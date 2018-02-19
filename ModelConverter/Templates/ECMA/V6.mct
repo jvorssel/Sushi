@@ -1,0 +1,9 @@
+﻿// ECMA 6 - $$TYPENAME$$
+
+class $$TYPENAME$$ {
+	constructor(obj) {
+		$$VALIDATE_OBJECT$$
+
+		$$SET_VALUES$$
+	}
+}

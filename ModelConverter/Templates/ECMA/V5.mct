@@ -1,0 +1,7 @@
+﻿// ECMA 5 - $$TYPENAME$$
+
+function $$TYPENAME$$(obj) {
+	$$VALIDATE_OBJECT$$
+
+	$$SET_VALUES$$
+}

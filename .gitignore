@@ -1,0 +1,12 @@
+.vs/*
+packages/*
+_ReSharper/*
+_ReSharper.Caches/*
+ModelConverter/bin/*
+ModelConverter/obj/*
+
+ModelConverter.Tests/bin/*
+ModelConverter.Tests/obj/*
+
+Common.Utility/bin/*
+Common.Utility/obj/*
