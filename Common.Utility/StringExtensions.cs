@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,11 @@ namespace Common.Utility
         /// <returns>The resulting <see cref="string"/>.</returns>
         public static string GetString(this byte[] @this)
         {
-            var chars = new char[@this.Length / sizeof(char)];
-            Buffer.BlockCopy(@this, 0, chars, 0, @this.Length);
-
-            return new string(chars);
+            using (var reader = new MemoryStream(@this))
+            using (var streamReader = new StreamReader(reader))
+            {
+                return streamReader.ReadToEnd();
+            }
         }
     }
 }

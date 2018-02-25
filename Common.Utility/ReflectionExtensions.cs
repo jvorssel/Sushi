@@ -93,6 +93,26 @@ namespace Common.Utility
             return field ?? null;
         }
 
+        /// <summary>
+        ///     Get the <see cref="Type"/> and default <see cref="object"/> value 
+        ///     for the available Properties in the given <typeparamref name="T"/> <paramref name="@this"/>.
+        /// </summary>
+        public static IEnumerable<KeyValuePair<PropertyInfo, object>> GetPropertiesWithStaticValue<T>(this T @this)
+        {
+            if (@this == null)
+                yield break;
+
+            var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
+            var instance = Activator.CreateInstance(type);
+            var properties = type.GetProperties();
+
+            foreach (var prp in properties)
+            {
+                var defaultValue = prp.GetValue(instance);
+                yield return new KeyValuePair<PropertyInfo, object>(prp, defaultValue);
+            }
+        }
+
         #endregion
 
         /// <summary>

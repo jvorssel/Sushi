@@ -10,16 +10,17 @@ namespace Common.Utility.Enum
     /// </summary>
     public enum CSharpNativeType
     {
-        Bool,
-        Byte,
-        Char,
-        Decimal,
-        Double,
-        Float,
-        Int,
-        Long,
-        Short,
-        Object,
-        String
+        Undefined = 0,
+        Bool = 1,
+        Byte = 2,
+        Char = 3,
+        Decimal = 4,
+        Double = 5,
+        Float = 6,
+        Int = 7,
+        Long = 8,
+        Short = 9,
+        Object = 10,
+        String = 11
     }
 }

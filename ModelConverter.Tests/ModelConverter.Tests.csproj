@@ -56,6 +56,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common.Utility\Common.Utility.csproj">
+      <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
+      <Name>Common.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelConverter\ModelConverter.csproj">
       <Project>{6476ff8a-3ae9-45e4-a7f3-014c9318b2aa}</Project>
       <Name>ModelConverter</Name>

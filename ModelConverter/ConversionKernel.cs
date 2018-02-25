@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Common.Utility;
 using ModelConverter.Interfaces;
 using ModelConverter.Interfaces.Models;
+using ModelConverter.Templates;
 
 namespace ModelConverter
 {
-    public class ConversionKernel
+    public class ConversionKernel : IDisposable
     {
+        private ModelConverter _instance = null;
         public List<ILanguageSpecification> Languages { get; } = new List<ILanguageSpecification>();
 
         public ConversionKernel AddLanguage(ILanguageSpecification language)
         {
-            if (Languages.Any(x => x.Language == language.Language && x.Version == language.Version))
+            if (Languages.Any(x => x == language))
                 throw Errors.DuplicateLanguageSpecification(language);
 
             Languages.Add(language);
@@ -22,16 +25,34 @@ namespace ModelConverter
 
         public ConversionKernel()
         {
-            // TODO: Load base languages.
+            Languages.AddRange(DefaultTemplates.EcmaScript());
         }
 
-        public static ModelConverter Initialize(Assembly assembly)
+        /// <summary>
+        ///     Create a instance of a <see cref="ModelConverter"/> for a specific <paramref name="template"/>.
+        /// </summary>
+        public ModelConverter CreateConverter(Assembly assembly, TemplateManager template)
         {
             var models = assembly.ExportedTypes
                 .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)))
                 .ToList();
 
-            return new ModelConverter(models);
+            _instance = new ModelConverter(models, template);
+            return _instance;
         }
+
+        #region IDisposable
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+        }
+
+        ~ConversionKernel()
+        {
+            Dispose();
+        }
+
+        #endregion
     }
 }
