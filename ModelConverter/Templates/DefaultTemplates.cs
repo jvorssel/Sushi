@@ -13,15 +13,18 @@ namespace ModelConverter.Templates
         /// <summary>
         ///     Load the <see cref="ILanguageSpecification"/>(s) for the files available by default.
         /// </summary>
-        public static IEnumerable<ILanguageSpecification> EcmaScript()
+        public static IEnumerable<ILanguageSpecification> JavaScript()
         {
             var directory = Path.Combine(Environment.CurrentDirectory, @"Templates\");
 
-            yield return new EcmaSpecification("JavaScript", new Version(5, 0), true).UseTemplate(Resources.V5_Isolated.GetString());
+            yield return new JavaScriptSpecification("JavaScript", new Version(5, 0), true)
+                .UseTemplate(Resources.V5_Isolated.GetString());
 
-            yield return new EcmaSpecification("JavaScript", new Version(5, 0)).UseTemplate(Resources.V5.GetString());
+            yield return new JavaScriptSpecification("JavaScript", new Version(5, 0))
+                .UseTemplate(Resources.V5.GetString());
 
-            yield return new EcmaSpecification("JavaScript", new Version(6, 0)).UseTemplate(Resources.V6.GetString());
+            yield return new JavaScriptSpecification("JavaScript", new Version(6, 0))
+                .UseTemplate(Resources.V6.GetString());
         }
 
     }

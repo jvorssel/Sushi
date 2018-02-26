@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Result\result V5 Isolated.js" />
+    <Content Include="Result\result V5.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Utility\Common.Utility.csproj">
@@ -68,6 +70,9 @@
       <Project>{6476ff8a-3ae9-45e4-a7f3-014c9318b2aa}</Project>
       <Name>ModelConverter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Result\result V6.js" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

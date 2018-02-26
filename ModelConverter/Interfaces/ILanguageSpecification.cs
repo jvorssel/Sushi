@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Common.Utility.Enum;
 using ModelConverter.Models;
 using ModelConverter.Templates.Languages;
+using ModelConverter.Templates.Recognition;
 
 namespace ModelConverter.Interfaces
 {
@@ -11,7 +12,6 @@ namespace ModelConverter.Interfaces
     /// </summary>
     /// <inheritdoc />
     public interface ILanguageSpecification : IEquatable<LanguageSpecification>
-        
     {
         /// <summary>
         ///     The directory path to the template file.
@@ -84,6 +84,9 @@ namespace ModelConverter.Interfaces
         /// </summary>
         LanguageSpecification UseTemplate(string template);
 
-        
+        /// <summary>
+        ///     Use the given <paramref name="kernel"/> instance for options.
+        /// </summary>
+        LanguageSpecification UseKernel(ConversionKernel kernel);
     }
 }

@@ -1,4 +1,5 @@
-﻿namespace ModelConverter.Consistency {
+﻿namespace ModelConverter.Consistency
+{
     /// <summary>
     ///     Template key constants.
     /// </summary>
@@ -9,5 +10,7 @@
         public const string VALUES_KEY = @"$$SET_VALUES$$";
         public const string PROPERTY_KEY = @"$$PROPERTY$$";
         public const string VALUE_KEY = @"$$VALUE$$";
+
+        public const string ARGUMENT_NAME = @"$$ARGUMENT_NAME$$";
     }
 }

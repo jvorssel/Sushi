@@ -22,7 +22,7 @@ namespace ModelConverter.Tests
         {
             using (var kernel = new ConversionKernel())
             {
-                var template = TemplateManager.ForEcmaScript(kernel, EcmaVersion.V6, false);
+                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V6, false);
                 var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
 
                 Assert.IsTrue(converter.ModelCount > 0);
@@ -35,7 +35,7 @@ namespace ModelConverter.Tests
         {
             using (var kernel = new ConversionKernel())
             {
-                var template = TemplateManager.ForEcmaScript(kernel, EcmaVersion.V6, false);
+                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V6, false);
                 var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
 
                 var firstModel = converter.Models.First();
@@ -59,12 +59,12 @@ namespace ModelConverter.Tests
         {
             using (var kernel = new ConversionKernel())
             {
-                var template = TemplateManager.ForEcmaScript(kernel, EcmaVersion.V5, true);
+                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V5, true);
                 var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
 
                 var result = converter.Convert();
 
-                Console.WriteLine(result + "WOAH");
+                Console.WriteLine(result);
 
                 Assert.IsTrue(result != string.Empty);
             }

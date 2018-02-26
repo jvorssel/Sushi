@@ -38,5 +38,18 @@ namespace Common.Utility
                     yield return line;
             }
         }
+
+        /// <summary>
+        ///     Get the characters in the <see cref="string"/> <paramref name="@this"/>
+        ///     <paramref name="before"/> a the first occurrence of given string.
+        /// </summary>
+        public static string Before(this string @this, string before)
+        {
+            var indent = string.Empty;
+            if (@this.Contains(before))
+                indent = @this.Substring(0, @this.IndexOf(before, StringComparison.InvariantCultureIgnoreCase));
+
+            return indent;
+        }
     }
 }

@@ -15,6 +15,18 @@ namespace ModelConverter
         private ModelConverter _instance = null;
         public List<ILanguageSpecification> Languages { get; } = new List<ILanguageSpecification>();
 
+        public string ArgumentName { get; set; }
+            = @"value";
+
+        public string ObjectPropertyMissing { get; set; }
+            = @"Given object is expected to have a property with name: '{0}'.";
+
+        public string PropertyTypeMismatch { get; set; }
+            = @"Given object property '{0}' is expected to be a {1}.";
+
+        public string PropertyInstanceMismatch { get; set; }
+            = @"Given object property '{0}' is expected to be an instance of the '{1}' constructor.";
+
         public ConversionKernel AddLanguage(ILanguageSpecification language)
         {
             if (Languages.Any(x => x == language))
@@ -26,7 +38,7 @@ namespace ModelConverter
 
         public ConversionKernel()
         {
-            Languages.AddRange(DefaultTemplates.EcmaScript());
+            Languages.AddRange(DefaultTemplates.JavaScript());
         }
 
         /// <summary>
@@ -38,7 +50,7 @@ namespace ModelConverter
                 .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)))
                 .ToList();
 
-            _instance = new ModelConverter(models, template);
+            _instance = new ModelConverter(this, models, template);
             return _instance;
         }
 
@@ -55,5 +67,10 @@ namespace ModelConverter
         }
 
         #endregion
+    }
+
+    public enum ResourceType
+    {
+        ObjectPropertyMissing,
     }
 }

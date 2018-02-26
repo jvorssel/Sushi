@@ -1,4 +1,6 @@
-﻿using ModelConverter.Models;
+﻿using System.Collections.Generic;
+using ModelConverter.Models;
+using ModelConverter.Templates.Languages;
 
 namespace ModelConverter.Templates.Recognition
 {
@@ -11,6 +13,6 @@ namespace ModelConverter.Templates.Recognition
     /// </remarks>
     public abstract class RecognitionPipeline
     {
-        public abstract string CreatePropertyRecognitionStatement(Property property);
+        public abstract IEnumerable<string> CreateStatements(LanguageSpecification language, ConversionKernel kernel, Property property);
     }
 }

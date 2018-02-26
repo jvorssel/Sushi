@@ -21,7 +21,7 @@ namespace ModelConverter
         /// </summary>
         public long ModelCount => Models.Count;
 
-        public ModelConverter(IEnumerable<Type> models, TemplateManager template)
+        public ModelConverter(ConversionKernel kernel, IEnumerable<Type> models, TemplateManager template)
         {
             Models = models.Select(x => new DataModel(x)).ToList();
             Template = template;
@@ -35,7 +35,7 @@ namespace ModelConverter
             if (Template != null)
                 throw Errors.LanguageAlreadyDefined();
 
-            Template = TemplateManager.ForEcmaScript(kernel, version, useIsolateScope);
+            Template = TemplateManager.ForJavaScript(kernel, version, useIsolateScope);
 
             return this;
         }

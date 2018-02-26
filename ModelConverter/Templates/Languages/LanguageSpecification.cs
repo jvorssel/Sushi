@@ -5,13 +5,17 @@ using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
+using ModelConverter.Templates.Recognition;
 
 namespace ModelConverter.Templates.Languages
 {
     /// <inheritdoc />
     public abstract class LanguageSpecification : ILanguageSpecification
     {
+        protected ConversionKernel _kernel;
         private string _targetObject = @"window";
+
+        protected RecognitionPipeline RecognitionPipeline { get; set; }
 
         /// <inheritdoc />
         public string FilePath { get; } = string.Empty;
@@ -99,8 +103,6 @@ namespace ModelConverter.Templates.Languages
         private static string FormatObjectPath(string input)
             => input.EndsWith(".") ? input.Substring(0, input.Length - 1) : input;
 
-
-
         /// <inheritdoc />
         public LanguageSpecification LoadFile()
         {
@@ -129,6 +131,13 @@ namespace ModelConverter.Templates.Languages
         public LanguageSpecification UseTemplate(string template)
         {
             Template = template ?? throw new ArgumentNullException(nameof(template));
+            return this;
+        }
+
+        /// <inheritdoc />
+        public LanguageSpecification UseKernel(ConversionKernel kernel)
+        {
+            _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             return this;
         }
 

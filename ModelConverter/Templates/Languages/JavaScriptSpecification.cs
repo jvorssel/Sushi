@@ -1,37 +1,32 @@
 ﻿using System;
+using System.Text;
 using Common.Utility;
 using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Models;
+using ModelConverter.Templates.Recognition;
 
 namespace ModelConverter.Templates.Languages
 {
-    public class EcmaSpecification : LanguageSpecification
+    public class JavaScriptSpecification : LanguageSpecification
     {
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
         public override string FormatProperty(Property property)
         {
-            var indent = string.Empty;
-            foreach (var line in Template.GetLines())
-            {
-                if (indent != string.Empty)
-                    continue;
-
-                if (line.Contains(TemplateKeys.VALUES_KEY))
-                    indent = line.Substring(0, line.IndexOf(TemplateKeys.VALUES_KEY, StringComparison.InvariantCultureIgnoreCase));
-            }
-
-
             var value = FormatValueForType(property.NativeType, property.Value);
-            return $@"{indent}this.{property.Name} = {value};";
+            return $@"this.{property.Name} = {value};";
         }
 
         /// <inheritdoc />
         public override string FormatRecognition(Property property)
         {
-            return string.Empty;
+            var builder = new StringBuilder();
+            foreach (var statement in RecognitionPipeline.CreateStatements(this, _kernel, property))
+                builder.AppendLine(statement);
+
+            return builder.ToString();
         }
 
         /// <inheritdoc />
@@ -92,33 +87,33 @@ namespace ModelConverter.Templates.Languages
 
         #region Initializers
 
-        public EcmaSpecification()
+        public JavaScriptSpecification()
         {
-
+            RecognitionPipeline = new JavaScriptObjectRecognition();
         }
 
-        public EcmaSpecification(string scriptLanguage, Version version, bool isIsolated = false)
+        public JavaScriptSpecification(string scriptLanguage, Version version, bool isIsolated = false)
             : base(scriptLanguage, version, isIsolated)
         {
-
+            RecognitionPipeline = new JavaScriptObjectRecognition();
         }
 
-        public EcmaSpecification(string scriptLanguage, string version, bool isIsolated = false)
+        public JavaScriptSpecification(string scriptLanguage, string version, bool isIsolated = false)
             : base(scriptLanguage, Version.Parse(version), isIsolated)
         {
-
+            RecognitionPipeline = new JavaScriptObjectRecognition();
         }
 
-        public EcmaSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
+        public JavaScriptSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
             : base(path, scriptLanguage, Version.Parse(version), isIsolated)
         {
-
+            RecognitionPipeline = new JavaScriptObjectRecognition();
         }
 
-        public EcmaSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
+        public JavaScriptSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
             : base(path, scriptLanguage, version, isIsolated)
         {
-
+            RecognitionPipeline = new JavaScriptObjectRecognition();
         }
 
         #endregion Initializers
