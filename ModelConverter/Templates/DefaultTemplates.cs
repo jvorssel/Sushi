@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Common.Utility;
 using ModelConverter.Interfaces;
-using ModelConverter.Languages;
 using ModelConverter.Properties;
+using ModelConverter.Templates.Languages;
 
 namespace ModelConverter.Templates
 {

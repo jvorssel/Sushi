@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
 
-namespace ModelConverter.Languages
+namespace ModelConverter.Templates.Languages
 {
     /// <inheritdoc />
     public abstract class LanguageSpecification : ILanguageSpecification

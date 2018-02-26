@@ -7,6 +7,7 @@ using System.Text;
 using Common.Utility.Enum.ECMAScript;
 using ModelConverter.Consistency;
 using ModelConverter.Models;
+using ModelConverter.Templates;
 
 namespace ModelConverter
 {

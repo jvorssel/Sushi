@@ -57,7 +57,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Templates\TemplateManager.cs" />
-    <Compile Include="RecognitionPipeline.cs" />
+    <Compile Include="Templates\Recognition\RecognitionPipeline.cs" />
     <Compile Include="Templates\DefaultTemplates.cs" />
   </ItemGroup>
   <ItemGroup>

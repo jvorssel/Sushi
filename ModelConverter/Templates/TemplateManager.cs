@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common.Utility.Enum.ECMAScript;
 using Common.Utility.Helpers;
 using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
-using ModelConverter.Languages;
 using ModelConverter.Models;
-using static ModelConverter.Consistency.TemplateKeys;
+using ModelConverter.Templates.Languages;
 
-namespace ModelConverter
+namespace ModelConverter.Templates
 {
     /// <summary>
     ///     Manages the expected file code-templates.
@@ -70,12 +68,12 @@ namespace ModelConverter
         {
             var builder = new StringBuilder();
             var template = Language.Template
-                .Replace(TYPE_NAME_KEY, model.Name);
+                .Replace(TemplateKeys.TYPE_NAME_KEY, model.Name);
 
             var enumerator = new StringEnumerator(template);
             while (enumerator.MoveNext())
             {
-                if (enumerator.Current.Contains(VALUES_KEY))
+                if (enumerator.Current.Contains(TemplateKeys.VALUES_KEY))
                 {
                     // Define each property in the template.
                     var propertyBuilder = new StringBuilder();

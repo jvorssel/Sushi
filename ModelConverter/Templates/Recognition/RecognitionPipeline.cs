@@ -1,6 +1,6 @@
-﻿using Common.Utility.Enum;
+﻿using ModelConverter.Models;
 
-namespace ModelConverter
+namespace ModelConverter.Templates.Recognition
 {
     /// <summary>
     ///     Manage the recognition method used when an object is parsed to the generated constructor.
@@ -9,11 +9,8 @@ namespace ModelConverter
     ///     These templates are not type-specific (yet). 
     ///     Will be used for every generated file with matching property type(s).
     /// </remarks>
-    internal class RecognitionPipeline
+    public abstract class RecognitionPipeline
     {
-        internal static RecognitionPipeline ForType(CSharpNativeType type)
-        {
-            return new RecognitionPipeline();
-        }
+        public abstract string CreatePropertyRecognitionStatement(Property property);
     }
 }

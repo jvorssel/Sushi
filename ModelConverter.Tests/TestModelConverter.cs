@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Common.Utility.Enum.ECMAScript;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ModelConverter.Templates;
 
 namespace ModelConverter.Tests
 {

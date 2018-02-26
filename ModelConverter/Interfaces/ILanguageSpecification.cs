@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
-using ModelConverter.Languages;
 using ModelConverter.Models;
+using ModelConverter.Templates.Languages;
 
 namespace ModelConverter.Interfaces
 {

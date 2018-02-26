@@ -4,7 +4,7 @@ using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Models;
 
-namespace ModelConverter.Languages
+namespace ModelConverter.Templates.Languages
 {
     public class EcmaSpecification : LanguageSpecification
     {
