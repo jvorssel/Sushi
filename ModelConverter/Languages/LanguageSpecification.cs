@@ -1,30 +1,30 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
+using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
+using ModelConverter.Models;
 
 namespace ModelConverter.Languages
 {
     /// <inheritdoc />
-    public class LanguageSpecification : ILanguageSpecification
+    public abstract class LanguageSpecification : ILanguageSpecification
     {
         private string _targetObject = @"window";
-        private string _template = string.Empty;
-
-        public const string PROPERTY_KEY = @"$$PROPERTY$$";
 
         /// <inheritdoc />
-        public string FilePath { get; set; } = string.Empty;
+        public string FilePath { get; } = string.Empty;
 
         /// <inheritdoc />
-        public string Language { get; set; } = string.Empty;
+        public string Language { get; } = string.Empty;
 
         ///<inheritdoc />
-        public Version Version { get; set; } = new Version();
+        public Version Version { get; } = new Version();
 
         /// <inheritdoc />
-        public bool IsIsolated { get; set; } = false;
+        public bool IsIsolated { get; }
 
         /// <inheritdoc />
         public string TargetObject
@@ -33,14 +33,32 @@ namespace ModelConverter.Languages
             set => _targetObject = FormatObjectPath(value);
         }
 
+        /// <inheritdoc />
+        public bool IsLoaded => Template != string.Empty;
+
+        /// <inheritdoc />
+        public string Template { get; private set; } = string.Empty;
+
+        /// <inheritdoc />
+        public abstract string FormatProperty(Property property);
+
+        /// <inheritdoc />
+        public abstract string FormatRecognition(Property property);
+
+        /// <inheritdoc />
+        public abstract string GetDefaultForType(CSharpNativeType type);
+
+        /// <inheritdoc />
+        public abstract string FormatValueForType(CSharpNativeType type, object value);
+
         #region Initializers
 
-        public LanguageSpecification()
+        protected LanguageSpecification()
         {
 
         }
 
-        public LanguageSpecification(string scriptLanguage, Version version, bool isIsolated = false)
+        protected LanguageSpecification(string scriptLanguage, Version version, bool isIsolated = false)
         {
             if (scriptLanguage == string.Empty)
                 throw new ArgumentNullException(nameof(scriptLanguage));
@@ -50,19 +68,19 @@ namespace ModelConverter.Languages
             IsIsolated = isIsolated;
         }
 
-        public LanguageSpecification(string scriptLanguage, string version, bool isIsolated = false)
+        protected LanguageSpecification(string scriptLanguage, string version, bool isIsolated = false)
             : this(scriptLanguage, Version.Parse(version), isIsolated)
         {
 
         }
 
-        public LanguageSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
+        protected LanguageSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
             : this(path, scriptLanguage, Version.Parse(version), isIsolated)
         {
 
         }
 
-        public LanguageSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
+        protected LanguageSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
             : this(scriptLanguage, version, isIsolated)
         {
             if (path == string.Empty)
@@ -82,28 +100,15 @@ namespace ModelConverter.Languages
         private static string FormatObjectPath(string input)
             => input.EndsWith(".") ? input.Substring(0, input.Length - 1) : input;
 
-        /// <inheritdoc />
-        public virtual string FormatProperty(CSharpNativeType type, string name)
-        {
-            return string.Empty;
-        }
 
-        /// <inheritdoc />
-        public virtual string FormatRecognition(CSharpNativeType type, string name, string body)
-        {
-            return string.Empty;
-        }
-
-        /// <inheritdoc />
-        public bool IsLoaded => _template != string.Empty;
 
         /// <inheritdoc />
         public LanguageSpecification LoadFile()
         {
-            _template = string.Empty;
+            Template = string.Empty;
             using (var reader = new StreamReader(FilePath))
             {
-                _template = reader.ReadToEnd();
+                Template = reader.ReadToEnd();
             }
 
             return this;
@@ -112,10 +117,10 @@ namespace ModelConverter.Languages
         /// <inheritdoc />
         public async Task<LanguageSpecification> LoadFileAsync()
         {
-            _template = string.Empty;
+            Template = string.Empty;
             using (var reader = new StreamReader(FilePath))
             {
-                _template = await reader.ReadToEndAsync();
+                Template = await reader.ReadToEndAsync();
             }
 
             return this;
@@ -124,7 +129,7 @@ namespace ModelConverter.Languages
         /// <inheritdoc />
         public LanguageSpecification UseTemplate(string template)
         {
-            _template = template ?? throw new ArgumentNullException(nameof(template));
+            Template = template ?? throw new ArgumentNullException(nameof(template));
             return this;
         }
 

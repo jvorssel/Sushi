@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using Common.Utility.Enum.ECMAScript;
+using ModelConverter.Consistency;
 using ModelConverter.Models;
 
 namespace ModelConverter
@@ -47,6 +50,21 @@ namespace ModelConverter
             Template = TemplateManager.ForTypeScript(version);
 
             return this;
+        }
+
+        public string Convert(Func<DataModel, bool> predicate = null)
+        {
+            var builder = new StringBuilder();
+
+            var enumerable = predicate == null ? Models : Models.Where(predicate);
+            foreach (var model in enumerable)
+            {
+                var scriptModel = Template.Compile(model).ToString();
+
+                builder.AppendLine(scriptModel);
+            }
+
+            return builder.ToString();
         }
     }
 }

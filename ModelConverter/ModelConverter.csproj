@@ -40,12 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consistency\TemplateKeys.cs" />
     <Compile Include="ConversionKernel.cs" />
+    <Compile Include="Templates\Languages\EcmaSpecification.cs" />
     <Compile Include="Models\DataModel.cs" />
-    <Compile Include="Errors.cs" />
+    <Compile Include="Consistency\Errors.cs" />
     <Compile Include="Interfaces\ILanguageSpecification.cs" />
     <Compile Include="Interfaces\Models\IModelToConvert.cs" />
-    <Compile Include="Languages\LanguageSpecification.cs" />
+    <Compile Include="Templates\Languages\LanguageSpecification.cs" />
     <Compile Include="ModelConverter.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,7 +56,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TemplateManager.cs" />
+    <Compile Include="Templates\TemplateManager.cs" />
     <Compile Include="RecognitionPipeline.cs" />
     <Compile Include="Templates\DefaultTemplates.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Common.Utility.Enum.ECMAScript;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,7 @@ namespace ModelConverter.Tests
     [TestClass]
     public class TestModelConverter
     {
+        public TestContext Context { get; set; }
 
         [TestInitialize]
         public void BeforeTest()
@@ -46,8 +48,24 @@ namespace ModelConverter.Tests
                 Assert.IsNotNull(insertion);
                 Assert.IsNotNull(surname);
 
-                Assert.AreEqual(name.Default.ToString(), "Jeroen");
-                Assert.AreEqual(surname.Default.ToString(), "Vorsselman");
+                Assert.AreEqual(name.Value.ToString(), "Jeroen");
+                Assert.AreEqual(surname.Value.ToString(), "Vorsselman");
+            }
+        }
+
+        [TestMethod]
+        public void TestBasicModelCompilation()
+        {
+            using (var kernel = new ConversionKernel())
+            {
+                var template = TemplateManager.ForEcmaScript(kernel, EcmaVersion.V5, true);
+                var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
+
+                var result = converter.Convert();
+
+                Console.WriteLine(result + "WOAH");
+
+                Assert.IsTrue(result != string.Empty);
             }
         }
     }

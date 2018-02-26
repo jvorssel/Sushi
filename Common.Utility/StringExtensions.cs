@@ -25,5 +25,18 @@ namespace Common.Utility
                 return streamReader.ReadToEnd();
             }
         }
+
+        /// <summary>
+        ///     Enumerate over each available line in the given <see cref="string"/> <paramref name="@this"/>.
+        /// </summary>
+        public static IEnumerable<string> GetLines(this string @this)
+        {
+            using (var reader = new StringReader(@this))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                    yield return line;
+            }
+        }
     }
 }

@@ -45,6 +45,7 @@
     <Compile Include="Enum\ECMAScript\ErrorType.cs" />
     <Compile Include="Enum\ECMAScript\HostOrNativeObject.cs" />
     <Compile Include="Enum\ECMAScript\JavaScriptType.cs" />
+    <Compile Include="Helpers\StringLineEnumerator.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="TypeConversionHelper.cs" />
     <Compile Include="ReflectionExtensions.cs" />

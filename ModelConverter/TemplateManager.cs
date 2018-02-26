@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Common.Utility.Enum.ECMAScript;
+using Common.Utility.Helpers;
+using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
 using ModelConverter.Languages;
+using ModelConverter.Models;
+using static ModelConverter.Consistency.TemplateKeys;
 
 namespace ModelConverter
 {
@@ -14,11 +19,7 @@ namespace ModelConverter
     {
         public ILanguageSpecification Language { get; }
 
-        private const string TYPENAME_KEY = @"$$TYPENAME$$";
-        private const string VALIDATION_KEY = @"$$VALIDATE_OBJECT$$";
-        private const string VALUES_KEY = @"$$SET_VALUES$$";
-
-        private string _template = string.Empty;
+        private string _result = string.Empty;
 
         public TemplateManager(ILanguageSpecification language)
         {
@@ -61,5 +62,49 @@ namespace ModelConverter
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        ///     Compile the given <paramref name="model"/> with the current <see cref="LanguageSpecification"/>.
+        /// </summary>
+        public TemplateManager Compile(DataModel model)
+        {
+            var builder = new StringBuilder();
+            var template = Language.Template
+                .Replace(TYPE_NAME_KEY, model.Name);
+
+            var enumerator = new StringEnumerator(template);
+            while (enumerator.MoveNext())
+            {
+                if (enumerator.Current.Contains(VALUES_KEY))
+                {
+                    // Define each property in the template.
+                    var propertyBuilder = new StringBuilder();
+                    foreach (var property in model.Properties)
+                    {
+                        var assignStatement = Language.FormatProperty(property);
+                        propertyBuilder.AppendLine(assignStatement);
+                    }
+
+                    builder.Append(propertyBuilder);
+                    
+                }else
+                    builder.Append(enumerator.Current);
+            }
+
+            // Set the model name in the template.
+
+
+            //builder.Replace(VALUES_KEY, propertyBuilder.ToString());
+
+            _result = builder.ToString();
+            return this;
+        }
+
+        #region Overrides of Object
+
+        /// <inheritdoc />
+        public override string ToString() => _result;
+
+        #endregion
     }
 }

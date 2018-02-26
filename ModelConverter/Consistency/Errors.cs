@@ -1,7 +1,7 @@
 ﻿using System;
 using ModelConverter.Interfaces;
 
-namespace ModelConverter
+namespace ModelConverter.Consistency
 {
     /// <summary>
     ///     Container class to keep the error messages in one place.

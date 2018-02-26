@@ -13,14 +13,12 @@ namespace ModelConverter.Models {
 
         public CSharpNativeType NativeType => _property.PropertyType.ToCSharpNativeType();
 
-        public JavaScriptType EcmaType => NativeType.ToJavaScriptType();
+        public object Value { get; }
 
-        public object Default { get; }
-
-        public Property(PropertyInfo property, object defaultValue)
+        public Property(PropertyInfo property, object value)
         {
             _property = property;
-            Default = defaultValue;
+            Value = value;
         }
     }
 }
