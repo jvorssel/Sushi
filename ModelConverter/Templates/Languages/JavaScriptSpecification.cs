@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Common.Utility;
 using Common.Utility.Enum;
@@ -16,18 +18,13 @@ namespace ModelConverter.Templates.Languages
         public override string FormatProperty(Property property)
         {
             var value = FormatValueForType(property.NativeType, property.Value);
-            return $@"this.{property.Name} = {value};";
+            return $@"this.{property.Name} = {_kernel.ArgumentName}.{property.Name} || {value};";
         }
 
         /// <inheritdoc />
-        public override string FormatRecognition(Property property)
-        {
-            var builder = new StringBuilder();
-            foreach (var statement in RecognitionPipeline.CreateStatements(this, _kernel, property))
-                builder.AppendLine(statement);
-
-            return builder.ToString();
-        }
+        public override IEnumerable<string> FormatRecognition(Property property,
+            IEnumerable<DataModel> referenceDataModels)
+            => RecognitionPipeline.CreateStatements(this, _kernel, property, referenceDataModels);
 
         /// <inheritdoc />
         public override string GetDefaultForType(CSharpNativeType type)
@@ -62,13 +59,12 @@ namespace ModelConverter.Templates.Languages
             if (value == null)
                 return GetDefaultForType(type);
 
+            var numberFormat = new NumberFormatInfo { CurrencyDecimalSeparator = "." };
             switch (type)
             {
                 case CSharpNativeType.Undefined:
-                case CSharpNativeType.Bool:
+                    return @"undefined";
                 case CSharpNativeType.Byte:
-                case CSharpNativeType.Decimal:
-                case CSharpNativeType.Double:
                 case CSharpNativeType.Float:
                 case CSharpNativeType.Int:
                 case CSharpNativeType.Long:
@@ -78,6 +74,14 @@ namespace ModelConverter.Templates.Languages
                 case CSharpNativeType.Char:
                 case CSharpNativeType.String:
                     return $"\"{value}\"";
+                case CSharpNativeType.Bool:
+                    return value.ToString().ToLowerInvariant();
+                case CSharpNativeType.Double:
+                    var dbl = (double)value;
+                    return dbl.ToString(numberFormat);
+                case CSharpNativeType.Decimal:
+                    var dec = (decimal)value;
+                    return dec.ToString(numberFormat);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }

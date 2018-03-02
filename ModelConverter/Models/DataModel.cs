@@ -20,6 +20,11 @@ namespace ModelConverter.Models
         /// </summary>
         public string FullName => _type.FullName;
 
+        /// <summary>
+        ///     The generated <see cref="Script"/> for this <see cref="DataModel"/>.
+        /// </summary>
+        public string Script { get; set; }
+
         public DataModel(Type type)
         {
             _type = type;

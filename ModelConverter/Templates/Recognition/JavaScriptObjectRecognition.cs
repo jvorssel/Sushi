@@ -14,17 +14,23 @@ namespace ModelConverter.Templates.Recognition
         #region Overrides of RecognitionPipeline
 
         /// <inheritdoc />
-        public override IEnumerable<string> CreateStatements(LanguageSpecification language, ConversionKernel kernel, Property property)
+        public override IEnumerable<string> CreateStatements(LanguageSpecification language,
+            ConversionKernel kernel,
+            Property property,
+            IEnumerable<DataModel> referenceDataModels)
         {
+            var isDefinedStatement = $@"{kernel.ArgumentName}['{property.Name}'] !== void 0 && {kernel.ArgumentName}['{property.Name}'] !== null";
+
             yield return $"if (!{kernel.ArgumentName}.hasOwnProperty('{property.Name}'))" +
                 $" throw new TypeError(\"{string.Format(kernel.ObjectPropertyMissing, property.Name)}\"); ";
 
-            var typeCheck = $@"if (typeof ({kernel.ArgumentName}['{{0}}']) !== '{{1}}')" +
-                    $" throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
+            var typeCheck = $@"if ({isDefinedStatement} && typeof ({kernel.ArgumentName}['{{0}}']) !== '{{1}}')" +
+                $" throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
 
-            var instanceCheck = $@"if (!({kernel.ArgumentName}['{{0}}'] instanceof {{1}}))" +
-                    $" throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
+            var instanceCheck = $@"if ({isDefinedStatement} && !({kernel.ArgumentName}['{{0}}'] instanceof {{1}}))" +
+                $" throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
 
+            var models = referenceDataModels.ToList();
             var scriptType = property.NativeType.ToJavaScriptType();
             switch (scriptType)
             {
@@ -50,8 +56,12 @@ namespace ModelConverter.Templates.Recognition
                     yield return string.Format(instanceCheck, property.Name, "Array");
                     break;
                 case JavaScriptType.Object:
-                    // TODO Compare to custom types.
                     yield return string.Format(typeCheck, property.Name, "object");
+
+                    var propertyWithName = models.FirstOrDefault(x => x.FullName == property.Type.FullName);
+                    if (propertyWithName != null)
+                        yield return string.Format(instanceCheck, property.Name, propertyWithName.Name);
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

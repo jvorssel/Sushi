@@ -13,6 +13,9 @@ namespace ModelConverter.Templates.Recognition
     /// </remarks>
     public abstract class RecognitionPipeline
     {
-        public abstract IEnumerable<string> CreateStatements(LanguageSpecification language, ConversionKernel kernel, Property property);
+        public abstract IEnumerable<string> CreateStatements(LanguageSpecification language,
+            ConversionKernel kernel,
+            Property property,
+            IEnumerable<DataModel> referenceDataModels);
     }
 }

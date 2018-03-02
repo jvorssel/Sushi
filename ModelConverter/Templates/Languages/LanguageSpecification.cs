@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
@@ -46,7 +47,8 @@ namespace ModelConverter.Templates.Languages
         public abstract string FormatProperty(Property property);
 
         /// <inheritdoc />
-        public abstract string FormatRecognition(Property property);
+        public abstract IEnumerable<string> FormatRecognition(Property property,
+            IEnumerable<DataModel> referenceDataModels);
 
         /// <inheritdoc />
         public abstract string GetDefaultForType(CSharpNativeType type);

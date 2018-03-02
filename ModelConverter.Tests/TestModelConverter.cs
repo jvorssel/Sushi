@@ -4,6 +4,7 @@ using System.Linq;
 using Common.Utility.Enum.ECMAScript;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelConverter.Templates;
+using ModelConverter.Tests.Models;
 
 namespace ModelConverter.Tests
 {
@@ -26,7 +27,7 @@ namespace ModelConverter.Tests
                 var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
 
                 Assert.IsTrue(converter.ModelCount > 0);
-                Assert.AreEqual(converter.Models[0].Name, @"SomeModel");
+                Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(NameModel)));
             }
         }
 
@@ -59,7 +60,7 @@ namespace ModelConverter.Tests
         {
             using (var kernel = new ConversionKernel())
             {
-                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V5, true);
+                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V5, false);
                 var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
 
                 var result = converter.Convert();

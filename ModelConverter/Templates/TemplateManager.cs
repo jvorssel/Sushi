@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common.Utility;
@@ -31,7 +32,9 @@ namespace ModelConverter.Templates
         /// <summary>
         ///     Compile the given <paramref name="model"/> with the current <see cref="LanguageSpecification"/>.
         /// </summary>
-        public TemplateManager Compile(DataModel model)
+        /// <param name="model">The <see cref="DataModel"/> to convert to the given <see cref="Language"/>.</param>
+        /// <param name="referenceDataModels">Check type reference for found <see cref="DataModel"/>(s).</param>
+        public TemplateManager Compile(DataModel model, IEnumerable<DataModel> referenceDataModels)
         {
             var builder = new StringBuilder();
             var template = Language.Template
@@ -62,8 +65,11 @@ namespace ModelConverter.Templates
                     var recognitionBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
-                        var recognizeStatements = Language.FormatRecognition(property);
-                        recognitionBuilder.AppendLine(indent + recognizeStatements);
+                        var recognizeStatements = Language.FormatRecognition(property, referenceDataModels).ToList();
+                        property.Script = recognizeStatements;
+
+                        foreach (var line in recognizeStatements)
+                            recognitionBuilder.AppendLine(indent + line);
                     }
 
                     builder.Append(recognitionBuilder);
@@ -74,6 +80,7 @@ namespace ModelConverter.Templates
 
             // Set the model name in the template.
             _result = builder.ToString();
+            model.Script = _result;
 
             return this;
         }

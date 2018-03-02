@@ -57,10 +57,11 @@ namespace ModelConverter
         {
             var builder = new StringBuilder();
 
-            var enumerable = predicate == null ? Models : Models.Where(predicate);
+            var enumerable = (predicate == null ? Models : Models.Where(predicate)).ToList();
+
             foreach (var model in enumerable)
             {
-                var scriptModel = Template.Compile(model).ToString();
+                var scriptModel = Template.Compile(model, enumerable).ToString();
 
                 builder.AppendLine(scriptModel);
             }

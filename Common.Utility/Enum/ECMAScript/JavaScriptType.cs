@@ -49,5 +49,10 @@
         ///     The base of every value is a <see cref="Object"/>.
         /// </summary>
         Object = 9,
+
+        /// <summary>
+        ///     Represents a <see cref="Decimal"/> type.
+        /// </summary>
+        Decimal = 10,
     }
 }

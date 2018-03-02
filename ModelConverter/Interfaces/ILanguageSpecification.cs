@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
 using ModelConverter.Models;
@@ -56,7 +57,7 @@ namespace ModelConverter.Interfaces
         /// <summary>
         ///     Format the validation for the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        string FormatRecognition(Property property);
+        IEnumerable<string> FormatRecognition(Property property, IEnumerable<DataModel> referenceDataModels);
 
         /// <summary>
         ///     Get the default <see cref="string"/> value that reflects the given <see cref="CSharpNativeType"/> 

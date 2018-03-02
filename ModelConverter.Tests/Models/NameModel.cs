@@ -2,7 +2,7 @@
 
 namespace ModelConverter.Tests.Models
 {
-    public class SomeModel : IModelToConvert
+    public class NameModel : IModelToConvert
     {
         // Lets start with some person data-model.
         public string Name { get; set; } = @"Jeroen";
