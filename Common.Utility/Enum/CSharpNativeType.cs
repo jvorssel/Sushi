@@ -21,6 +21,7 @@ namespace Common.Utility.Enum
         Long = 8,
         Short = 9,
         Object = 10,
-        String = 11
+        String = 11,
+        Null = 12
     }
 }

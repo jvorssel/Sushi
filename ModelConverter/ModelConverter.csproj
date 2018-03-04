@@ -42,24 +42,16 @@
   <ItemGroup>
     <Compile Include="Consistency\TemplateKeys.cs" />
     <Compile Include="ConversionKernel.cs" />
-    <Compile Include="Templates\Languages\JavaScriptSpecification.cs" />
+    <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Consistency\Errors.cs" />
     <Compile Include="Interfaces\ILanguageSpecification.cs" />
-    <Compile Include="Interfaces\Models\IModelToConvert.cs" />
-    <Compile Include="Templates\Languages\LanguageSpecification.cs" />
+    <Compile Include="Interfaces\IModelToConvert.cs" />
+    <Compile Include="LanguageSpecification.cs" />
     <Compile Include="ModelConverter.cs" />
     <Compile Include="Models\Property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Templates\Recognition\JavaScriptObjectRecognition.cs" />
-    <Compile Include="Templates\TemplateManager.cs" />
-    <Compile Include="Templates\Recognition\RecognitionPipeline.cs" />
-    <Compile Include="Templates\DefaultTemplates.cs" />
+    <Compile Include="StatementPipeline.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.txt" />
@@ -69,17 +61,6 @@
       <Project>{64a5f77d-0f1a-4b2e-933d-501fd0a540de}</Project>
       <Name>Common.Utility</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Templates\ECMA\V5.mct" />
-    <None Include="Templates\ECMA\V5 Isolated.mct" />
-    <None Include="Templates\ECMA\V6.mct" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

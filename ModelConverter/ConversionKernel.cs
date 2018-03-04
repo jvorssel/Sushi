@@ -5,15 +5,18 @@ using System.Reflection;
 using Common.Utility;
 using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
-using ModelConverter.Interfaces.Models;
-using ModelConverter.Templates;
+using ModelConverter.Models;
 
 namespace ModelConverter
 {
+    /// <summary>
+    ///     Root <see cref="ConversionKernel"/> for converting given <see cref="Models"/> to one of the specified <see cref="Languages"/>.
+    /// </summary>
     public class ConversionKernel : IDisposable
     {
-        private ModelConverter _instance = null;
-        public List<ILanguageSpecification> Languages { get; } = new List<ILanguageSpecification>();
+        public HashSet<DataModel> Models { get; } = new HashSet<DataModel>();
+
+        public long ModelCount => Models.Count;
 
         public string ArgumentName { get; set; }
             = @"value";
@@ -27,33 +30,68 @@ namespace ModelConverter
         public string PropertyInstanceMismatch { get; set; }
             = @"Given object property '{0}' is expected to be an instance of the '{1}' constructor.";
 
-        public ConversionKernel AddLanguage(ILanguageSpecification language)
+        /// <summary>
+        ///     Add the given <paramref name="types"/> to use for conversion.
+        /// </summary>
+        public ConversionKernel AddModes(IEnumerable<Type> types)
         {
-            if (Languages.Any(x => x == language))
-                throw Errors.DuplicateLanguageSpecification(language);
+            foreach (var model in types.Select(x => new DataModel(x)))
+                Models.Add(model);
 
-            Languages.Add(language);
             return this;
         }
 
+        /// <summary>
+        ///     Add the given <paramref name="types"/> to use for conversion.
+        /// </summary>
+        public ConversionKernel AddModels(params Type[] types)
+        {
+            foreach (var model in types.Select(x => new DataModel(x)))
+                Models.Add(model);
+
+            return this;
+        }
+        
+        /// <summary>
+        ///     Initialize a new <see cref="ConversionKernel"/> with the default <see cref="ILanguageSpecification"/>(s).
+        /// </summary>
         public ConversionKernel()
         {
-            Languages.AddRange(DefaultTemplates.JavaScript());
+
         }
 
         /// <summary>
-        ///     Create a instance of a <see cref="ModelConverter"/> for a specific <paramref name="template"/>.
+        ///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="types"/> for <see cref="Models"/>.
         /// </summary>
-        public ModelConverter CreateConverter(Assembly assembly, TemplateManager template)
+        public ConversionKernel(IEnumerable<Type> types)
+            : this(types.Select(x => new DataModel(x)))
         {
+        }
+
+        /// <summary>
+        ///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="models"/>.
+        /// </summary>
+        public ConversionKernel(IEnumerable<DataModel> models)
+            : this()
+        {
+            Models = new HashSet<DataModel>(models);
+        }
+
+        /// <summary>
+        ///     Initialize a new <see cref="ConversionKernel"/> with models that 
+        ///     inherit <see cref="IModelToConvert"/> in the given <paramref name="assembly"/>.
+        /// </summary>
+        public ConversionKernel(Assembly assembly)
+            : this()
+        {
+            // Find the models in the given assembly.
             var models = assembly.ExportedTypes
                 .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)))
                 .ToList();
 
-            _instance = new ModelConverter(this, models, template);
-            return _instance;
+            Models = new HashSet<DataModel>(models.Select(x => new DataModel(x)));
         }
-
+        
         #region IDisposable
 
         /// <inheritdoc />
@@ -67,10 +105,5 @@ namespace ModelConverter
         }
 
         #endregion
-    }
-
-    public enum ResourceType
-    {
-        ObjectPropertyMissing,
     }
 }

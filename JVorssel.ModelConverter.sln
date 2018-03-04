@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Utility", "Common.Ut
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelConverter.Tests", "ModelConverter.Tests\ModelConverter.Tests.csproj", "{4C704286-6A75-42FD-A651-D8B02AAA24F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelConverter.JavaScript", "ModelConverter.JavaScript\ModelConverter.JavaScript.csproj", "{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4C704286-6A75-42FD-A651-D8B02AAA24F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C704286-6A75-42FD-A651-D8B02AAA24F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C704286-6A75-42FD-A651-D8B02AAA24F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

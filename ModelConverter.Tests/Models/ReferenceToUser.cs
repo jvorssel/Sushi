@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ModelConverter.Interfaces.Models;
+using ModelConverter.Interfaces;
 
 namespace ModelConverter.Tests.Models
 {

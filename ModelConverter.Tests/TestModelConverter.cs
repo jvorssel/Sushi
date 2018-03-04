@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using Common.Utility.Enum.ECMAScript;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ModelConverter.Templates;
+using ModelConverter.JavaScript;
+using ModelConverter.JavaScript.Enum;
 using ModelConverter.Tests.Models;
 
 namespace ModelConverter.Tests
@@ -21,25 +20,19 @@ namespace ModelConverter.Tests
         [TestMethod]
         public void TestFindModelsInAssembly()
         {
-            using (var kernel = new ConversionKernel())
+            using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
             {
-                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V6, false);
-                var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
-
-                Assert.IsTrue(converter.ModelCount > 0);
-                Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(NameModel)));
+                Assert.IsTrue(kernel.ModelCount > 0);
+                Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(NameModel)));
             }
         }
 
         [TestMethod]
         public void TestFieldFindingInModel()
         {
-            using (var kernel = new ConversionKernel())
+            using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
             {
-                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V6, false);
-                var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
-
-                var firstModel = converter.Models.First();
+                var firstModel = kernel.Models.First();
 
                 Assert.IsTrue(firstModel.Properties.Count >= 3);
                 var name = firstModel.Properties.Single(x => x.Name.ToLower() == "name");
@@ -58,11 +51,9 @@ namespace ModelConverter.Tests
         [TestMethod]
         public void TestBasicModelCompilation()
         {
-            using (var kernel = new ConversionKernel())
+            using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
             {
-                var template = TemplateManager.ForJavaScript(kernel, EcmaVersion.V5, false);
-                var converter = kernel.CreateConverter(typeof(TestModelConverter).Assembly, template);
-
+                var converter = kernel.CreateConverterForJavaScript(JavaScriptVersion.V5,true);
                 var result = converter.Convert();
 
                 Console.WriteLine(result);

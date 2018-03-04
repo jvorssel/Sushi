@@ -2,8 +2,8 @@
 packages/*
 _ReSharper/*
 _ReSharper.Caches/*
-ModelConverter/bin/*
-ModelConverter/obj/*
+*/bin/*
+*/obj/*
 
 ModelConverter.Tests/bin/*
 ModelConverter.Tests/obj/*

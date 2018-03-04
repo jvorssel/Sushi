@@ -1,4 +1,4 @@
-﻿namespace Common.Utility.Enum.ECMAScript
+﻿namespace ModelConverter.JavaScript.Enum
 {
     /// <summary>
     ///     If the current Object is provided natively or hosted by the programmer.

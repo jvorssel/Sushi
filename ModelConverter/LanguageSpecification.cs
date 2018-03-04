@@ -6,17 +6,16 @@ using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
-using ModelConverter.Templates.Recognition;
 
-namespace ModelConverter.Templates.Languages
+namespace ModelConverter
 {
     /// <inheritdoc />
     public abstract class LanguageSpecification : ILanguageSpecification
     {
-        protected ConversionKernel _kernel;
         private string _targetObject = @"window";
 
-        protected RecognitionPipeline RecognitionPipeline { get; set; }
+        /// <inheritdoc />
+        public StatementPipeline StatementPipeline { get; protected set; }
 
         /// <inheritdoc />
         public string FilePath { get; } = string.Empty;
@@ -44,23 +43,24 @@ namespace ModelConverter.Templates.Languages
         public string Template { get; private set; } = string.Empty;
 
         /// <inheritdoc />
-        public abstract string FormatProperty(Property property);
+        public abstract string FormatProperty(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
-        public abstract IEnumerable<string> FormatRecognition(Property property,
-            IEnumerable<DataModel> referenceDataModels);
+        public abstract Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType);
 
         /// <inheritdoc />
-        public abstract string GetDefaultForType(CSharpNativeType type);
+        public abstract IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels);
 
         /// <inheritdoc />
-        public abstract string FormatValueForType(CSharpNativeType type, object value);
+        public abstract string GetDefaultForProperty(Property property);
+
+        /// <inheritdoc />
+        public abstract string FormatValueForProperty(Property property, object value);
 
         #region Initializers
 
         protected LanguageSpecification()
         {
-
         }
 
         protected LanguageSpecification(string scriptLanguage, Version version, bool isIsolated = false)
@@ -133,13 +133,6 @@ namespace ModelConverter.Templates.Languages
         public LanguageSpecification UseTemplate(string template)
         {
             Template = template ?? throw new ArgumentNullException(nameof(template));
-            return this;
-        }
-
-        /// <inheritdoc />
-        public LanguageSpecification UseKernel(ConversionKernel kernel)
-        {
-            _kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             return this;
         }
 

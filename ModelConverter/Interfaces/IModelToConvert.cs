@@ -1,4 +1,4 @@
-﻿namespace ModelConverter.Interfaces.Models
+﻿namespace ModelConverter.Interfaces
 {
     public interface IModelToConvert
     {

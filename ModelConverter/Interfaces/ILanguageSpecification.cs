@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
 using ModelConverter.Models;
-using ModelConverter.Templates.Languages;
-using ModelConverter.Templates.Recognition;
 
 namespace ModelConverter.Interfaces
 {
@@ -50,25 +48,9 @@ namespace ModelConverter.Interfaces
         string Template { get; }
 
         /// <summary>
-        ///     Format the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
-        ///  </summary>
-        string FormatProperty(Property property);
-
-        /// <summary>
-        ///     Format the validation for the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
-        ///  </summary>
-        IEnumerable<string> FormatRecognition(Property property, IEnumerable<DataModel> referenceDataModels);
-
-        /// <summary>
-        ///     Get the default <see cref="string"/> value that reflects the given <see cref="CSharpNativeType"/> 
-        ///     for the current <see cref="Language"/>.
+        ///     The <see cref="StatementPipeline"/> used to format different validation / recognition statements.
         /// </summary>
-        string GetDefaultForType(CSharpNativeType type);
-
-        /// <summary>
-        ///     Apply formatting to the given <paramref name="value"/> of <see cref="CSharpNativeType"/>.
-        /// </summary>
-        string FormatValueForType(CSharpNativeType type, object value);
+        StatementPipeline StatementPipeline { get; }
 
         /// <summary>
         ///     Load the file that the <see cref="LanguageSpecification.FilePath"/> directs to.
@@ -86,8 +68,29 @@ namespace ModelConverter.Interfaces
         LanguageSpecification UseTemplate(string template);
 
         /// <summary>
-        ///     Use the given <paramref name="kernel"/> instance for options.
+        ///     Format the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
+        ///  </summary>
+        string FormatProperty(ConversionKernel kernel, Property property);
+
+        /// <summary>
+        ///     Format the validation for the <paramref name="properties"/> to compile for the current <see cref="LanguageSpecification"/>.
+        ///  </summary>
+        IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> referenceDataModels);
+
+        /// <summary>
+        ///     Get the default <see cref="string"/> value that reflects the given <see cref="CSharpNativeType"/> 
+        ///     for the current <see cref="Language"/>.
         /// </summary>
-        LanguageSpecification UseKernel(ConversionKernel kernel);
+        string GetDefaultForProperty(Property property);
+
+        /// <summary>
+        ///     Apply formatting to the given <paramref name="value"/> of <see cref="CSharpNativeType"/>.
+        /// </summary>
+        string FormatValueForProperty(Property property, object value);
+
+        /// <summary>
+        ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.
+        /// </summary>
+        Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType);
     }
 }

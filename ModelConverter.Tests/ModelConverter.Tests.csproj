@@ -59,6 +59,7 @@
     <Compile Include="UtilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Result\result.propertyGroup.js" />
     <None Include="packages.config" />
     <Content Include="Result\paste.js" />
     <Content Include="Result\result V5 Isolated.js" />
@@ -68,6 +69,10 @@
     <ProjectReference Include="..\Common.Utility\Common.Utility.csproj">
       <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
       <Name>Common.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelConverter.JavaScript\ModelConverter.JavaScript.csproj">
+      <Project>{a0dfeeaf-2d9a-4317-869a-04af157c7a5b}</Project>
+      <Name>ModelConverter.JavaScript</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelConverter\ModelConverter.csproj">
       <Project>{6476ff8a-3ae9-45e4-a7f3-014c9318b2aa}</Project>

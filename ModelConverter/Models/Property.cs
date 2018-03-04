@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using Common.Utility;
 using Common.Utility.Enum;
-using Common.Utility.Enum.ECMAScript;
 
 namespace ModelConverter.Models
 {

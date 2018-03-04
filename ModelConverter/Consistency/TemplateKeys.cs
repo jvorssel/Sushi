@@ -10,7 +10,9 @@
         public const string VALUES_KEY = @"$$SET_VALUES$$";
         public const string PROPERTY_KEY = @"$$PROPERTY$$";
         public const string VALUE_KEY = @"$$VALUE$$";
-
+        
+        public const string IS_DEFINED_CHECK = @"$$DEFINED_CHECK$$";
+        public const string IS_UNDEFINED_CHECK = @"$$UNDEFINED_CHECK$$";
         public const string ARGUMENT_NAME = @"$$ARGUMENT_NAME$$";
     }
 }

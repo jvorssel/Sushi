@@ -20,7 +20,10 @@ namespace ModelConverter.Consistency
         public static Exception NonExistentLanguageFile(string path)
             => new InvalidOperationException($"The {nameof(path)} to the language template does not direct to a existing file. \n\r Path '{path}'.");
 
-        public static Exception LanguageNotFound(Version version, bool useIsolateScope)
-            => new ArgumentException($@"No default or custom {nameof(ILanguageSpecification)} found for given arguments '{version}' and '{nameof(useIsolateScope)}:{useIsolateScope}'.");
+        public static Exception LanguageNotFound()
+            => new ArgumentException($@"No default or custom {nameof(ILanguageSpecification)} found.");
+
+        public static ArgumentException OnlyInlineCommentsSupported(string comment)
+            => new ArgumentException($"Only single-line comments are supported. \n\rGiven comment: \r\n\r\n{comment}", nameof(comment));
     }
 }

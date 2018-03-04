@@ -1,4 +1,4 @@
-﻿using ModelConverter.Interfaces.Models;
+﻿using ModelConverter.Interfaces;
 
 namespace ModelConverter.Tests.Models {
     public class TypeModel : IModelToConvert

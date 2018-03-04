@@ -1,4 +1,4 @@
-﻿namespace Common.Utility.Enum.ECMAScript
+﻿namespace ModelConverter.JavaScript.Enum
 {
     /// <summary>
     ///     What ECMAScript <see cref="ErrorType"/> is referenced.
