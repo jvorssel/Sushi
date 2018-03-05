@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
 using ModelConverter.Consistency;
@@ -47,6 +48,9 @@ namespace ModelConverter
 
         /// <inheritdoc />
         public abstract Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType);
+
+        /// <inheritdoc />
+        public abstract string RemoveComments(DataModel model);
 
         /// <inheritdoc />
         public abstract IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels);

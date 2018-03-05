@@ -2,8 +2,13 @@
 (function (window) {
 	"use strict";
 
-	// ECMA 5 - NameModel
-
+	/**
+	 * @name NameModel
+	 * @namespace Generated.NameModel
+	 * @class NameModel
+	 * @classdesc Server-side generated constructor for the 'NameModel' class.
+	 * @param {Object<NameModel>} value The object to convert to the match the 'NameModel' class.
+	 */
 	function NameModel(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
@@ -30,6 +35,13 @@
 
 	window.NameModel = NameModel;
 
+	/**
+	 * @name tryParse
+	 * @namespace Generated.NameModel.tryParse
+	 * @description Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
+	 * @param {Object=} value The object to parse.
+	 * @return {boolean} If the given 'value' can match the 'NameModel' class.
+	 */
 	NameModel.prototype.tryParse = function (value) {
 		try {
 			if (value === void 0 || value === null)
@@ -63,8 +75,13 @@
 (function (window) {
 	"use strict";
 
-	// ECMA 5 - PersonReferenceToUser
-
+	/**
+	 * @name PersonReferenceToUser
+	 * @namespace Generated.PersonReferenceToUser
+	 * @class PersonReferenceToUser
+	 * @classdesc Server-side generated constructor for the 'PersonReferenceToUser' class.
+	 * @param {Object<PersonReferenceToUser>} value The object to convert to the match the 'PersonReferenceToUser' class.
+	 */
 	function PersonReferenceToUser(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
@@ -100,6 +117,13 @@
 
 	window.PersonReferenceToUser = PersonReferenceToUser;
 
+	/**
+	 * @name tryParse
+	 * @namespace Generated.PersonReferenceToUser.tryParse
+	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
+	 * @param {Object=} value The object to parse.
+	 * @return {boolean} If the given 'value' can match the 'PersonReferenceToUser' class.
+	 */
 	PersonReferenceToUser.prototype.tryParse = function (value) {
 		try {
 			if (value === void 0 || value === null)
@@ -141,8 +165,13 @@
 (function (window) {
 	"use strict";
 
-	// ECMA 5 - UserReferenceToPerson
-
+	/**
+	 * @name UserReferenceToPerson
+	 * @namespace Generated.UserReferenceToPerson
+	 * @class UserReferenceToPerson
+	 * @classdesc Server-side generated constructor for the 'UserReferenceToPerson' class.
+	 * @param {Object<UserReferenceToPerson>} value The object to convert to the match the 'UserReferenceToPerson' class.
+	 */
 	function UserReferenceToPerson(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
@@ -174,7 +203,7 @@
 				throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 		}
 
-		this.RegisteredOn = value.RegisteredOn || new Date(2018, 3, 4, 17, 39, 24, 839);
+		this.RegisteredOn = value.RegisteredOn || new Date(2018, 3, 5, 1, 46, 8, 552);
 		this.Guid = value.Guid || '00000000-0000-0000-0000-000000000000';
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";
@@ -183,6 +212,13 @@
 
 	window.UserReferenceToPerson = UserReferenceToPerson;
 
+	/**
+	 * @name tryParse
+	 * @namespace Generated.UserReferenceToPerson.tryParse
+	 * @description Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
+	 * @param {Object=} value The object to parse.
+	 * @return {boolean} If the given 'value' can match the 'UserReferenceToPerson' class.
+	 */
 	UserReferenceToPerson.prototype.tryParse = function (value) {
 		try {
 			if (value === void 0 || value === null)
@@ -228,8 +264,13 @@
 (function (window) {
 	"use strict";
 
-	// ECMA 5 - TypeModel
-
+	/**
+	 * @name TypeModel
+	 * @namespace Generated.TypeModel
+	 * @class TypeModel
+	 * @classdesc Server-side generated constructor for the 'TypeModel' class.
+	 * @param {Object<TypeModel>} [value] The object to convert to the match the 'TypeModel' class.
+	 */
 	function TypeModel(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
@@ -265,7 +306,14 @@
 	}
 
 	window.TypeModel = TypeModel;
-
+	
+	/**
+	 * @name tryParse
+	 * @namespace Generated.TypeModel.tryParse
+	 * @description Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
+	 * @param {Object=} value The object to parse.
+	 * @return {boolean} If the given 'value' can match the 'TypeModel' class.
+	 */
 	TypeModel.prototype.tryParse = function (value) {
 		try {
 			if (value === void 0 || value === null)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Models;
@@ -19,6 +20,21 @@ namespace ModelConverter.JavaScript
         }
 
         /// <inheritdoc />
+        public override string RemoveComments(DataModel model)
+        {
+            var script = model.Script;
+
+            // Remove single-line comments
+            script = new Regex(@"([/]{2})(.*)$", RegexOptions.Multiline | RegexOptions.Compiled).Replace(script, "");
+
+            // Remove multi-line comments
+            script = new Regex(@"(\/\*)(.|[\r\n])*?(\*\/)", RegexOptions.Compiled | RegexOptions.Multiline).Replace(script, "");
+            
+            model.Script = script;
+            return script;
+        }
+
+        /// <inheritdoc />
         public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels)
         {
             // Key check
@@ -27,13 +43,13 @@ namespace ModelConverter.JavaScript
                 yield return StatementPipeline.CreateKeyCheckStatement(kernel, prop);
 
             // Type check
-            yield return new Statement(string.Empty, StatementType.Type, false,true);
+            yield return new Statement(string.Empty, StatementType.Type, false, true);
             yield return FormatComment(kernel, "Check property type match", StatementType.Type);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateTypeCheckStatement(kernel, prop);
 
             // Instance check
-            yield return new Statement(string.Empty, StatementType.Instance, false,true);
+            yield return new Statement(string.Empty, StatementType.Instance, false, true);
             yield return FormatComment(kernel, "Check property class instance match", StatementType.Instance);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateInstanceCheckStatement(kernel, prop, dataModels);
@@ -88,7 +104,7 @@ namespace ModelConverter.JavaScript
                 case CSharpNativeType.Object:
                     if (value is DateTime d)
                         return $"new Date({d.Year}, {d.Month}, {d.Day}, {d.Hour}, {d.Minute}, {d.Second}, {d.Millisecond})";
-                    if(value is Guid g)
+                    if (value is Guid g)
                         return $@"'{g.ToString()}'";
                     return value.ToString();
                 case CSharpNativeType.Char:
@@ -124,14 +140,14 @@ namespace ModelConverter.JavaScript
         #endregion
 
         #region Initializers
-
+        
         public JavaScriptSpecification()
         {
             StatementPipeline = new JavaScriptStatements();
         }
 
         public JavaScriptSpecification(string scriptLanguage, Version version, bool isIsolated = false)
-            : base(scriptLanguage, version, isIsolated)
+             : base(scriptLanguage, version, isIsolated)
         {
             StatementPipeline = new JavaScriptStatements();
         }

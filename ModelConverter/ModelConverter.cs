@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using Common.Utility;
+using Common.Utility.Enum;
 using Common.Utility.Helpers;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
@@ -28,20 +30,48 @@ namespace ModelConverter
         /// <summary>
         ///     Convert the available models in the <see cref="ConversionKernel"/> that match the given <paramref name="predicate"/>.
         /// </summary>
-        public string Convert(Func<DataModel, bool> predicate = null)
+        public IEnumerable<DataModel> Convert(Func<DataModel, bool> predicate = null)
         {
-            var builder = new StringBuilder();
-
             var enumerable = (predicate == null ? _kernel.Models : _kernel.Models.Where(predicate)).ToList();
 
             foreach (var model in enumerable)
             {
-                var scriptModel = Compile(model, enumerable); ;
+                var scriptModel = Compile(model, enumerable);
 
-                builder.AppendLine(scriptModel);
+                yield return model;
+            }
+        }
+
+        /// <summary>
+        ///     Join one or more given <paramref name="models"/> and maybe <paramref name="minify"/>
+        ///     them to create one <see cref="string"/>.
+        /// </summary>
+        public string JoinModels(IEnumerable<DataModel> models, bool minify = false)
+        {
+            var builder = new StringBuilder();
+            foreach (var model in models)
+            {
+                builder.AppendLine(minify ? Minify(model) : model.Script);
             }
 
             return builder.ToString();
+        }
+
+        /// <summary>
+        ///     Remove leading whitespaces, newlines and tabs and comments.
+        /// </summary>
+        public string Minify(DataModel model)
+        {
+            // Run regex to replace comments if defined.
+            var result = Language.RemoveComments(model);
+
+            // Replace tabs and return-newline characters with whitespaces.
+            result = result.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+
+            // Remove leading whitespaces and leave single ones.
+            result = result.RemoveLeadingWhitespaces();
+
+            return result;
         }
 
         /// <summary>
@@ -49,7 +79,7 @@ namespace ModelConverter
         /// </summary>
         /// <param name="model">The <see cref="DataModel"/> to convert to the given <see cref="Language"/>.</param>
         /// <param name="referenceDataModels">Check type reference for found <see cref="DataModel"/>(s).</param>
-        public string Compile(DataModel model, List<DataModel> referenceDataModels)
+        public DataModel Compile(DataModel model, List<DataModel> referenceDataModels)
         {
             var modelBuilder = new StringBuilder();
             var template = Language.Template
@@ -121,7 +151,7 @@ namespace ModelConverter
             var result = modelBuilder.ToString();
             model.Script = result;
 
-            return result;
+            return model;
         }
     }
 }

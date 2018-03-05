@@ -31,7 +31,7 @@ namespace ModelConverter.JavaScript
                     throw Errors.LanguageNotFound();
             }
 
-            var converter = new ModelConverter(@this, language);
+            var converter = @this.CreateConverterForTemplate(language);
             return converter;
         }
     }

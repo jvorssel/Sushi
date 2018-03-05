@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Common.Utility.Enum;
 using ModelConverter.Models;
@@ -92,5 +93,10 @@ namespace ModelConverter.Interfaces
         ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.
         /// </summary>
         Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType);
+
+        /// <summary>
+        ///     Remove comments from the <see cref="DataModel.Script"/>.
+        /// </summary>
+        string RemoveComments(DataModel model);
     }
 }

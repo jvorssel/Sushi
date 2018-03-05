@@ -53,8 +53,22 @@ namespace ModelConverter.Tests
         {
             using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
             {
-                var converter = kernel.CreateConverterForJavaScript(JavaScriptVersion.V5,true);
-                var result = converter.Convert();
+                var converter = kernel.CreateConverterForJavaScript(JavaScriptVersion.V5, true);
+                var result = converter.JoinModels(converter.Convert());
+
+                Console.WriteLine(result);
+
+                Assert.IsTrue(result != string.Empty);
+            }
+        }
+
+        [TestMethod]
+        public void TestMinifiedModelCompilation()
+        {
+            using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
+            {
+                var converter = kernel.CreateConverterForJavaScript(JavaScriptVersion.V5, true);
+                var result = converter.JoinModels(converter.Convert(), true);
 
                 Console.WriteLine(result);
 

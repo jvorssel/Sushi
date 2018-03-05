@@ -51,7 +51,7 @@ namespace ModelConverter
 
             return this;
         }
-        
+
         /// <summary>
         ///     Initialize a new <see cref="ConversionKernel"/> with the default <see cref="ILanguageSpecification"/>(s).
         /// </summary>
@@ -91,7 +91,16 @@ namespace ModelConverter
 
             Models = new HashSet<DataModel>(models.Select(x => new DataModel(x)));
         }
-        
+
+        /// <summary>
+        ///     Create a <see cref="ModelConverter"/> for a custom <see cref="ILanguageSpecification"/>.
+        /// </summary>
+        public ModelConverter CreateConverterForTemplate(ILanguageSpecification language)
+        {
+            var converter = new ModelConverter(this, language);
+            return converter;
+        }
+
         #region IDisposable
 
         /// <inheritdoc />

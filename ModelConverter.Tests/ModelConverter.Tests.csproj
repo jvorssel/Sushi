@@ -59,6 +59,7 @@
     <Compile Include="UtilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Result\result.minified.js" />
     <Content Include="Result\result.propertyGroup.js" />
     <None Include="packages.config" />
     <Content Include="Result\paste.js" />

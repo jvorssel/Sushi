@@ -51,5 +51,17 @@ namespace Common.Utility
 
             return indent;
         }
+
+        /// <summary>
+        ///     Replace multiple whitespaces "  " with a single one " " in the <see cref="string"/> <paramref name="@this"/>.
+        /// </summary>
+        public static string RemoveLeadingWhitespaces(this string @this)
+        {
+            var str = @this;
+            while (str.IndexOf("  ", StringComparison.InvariantCultureIgnoreCase) > 0)
+                str = str.Replace("  ", " ");
+
+            return str;
+        }
     }
 }
