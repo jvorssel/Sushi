@@ -16,3 +16,10 @@ I also want to be able specify variations of the code above, such as:
 	- Custom validation template(s)
 	- Support type inheritance
 	- Support basic .NET ComponentAttributes for validation
+
+TODO:	
+	- Support TypeScript
+	- Support inherited methods
+	- Support dependency injection (requireJs, import / export)
+	- Able to write to file.
+	- Able to validate template completion.
