@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6476FF8A-3AE9-45E4-A7F3-014C9318B2AA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sushi</RootNamespace>
+    <AssemblyName>Sushi</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\ConvertToScriptAttribute.cs" />
+    <Compile Include="Attributes\IgnoreForScript.cs" />
+    <Compile Include="Consistency\TemplateKeys.cs" />
+    <Compile Include="ConversionKernel.cs" />
+    <Compile Include="Documentation\Models\FieldType.cs" />
+    <Compile Include="Documentation\XmlDocumentationReader.cs" />
+    <Compile Include="Documentation\Models\MemberSummary.cs" />
+    <Compile Include="FileWriter.cs" />
+    <Compile Include="Models\Statement.cs" />
+    <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Consistency\Errors.cs" />
+    <Compile Include="Interfaces\ILanguageSpecification.cs" />
+    <Compile Include="Interfaces\IModelToConvert.cs" />
+    <Compile Include="LanguageSpecification.cs" />
+    <Compile Include="ModelConverter.cs" />
+    <Compile Include="Models\Property.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecificationDefaults.cs" />
+    <Compile Include="StatementPipeline.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.Utility\Sushi.Common.csproj">
+      <Project>{64a5f77d-0f1a-4b2e-933d-501fd0a540de}</Project>
+      <Name>Sushi.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
