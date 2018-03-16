@@ -44,7 +44,7 @@ namespace ModelConverter
         public string Template { get; private set; } = string.Empty;
 
         /// <inheritdoc />
-        public abstract string FormatProperty(ConversionKernel kernel, Property property);
+        public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
         public abstract Statement FormatComment(string comment, StatementType statementType);

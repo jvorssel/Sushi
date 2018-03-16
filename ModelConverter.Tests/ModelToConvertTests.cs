@@ -5,7 +5,6 @@ using ModelConverter.Tests.Models.Ignore;
 
 namespace ModelConverter.Tests
 {
-
 	[TestClass]
 	public class ModelToConvertTests
 	{

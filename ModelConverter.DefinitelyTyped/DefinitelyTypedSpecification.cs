@@ -45,10 +45,19 @@ namespace ModelConverter.DefinitelyTyped
         }
 
         /// <inheritdoc />
-        public override string FormatProperty(ConversionKernel kernel, Property property)
+        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
             var type = GetBaseType(property.NativeType);
             var enumerable = property.Type.GetInterfaces().FirstOrDefault(x => x == typeof(IEnumerable));
+
+            // Return the rows for the js-doc
+            var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
+            if (summary != null)
+            {
+                yield return $"/**";
+                yield return $"  * {summary.Summary}";
+                yield return $"  */";
+            }
 
             if (property.Type.IsArray())
             {
@@ -62,7 +71,7 @@ namespace ModelConverter.DefinitelyTyped
                 $@"readonly {property.Name}: {type};" :
                 $@"{property.Name}: {type};";
 
-            return statement;
+            yield return statement;
         }
 
         /// <inheritdoc />

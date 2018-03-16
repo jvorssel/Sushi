@@ -10,8 +10,8 @@ namespace ModelConverter.Tests.Models.Inheritance
 
 	public class PersonModel:IModelToConvert
 	{
-		public string Name { get; set; }
-		public string Surname { get; set; }
+		public string Name { get; set; } = "Jeroen";
+		public string Surname { get; set; } = "Vorsselman";
 
 	}
 }

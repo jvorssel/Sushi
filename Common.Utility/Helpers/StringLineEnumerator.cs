@@ -10,19 +10,19 @@ namespace Common.Utility.Helpers
     public class StringEnumerator : IEnumerator<string>
     {
         private readonly string _complete;
-        private readonly string[] _rows;
+        private readonly string[] _split;
 
         public readonly char Split;
-        public int RowIndex;
-        public int RowCount;
+        public int Index;
+        public int Count;
 
         public StringEnumerator(string complete, char split = '\n')
         {
             _complete = complete;
-            _rows = complete.Split(split);
+            _split = complete.Split(split);
 
             Split = split;
-            RowCount = _rows.Length - 1;
+            Count = _split.Length - 1;
         }
 
 
@@ -38,11 +38,11 @@ namespace Common.Utility.Helpers
         /// <inheritdoc />
         public bool MoveNext()
         {
-            if (RowIndex > RowCount)
+            if (Index > Count)
                 return false;
 
-            Current = _rows[RowIndex] + (RowIndex < RowCount && RowIndex != 0 ? Split.ToString() : "");
-            RowIndex++;
+            Current = _split[Index] + (Index < Count  ? Split.ToString() : "");
+            Index++;
 
             return true;
         }
@@ -50,8 +50,8 @@ namespace Common.Utility.Helpers
         /// <inheritdoc />
         public void Reset()
         {
-            RowIndex = 0;
-            RowCount = _rows.Length - 1;
+            Index = 0;
+            Count = _split.Length - 1;
         }
 
         /// <inheritdoc />

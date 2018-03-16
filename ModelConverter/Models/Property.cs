@@ -16,14 +16,15 @@ namespace ModelConverter.Models
 
         public Type Type => _property.PropertyType;
         public CSharpNativeType NativeType => _property.PropertyType.ToCSharpNativeType();
+        public string Namespace => $"{_property.DeclaringType.Namespace}.{_property.DeclaringType.Name}.{_property.Name}";
 
         public object Value { get; }
 
         public bool IsReadonly =>
             !_property.CanWrite ||
-            Attribute.GetCustomAttribute(_property, typeof(ReadOnlyAttribute)) 
+            Attribute.GetCustomAttribute(_property, typeof(ReadOnlyAttribute))
                 is ReadOnlyAttribute attribute && attribute.IsReadOnly;
-
+        
         public Property(PropertyInfo property, object value)
         {
             _property = property;

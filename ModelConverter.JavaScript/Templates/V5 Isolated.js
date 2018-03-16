@@ -10,6 +10,7 @@
 	 * @class $$TYPENAME$$
 	 * @classdesc Server-side generated constructor for the '$$TYPENAME$$' class.
 	 * @param {Object<$$TYPENAME$$>} [$$ARGUMENT_NAME$$] The object to convert to the match the '$$TYPENAME$$' class.
+	 * @summary $$SUMMARY$$
 	 */
 	function $$TYPENAME$$($$ARGUMENT_NAME$$) {
 		if ($$DEFINED_CHECK$$) {

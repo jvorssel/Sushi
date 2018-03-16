@@ -80,6 +80,8 @@ namespace ModelConverter
         public DataModel Compile(DataModel model, List<DataModel> referenceDataModels)
         {
             var modelBuilder = new StringBuilder();
+            var doc = _kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == model.Type.FullName);
+
             var template = Language.Template
                 .Replace(TYPE_NAME_KEY, model.Name)
                 .Replace(TYPE_NAMESPACE_KEY, model.Type.Namespace)
@@ -101,8 +103,8 @@ namespace ModelConverter
                     var propertyBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
-                        var assignStatement = Language.FormatProperty(_kernel, property);
-                        propertyBuilder.AppendLine(indent + assignStatement);
+                        foreach (var line in Language.FormatProperty(_kernel, property))
+                            propertyBuilder.AppendLine(indent + line);
                     }
 
                     modelBuilder.Append(propertyBuilder);
@@ -152,6 +154,13 @@ namespace ModelConverter
 
                     var statement = Language.FormatInheritanceStatement(model, inherits);
                     modelBuilder.Append(row.Replace(INHERIT_TYPE, statement.ToString()));
+                }
+                // JsDoc
+                else if (row.Contains(SUMMARY_KEY))
+                {
+                    var summary = doc?.Summary ?? string.Empty;
+                    if (!summary.IsEmpty())
+                        modelBuilder.Append(enumerator.Current.Replace(SUMMARY_KEY, summary));
                 }
                 // Comments & Empty lines
                 else if (row.StartsWith("// ReSharper")) // Remove resharper comments.

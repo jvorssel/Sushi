@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Common.Utility;
 using ModelConverter.Attributes;
 using ModelConverter.Consistency;
+using ModelConverter.Documentation;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
 
@@ -16,6 +19,8 @@ namespace ModelConverter
     public class ConversionKernel : IDisposable
     {
         public HashSet<DataModel> Models { get; } = new HashSet<DataModel>();
+
+        public XmlDocumentationReader Documentation { get; private set; } = null;
 
         public long ModelCount => Models.Count;
 
@@ -101,6 +106,21 @@ namespace ModelConverter
         {
             var converter = new ModelConverter(this, language);
             return converter;
+        }
+
+        /// <summary>
+        ///     Use the xml documentation generated on build.
+        /// </summary>
+        /// <param name="path">The <paramref name="path"/> to the xml file.</param>
+        public ConversionKernel LoadXmlDocumentation(string path)
+        {
+            var extension = Path.GetExtension(path);
+            if (extension != ".xml")
+                throw Errors.XmlDocumentExpected(path);
+
+            Documentation = new XmlDocumentationReader(path).Initialize();
+
+            return this;
         }
 
         #region IDisposable

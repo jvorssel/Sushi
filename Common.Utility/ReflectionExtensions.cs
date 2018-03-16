@@ -321,5 +321,11 @@ namespace Common.Utility
 
             return type;
         }
+
+        /// <summary>
+        ///     Get the actual project name for the given <see cref="Assembly"/>.
+        /// </summary>
+        public static string GetProjectName(this Assembly @this)
+            => @this.GetName().ToString().Split(',')[0];
     }
 }

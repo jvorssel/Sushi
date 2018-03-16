@@ -9,33 +9,20 @@ using ModelConverter.Tests.Models.Inheritance;
 namespace ModelConverter.Tests
 {
 	[TestClass]
-	public class ModelCompilationTests
+	public class ModelCompilationTests : TestBase
 	{
 		public TestContext Context { get; set; }
 
-		private static void Compile(ConversionKernel kernel,
-			JavaScriptVersion version,
-			bool isolated,
-			Func<DataModel, bool> predicate)
-		{
-			var isolatedText = isolated ? " isolated" : string.Empty;
-			var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Result\Compiled\");
-
-			var converter = kernel.CreateConverterForJavaScript(version, isolated);
-			var converted = converter.Convert(predicate);
-
-			var writer = new FileWriter(converter, path,".js");
-			writer.FlushToFile(converted, $@"result {version}{isolatedText}");
-		}
+		
 
 		[TestMethod]
 		public void CompileAvailableVersionsToFileTest()
 		{
 			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
 			{
-				Compile(kernel, JavaScriptVersion.V5, false, null);
-				Compile(kernel, JavaScriptVersion.V5, true, null);
-				Compile(kernel, JavaScriptVersion.V6, false, null);
+				Compile(kernel, JavaScriptVersion.V5, false, "complete", null);
+				Compile(kernel, JavaScriptVersion.V5, true, "complete", null);
+				Compile(kernel, JavaScriptVersion.V6, false, "complete", null);
 			}
 		}
 
@@ -45,9 +32,9 @@ namespace ModelConverter.Tests
 			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
 			{
 				Func<DataModel, bool> predicate = x => x == typeof(PersonModel) || x == typeof(StudentModel);
-				Compile(kernel, JavaScriptVersion.V5, false, predicate);
-				Compile(kernel, JavaScriptVersion.V5, true, predicate);
-				Compile(kernel, JavaScriptVersion.V6, false, predicate);
+				Compile(kernel, JavaScriptVersion.V5, false, "inherits", predicate);
+				Compile(kernel, JavaScriptVersion.V5, true, "inherits", predicate);
+				Compile(kernel, JavaScriptVersion.V6, false, "inherits", predicate);
 			}
 		}
 	}

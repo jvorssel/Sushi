@@ -44,6 +44,9 @@
     <Compile Include="Attributes\IgnoreForScript.cs" />
     <Compile Include="Consistency\TemplateKeys.cs" />
     <Compile Include="ConversionKernel.cs" />
+    <Compile Include="Documentation\Models\FieldType.cs" />
+    <Compile Include="Documentation\XmlDocumentationReader.cs" />
+    <Compile Include="Documentation\Models\MemberSummary.cs" />
     <Compile Include="FileWriter.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\DataModel.cs" />
@@ -66,5 +69,6 @@
       <Name>Common.Utility</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

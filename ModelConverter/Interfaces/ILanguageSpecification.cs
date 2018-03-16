@@ -71,7 +71,7 @@ namespace ModelConverter.Interfaces
         /// <summary>
         ///     Format the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        string FormatProperty(ConversionKernel kernel, Property property);
+        IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
 
         /// <summary>
         ///     Format the validation for the <paramref name="properties"/> to compile for the current <see cref="LanguageSpecification"/>.

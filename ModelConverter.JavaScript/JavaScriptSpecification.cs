@@ -18,10 +18,20 @@ namespace ModelConverter.JavaScript
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
-        public override string FormatProperty(ConversionKernel kernel, Property property)
+        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
             var value = FormatValueForProperty(property, property.Value);
-            return $@"this.{property.Name} = {kernel.ArgumentName}.{property.Name} || {value};";
+
+            // Return the rows for the js-doc
+            var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
+            if (summary != null)
+            {
+                yield return $"/**";
+                yield return $"  * @summary {summary.Summary}";
+                yield return $"  */";
+            }
+
+            yield return $"this.{property.Name} = {kernel.ArgumentName}.{property.Name} || {value};";
         }
 
         /// <inheritdoc />

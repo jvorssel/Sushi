@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace ModelConverter.Consistency
 {
@@ -7,6 +8,11 @@ namespace ModelConverter.Consistency
     /// </summary>
     public static class TemplateKeys
     {
+        /// <summary>
+        ///     The summary doc for the specific <see cref="PropertyInfo"/>.
+        /// </summary>
+        public const string SUMMARY_KEY = @"$$SUMMARY$$";
+
         /// <summary>
         ///     The name for the specific <see cref="Type"/> to compile.
         /// </summary>
