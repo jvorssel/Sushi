@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ConvertToScriptAttribute.cs" />
+    <Compile Include="Attributes\IgnoreForScript.cs" />
     <Compile Include="Consistency\TemplateKeys.cs" />
     <Compile Include="ConversionKernel.cs" />
     <Compile Include="FileWriter.cs" />

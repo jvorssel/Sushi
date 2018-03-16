@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Common.Utility;
+using ModelConverter.Attributes;
 using ModelConverter.Consistency;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
@@ -86,7 +87,8 @@ namespace ModelConverter
         {
             // Find the models in the given assembly.
             var models = assembly.ExportedTypes
-                .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)))
+                .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)) || x.GetCustomAttributes(typeof(ConvertToScriptAttribute), true).Any())
+                .Where(x => !x.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
                 .ToList();
 
             Models = new HashSet<DataModel>(models.Select(x => new DataModel(x)));

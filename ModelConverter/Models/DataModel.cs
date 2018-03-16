@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Utility;
+using ModelConverter.Attributes;
 
 namespace ModelConverter.Models
 {
@@ -40,6 +41,7 @@ namespace ModelConverter.Models
 
             // Get the available properties in the given type
             Properties = type.GetPropertiesWithStaticValue()
+                .Where(x => !x.Key.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
                 .Select(x => new Property(x.Key, x.Value))
                 .ToList();
         }

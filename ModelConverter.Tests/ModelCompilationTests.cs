@@ -9,7 +9,7 @@ using ModelConverter.Tests.Models.Inheritance;
 namespace ModelConverter.Tests
 {
 	[TestClass]
-	public class TestModelCompilation
+	public class ModelCompilationTests
 	{
 		public TestContext Context { get; set; }
 
@@ -31,7 +31,7 @@ namespace ModelConverter.Tests
 		[TestMethod]
 		public void CompileAvailableVersionsToFileTest()
 		{
-			using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
+			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
 			{
 				Compile(kernel, JavaScriptVersion.V5, false, null);
 				Compile(kernel, JavaScriptVersion.V5, true, null);
@@ -42,7 +42,7 @@ namespace ModelConverter.Tests
 		[TestMethod]
 		public void CompileInheritanceTest()
 		{
-			using (var kernel = new ConversionKernel(typeof(TestModelConverter).Assembly))
+			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
 			{
 				Func<DataModel, bool> predicate = x => x == typeof(PersonModel) || x == typeof(StudentModel);
 				Compile(kernel, JavaScriptVersion.V5, false, predicate);
