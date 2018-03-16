@@ -19,6 +19,8 @@ function $$TYPENAME$$($$ARGUMENT_NAME$$) {
 	$$SET_VALUES$$;
 }
 
+$$INHERIT_TYPE$$;
+
 /**
  * @name tryParse
  * @namespace Generated.$$TYPENAME$$.tryParse

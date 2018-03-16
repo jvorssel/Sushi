@@ -21,6 +21,8 @@
 
 	window.$$TYPENAME$$ = $$TYPENAME$$;
 
+	$$INHERIT_TYPE$$;
+
 	/**
 	 * @name tryParse
 	 * @namespace Generated.$$TYPENAME$$.tryParse

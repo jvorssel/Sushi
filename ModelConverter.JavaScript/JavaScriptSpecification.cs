@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using Common.Utility;
 using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Models;
+using Newtonsoft.Json;
+using static System.Enum;
 
 namespace ModelConverter.JavaScript
 {
@@ -29,7 +34,7 @@ namespace ModelConverter.JavaScript
 
             // Remove multi-line comments
             script = new Regex(@"(\/\*)(.|[\r\n])*?(\*\/)", RegexOptions.Compiled | RegexOptions.Multiline).Replace(script, "");
-            
+
             model.Script = script;
             return script;
         }
@@ -56,6 +61,21 @@ namespace ModelConverter.JavaScript
         }
 
         /// <inheritdoc />
+        public override Statement FormatInheritanceStatement(DataModel model, DataModel inherits)
+        {
+            string script;
+            if (Version.Major >= 6)
+                script = $@" extends {inherits.Name}";
+            else if (Version.Major <= 5)
+                script = $@"{model.Name}.prototype = new {inherits.Name}();";
+            else
+                throw Errors.LanguageVersionMismatch(Version);
+
+            var statement = new Statement(script, StatementType.Inheritance);
+            return statement;
+        }
+
+        /// <inheritdoc />
         public override string GetDefaultForProperty(Property property)
         {
             var type = property.NativeType;
@@ -79,6 +99,8 @@ namespace ModelConverter.JavaScript
                 case CSharpNativeType.Char:
                 case CSharpNativeType.String:
                     return "''";
+                case CSharpNativeType.Enum:
+                    return "0";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -92,37 +114,7 @@ namespace ModelConverter.JavaScript
 
             var numberFormat = new NumberFormatInfo { CurrencyDecimalSeparator = "." };
             var type = property.NativeType;
-            switch (type)
-            {
-                case CSharpNativeType.Undefined:
-                    return @"undefined";
-                case CSharpNativeType.Byte:
-                case CSharpNativeType.Float:
-                case CSharpNativeType.Int:
-                case CSharpNativeType.Long:
-                case CSharpNativeType.Short:
-                case CSharpNativeType.Object:
-                    if (value is DateTime d)
-                        return $"new Date({d.Year}, {d.Month}, {d.Day}, {d.Hour}, {d.Minute}, {d.Second}, {d.Millisecond})";
-                    if (value is Guid g)
-                        return $@"'{g.ToString()}'";
-                    return value.ToString();
-                case CSharpNativeType.Char:
-                case CSharpNativeType.String:
-                    return $"\"{value}\"";
-                case CSharpNativeType.Bool:
-                    return value.ToString().ToLowerInvariant();
-                case CSharpNativeType.Double:
-                    var dbl = (double)value;
-                    return dbl.ToString(numberFormat);
-                case CSharpNativeType.Decimal:
-                    var dec = (decimal)value;
-                    return dec.ToString(numberFormat);
-                case CSharpNativeType.Null:
-                    return @"null";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            return JsonConvert.SerializeObject(value);
         }
 
         /// <inheritdoc />
@@ -140,7 +132,7 @@ namespace ModelConverter.JavaScript
         #endregion
 
         #region Initializers
-        
+
         public JavaScriptSpecification()
         {
             StatementPipeline = new JavaScriptStatements();

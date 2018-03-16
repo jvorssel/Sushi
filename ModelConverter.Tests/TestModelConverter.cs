@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelConverter.JavaScript;
 using ModelConverter.JavaScript.Enum;

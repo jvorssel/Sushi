@@ -43,6 +43,9 @@ namespace Common.Utility
             if (type == typeof(char))
                 return CSharpNativeType.Char;
 
+            if (type == typeof(System.Enum) || type.BaseType == typeof(System.Enum))
+                return CSharpNativeType.Enum;
+
             // Null value already defined above, use Object as default.
             return CSharpNativeType.Object;
         }

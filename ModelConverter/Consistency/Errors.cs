@@ -25,5 +25,8 @@ namespace ModelConverter.Consistency
 
         public static ArgumentException OnlyInlineCommentsSupported(string comment)
             => new ArgumentException($"Only single-line comments are supported. \n\rGiven comment: \r\n\r\n{comment}", nameof(comment));
+
+        public static InvalidOperationException LanguageVersionMismatch(Version version)
+            => new InvalidOperationException($@"Unexpected version '{version}' type wasn't processed properly.");
     }
 }

@@ -3,7 +3,8 @@ using System.Text;
 using Common.Utility.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ModelConverter.Tests {
+namespace ModelConverter.Tests
+{
     [TestClass]
     public class UtilityTest
     {

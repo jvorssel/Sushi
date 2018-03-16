@@ -71,7 +71,7 @@ namespace ModelConverter.JavaScript
                     break;
                 case JavaScriptType.Object:
                     var propertyWithName = models.FirstOrDefault(x => x.FullName == property.Type.FullName);
-                    if (propertyWithName != null)
+                    if (!ReferenceEquals(propertyWithName, null))
                         script = string.Format(instanceCheck, property.Name, propertyWithName.Name);
 
                     break;

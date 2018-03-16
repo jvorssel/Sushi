@@ -7,6 +7,7 @@
     {
         Key,
         Type,
-        Instance
+        Instance,
+        Inheritance
     }
 }

@@ -77,6 +77,7 @@ namespace ModelConverter.JavaScript.Enum
                 case CSharpNativeType.Double: // TODO Create a default base-model for showing a decimal correctly.
                 case CSharpNativeType.Decimal:
                 case CSharpNativeType.Byte:
+                case CSharpNativeType.Enum:
                     return JavaScriptType.Number;
                 case CSharpNativeType.String:
                 case CSharpNativeType.Char:

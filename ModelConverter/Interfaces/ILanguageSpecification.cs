@@ -79,6 +79,12 @@ namespace ModelConverter.Interfaces
         IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> referenceDataModels);
 
         /// <summary>
+        ///     Format the given <see cref="DataModel"/> <paramref name="inherits"/>
+        ///     to be available on the current <see cref="DataModel"/>.
+        /// </summary>
+        Statement FormatInheritanceStatement(DataModel model, DataModel inherits);
+
+        /// <summary>
         ///     Get the default <see cref="string"/> value that reflects the given <see cref="CSharpNativeType"/> 
         ///     for the current <see cref="Language"/>.
         /// </summary>

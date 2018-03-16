@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Consistency\TemplateKeys.cs" />
     <Compile Include="ConversionKernel.cs" />
+    <Compile Include="FileWriter.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Consistency\Errors.cs" />

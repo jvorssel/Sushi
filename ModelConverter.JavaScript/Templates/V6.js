@@ -7,7 +7,7 @@
 /**
  * @summary Server-side generated model for the '$$TYPENAME$$' class.
  */
-class $$TYPENAME$$ {
+class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 	/**
 	 * @name $$TYPENAME$$
 	 * @namespace Generated.$$TYPENAME$$

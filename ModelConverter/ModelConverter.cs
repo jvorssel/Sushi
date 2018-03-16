@@ -38,7 +38,7 @@ namespace ModelConverter
             {
                 var scriptModel = Compile(model, enumerable);
 
-                yield return model;
+                yield return scriptModel;
             }
         }
 
@@ -134,11 +134,25 @@ namespace ModelConverter
                     var rowWithStatement = row.Replace(IS_DEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
+                // Undefined check
                 else if (row.Contains(IS_UNDEFINED_CHECK))
                 {
                     var statement = Language.StatementPipeline.ArgumentUndefinedStatement(_kernel);
                     var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
+                }
+                // Base type check
+                else if (row.Contains(INHERIT_TYPE))
+                {
+                    var inherits = referenceDataModels.SingleOrDefault(x => x == model.BaseType);
+                    if (ReferenceEquals(inherits, null))
+                    {
+                        modelBuilder.Append(row.Replace(INHERIT_TYPE, string.Empty)); // No inheritance member available, add row.
+                        continue;
+                    }
+
+                    var statement = Language.FormatInheritanceStatement(model, inherits);
+                    modelBuilder.Append(row.Replace(INHERIT_TYPE, statement.ToString()));
                 }
                 // Comments & Empty lines
                 else if (row.StartsWith("// ReSharper")) // Remove resharper comments.
@@ -153,5 +167,6 @@ namespace ModelConverter
 
             return model;
         }
+
     }
 }

@@ -271,5 +271,20 @@ namespace Common.Utility
                 ex = ex.InnerException;
             }
         }
+
+        /// <summary>
+        ///     Iterate over each type that the given <see cref="Type"/> <paramref name="@this"/> inherits.
+        /// </summary>
+        public static IEnumerable<Type> GetBaseTypes(this Type @this, params Type[] exclude)
+        {
+            var type = @this;
+            while (type != null && type.BaseType != typeof(Type))
+            {
+                if (!exclude.Contains(type) || exclude.Length < 1)
+                    yield return type;
+
+                type = type.BaseType;
+            }
+        }
     }
 }

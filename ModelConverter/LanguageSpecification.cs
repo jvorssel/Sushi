@@ -56,6 +56,9 @@ namespace ModelConverter
         public abstract IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels);
 
         /// <inheritdoc />
+        public abstract Statement FormatInheritanceStatement(DataModel model, DataModel inherits);
+
+        /// <inheritdoc />
         public abstract string GetDefaultForProperty(Property property);
 
         /// <inheritdoc />

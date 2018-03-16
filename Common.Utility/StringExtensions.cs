@@ -63,5 +63,20 @@ namespace Common.Utility
 
             return str;
         }
+
+        /// <summary>
+        ///     Get the UTC timestamp.s
+        /// </summary>
+        public static string GetTimeStamp(this string @this)
+        {
+            var date = DateTime.Now;
+            return date.ToFileTimeUtc().ToString();
+        }
+
+        /// <summary>
+        ///     If given <see cref="string"/> <paramref name="@this"/> is null or empty.
+        /// </summary>
+        public static bool IsEmpty(this string @this)
+            => string.IsNullOrEmpty(@this) || string.IsNullOrWhiteSpace(@this) || @this.Length < 1;
     }
 }

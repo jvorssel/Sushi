@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Common.Utility.Enum
+﻿namespace Common.Utility.Enum
 {
     /// <summary>
     ///     Enum for available <see cref="CSharpNativeType"/>(s).
@@ -22,6 +17,7 @@ namespace Common.Utility.Enum
         Short = 9,
         Object = 10,
         String = 11,
-        Null = 12
+        Null = 12,
+        Enum = 13
     }
 }

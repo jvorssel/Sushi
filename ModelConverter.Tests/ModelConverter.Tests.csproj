@@ -51,9 +51,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Inheritance\Gender.cs" />
+    <Compile Include="Models\Inheritance\Person.cs" />
+    <Compile Include="Models\Inheritance\StudentModel.cs" />
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="Models\ReferenceToUser.cs" />
     <Compile Include="Models\TypeModel.cs" />
+    <Compile Include="TestModelCompilation.cs" />
     <Compile Include="TestModelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilityTest.cs" />
@@ -83,6 +87,7 @@
   <ItemGroup>
     <Content Include="Result\result V6.js" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
