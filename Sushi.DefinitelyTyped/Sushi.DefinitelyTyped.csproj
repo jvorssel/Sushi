@@ -45,12 +45,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Sushi.Common\Sushi.Common.csproj">
-      <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
-      <Name>Sushi.Common</Name>
-    </ProjectReference>
+    <None Include="package.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Sushi\Sushi.csproj">
       <Project>{6476FF8A-3AE9-45E4-A7F3-014C9318B2AA}</Project>
       <Name>Sushi</Name>

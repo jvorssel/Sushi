@@ -43,7 +43,14 @@
     <Compile Include="Documentation\Models\FieldType.cs" />
     <Compile Include="Documentation\XmlDocumentationReader.cs" />
     <Compile Include="Documentation\Models\MemberSummary.cs" />
+    <Compile Include="Enum\CSharpNativeType.cs" />
+    <Compile Include="Enum\StatementType.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileWriter.cs" />
+    <Compile Include="Helpers\StringLineEnumerator.cs" />
+    <Compile Include="Helpers\TypeConversionHelper.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\DataModel.cs" />
     <Compile Include="Consistency\Errors.cs" />
@@ -60,10 +67,7 @@
     <Content Include="About.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sushi.Common\Sushi.Common.csproj">
-      <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
-      <Name>Sushi.Common</Name>
-    </ProjectReference>
+    <None Include="package.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sushi.Enum;
+using Sushi.Extensions;
+using Sushi.Helpers;
 using Sushi.Models;
-using Sushi.Common;
-using Sushi.Common.Enum;
 
 namespace Sushi.DefinitelyTyped
 {

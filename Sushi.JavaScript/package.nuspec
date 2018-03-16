@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <!--*-->
+    <id>$id$</id>
+    <!--*-->
+    <version>$version$</version>
+    <title></title>
+    <!--*-->
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/jvorssel/Sushi</projectUrl>
+<!--
+    <licenseUrl></licenseUrl>
+    <iconUrl></iconUrl>
+-->
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <!--*-->
+    <description>$description$</description>
+    <!--*-->
+    <releaseNotes> </releaseNotes>
+    <copyright>$copyright$</copyright>
+		<tags>C#, .NET, typescript, javascript, definitelytyped, script language, compiler, lexerr, models, mapping</tags>
+    <dependencies>
+         <group targetFramework="net461">
+            <dependency id="Newtonsoft.Json" version="11.0.1" />
+         </group>
+      </dependencies>
+  </metadata>
+</package>

@@ -6,9 +6,9 @@ using System.Reflection;
 using Sushi.Attributes;
 using Sushi.Consistency;
 using Sushi.Documentation;
+using Sushi.Extensions;
 using Sushi.Interfaces;
 using Sushi.Models;
-using Sushi.Common;
 
 namespace Sushi
 {

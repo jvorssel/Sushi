@@ -2,8 +2,8 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sushi.Extensions;
 using Sushi.JavaScript.Enum;
-using Sushi.Common;
 
 namespace Sushi.Tests
 {

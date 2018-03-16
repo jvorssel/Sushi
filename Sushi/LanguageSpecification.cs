@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Sushi.Consistency;
+using Sushi.Enum;
 using Sushi.Interfaces;
 using Sushi.Models;
-using Sushi.Common.Enum;
 
 namespace Sushi
 {

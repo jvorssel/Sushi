@@ -4,14 +4,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ModelConverter.JavaScript")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Sushi.JavaScript")]
+[assembly: AssemblyDescription("A framework for generating models for multiple script-languages.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ModelConverter.JavaScript")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("Jeroen Vorsselman")]
+[assembly: AssemblyProduct("Sushi.JavaScript")]
+[assembly: AssemblyCopyright("Copyright Jeroen Vorsselman 2018")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCulture("en-US")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

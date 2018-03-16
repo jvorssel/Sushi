@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sushi.Attributes;
-using Sushi.Common;
+using Sushi.Extensions;
 
 namespace Sushi.Models
 {

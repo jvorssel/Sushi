@@ -1,14 +1,14 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ModelConverter.Tests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Sushi.Tests")]
+[assembly: AssemblyDescription("A framework for generating models for multiple script-languages.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ModelConverter.Tests")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("Jeroen Vorsselman")]
+[assembly: AssemblyProduct("Sushi.Tests")]
+[assembly: AssemblyCopyright("Copyright Jeroen Vorsselman 2018")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCulture("en-US")]
 
 [assembly: ComVisible(false)]
 

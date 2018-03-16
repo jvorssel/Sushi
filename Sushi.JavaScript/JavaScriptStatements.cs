@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sushi.Enum;
 using Sushi.JavaScript.Enum;
 using Sushi.Models;
-using Sushi.Common.Enum;
 
 namespace Sushi.JavaScript
 {

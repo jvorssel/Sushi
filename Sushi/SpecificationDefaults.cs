@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Sushi.Consistency;
+using Sushi.Enum;
 using Sushi.Models;
-using Sushi.Common.Enum;
 
 namespace Sushi {
     public static class SpecificationDefaults

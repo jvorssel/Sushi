@@ -2,6 +2,7 @@
 using Sushi.Consistency;
 using Sushi.Interfaces;
 using Sushi.JavaScript.Enum;
+using Sushi.JavaScript.Properties;
 
 namespace Sushi.JavaScript
 {

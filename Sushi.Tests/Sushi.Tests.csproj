@@ -83,10 +83,6 @@
     <Folder Include="Compiled\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sushi.Common\Sushi.Common.csproj">
-      <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
-      <Name>Sushi.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sushi.DefinitelyTyped\Sushi.DefinitelyTyped.csproj">
       <Project>{9738e596-4040-438b-8dd1-ec9d770233df}</Project>
       <Name>Sushi.DefinitelyTyped</Name>

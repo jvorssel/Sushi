@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sushi.Enum;
 using Sushi.Models;
-using Sushi.Common.Enum;
 
 namespace Sushi.Interfaces
 {

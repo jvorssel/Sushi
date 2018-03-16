@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Common.Helpers;
+using Sushi.Helpers;
 
 namespace Sushi.Tests
 {

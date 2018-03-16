@@ -4,8 +4,8 @@ using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using Sushi.Consistency;
+using Sushi.Enum;
 using Sushi.Models;
-using Sushi.Common.Enum;
 
 namespace Sushi.JavaScript
 {
