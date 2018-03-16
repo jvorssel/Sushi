@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Sushi.Consistency;
 using Sushi.Interfaces;
 using Sushi.Models;
-using Sushi.Utility.Enum;
+using Sushi.Common.Enum;
 
 namespace Sushi
 {

@@ -7,8 +7,8 @@
     <ProjectGuid>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sushi.Utility</RootNamespace>
-    <AssemblyName>Sushi.Utility</AssemblyName>
+    <RootNamespace>Sushi.Common</RootNamespace>
+    <AssemblyName>Sushi.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

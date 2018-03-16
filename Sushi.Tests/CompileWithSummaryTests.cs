@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.JavaScript.Enum;
-using Sushi.Utility;
+using Sushi.Common;
 
 namespace Sushi.Tests
 {

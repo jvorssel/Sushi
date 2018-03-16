@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using Sushi.Utility;
-using Sushi.Utility.Enum;
+using Sushi.Common;
+using Sushi.Common.Enum;
 
 namespace Sushi.Models
 {

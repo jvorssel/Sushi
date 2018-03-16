@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Sushi.Utility.Helpers
+namespace Sushi.Common.Helpers
 {
     public class StringEnumerator : IEnumerator<string>
     {

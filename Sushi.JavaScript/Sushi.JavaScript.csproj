@@ -55,11 +55,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Utility\Sushi.Common.csproj">
+    <ProjectReference Include="..\Sushi.Common\Sushi.Common.csproj">
       <Project>{64a5f77d-0f1a-4b2e-933d-501fd0a540de}</Project>
       <Name>Sushi.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ModelConverter\Sushi.csproj">
+    <ProjectReference Include="..\Sushi\Sushi.csproj">
       <Project>{6476ff8a-3ae9-45e4-a7f3-014c9318b2aa}</Project>
       <Name>Sushi</Name>
     </ProjectReference>

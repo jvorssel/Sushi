@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sushi.Models;
-using Sushi.Utility;
-using Sushi.Utility.Enum;
+using Sushi.Common;
+using Sushi.Common.Enum;
 
 namespace Sushi.DefinitelyTyped
 {

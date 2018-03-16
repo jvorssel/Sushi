@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Sushi.Utility
+namespace Sushi.Common
 {
     public static class StringExtensions
     {

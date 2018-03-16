@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sushi.Models;
-using Sushi.Utility.Enum;
+using Sushi.Common.Enum;
 
 namespace Sushi.Interfaces
 {

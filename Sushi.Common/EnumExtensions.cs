@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Sushi.Utility
+namespace Sushi.Common
 {
     public static class EnumExtensions
     {

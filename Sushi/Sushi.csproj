@@ -60,11 +60,10 @@
     <Content Include="About.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Utility\Sushi.Common.csproj">
-      <Project>{64a5f77d-0f1a-4b2e-933d-501fd0a540de}</Project>
+    <ProjectReference Include="..\Sushi.Common\Sushi.Common.csproj">
+      <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
       <Name>Sushi.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

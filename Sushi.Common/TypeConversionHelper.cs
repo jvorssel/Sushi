@@ -1,7 +1,7 @@
 ﻿using System;
-using Sushi.Utility.Enum;
+using Sushi.Common.Enum;
 
-namespace Sushi.Utility
+namespace Sushi.Common
 {
     public static class TypeConversionHelper
     {

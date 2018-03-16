@@ -6,8 +6,8 @@ using System.Text;
 using Sushi.Consistency;
 using Sushi.Interfaces;
 using Sushi.Models;
-using Sushi.Utility;
-using Sushi.Utility.Helpers;
+using Sushi.Common;
+using Sushi.Common.Helpers;
 
 namespace Sushi
 {

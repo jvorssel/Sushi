@@ -8,7 +8,7 @@ using Sushi.Consistency;
 using Sushi.Documentation;
 using Sushi.Interfaces;
 using Sushi.Models;
-using Sushi.Utility;
+using Sushi.Common;
 
 namespace Sushi
 {

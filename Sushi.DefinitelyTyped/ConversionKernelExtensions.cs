@@ -1,4 +1,5 @@
 ﻿using System;
+using Sushi.DefinitelyTyped.Properties;
 
 namespace Sushi.DefinitelyTyped
 {

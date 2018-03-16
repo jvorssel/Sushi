@@ -1,4 +1,4 @@
-﻿namespace Sushi.Utility.Enum
+﻿namespace Sushi.Common.Enum
 {
     /// <summary>
     ///     Enum for available <see cref="CSharpNativeType"/>(s).

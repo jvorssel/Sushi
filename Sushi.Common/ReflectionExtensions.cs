@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Sushi.Utility
+namespace Sushi.Common
 {
     /// <summary>
     ///     SOURCED FROM: Royaldesk.Common.Utility.Extensions

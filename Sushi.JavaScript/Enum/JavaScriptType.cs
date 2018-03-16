@@ -1,5 +1,5 @@
 ﻿using System;
-using Sushi.Utility.Enum;
+using Sushi.Common.Enum;
 
 namespace Sushi.JavaScript.Enum
 {

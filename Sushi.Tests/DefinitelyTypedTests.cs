@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.DefinitelyTyped;
-using Sushi.Utility;
+using Sushi.Common;
 
 namespace Sushi.Tests
 {

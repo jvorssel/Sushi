@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Sushi.Utility.Enum;
+using Sushi.Common.Enum;
 
 namespace Sushi.Models
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Sushi.Consistency;
 using Sushi.Models;
-using Sushi.Utility.Enum;
+using Sushi.Common.Enum;
 
 namespace Sushi.JavaScript
 {

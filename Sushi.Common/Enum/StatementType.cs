@@ -1,4 +1,4 @@
-﻿namespace Sushi.Utility.Enum
+﻿namespace Sushi.Common.Enum
 {
     /// <summary>
     ///     Basic <see cref="StatementType"/> for a property.
