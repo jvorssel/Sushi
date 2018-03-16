@@ -172,11 +172,8 @@ namespace Common.Utility
         /// <summary>
         ///     If the <see cref="PropertyInfo"/> <paramref name="this"/> is an array.
         /// </summary>
-        public static bool IsArray(this PropertyInfo @this)
-        {
-            return (typeof(IEnumerable).IsAssignableFrom(@this.PropertyType) || @this.PropertyType.IsArray) &&
-                @this.PropertyType != typeof(string);
-        }
+        public static bool IsArray(this Type @this)
+            => (typeof(IEnumerable).IsAssignableFrom(@this) || @this.IsArray) && @this != typeof(string);
 
         /// <summary>
         ///     If the <see cref="Type"/> <paramref name="this"/> has the <see cref="Attribute"/> <typeparamref name="TAttr"/>.
@@ -285,6 +282,44 @@ namespace Common.Utility
 
                 type = type.BaseType;
             }
+        }
+
+        /// <summary>
+        ///     Get the generic types for the interfaces used 
+        ///     by the given <see cref="Type"/> <paramref name="@this"/>.
+        /// </summary>
+        public static IEnumerable<Type> GetGenericTypes(this Type @this)
+        {
+            var genericTypes = @this
+                 .GetInterfaces()
+                 .Where(t => t.IsGenericType)
+                 .Select(t => t.GetGenericArguments()[0]);
+
+            return genericTypes;
+        }
+
+        /// <summary>
+        ///     Get the underlying primitive type for the given <see cref="Type"/> <paramref name="@this"/>.
+        /// </summary>
+        public static Type GetUnderlyingPrimitiveType(this Type @this)
+        {
+            var type = @this;
+            while (type != null && type.BaseType != typeof(Type))
+            {
+                var genericTypes = type.GetGenericTypes().ToList();
+                if (genericTypes.Any())
+                    type = genericTypes[0];
+
+                if (type.IsPrimitiveType())
+                    return type;
+
+                if (type.BaseType == null)
+                    return type;
+
+                type = type.BaseType;
+            }
+
+            return type;
         }
     }
 }

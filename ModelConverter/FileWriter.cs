@@ -12,16 +12,18 @@ namespace ModelConverter
 	public class FileWriter
 	{
 		private readonly ModelConverter _converter;
+		private readonly string _extension;
 		private readonly string _path;
 		private readonly bool _minify;
 		private readonly Encoding _encoding;
 
-		public FileWriter(ModelConverter converter, string path, bool minify = false, Encoding encoding = null)
+		public FileWriter(ModelConverter converter, string path, string extension, bool minify = false, Encoding encoding = null)
 		{
 			if (path.IsEmpty())
 				throw new ArgumentNullException(nameof(converter));
 
 			_converter = converter ?? throw new ArgumentNullException(nameof(converter));
+			_extension = extension;
 			_path = path.Replace('/', '\\').TrimEnd('\\');
 			_minify = minify;
 			_encoding = encoding ?? Encoding.Default;
@@ -46,7 +48,7 @@ namespace ModelConverter
 				fileName = $@"Generated_{"".GetTimeStamp()}";
 
 			var fileContent = _converter.JoinModels(models, _minify);
-			var filePath = $@"{_path}\{fileName}.js";
+			var filePath = $@"{_path}\{fileName}{_extension}";
 
 			File.WriteAllText(filePath, fileContent, _encoding);
 		}
@@ -60,7 +62,7 @@ namespace ModelConverter
 				fileName = $@"Generated_{"".GetTimeStamp()}";
 
 			var fileContent = _converter.JoinModels(models, _minify);
-			var filePath = $@"{_path}\{fileName}.js";
+			var filePath = $@"{_path}\{fileName}{_extension}";
 
 			using (var writer = new StreamWriter(filePath, false, _encoding))
 			{

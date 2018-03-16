@@ -98,7 +98,7 @@ namespace ModelConverter.Interfaces
         /// <summary>
         ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.
         /// </summary>
-        Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType);
+        Statement FormatComment(string comment, StatementType relatedType);
 
         /// <summary>
         ///     Remove comments from the <see cref="DataModel.Script"/>.

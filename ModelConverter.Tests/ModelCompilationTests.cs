@@ -24,8 +24,8 @@ namespace ModelConverter.Tests
 			var converter = kernel.CreateConverterForJavaScript(version, isolated);
 			var converted = converter.Convert(predicate);
 
-			var writer = new FileWriter(converter, path, false);
-			writer.FlushToFile(converted, $@"result {version}{isolatedText}.js");
+			var writer = new FileWriter(converter, path,".js");
+			writer.FlushToFile(converted, $@"result {version}{isolatedText}");
 		}
 
 		[TestMethod]

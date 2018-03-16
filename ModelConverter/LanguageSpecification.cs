@@ -47,7 +47,7 @@ namespace ModelConverter
         public abstract string FormatProperty(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
-        public abstract Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType);
+        public abstract Statement FormatComment(string comment, StatementType statementType);
 
         /// <inheritdoc />
         public abstract string RemoveComments(DataModel model);

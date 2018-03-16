@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using Common.Utility;
 using Common.Utility.Enum;
@@ -17,6 +18,11 @@ namespace ModelConverter.Models
         public CSharpNativeType NativeType => _property.PropertyType.ToCSharpNativeType();
 
         public object Value { get; }
+
+        public bool IsReadonly =>
+            !_property.CanWrite ||
+            Attribute.GetCustomAttribute(_property, typeof(ReadOnlyAttribute)) 
+                is ReadOnlyAttribute attribute && attribute.IsReadOnly;
 
         public Property(PropertyInfo property, object value)
         {

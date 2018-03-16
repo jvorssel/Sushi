@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using Common.Utility;
-using Common.Utility.Enum;
 using Common.Utility.Helpers;
 using ModelConverter.Interfaces;
 using ModelConverter.Models;
@@ -84,6 +82,7 @@ namespace ModelConverter
             var modelBuilder = new StringBuilder();
             var template = Language.Template
                 .Replace(TYPE_NAME_KEY, model.Name)
+                .Replace(TYPE_NAMESPACE_KEY, model.Type.Namespace)
                 .Replace(ARGUMENT_NAME, _kernel.ArgumentName)
                 ;
 
@@ -167,6 +166,5 @@ namespace ModelConverter
 
             return model;
         }
-
     }
 }

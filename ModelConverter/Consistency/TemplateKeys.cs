@@ -13,6 +13,11 @@ namespace ModelConverter.Consistency
         public const string TYPE_NAME_KEY = @"$$TYPENAME$$";
 
         /// <summary>
+        ///     The namespace for the specific <see cref="Type"/> to compile.
+        /// </summary>
+        public const string TYPE_NAMESPACE_KEY = @"$$TYPE_NAMESPACE$$";
+
+        /// <summary>
         ///     Placeholder for the <see cref="Type"/> properties validation.
         /// </summary>
         public const string VALIDATION_KEY = @"$$VALIDATE_OBJECT$$";

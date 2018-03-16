@@ -28,5 +28,8 @@ namespace ModelConverter.Consistency
 
         public static InvalidOperationException LanguageVersionMismatch(Version version)
             => new InvalidOperationException($@"Unexpected version '{version}' type wasn't processed properly.");
+
+        public static InvalidOperationException PropertyTypeNotSupported(string typeName)
+            => new InvalidOperationException($@"Given {typeName} is not processed by the current {nameof(LanguageSpecification)}.");
     }
 }

@@ -54,6 +54,5 @@ namespace ModelConverter.Tests
 				Assert.IsTrue(model.Properties.All(x => x.Name != nameof(DoNotIgnoreMe.ShouldNotExist)));
 			}
 		}
-
 	}
 }

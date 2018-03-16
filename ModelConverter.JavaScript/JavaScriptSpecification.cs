@@ -26,36 +26,25 @@ namespace ModelConverter.JavaScript
 
         /// <inheritdoc />
         public override string RemoveComments(DataModel model)
-        {
-            var script = model.Script;
-
-            // Remove single-line comments
-            script = new Regex(@"([/]{2})(.*)$", RegexOptions.Multiline | RegexOptions.Compiled).Replace(script, "");
-
-            // Remove multi-line comments
-            script = new Regex(@"(\/\*)(.|[\r\n])*?(\*\/)", RegexOptions.Compiled | RegexOptions.Multiline).Replace(script, "");
-
-            model.Script = script;
-            return script;
-        }
+            => SpecificationDefaults.RemoveCommentsFromModel(model);
 
         /// <inheritdoc />
         public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels)
         {
             // Key check
-            yield return FormatComment(kernel, "Check property keys", StatementType.Key);
+            yield return FormatComment(@"Check property keys", StatementType.Key);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateKeyCheckStatement(kernel, prop);
 
             // Type check
             yield return new Statement(string.Empty, StatementType.Type, false, true);
-            yield return FormatComment(kernel, "Check property type match", StatementType.Type);
+            yield return FormatComment(@"Check property type match", StatementType.Type);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateTypeCheckStatement(kernel, prop);
 
             // Instance check
             yield return new Statement(string.Empty, StatementType.Instance, false, true);
-            yield return FormatComment(kernel, "Check property class instance match", StatementType.Instance);
+            yield return FormatComment(@"Check property class instance match", StatementType.Instance);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateInstanceCheckStatement(kernel, prop, dataModels);
         }
@@ -118,16 +107,8 @@ namespace ModelConverter.JavaScript
         }
 
         /// <inheritdoc />
-        public override Statement FormatComment(ConversionKernel kernel, string comment, StatementType relatedType)
-        {
-            if (comment.Contains("\n"))
-                throw Errors.OnlyInlineCommentsSupported(comment);
-
-            if (comment.EndsWith("."))
-                comment = comment.Substring(0, comment.Length - 1);
-
-            return new Statement($@"// {comment}.", relatedType, true);
-        }
+        public override Statement FormatComment(string comment, StatementType relatedType)
+            => SpecificationDefaults.FormatInlineComment(comment, relatedType);
 
         #endregion
 

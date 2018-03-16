@@ -28,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ModelConverter.Tests.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,12 +52,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefinitelyTypedTests.cs" />
     <Compile Include="Models\Ignore\DoNotIgnoreMe.cs" />
     <Compile Include="Models\Ignore\IgnoreMe.cs" />
     <Compile Include="Models\Ignore\IgnoreTestRoot.cs" />
     <Compile Include="Models\Inheritance\Gender.cs" />
     <Compile Include="Models\Inheritance\Person.cs" />
     <Compile Include="Models\Inheritance\StudentModel.cs" />
+    <Compile Include="Models\ModelWithManyLists.cs" />
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="Models\ReferenceToUser.cs" />
     <Compile Include="Models\TypeModel.cs" />
@@ -78,6 +81,10 @@
     <ProjectReference Include="..\Common.Utility\Common.Utility.csproj">
       <Project>{64A5F77D-0F1A-4B2E-933D-501FD0A540DE}</Project>
       <Name>Common.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModelConverter.DefinitelyTyped\ModelConverter.DefinitelyTyped.csproj">
+      <Project>{9738e596-4040-438b-8dd1-ec9d770233df}</Project>
+      <Name>ModelConverter.DefinitelyTyped</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModelConverter.JavaScript\ModelConverter.JavaScript.csproj">
       <Project>{a0dfeeaf-2d9a-4317-869a-04af157c7a5b}</Project>
@@ -102,4 +109,8 @@
     <Error Condition="!Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>
