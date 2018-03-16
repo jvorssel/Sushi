@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ModelConverter.JavaScript;
 using ModelConverter.JavaScript.Enum;
-using ModelConverter.Tests.Models;
 
 namespace ModelConverter.Tests
 {

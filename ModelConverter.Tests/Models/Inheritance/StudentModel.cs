@@ -1,6 +1,4 @@
-﻿using ModelConverter.Interfaces;
-
-namespace ModelConverter.Tests.Models.Inheritance
+﻿namespace ModelConverter.Tests.Models.Inheritance
 {
 	public class StudentModel : PersonModel
 	{

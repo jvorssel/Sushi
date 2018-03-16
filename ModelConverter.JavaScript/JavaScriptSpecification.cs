@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using Common.Utility;
 using Common.Utility.Enum;
 using ModelConverter.Consistency;
 using ModelConverter.Models;
 using Newtonsoft.Json;
-using static System.Enum;
 
 namespace ModelConverter.JavaScript
 {

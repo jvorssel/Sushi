@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ModelConverter.JavaScript;
 using ModelConverter.JavaScript.Enum;
 using ModelConverter.Models;
 using ModelConverter.Tests.Models.Inheritance;

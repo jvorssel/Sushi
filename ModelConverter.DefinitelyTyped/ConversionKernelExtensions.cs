@@ -1,6 +1,5 @@
 ﻿using System;
 using ModelConverter.DefinitelyTyped.Properties;
-using ModelConverter.Interfaces;
 
 namespace ModelConverter.DefinitelyTyped
 {
