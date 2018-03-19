@@ -27,12 +27,17 @@ namespace Sushi.Consistency
         ///     Placeholder for the <see cref="Type"/> properties validation.
         /// </summary>
         public const string VALIDATION_KEY = @"$$VALIDATE_OBJECT$$";
-        
+
+        /// <summary>
+        ///     Placeholder for the properties that should be defined.
+        /// </summary>
+        public const string CLASS_PROPERTIES_KEY = @"$$DEFINE_PROPERTIES$$";
+
         /// <summary>
         ///     Placeholder for the values that should be set.
         /// </summary>
-        public const string VALUES_KEY = @"$$SET_VALUES$$";
-        
+        public const string CTOR_PROPERTIES_KEY = @"$$SET_PROPERTY_VALUES$$";
+
         /// <summary>
         ///     Placeholder for the name of the inherited <see cref="Type"/>.
         /// </summary>

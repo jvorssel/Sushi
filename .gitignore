@@ -7,6 +7,7 @@ _ReSharper.Caches/*
 
 ModelConverter.Tests/bin/*
 ModelConverter.Tests/obj/*
+ModelConverter.Tests/Converted/*
 
 Common.Utility/bin/*
 Common.Utility/obj/*

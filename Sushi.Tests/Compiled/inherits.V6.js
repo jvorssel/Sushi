@@ -6,7 +6,7 @@
 class PersonModel  {
 	/**
 	 * @name PersonModel
-	 * @namespace ModelConverter.Tests.Models.Inheritance.PersonModel
+	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel
 	 * @class PersonModel
 	 * @classdesc Server-side generated constructor for the 'PersonModel' class.
 	 * @param {Object<PersonModel>} [value] The object to convert to the match the 'PersonModel' class.
@@ -28,11 +28,12 @@ class PersonModel  {
 
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
+		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
 	 * @name tryParse
-	 * @namespace ModelConverter.Tests.Models.Inheritance.PersonModel.tryParse
+	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel.tryParse
 	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'PersonModel' class.
@@ -70,7 +71,7 @@ class PersonModel  {
 class StudentModel  extends PersonModel {
 	/**
 	 * @name StudentModel
-	 * @namespace ModelConverter.Tests.Models.Inheritance.StudentModel
+	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel
 	 * @class StudentModel
 	 * @classdesc Server-side generated constructor for the 'StudentModel' class.
 	 * @param {Object<StudentModel>} [value] The object to convert to the match the 'StudentModel' class.
@@ -107,11 +108,12 @@ class StudentModel  extends PersonModel {
 		this.Gender = value.Gender || 0;
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
+		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
 	 * @name tryParse
-	 * @namespace ModelConverter.Tests.Models.Inheritance.StudentModel.tryParse
+	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel.tryParse
 	 * @description Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'StudentModel' class.

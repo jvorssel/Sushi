@@ -17,7 +17,7 @@ function $$TYPENAME$$($$ARGUMENT_NAME$$) {
 		$$VALIDATE_OBJECT$$;
 	}
 
-	$$SET_VALUES$$;
+	$$SET_PROPERTY_VALUES$$;
 }
 
 $$INHERIT_TYPE$$;

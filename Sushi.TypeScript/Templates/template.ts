@@ -8,6 +8,9 @@
  * @summary Server-side generated model for the '$$TYPENAME$$' class.
  */
 class $$TYPENAME$$ $$INHERIT_TYPE$$ {
+
+	$$DEFINE_PROPERTIES$$;
+
 	/**
 	 * @name $$TYPENAME$$
 	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$

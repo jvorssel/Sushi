@@ -1,11 +1,8 @@
 // Definitely Typed - ModelWithManyLists
 
 /**
- * @name ModelWithManyLists
- * @namespace ModelConverter.Tests.Models.ModelWithManyLists
- * @class ModelWithManyLists
- * @classdesc Server-side generated constructor for the 'ModelWithManyLists' class.
- * @summary A model with a LOT of lists.
+ * A model with a LOT of lists.
+ * FullName = Sushi.Tests.Models.ModelWithManyLists
  */
 interface ModelWithManyListsConstructor {
 	/**
@@ -40,10 +37,7 @@ declare const ModelWithManyLists: ModelWithManyListsConstructor;
 // Definitely Typed - NameModel
 
 /**
- * @name NameModel
- * @namespace ModelConverter.Tests.Models.NameModel
- * @class NameModel
- * @classdesc Server-side generated constructor for the 'NameModel' class.
+ * FullName = Sushi.Tests.Models.NameModel
  */
 interface NameModelConstructor {
 	Name: string;
@@ -57,10 +51,7 @@ declare const NameModel: NameModelConstructor;
 // Definitely Typed - PersonReferenceToUser
 
 /**
- * @name PersonReferenceToUser
- * @namespace ModelConverter.Tests.Models.PersonReferenceToUser
- * @class PersonReferenceToUser
- * @classdesc Server-side generated constructor for the 'PersonReferenceToUser' class.
+ * FullName = Sushi.Tests.Models.PersonReferenceToUser
  */
 interface PersonReferenceToUserConstructor {
 	Name: string;
@@ -75,10 +66,7 @@ declare const PersonReferenceToUser: PersonReferenceToUserConstructor;
 // Definitely Typed - UserReferenceToPerson
 
 /**
- * @name UserReferenceToPerson
- * @namespace ModelConverter.Tests.Models.UserReferenceToPerson
- * @class UserReferenceToPerson
- * @classdesc Server-side generated constructor for the 'UserReferenceToPerson' class.
+ * FullName = Sushi.Tests.Models.UserReferenceToPerson
  */
 interface UserReferenceToPersonConstructor {
 	RegisteredOn: any;
@@ -94,10 +82,7 @@ declare const UserReferenceToPerson: UserReferenceToPersonConstructor;
 // Definitely Typed - TypeModel
 
 /**
- * @name TypeModel
- * @namespace ModelConverter.Tests.Models.TypeModel
- * @class TypeModel
- * @classdesc Server-side generated constructor for the 'TypeModel' class.
+ * FullName = Sushi.Tests.Models.TypeModel
  */
 interface TypeModelConstructor {
 	Name: string;
@@ -110,13 +95,21 @@ interface TypeModelConstructor {
 declare const TypeModel: TypeModelConstructor;
 
 
+// Definitely Typed - Gender
+
+/**
+ * FullName = Sushi.Tests.Models.Inheritance.Gender
+ */
+interface GenderConstructor {
+}
+
+declare const Gender: GenderConstructor;
+
+
 // Definitely Typed - PersonModel
 
 /**
- * @name PersonModel
- * @namespace ModelConverter.Tests.Models.Inheritance.PersonModel
- * @class PersonModel
- * @classdesc Server-side generated constructor for the 'PersonModel' class.
+ * FullName = Sushi.Tests.Models.Inheritance.PersonModel
  */
 interface PersonModelConstructor {
 	Name: string;
@@ -129,10 +122,7 @@ declare const PersonModel: PersonModelConstructor;
 // Definitely Typed - StudentModel
 
 /**
- * @name StudentModel
- * @namespace ModelConverter.Tests.Models.Inheritance.StudentModel
- * @class StudentModel
- * @classdesc Server-side generated constructor for the 'StudentModel' class.
+ * FullName = Sushi.Tests.Models.Inheritance.StudentModel
  */
 interface StudentModelConstructor extends PersonModelConstructor {
 	Grade: number;
@@ -148,10 +138,7 @@ declare const StudentModel: StudentModelConstructor;
 // Definitely Typed - DoNotIgnoreMe
 
 /**
- * @name DoNotIgnoreMe
- * @namespace ModelConverter.Tests.Models.Ignore.DoNotIgnoreMe
- * @class DoNotIgnoreMe
- * @classdesc Server-side generated constructor for the 'DoNotIgnoreMe' class.
+ * FullName = Sushi.Tests.Models.Ignore.DoNotIgnoreMe
  */
 interface DoNotIgnoreMeConstructor extends IgnoreTestRootConstructor {
 	ShouldExist: string;
@@ -163,10 +150,7 @@ declare const DoNotIgnoreMe: DoNotIgnoreMeConstructor;
 // Definitely Typed - IgnoreTestRoot
 
 /**
- * @name IgnoreTestRoot
- * @namespace ModelConverter.Tests.Models.Ignore.IgnoreTestRoot
- * @class IgnoreTestRoot
- * @classdesc Server-side generated constructor for the 'IgnoreTestRoot' class.
+ * FullName = Sushi.Tests.Models.Ignore.IgnoreTestRoot
  */
 interface IgnoreTestRootConstructor {
 }

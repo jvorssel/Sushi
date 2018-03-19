@@ -46,6 +46,11 @@ namespace Sushi
         public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
+        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
+            Property property,
+            ICollection<DataModel> relatedTypes);
+
+        /// <inheritdoc />
         public abstract Statement FormatComment(string comment, StatementType statementType);
 
         /// <inheritdoc />

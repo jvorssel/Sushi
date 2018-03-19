@@ -4,7 +4,7 @@ using Sushi.Enum;
 namespace Sushi.JavaScript.Enum
 {
     /// <summary>
-    ///     What <see cref="JavaScriptType"/> is referenced in Ecmascript.
+    ///     What <see cref="JavaScriptType"/> is referenced in ECMA-script.
     /// </summary>
     public enum JavaScriptType
     {

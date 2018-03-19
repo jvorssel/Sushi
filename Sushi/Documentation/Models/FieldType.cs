@@ -12,7 +12,12 @@ namespace Sushi.Documentation.Models
         /// <summary>
         ///     Member redirects to a specific <see cref="Property"/> (P).
         /// </summary>
-        Property
+        Property,
+
+        /// <summary>
+        ///     Member redirects to a specific <see cref="Method"/> (M).
+        /// </summary>
+        Method
     }
 
     public static class SummaryFieldTypeExtensions
@@ -25,6 +30,8 @@ namespace Sushi.Documentation.Models
                     return FieldType.Type;
                 case "P":
                     return FieldType.Property;
+                case "M":
+                    return FieldType.Method;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(specifier));
             }

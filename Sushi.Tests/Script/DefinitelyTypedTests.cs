@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.DefinitelyTyped;
 using Sushi.Extensions;
 
-namespace Sushi.Tests
+namespace Sushi.Tests.Script
 {
     [TestClass]
     public class DefinitelyTypedTests : TestBase

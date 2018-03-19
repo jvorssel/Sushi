@@ -95,6 +95,17 @@ namespace Sushi.Interfaces
         string FormatValueForProperty(Property property, object value);
 
         /// <summary>
+        ///     Format the given <see cref="property"/> to be defined in the current <see cref="Language"/>.
+        /// </summary>
+        /// <param name="kernel"></param>
+        /// <param name="property"></param>
+        /// <param name="relatedTypes"></param>
+        /// <returns></returns>
+        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
+            Property property,
+            ICollection<DataModel> relatedTypes);
+
+        /// <summary>
         ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.
         /// </summary>
         Statement FormatComment(string comment, StatementType relatedType);

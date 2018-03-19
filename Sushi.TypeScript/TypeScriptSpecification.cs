@@ -6,10 +6,11 @@ using Newtonsoft.Json;
 using Sushi.Consistency;
 using Sushi.Enum;
 using Sushi.Models;
+using Sushi.TypeScript.Enum;
 
-namespace Sushi.JavaScript
+namespace Sushi.TypeScript
 {
-    public class JavaScriptSpecification : LanguageSpecification
+    public class TypeScriptSpecification : LanguageSpecification
     {
         #region Overrides of LanguageSpecification
 
@@ -31,11 +32,42 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
-            Property property,
-            ICollection<DataModel> relatedTypes)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property, ICollection<DataModel> relatedTypes)
         {
-            yield break;
+            var relatedType = relatedTypes.FirstOrDefault(x => x.Name == property.Type.Name);
+            var tsType = property.NativeType.ToTypeScriptType();
+            switch (tsType)
+            {
+                case TypeScriptType.Number:
+                    yield return $@"{property.Name}: number;";
+                    break;
+                case TypeScriptType.Boolean:
+                    yield return $@"{property.Name}: boolean;";
+                    break;
+                case TypeScriptType.Array:
+                    yield return $@"{property.Name}: any;";
+                    break;
+                case TypeScriptType.Enum:
+                    if (relatedType is null)
+                        throw Errors.EnumUnavailable(property);
+
+                    yield return $@"{property.Name}: {relatedType.Type.Name} | Array<number>;";
+                    break;
+                case TypeScriptType.String:
+                    yield return $@"{property.Name}: string;";
+                    break;
+                case TypeScriptType.Object:
+                    var typeString = relatedType is null ? "any" : $@"{relatedType.Name} | any";
+                    yield return $@"{property.Name}: {typeString};";
+                    break;
+                case TypeScriptType.Null:
+                case TypeScriptType.RegExp:
+                case TypeScriptType.Undefined:
+                    yield return $@"{property.Type.Name}: any;";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         /// <inheritdoc />
@@ -66,15 +98,9 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public override Statement FormatInheritanceStatement(DataModel model, DataModel inherits)
         {
-            string script;
-            if (Version.Major >= 6)
-                script = $@" extends {inherits.Name}";
-            else if (Version.Major <= 5)
-                script = $@"{model.Name}.prototype = new {inherits.Name}();";
-            else
-                throw Errors.LanguageVersionMismatch(Version);
-
+            var script = $@" extends {inherits.Name}";
             var statement = new Statement(script, StatementType.Inheritance);
+
             return statement;
         }
 
@@ -128,33 +154,33 @@ namespace Sushi.JavaScript
 
         #region Initializers
 
-        public JavaScriptSpecification()
+        public TypeScriptSpecification()
         {
-            StatementPipeline = new JavaScriptStatements();
+            StatementPipeline = new TypeScriptStatements();
         }
 
-        public JavaScriptSpecification(string scriptLanguage, Version version, bool isIsolated = false)
+        public TypeScriptSpecification(string scriptLanguage, Version version, bool isIsolated = false)
              : base(scriptLanguage, version, isIsolated)
         {
-            StatementPipeline = new JavaScriptStatements();
+            StatementPipeline = new TypeScriptStatements();
         }
 
-        public JavaScriptSpecification(string scriptLanguage, string version, bool isIsolated = false)
+        public TypeScriptSpecification(string scriptLanguage, string version, bool isIsolated = false)
             : base(scriptLanguage, Version.Parse(version), isIsolated)
         {
-            StatementPipeline = new JavaScriptStatements();
+            StatementPipeline = new TypeScriptStatements();
         }
 
-        public JavaScriptSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
+        public TypeScriptSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
             : base(path, scriptLanguage, Version.Parse(version), isIsolated)
         {
-            StatementPipeline = new JavaScriptStatements();
+            StatementPipeline = new TypeScriptStatements();
         }
 
-        public JavaScriptSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
+        public TypeScriptSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
             : base(path, scriptLanguage, version, isIsolated)
         {
-            StatementPipeline = new JavaScriptStatements();
+            StatementPipeline = new TypeScriptStatements();
         }
 
         #endregion Initializers

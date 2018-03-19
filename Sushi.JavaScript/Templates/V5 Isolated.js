@@ -17,7 +17,7 @@
 			$$VALIDATE_OBJECT$$;
 		}
 
-		$$SET_VALUES$$;
+		$$SET_PROPERTY_VALUES$$;
 	}
 
 	window.$$TYPENAME$$ = $$TYPENAME$$;

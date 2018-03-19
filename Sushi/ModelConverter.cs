@@ -96,18 +96,31 @@ namespace Sushi
                     continue;
 
                 // Recognition
-                if (row.Contains(TemplateKeys.VALUES_KEY))
+                if (row.Contains(TemplateKeys.CTOR_PROPERTIES_KEY))
                 {
-                    // Define each property in the template.
-                    var indent = row.Before(TemplateKeys.VALUES_KEY);
-                    var propertyBuilder = new StringBuilder();
+                    // Set the values for each property in the ctor
+                    var indent = row.Before(TemplateKeys.CTOR_PROPERTIES_KEY);
+                    var propertyValueBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
                         foreach (var line in Language.FormatProperty(_kernel, property))
-                            propertyBuilder.AppendLine(indent + line);
+                            propertyValueBuilder.AppendLine(indent + line);
                     }
 
-                    modelBuilder.Append(propertyBuilder);
+                    modelBuilder.Append(propertyValueBuilder);
+                }
+                // Define
+                if (row.Contains(TemplateKeys.CLASS_PROPERTIES_KEY))
+                {
+                    var indent = row.Before(TemplateKeys.CLASS_PROPERTIES_KEY);
+                    var propertyDefinitionBuilder = new StringBuilder();
+                    foreach (var property in model.Properties)
+                    {
+                        foreach (var line in Language.FormatPropertyDefinition(_kernel, property, referenceDataModels))
+                            propertyDefinitionBuilder.AppendLine(indent + line);
+                    }
+
+                    modelBuilder.Append(propertyDefinitionBuilder);
                 }
                 // Check
                 else if (row.Contains(TemplateKeys.VALIDATION_KEY))

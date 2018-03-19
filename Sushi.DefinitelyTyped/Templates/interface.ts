@@ -2,14 +2,11 @@
 // Definitely Typed - $$TYPENAME$$
 
 /**
- * @name $$TYPENAME$$
- * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
- * @class $$TYPENAME$$
- * @classdesc Server-side generated constructor for the '$$TYPENAME$$' class.
- * @summary $$SUMMARY$$
+ * $$SUMMARY$$
+ * FullName = $$TYPE_NAMESPACE$$.$$TYPENAME$$
  */
 interface $$TYPENAME$$Constructor$$INHERIT_TYPE$$ {
-	$$SET_VALUES$$;
+	$$DEFINE_PROPERTIES$$;
 }
 
 declare const $$TYPENAME$$: $$TYPENAME$$Constructor;

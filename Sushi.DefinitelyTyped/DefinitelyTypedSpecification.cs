@@ -45,6 +45,14 @@ namespace Sushi.DefinitelyTyped
         /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
+            yield break;
+        }
+
+        /// <inheritdoc />
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
+            Property property,
+            ICollection<DataModel> relatedTypes)
+        {
             var type = GetBaseType(property.NativeType);
             var enumerable = property.Type.GetInterfaces().FirstOrDefault(x => x == typeof(IEnumerable));
 

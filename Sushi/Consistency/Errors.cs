@@ -1,5 +1,6 @@
 ﻿using System;
 using Sushi.Interfaces;
+using Sushi.Models;
 
 namespace Sushi.Consistency
 {
@@ -42,5 +43,8 @@ namespace Sushi.Consistency
 
         public static InvalidOperationException IncompatibleXmlDocument(object missingNode)
             => new InvalidOperationException($"Expected the node '{missingNode}' to exist in the loaded XML file.{XML_DOC_INSTRUCTIONS}");
+
+        public static InvalidOperationException EnumUnavailable(Property property)
+            => new InvalidOperationException($@"The {property.Type.FullName} {nameof(System.Enum)} for the given {nameof(property)} is expected to be available.");
     }
 }

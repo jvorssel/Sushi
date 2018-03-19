@@ -4,10 +4,10 @@ using Sushi.JavaScript.Enum;
 using Sushi.Models;
 using Sushi.Tests.Models.Inheritance;
 
-namespace Sushi.Tests
+namespace Sushi.Tests.Script
 {
 	[TestClass]
-	public class ModelCompilationTests : TestBase
+	public class JavaScriptTests : TestBase
 	{
 		public TestContext Context { get; set; }
 
@@ -18,9 +18,9 @@ namespace Sushi.Tests
 		{
 			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
 			{
-				Compile(kernel, JavaScriptVersion.V5, false, "complete", null);
-				Compile(kernel, JavaScriptVersion.V5, true, "complete", null);
-				Compile(kernel, JavaScriptVersion.V6, false, "complete", null);
+				CompileJavaScript(kernel, JavaScriptVersion.V5, false, "complete", null);
+				CompileJavaScript(kernel, JavaScriptVersion.V5, true, "complete", null);
+				CompileJavaScript(kernel, JavaScriptVersion.V6, false, "complete", null);
 			}
 		}
 
@@ -30,9 +30,9 @@ namespace Sushi.Tests
 			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
 			{
 				Func<DataModel, bool> predicate = x => x == typeof(PersonModel) || x == typeof(StudentModel);
-				Compile(kernel, JavaScriptVersion.V5, false, "inherits", predicate);
-				Compile(kernel, JavaScriptVersion.V5, true, "inherits", predicate);
-				Compile(kernel, JavaScriptVersion.V6, false, "inherits", predicate);
+				CompileJavaScript(kernel, JavaScriptVersion.V5, false, "inherits", predicate);
+				CompileJavaScript(kernel, JavaScriptVersion.V5, true, "inherits", predicate);
+				CompileJavaScript(kernel, JavaScriptVersion.V6, false, "inherits", predicate);
 			}
 		}
 	}

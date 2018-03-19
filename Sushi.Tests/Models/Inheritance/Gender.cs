@@ -1,4 +1,8 @@
-﻿namespace Sushi.Tests.Models.Inheritance {
+﻿using Sushi.Attributes;
+
+namespace Sushi.Tests.Models.Inheritance
+{
+	[ConvertToScript]
 	public enum Gender
 	{
 		Undefined = 0,
