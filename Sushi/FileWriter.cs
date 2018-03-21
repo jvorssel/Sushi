@@ -40,8 +40,6 @@ namespace Sushi
 
 		public void FlushToFile(IEnumerable<DataModel> models, string fileName = "")
 		{
-			fileName = Path.GetFileNameWithoutExtension(fileName);
-
 			// Default to model name as name
 			if (fileName.IsEmpty())
 				fileName = $@"Generated_{"".GetTimeStamp()}";
@@ -54,8 +52,6 @@ namespace Sushi
 
 		public async Task FlushToFileAsync(IEnumerable<DataModel> models, string fileName = "")
 		{
-			fileName = Path.GetFileNameWithoutExtension(fileName);
-
 			// Default to model name as name
 			if (fileName.IsEmpty())
 				fileName = $@"Generated_{"".GetTimeStamp()}";

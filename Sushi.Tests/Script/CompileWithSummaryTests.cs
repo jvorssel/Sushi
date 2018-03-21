@@ -41,7 +41,7 @@ namespace Sushi.Tests
                 kernel.LoadXmlDocumentation(xmlDocPath);
 
                 // Convert the available models and look if the result is as expected.
-                CompileJavaScript(kernel, JavaScriptVersion.V5, false, "summary", null);
+                CompileJavaScript(kernel, JavaScriptVersion.V5);
             }
         }
     }

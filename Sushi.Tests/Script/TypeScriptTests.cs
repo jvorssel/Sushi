@@ -23,6 +23,16 @@ namespace Sushi.Tests.Script
         }
 
         [TestMethod]
+        public void CompileMinifiedTypeScriptFileTest()
+        {
+            var assembly = typeof(TypeScriptTests).Assembly;
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            {
+                CompileTypeScript(kernel, minify: true);
+            }
+        }
+
+        [TestMethod]
         public void CompileDefinitelyTypedFileTest()
         {
             var assembly = typeof(TypeScriptTests).Assembly;
@@ -31,6 +41,8 @@ namespace Sushi.Tests.Script
                 CompileDefinitelyTyped(kernel);
             }
         }
+
+
 
     }
 }

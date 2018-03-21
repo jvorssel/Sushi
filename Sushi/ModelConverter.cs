@@ -64,10 +64,11 @@ namespace Sushi
             var result = Language.RemoveComments(model);
 
             // Replace tabs and return-newline characters with whitespaces.
-            result = result.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
-
-            // Remove leading whitespaces and leave single ones.
-            result = result.RemoveLeadingWhitespaces();
+            result = result
+                .Replace("\t", string.Empty)
+                .Replace("\r", string.Empty)
+                .Replace("\n", string.Empty)
+                .RemoveLeadingWhitespaces();
 
             return result;
         }

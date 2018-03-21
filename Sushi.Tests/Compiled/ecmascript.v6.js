@@ -1,15 +1,20 @@
-(function (window) {
-	"use strict";
+// ECMA 6 - ModelWithManyLists
 
+/**
+ * A model with a LOT of lists.
+ *
+ * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
+ * @name ModelWithManyLists
+ * @namespace Sushi.Tests.Models.ModelWithManyLists
+ */
+class ModelWithManyLists  {
 	/**
 	 * A model with a LOT of lists.
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
-	 * @name ModelWithManyLists
-	 * @namespace Sushi.Tests.Models.ModelWithManyLists
 	 * @param {Object<ModelWithManyLists>} [value] The object to convert to the match the 'ModelWithManyLists' class.
 	 */
-	function ModelWithManyLists(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('List'))
@@ -70,10 +75,6 @@
 		this.Dictionary = value.Dictionary || {};
 	}
 
-	window.ModelWithManyLists = ModelWithManyLists;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'ModelWithManyLists' class.
 	 * @name tryParse
@@ -81,7 +82,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'ModelWithManyLists' class.
 	 */
-	ModelWithManyLists.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -121,19 +122,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - NameModel
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.NameModel.
+ * @name NameModel
+ * @namespace Sushi.Tests.Models.NameModel
+ */
+class NameModel  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.NameModel.
-	 * @name NameModel
-	 * @namespace Sushi.Tests.Models.NameModel
 	 * @param {Object<NameModel>} [value] The object to convert to the match the 'NameModel' class.
 	 */
-	function NameModel(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -161,10 +165,6 @@
 		this.Surname = value.Surname || "Vorsselman";
 	}
 
-	window.NameModel = NameModel;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
 	 * @name tryParse
@@ -172,7 +172,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'NameModel' class.
 	 */
-	NameModel.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -200,19 +200,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - PersonReferenceToUser
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
+ * @name PersonReferenceToUser
+ * @namespace Sushi.Tests.Models.PersonReferenceToUser
+ */
+class PersonReferenceToUser  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
-	 * @name PersonReferenceToUser
-	 * @namespace Sushi.Tests.Models.PersonReferenceToUser
 	 * @param {Object<PersonReferenceToUser>} [value] The object to convert to the match the 'PersonReferenceToUser' class.
 	 */
-	function PersonReferenceToUser(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -249,10 +252,6 @@
 		this.User = value.User || null;
 	}
 
-	window.PersonReferenceToUser = PersonReferenceToUser;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
 	 * @name tryParse
@@ -260,7 +259,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'PersonReferenceToUser' class.
 	 */
-	PersonReferenceToUser.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -296,19 +295,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - UserReferenceToPerson
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
+ * @name UserReferenceToPerson
+ * @namespace Sushi.Tests.Models.UserReferenceToPerson
+ */
+class UserReferenceToPerson  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
-	 * @name UserReferenceToPerson
-	 * @namespace Sushi.Tests.Models.UserReferenceToPerson
 	 * @param {Object<UserReferenceToPerson>} [value] The object to convert to the match the 'UserReferenceToPerson' class.
 	 */
-	function UserReferenceToPerson(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('RegisteredOn'))
@@ -343,16 +345,12 @@
 		if (value === void 0 || value === null)
 			value = {};
 
-		this.RegisteredOn = value.RegisteredOn || "2018-03-21T14:39:10.4846093+01:00";
+		this.RegisteredOn = value.RegisteredOn || "2018-03-21T15:04:31.7782722+01:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";
 		this.Person = value.Person || null;
 	}
-
-	window.UserReferenceToPerson = UserReferenceToPerson;
-
-	;
 
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
@@ -361,7 +359,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'UserReferenceToPerson' class.
 	 */
-	UserReferenceToPerson.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -401,19 +399,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - TypeModel
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.TypeModel.
+ * @name TypeModel
+ * @namespace Sushi.Tests.Models.TypeModel
+ */
+class TypeModel  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.TypeModel.
-	 * @name TypeModel
-	 * @namespace Sushi.Tests.Models.TypeModel
 	 * @param {Object<TypeModel>} [value] The object to convert to the match the 'TypeModel' class.
 	 */
-	function TypeModel(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -451,10 +452,6 @@
 		this.Char = value.Char || "a";
 	}
 
-	window.TypeModel = TypeModel;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
 	 * @name tryParse
@@ -462,7 +459,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'TypeModel' class.
 	 */
-	TypeModel.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -498,19 +495,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - Gender
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
+ * @name Gender
+ * @namespace Sushi.Tests.Models.Inheritance.Gender
+ */
+class Gender  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
-	 * @name Gender
-	 * @namespace Sushi.Tests.Models.Inheritance.Gender
 	 * @param {Object<Gender>} [value] The object to convert to the match the 'Gender' class.
 	 */
-	function Gender(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 		}
 
@@ -520,10 +520,6 @@
 
 	}
 
-	window.Gender = Gender;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'Gender' class.
 	 * @name tryParse
@@ -531,7 +527,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'Gender' class.
 	 */
-	Gender.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -544,19 +540,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - PersonModel
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
+ * @name PersonModel
+ * @namespace Sushi.Tests.Models.Inheritance.PersonModel
+ */
+class PersonModel  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
-	 * @name PersonModel
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel
 	 * @param {Object<PersonModel>} [value] The object to convert to the match the 'PersonModel' class.
 	 */
-	function PersonModel(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -579,10 +578,6 @@
 		this.Surname = value.Surname || "Vorsselman";
 	}
 
-	window.PersonModel = PersonModel;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @name tryParse
@@ -590,7 +585,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'PersonModel' class.
 	 */
-	PersonModel.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -614,19 +609,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - StudentModel
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
+ * @name StudentModel
+ * @namespace Sushi.Tests.Models.Inheritance.StudentModel
+ */
+class StudentModel  extends PersonModel {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
-	 * @name StudentModel
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel
 	 * @param {Object<StudentModel>} [value] The object to convert to the match the 'StudentModel' class.
 	 */
-	function StudentModel(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Grade'))
@@ -664,10 +662,6 @@
 		this.Surname = value.Surname || "Vorsselman";
 	}
 
-	window.StudentModel = StudentModel;
-
-	StudentModel.prototype = new PersonModel();;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @name tryParse
@@ -675,7 +669,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'StudentModel' class.
 	 */
-	StudentModel.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -711,19 +705,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - DoNotIgnoreMe
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
+ * @name DoNotIgnoreMe
+ * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
+ */
+class DoNotIgnoreMe  extends IgnoreTestRoot {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
-	 * @name DoNotIgnoreMe
-	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
 	 * @param {Object<DoNotIgnoreMe>} [value] The object to convert to the match the 'DoNotIgnoreMe' class.
 	 */
-	function DoNotIgnoreMe(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('ShouldExist'))
@@ -741,10 +738,6 @@
 		this.ShouldExist = value.ShouldExist || '';
 	}
 
-	window.DoNotIgnoreMe = DoNotIgnoreMe;
-
-	DoNotIgnoreMe.prototype = new IgnoreTestRoot();;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'DoNotIgnoreMe' class.
 	 * @name tryParse
@@ -752,7 +745,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'DoNotIgnoreMe' class.
 	 */
-	DoNotIgnoreMe.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -772,19 +765,22 @@
 			return false;
 		}
 	}
+}
+// ECMA 6 - IgnoreTestRoot
 
-})(window);
-(function (window) {
-	"use strict";
-
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
+ * @name IgnoreTestRoot
+ * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
+ */
+class IgnoreTestRoot  {
 	/**
 	 *
 	 * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
-	 * @name IgnoreTestRoot
-	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
 	 * @param {Object<IgnoreTestRoot>} [value] The object to convert to the match the 'IgnoreTestRoot' class.
 	 */
-	function IgnoreTestRoot(value) {
+	constructor(value) {
 		if (value !== void 0 && value !== null) {
 		}
 
@@ -794,10 +790,6 @@
 
 	}
 
-	window.IgnoreTestRoot = IgnoreTestRoot;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'IgnoreTestRoot' class.
 	 * @name tryParse
@@ -805,7 +797,7 @@
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'IgnoreTestRoot' class.
 	 */
-	IgnoreTestRoot.prototype.tryParse = function (value) {
+	static tryParse(value) {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -818,5 +810,4 @@
 			return false;
 		}
 	}
-
-})(window);
+}

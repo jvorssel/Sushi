@@ -18,34 +18,47 @@ namespace Sushi.Tests
         /// </summary>
         protected static void CompileJavaScript(ConversionKernel kernel,
             JavaScriptVersion version,
-            bool isolated,
-            string fileName,
-            Func<DataModel, bool> predicate)
+            bool isolated = false,
+            Func<DataModel, bool> predicate = null,
+            string fileName = "ecmascript",
+            bool minify = false)
         {
-            var isolatedText = isolated ? "isolated" : string.Empty;
             var converter = kernel.CreateConverterForJavaScript(version, isolated);
             var converted = converter.Convert(predicate);
 
-            var writer = new FileWriter(converter, FilePath, ".js");
-            writer.FlushToFile(converted, $@"{fileName}.{version}.{isolatedText}");
+            var writer = new FileWriter(converter, FilePath, ".js", minify);
+
+            fileName += $".{version.ToString().ToLowerInvariant()}";
+
+            if (isolated)
+                fileName += ".isolated";
+
+            if (minify)
+                fileName += ".min";
+
+
+            writer.FlushToFile(converted, fileName);
         }
 
         /// <summary>
         ///     Compile a model for TypeScript.
         /// </summary>
-        protected static void CompileTypeScript(ConversionKernel kernel, string fileName = "typescript", Func<DataModel, bool> predicate = null)
+        protected static void CompileTypeScript(ConversionKernel kernel, string fileName = "typescript", Func<DataModel, bool> predicate = null, bool minify = false)
         {
             var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
             var converted = converter.Convert(predicate);
 
-            var writer = new FileWriter(converter, FilePath, ".ts");
+            var writer = new FileWriter(converter, FilePath, ".ts", minify);
+            if (minify)
+                fileName += ".min";
+
             writer.FlushToFile(converted, fileName);
         }
 
         /// <summary>
         ///     Compile a model for DefinitelyTyped.
         /// </summary>
-        protected static void CompileDefinitelyTyped(ConversionKernel kernel, string fileName = "reference")
+        protected static void CompileDefinitelyTyped(ConversionKernel kernel, string fileName = "reference", bool minify = false)
         {
             // Make sure the XML documentation is loaded
             var assemblyName = typeof(TestBase).Assembly.GetProjectName();
@@ -55,7 +68,10 @@ namespace Sushi.Tests
             var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
             var converted = converter.Convert();
 
-            var writer = new FileWriter(converter, FilePath, ".d.ts");
+            var writer = new FileWriter(converter, FilePath, ".d.ts", minify);
+            if (minify)
+                fileName += ".min";
+
             writer.FlushToFile(converted, fileName);
         }
     }

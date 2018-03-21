@@ -344,7 +344,7 @@ export class UserReferenceToPerson  {
 				throw new TypeError("Given object property 'Person' is expected to be a object.");
 		}
 
-		this.RegisteredOn = value.RegisteredOn || "2018-03-21T14:39:10.6891458+01:00";
+		this.RegisteredOn = value.RegisteredOn || "2018-03-21T15:04:32.1329147+01:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";

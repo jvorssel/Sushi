@@ -69,11 +69,6 @@
     <Compile Include="UtilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Compiled\complete.V5.js" />
-    <Content Include="Compiled\complete.V6.js" />
-    <Content Include="Compiled\inherits.V5.js" />
-    <Content Include="Compiled\inherits.V6.js" />
-    <Content Include="Compiled\summary.V5.js" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
@@ -92,7 +87,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Compiled\ecmascript.v5.isolated.js" />
+    <Content Include="Compiled\ecmascript.v5.isolated.min.js" />
+    <Content Include="Compiled\ecmascript.v5.js" />
+    <Content Include="Compiled\ecmascript.v5.min.js" />
+    <Content Include="Compiled\ecmascript.v6.js" />
+    <Content Include="Compiled\ecmascript.v6.min.js" />
+  </ItemGroup>
+  <ItemGroup>
     <TypeScriptCompile Include="Compiled\reference.d.ts" />
+    <TypeScriptCompile Include="Compiled\typescript.min.ts" />
     <TypeScriptCompile Include="Compiled\typescript.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
