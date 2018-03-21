@@ -3,6 +3,9 @@ using Sushi.Enum;
 
 namespace Sushi.TypeScript.Enum
 {
+    /// <summary>
+    ///     Enum for different base-types for TypeScript.
+    /// </summary>
     public enum TypeScriptType
     {
         /// <summary>

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Sushi.Consistency;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 using Sushi.Models;
+using static Sushi.Consistency.TemplateKeys;
 
 namespace Sushi
 {
@@ -83,9 +83,9 @@ namespace Sushi
             var doc = _kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == model.Type.FullName);
 
             var template = Language.Template
-                .Replace(TemplateKeys.TYPE_NAME_KEY, model.Name)
-                .Replace(TemplateKeys.TYPE_NAMESPACE_KEY, model.Type.Namespace)
-                .Replace(TemplateKeys.ARGUMENT_NAME, _kernel.ArgumentName)
+                .Replace(TYPE_NAME_KEY, model.Name)
+                .Replace(TYPE_NAMESPACE_KEY, model.Type.Namespace)
+                .Replace(ARGUMENT_NAME, _kernel.ArgumentName)
                 ;
 
             var enumerator = new StringEnumerator(template);
@@ -96,10 +96,10 @@ namespace Sushi
                     continue;
 
                 // Recognition
-                if (row.Contains(TemplateKeys.CTOR_PROPERTIES_KEY))
+                if (row.Contains(CTOR_PROPERTIES_KEY))
                 {
                     // Set the values for each property in the ctor
-                    var indent = row.Before(TemplateKeys.CTOR_PROPERTIES_KEY);
+                    var indent = row.Before(CTOR_PROPERTIES_KEY);
                     var propertyValueBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
@@ -110,9 +110,9 @@ namespace Sushi
                     modelBuilder.Append(propertyValueBuilder);
                 }
                 // Define
-                if (row.Contains(TemplateKeys.CLASS_PROPERTIES_KEY))
+                if (row.Contains(CLASS_PROPERTIES_KEY))
                 {
-                    var indent = row.Before(TemplateKeys.CLASS_PROPERTIES_KEY);
+                    var indent = row.Before(CLASS_PROPERTIES_KEY);
                     var propertyDefinitionBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
@@ -123,9 +123,9 @@ namespace Sushi
                     modelBuilder.Append(propertyDefinitionBuilder);
                 }
                 // Check
-                else if (row.Contains(TemplateKeys.VALIDATION_KEY))
+                else if (row.Contains(VALIDATION_KEY))
                 {
-                    var indent = row.Before(TemplateKeys.VALIDATION_KEY);
+                    var indent = row.Before(VALIDATION_KEY);
                     var statementBuilder = new StringBuilder();
                     var statements = Language.FormatStatements(_kernel, model.Properties.ToList(), referenceDataModels).GroupBy(x => x.Type);
 
@@ -142,38 +142,38 @@ namespace Sushi
                     modelBuilder.Append(statementBuilder);
                 }
                 // Defined check
-                else if (row.Contains(TemplateKeys.IS_DEFINED_CHECK))
+                else if (row.Contains(IS_DEFINED_CHECK))
                 {
                     var statement = Language.StatementPipeline.ArgumentDefinedStatement(_kernel);
-                    var rowWithStatement = row.Replace(TemplateKeys.IS_DEFINED_CHECK, statement.ToString());
+                    var rowWithStatement = row.Replace(IS_DEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
                 // Undefined check
-                else if (row.Contains(TemplateKeys.IS_UNDEFINED_CHECK))
+                else if (row.Contains(IS_UNDEFINED_CHECK))
                 {
                     var statement = Language.StatementPipeline.ArgumentUndefinedStatement(_kernel);
-                    var rowWithStatement = row.Replace(TemplateKeys.IS_UNDEFINED_CHECK, statement.ToString());
+                    var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
                 // Base type check
-                else if (row.Contains(TemplateKeys.INHERIT_TYPE))
+                else if (row.Contains(INHERIT_TYPE))
                 {
                     var inherits = referenceDataModels.SingleOrDefault(x => x == model.BaseType);
                     if (ReferenceEquals(inherits, null))
                     {
-                        modelBuilder.Append(row.Replace(TemplateKeys.INHERIT_TYPE, string.Empty)); // No inheritance member available, add row.
+                        modelBuilder.Append(row.Replace(INHERIT_TYPE, string.Empty)); // No inheritance member available, add row.
                         continue;
                     }
 
                     var statement = Language.FormatInheritanceStatement(model, inherits);
-                    modelBuilder.Append(row.Replace(TemplateKeys.INHERIT_TYPE, statement.ToString()));
+                    modelBuilder.Append(row.Replace(INHERIT_TYPE, statement.ToString()));
                 }
                 // JsDoc
-                else if (row.Contains(TemplateKeys.SUMMARY_KEY))
+                else if (row.Contains(SUMMARY_KEY))
                 {
                     var summary = doc?.Summary ?? string.Empty;
                     if (!summary.IsEmpty())
-                        modelBuilder.Append(enumerator.Current.Replace(TemplateKeys.SUMMARY_KEY, summary));
+                        modelBuilder.Append(enumerator.Current.Replace(SUMMARY_KEY, summary));
                 }
                 // Comments & Empty lines
                 else if (row.StartsWith("// ReSharper")) // Remove resharper comments.

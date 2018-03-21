@@ -49,7 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompileWithSummaryTests.cs" />
+    <Compile Include="Script\CompileWithSummaryTests.cs" />
     <Compile Include="Script\DefinitelyTypedTests.cs" />
     <Compile Include="Models\Ignore\DoNotIgnoreMe.cs" />
     <Compile Include="Models\Ignore\IgnoreMe.cs" />
@@ -84,10 +84,6 @@
     <Folder Include="Compiled\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sushi.DefinitelyTyped\Sushi.DefinitelyTyped.csproj">
-      <Project>{9738e596-4040-438b-8dd1-ec9d770233df}</Project>
-      <Name>Sushi.DefinitelyTyped</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
       <Project>{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}</Project>
       <Name>Sushi.JavaScript</Name>

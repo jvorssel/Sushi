@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.DefinitelyTyped;
 using Sushi.Extensions;
+using Sushi.TypeScript;
+using Sushi.TypeScript.Enum;
 
 namespace Sushi.Tests.Script
 {
@@ -22,7 +23,7 @@ namespace Sushi.Tests.Script
                 var xmlDocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{assemblyName}.xml");
                 kernel.LoadXmlDocumentation(xmlDocPath);
 
-                var converter = kernel.CreateConverterForDefinitelyTyped();
+                var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
                 var converted = converter.Convert();
 
                 var writer = new FileWriter(converter, FilePath, ".d.ts");

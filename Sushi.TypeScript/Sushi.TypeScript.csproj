@@ -44,14 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConversionKernelExtensions.cs" />
+    <Compile Include="Specifications\DefinitelyTypedSpecification.cs" />
+    <Compile Include="Specifications\DefinitelyTypedStatements.cs" />
+    <Compile Include="Enum\TypeScriptSpecification.cs" />
     <Compile Include="Enum\TypeScriptType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TypeScriptSpecification.cs" />
-    <Compile Include="TypeScriptStatements.cs" />
+    <Compile Include="Specifications\TypeScriptSpecification.cs" />
+    <Compile Include="Specifications\TypeScriptStatements.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +74,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Templates\reference.d.ts" />
     <TypeScriptCompile Include="Templates\template.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

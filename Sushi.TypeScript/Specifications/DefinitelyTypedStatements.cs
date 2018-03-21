@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sushi.Models;
 
-namespace Sushi.DefinitelyTyped
+namespace Sushi.TypeScript.Specifications
 {
 	public class DefinitelyTypedStatements : StatementPipeline
 	{

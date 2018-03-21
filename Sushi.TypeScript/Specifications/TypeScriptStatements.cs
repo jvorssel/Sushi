@@ -5,7 +5,7 @@ using Sushi.Enum;
 using Sushi.Models;
 using Sushi.TypeScript.Enum;
 
-namespace Sushi.TypeScript
+namespace Sushi.TypeScript.Specifications
 {
     /// <inheritdoc />
     public class TypeScriptStatements : StatementPipeline

@@ -63,6 +63,16 @@ namespace Sushi.TypeScript.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] reference {
+            get {
+                object obj = ResourceManager.GetObject("reference", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] template {
             get {
                 object obj = ResourceManager.GetObject("template", resourceCulture);

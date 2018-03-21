@@ -7,7 +7,7 @@ using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Models;
 
-namespace Sushi.DefinitelyTyped
+namespace Sushi.TypeScript.Specifications
 {
     public class DefinitelyTypedSpecification : LanguageSpecification
     {
@@ -111,30 +111,7 @@ namespace Sushi.DefinitelyTyped
         #region Initializers
 
         public DefinitelyTypedSpecification()
-        {
-            StatementPipeline = new DefinitelyTypedStatements();
-        }
-
-        public DefinitelyTypedSpecification(string scriptLanguage, Version version, bool isIsolated = false)
-            : base(scriptLanguage, version, isIsolated)
-        {
-            StatementPipeline = new DefinitelyTypedStatements();
-        }
-
-        public DefinitelyTypedSpecification(string scriptLanguage, string version, bool isIsolated = false)
-            : base(scriptLanguage, Version.Parse(version), isIsolated)
-        {
-            StatementPipeline = new DefinitelyTypedStatements();
-        }
-
-        public DefinitelyTypedSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
-            : base(path, scriptLanguage, Version.Parse(version), isIsolated)
-        {
-            StatementPipeline = new DefinitelyTypedStatements();
-        }
-
-        public DefinitelyTypedSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
-            : base(path, scriptLanguage, version, isIsolated)
+        : base("DefinitelyTyped", new Version(1, 0, 0))
         {
             StatementPipeline = new DefinitelyTypedStatements();
         }

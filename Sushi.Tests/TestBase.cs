@@ -4,6 +4,7 @@ using Sushi.JavaScript;
 using Sushi.JavaScript.Enum;
 using Sushi.Models;
 using Sushi.TypeScript;
+using Sushi.TypeScript.Enum;
 
 namespace Sushi.Tests
 {
@@ -33,7 +34,7 @@ namespace Sushi.Tests
         /// </summary>
         protected static void CompileTypeScript(ConversionKernel kernel, string fileName, Func<DataModel, bool> predicate)
         {
-            var converter = kernel.CreateConverterForTypeScript();
+            var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
             var converted = converter.Convert(predicate);
 
             var writer = new FileWriter(converter, FilePath, ".ts");

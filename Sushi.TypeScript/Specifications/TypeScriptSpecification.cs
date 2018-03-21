@@ -8,7 +8,7 @@ using Sushi.Enum;
 using Sushi.Models;
 using Sushi.TypeScript.Enum;
 
-namespace Sushi.TypeScript
+namespace Sushi.TypeScript.Specifications
 {
     public class TypeScriptSpecification : LanguageSpecification
     {

@@ -314,7 +314,7 @@ function UserReferenceToPerson(value) {
 			throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 	}
 
-	this.RegisteredOn = value.RegisteredOn || "2018-03-19T01:32:06.0109308+01:00";
+	this.RegisteredOn = value.RegisteredOn || "2018-03-19T11:37:36.6110028+01:00";
 	this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 	this.Username = value.Username || "MrAwesome";
 	this.Password = value.Password || "Secret";
