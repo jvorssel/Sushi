@@ -1,14 +1,15 @@
 // ECMA 6 - PersonModel
 
 /**
- * @summary Server-side generated model for the 'PersonModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
+ * @name PersonModel
+ * @namespace Sushi.Tests.Models.Inheritance.PersonModel
  */
 class PersonModel  {
 	/**
-	 * @name PersonModel
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel
-	 * @class PersonModel
-	 * @classdesc Server-side generated constructor for the 'PersonModel' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
 	 * @param {Object<PersonModel>} [value] The object to convert to the match the 'PersonModel' class.
 	 */
 	constructor(value) {
@@ -26,15 +27,18 @@ class PersonModel  {
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'PersonModel' class.
 	 */
@@ -66,14 +70,15 @@ class PersonModel  {
 // ECMA 6 - StudentModel
 
 /**
- * @summary Server-side generated model for the 'StudentModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
+ * @name StudentModel
+ * @namespace Sushi.Tests.Models.Inheritance.StudentModel
  */
 class StudentModel  extends PersonModel {
 	/**
-	 * @name StudentModel
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel
-	 * @class StudentModel
-	 * @classdesc Server-side generated constructor for the 'StudentModel' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
 	 * @param {Object<StudentModel>} [value] The object to convert to the match the 'StudentModel' class.
 	 */
 	constructor(value) {
@@ -103,18 +108,21 @@ class StudentModel  extends PersonModel {
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Grade = value.Grade || 9;
 		this.School = value.School || "Sint Jan";
 		this.Gender = value.Gender || 0;
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'StudentModel' class.
 	 */

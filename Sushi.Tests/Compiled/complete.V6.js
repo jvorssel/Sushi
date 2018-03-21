@@ -1,14 +1,17 @@
 // ECMA 6 - ModelWithManyLists
 
 /**
- * @summary Server-side generated model for the 'ModelWithManyLists' class.
+ * A model with a LOT of lists.
+ *
+ * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
+ * @name ModelWithManyLists
+ * @namespace Sushi.Tests.Models.ModelWithManyLists
  */
 class ModelWithManyLists  {
 	/**
-	 * @name ModelWithManyLists
-	 * @namespace Sushi.Tests.Models.ModelWithManyLists
-	 * @class ModelWithManyLists
-	 * @classdesc Server-side generated constructor for the 'ModelWithManyLists' class.
+	 * A model with a LOT of lists.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
 	 * @param {Object<ModelWithManyLists>} [value] The object to convert to the match the 'ModelWithManyLists' class.
 	 */
 	constructor(value) {
@@ -42,19 +45,40 @@ class ModelWithManyLists  {
 				throw new TypeError("Given object property 'Dictionary' is expected to be a object.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
+		/**
+		  * @summary A beautiful list!
+		  */
 		this.List = value.List || [];
+		/**
+		  * @summary Another one!
+		  */
 		this.HashSet = value.HashSet || [];
+		/**
+		  * @summary Wow another one!
+		  */
 		this.Enumerable = value.Enumerable || [];
+		/**
+		  * @summary Dude another one! WOW!
+		  */
 		this.Collection = value.Collection || [];
+		/**
+		  * @summary This one is readonly? WOAH!
+		  */
 		this.ReadOnlyList = value.ReadOnlyList || [];
+		/**
+		  * @summary DUDE THIS IS NOT A LIST BUT AN OBJECT!
+		  */
 		this.Dictionary = value.Dictionary || {};
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'ModelWithManyLists' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.ModelWithManyLists.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'ModelWithManyLists' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'ModelWithManyLists' class.
 	 */
@@ -102,14 +126,15 @@ class ModelWithManyLists  {
 // ECMA 6 - NameModel
 
 /**
- * @summary Server-side generated model for the 'NameModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.NameModel.
+ * @name NameModel
+ * @namespace Sushi.Tests.Models.NameModel
  */
 class NameModel  {
 	/**
-	 * @name NameModel
-	 * @namespace Sushi.Tests.Models.NameModel
-	 * @class NameModel
-	 * @classdesc Server-side generated constructor for the 'NameModel' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.NameModel.
 	 * @param {Object<NameModel>} [value] The object to convert to the match the 'NameModel' class.
 	 */
 	constructor(value) {
@@ -131,16 +156,19 @@ class NameModel  {
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Name = value.Name || "Jeroen";
 		this.Insertion = value.Insertion || '';
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.NameModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'NameModel' class.
 	 */
@@ -176,14 +204,15 @@ class NameModel  {
 // ECMA 6 - PersonReferenceToUser
 
 /**
- * @summary Server-side generated model for the 'PersonReferenceToUser' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
+ * @name PersonReferenceToUser
+ * @namespace Sushi.Tests.Models.PersonReferenceToUser
  */
 class PersonReferenceToUser  {
 	/**
-	 * @name PersonReferenceToUser
-	 * @namespace Sushi.Tests.Models.PersonReferenceToUser
-	 * @class PersonReferenceToUser
-	 * @classdesc Server-side generated constructor for the 'PersonReferenceToUser' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
 	 * @param {Object<PersonReferenceToUser>} [value] The object to convert to the match the 'PersonReferenceToUser' class.
 	 */
 	constructor(value) {
@@ -213,17 +242,20 @@ class PersonReferenceToUser  {
 				throw new TypeError("Given object property 'User' is expected to be an instance of the 'UserReferenceToPerson' constructor.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Name = value.Name || '';
 		this.Insertion = value.Insertion || '';
 		this.Surname = value.Surname || '';
 		this.User = value.User || null;
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.PersonReferenceToUser.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'PersonReferenceToUser' class.
 	 */
@@ -267,14 +299,15 @@ class PersonReferenceToUser  {
 // ECMA 6 - UserReferenceToPerson
 
 /**
- * @summary Server-side generated model for the 'UserReferenceToPerson' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
+ * @name UserReferenceToPerson
+ * @namespace Sushi.Tests.Models.UserReferenceToPerson
  */
 class UserReferenceToPerson  {
 	/**
-	 * @name UserReferenceToPerson
-	 * @namespace Sushi.Tests.Models.UserReferenceToPerson
-	 * @class UserReferenceToPerson
-	 * @classdesc Server-side generated constructor for the 'UserReferenceToPerson' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
 	 * @param {Object<UserReferenceToPerson>} [value] The object to convert to the match the 'UserReferenceToPerson' class.
 	 */
 	constructor(value) {
@@ -308,18 +341,21 @@ class UserReferenceToPerson  {
 				throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 		}
 
-		this.RegisteredOn = value.RegisteredOn || "2018-03-19T01:32:06.1880985+01:00";
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
+		this.RegisteredOn = value.RegisteredOn || "2018-03-21T14:39:10.4846093+01:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";
 		this.Person = value.Person || null;
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.UserReferenceToPerson.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'UserReferenceToPerson' class.
 	 */
@@ -367,14 +403,15 @@ class UserReferenceToPerson  {
 // ECMA 6 - TypeModel
 
 /**
- * @summary Server-side generated model for the 'TypeModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.TypeModel.
+ * @name TypeModel
+ * @namespace Sushi.Tests.Models.TypeModel
  */
 class TypeModel  {
 	/**
-	 * @name TypeModel
-	 * @namespace Sushi.Tests.Models.TypeModel
-	 * @class TypeModel
-	 * @classdesc Server-side generated constructor for the 'TypeModel' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.TypeModel.
 	 * @param {Object<TypeModel>} [value] The object to convert to the match the 'TypeModel' class.
 	 */
 	constructor(value) {
@@ -404,18 +441,21 @@ class TypeModel  {
 				throw new TypeError("Given object property 'Char' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Name = value.Name || "Jeroen";
 		this.Number = value.Number || 1337;
 		this.Decimal = value.Decimal || 1.47;
 		this.Value = value.Value || true;
 		this.Char = value.Char || "a";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.TypeModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'TypeModel' class.
 	 */
@@ -459,27 +499,31 @@ class TypeModel  {
 // ECMA 6 - Gender
 
 /**
- * @summary Server-side generated model for the 'Gender' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
+ * @name Gender
+ * @namespace Sushi.Tests.Models.Inheritance.Gender
  */
 class Gender  {
 	/**
-	 * @name Gender
-	 * @namespace Sushi.Tests.Models.Inheritance.Gender
-	 * @class Gender
-	 * @classdesc Server-side generated constructor for the 'Gender' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
 	 * @param {Object<Gender>} [value] The object to convert to the match the 'Gender' class.
 	 */
 	constructor(value) {
 		if (value !== void 0 && value !== null) {
 		}
 
-		$$SET_PROPERTY_VALUES$$;
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'Gender' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Inheritance.Gender.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'Gender' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'Gender' class.
 	 */
@@ -500,14 +544,15 @@ class Gender  {
 // ECMA 6 - PersonModel
 
 /**
- * @summary Server-side generated model for the 'PersonModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
+ * @name PersonModel
+ * @namespace Sushi.Tests.Models.Inheritance.PersonModel
  */
 class PersonModel  {
 	/**
-	 * @name PersonModel
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel
-	 * @class PersonModel
-	 * @classdesc Server-side generated constructor for the 'PersonModel' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
 	 * @param {Object<PersonModel>} [value] The object to convert to the match the 'PersonModel' class.
 	 */
 	constructor(value) {
@@ -525,15 +570,18 @@ class PersonModel  {
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'PersonModel' class.
 	 */
@@ -565,14 +613,15 @@ class PersonModel  {
 // ECMA 6 - StudentModel
 
 /**
- * @summary Server-side generated model for the 'StudentModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
+ * @name StudentModel
+ * @namespace Sushi.Tests.Models.Inheritance.StudentModel
  */
 class StudentModel  extends PersonModel {
 	/**
-	 * @name StudentModel
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel
-	 * @class StudentModel
-	 * @classdesc Server-side generated constructor for the 'StudentModel' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
 	 * @param {Object<StudentModel>} [value] The object to convert to the match the 'StudentModel' class.
 	 */
 	constructor(value) {
@@ -602,18 +651,21 @@ class StudentModel  extends PersonModel {
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.Grade = value.Grade || 9;
 		this.School = value.School || "Sint Jan";
 		this.Gender = value.Gender || 0;
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'StudentModel' class.
 	 */
@@ -657,14 +709,15 @@ class StudentModel  extends PersonModel {
 // ECMA 6 - DoNotIgnoreMe
 
 /**
- * @summary Server-side generated model for the 'DoNotIgnoreMe' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
+ * @name DoNotIgnoreMe
+ * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
  */
 class DoNotIgnoreMe  extends IgnoreTestRoot {
 	/**
-	 * @name DoNotIgnoreMe
-	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
-	 * @class DoNotIgnoreMe
-	 * @classdesc Server-side generated constructor for the 'DoNotIgnoreMe' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
 	 * @param {Object<DoNotIgnoreMe>} [value] The object to convert to the match the 'DoNotIgnoreMe' class.
 	 */
 	constructor(value) {
@@ -678,14 +731,17 @@ class DoNotIgnoreMe  extends IgnoreTestRoot {
 				throw new TypeError("Given object property 'ShouldExist' is expected to be a string.");
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 		this.ShouldExist = value.ShouldExist || '';
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'DoNotIgnoreMe' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'DoNotIgnoreMe' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'DoNotIgnoreMe' class.
 	 */
@@ -713,27 +769,31 @@ class DoNotIgnoreMe  extends IgnoreTestRoot {
 // ECMA 6 - IgnoreTestRoot
 
 /**
- * @summary Server-side generated model for the 'IgnoreTestRoot' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
+ * @name IgnoreTestRoot
+ * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
  */
 class IgnoreTestRoot  {
 	/**
-	 * @name IgnoreTestRoot
-	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
-	 * @class IgnoreTestRoot
-	 * @classdesc Server-side generated constructor for the 'IgnoreTestRoot' class.
+	 *
+	 * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
 	 * @param {Object<IgnoreTestRoot>} [value] The object to convert to the match the 'IgnoreTestRoot' class.
 	 */
 	constructor(value) {
 		if (value !== void 0 && value !== null) {
 		}
 
-		$$SET_PROPERTY_VALUES$$;
+		// Create object to avoid null/undefind TypeError
+		if (value === void 0 || value === null)
+			value = {};
+
 	}
 
 	/**
+	 * Check if the given 'value' contains the expected keys and instances to match the 'IgnoreTestRoot' class.
 	 * @name tryParse
 	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'IgnoreTestRoot' class.
 	 * @param {Object=} value The object to parse.
 	 * @return {boolean} If the given 'value' can match the 'IgnoreTestRoot' class.
 	 */

@@ -60,14 +60,6 @@ namespace Sushi
         }
 
         /// <summary>
-        ///     Initialize a new <see cref="ConversionKernel"/> with the default <see cref="ILanguageSpecification"/>(s).
-        /// </summary>
-        public ConversionKernel()
-        {
-
-        }
-
-        /// <summary>
         ///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="types"/> for <see cref="Models"/>.
         /// </summary>
         public ConversionKernel(IEnumerable<Type> types)
@@ -79,7 +71,6 @@ namespace Sushi
         ///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="models"/>.
         /// </summary>
         public ConversionKernel(IEnumerable<DataModel> models)
-            : this()
         {
             Models = new HashSet<DataModel>(models);
         }
@@ -89,7 +80,6 @@ namespace Sushi
         ///     inherit <see cref="IModelToConvert"/> in the given <paramref name="assembly"/>.
         /// </summary>
         public ConversionKernel(Assembly assembly)
-            : this()
         {
             // Find the models in the given assembly.
             var models = assembly.ExportedTypes

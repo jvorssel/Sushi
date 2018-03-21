@@ -16,7 +16,8 @@ namespace Sushi.Tests.Script
 		[TestMethod]
 		public void CompileAvailableVersionsToFileTest()
 		{
-			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
+			var assembly = typeof(JavaScriptTests).Assembly;
+			using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
 			{
 				CompileJavaScript(kernel, JavaScriptVersion.V5, false, "complete", null);
 				CompileJavaScript(kernel, JavaScriptVersion.V5, true, "complete", null);
@@ -27,7 +28,8 @@ namespace Sushi.Tests.Script
 		[TestMethod]
 		public void CompileInheritanceTest()
 		{
-			using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
+			var assembly = typeof(JavaScriptTests).Assembly;
+			using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
 			{
 				Func<DataModel, bool> predicate = x => x == typeof(PersonModel) || x == typeof(StudentModel);
 				CompileJavaScript(kernel, JavaScriptVersion.V5, false, "inherits", predicate);

@@ -74,15 +74,7 @@
     <Content Include="Compiled\inherits.V5.js" />
     <Content Include="Compiled\inherits.V6.js" />
     <Content Include="Compiled\summary.V5.js" />
-    <Content Include="Result\result.minified.js" />
-    <Content Include="Result\result.propertyGroup.js" />
     <None Include="packages.config" />
-    <Content Include="Result\paste.js" />
-    <Content Include="Result\result V5 Isolated.js" />
-    <Content Include="Result\result V5.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Result\result V6.js" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

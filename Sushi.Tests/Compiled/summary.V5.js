@@ -39,6 +39,10 @@ function ModelWithManyLists(value) {
 			throw new TypeError("Given object property 'Dictionary' is expected to be a object.");
 	}
 
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
 	/**
 	  * @summary A beautiful list!
 	  */
@@ -142,6 +146,10 @@ function NameModel(value) {
 			throw new TypeError("Given object property 'Surname' is expected to be a string.");
 	}
 
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
 	this.Name = value.Name || "Jeroen";
 	this.Insertion = value.Insertion || '';
 	this.Surname = value.Surname || "Vorsselman";
@@ -219,6 +227,10 @@ function PersonReferenceToUser(value) {
 		if (!(value['User'] === void 0 || value['User'] === null) && !(value['User'] instanceof UserReferenceToPerson))
 			throw new TypeError("Given object property 'User' is expected to be an instance of the 'UserReferenceToPerson' constructor.");
 	}
+
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
 
 	this.Name = value.Name || '';
 	this.Insertion = value.Insertion || '';
@@ -311,7 +323,11 @@ function UserReferenceToPerson(value) {
 			throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 	}
 
-	this.RegisteredOn = value.RegisteredOn || "2018-03-21T13:27:07.1629783+01:00";
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
+	this.RegisteredOn = value.RegisteredOn || "2018-03-21T14:18:42.0507101+01:00";
 	this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 	this.Username = value.Username || "MrAwesome";
 	this.Password = value.Password || "Secret";
@@ -403,6 +419,10 @@ function TypeModel(value) {
 			throw new TypeError("Given object property 'Char' is expected to be a string.");
 	}
 
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
 	this.Name = value.Name || "Jeroen";
 	this.Number = value.Number || 1337;
 	this.Decimal = value.Decimal || 1.47;
@@ -468,6 +488,10 @@ function Gender(value) {
 	if (value !== void 0 && value !== null) {
 	}
 
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
 }
 
 ;
@@ -515,6 +539,10 @@ function PersonModel(value) {
 		if (typeof (value['Surname']) !== 'string')
 			throw new TypeError("Given object property 'Surname' is expected to be a string.");
 	}
+
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
 
 	this.Name = value.Name || "Jeroen";
 	this.Surname = value.Surname || "Vorsselman";
@@ -589,6 +617,10 @@ function StudentModel(value) {
 			throw new TypeError("Given object property 'Surname' is expected to be a string.");
 	}
 
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
 	this.Grade = value.Grade || 9;
 	this.School = value.School || "Sint Jan";
 	this.Gender = value.Gender || 0;
@@ -661,6 +693,10 @@ function DoNotIgnoreMe(value) {
 			throw new TypeError("Given object property 'ShouldExist' is expected to be a string.");
 	}
 
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
+
 	this.ShouldExist = value.ShouldExist || '';
 }
 
@@ -705,6 +741,10 @@ DoNotIgnoreMe.prototype.tryParse = function (value) {
 function IgnoreTestRoot(value) {
 	if (value !== void 0 && value !== null) {
 	}
+
+	// Create object to avoid null/undefind TypeError
+	if (value === void 0 || value === null)
+		value = {};
 
 }
 

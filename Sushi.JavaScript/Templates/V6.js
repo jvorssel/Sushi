@@ -5,15 +5,17 @@
 // ECMA 6 - $$TYPENAME$$
 
 /**
- * @summary Server-side generated model for the '$$TYPENAME$$' class.
+ * $$SUMMARY$$
+ *
+ * Server-side generated model: $$TYPE_NAMESPACE$$.$$TYPENAME$$.
+ * @name $$TYPENAME$$
+ * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
  */
 class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 	/**
-	 * @name $$TYPENAME$$
-	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
-	 * @class $$TYPENAME$$
-	 * @classdesc Server-side generated constructor for the '$$TYPENAME$$' class.
-	 * @summary $$SUMMARY$$
+	 * $$SUMMARY$$
+	 *
+	 * Server-side generated model: $$TYPE_NAMESPACE$$.$$TYPENAME$$.
 	 * @param {Object<$$TYPENAME$$>} [$$ARGUMENT_NAME$$] The object to convert to the match the '$$TYPENAME$$' class.
 	 */
 	constructor($$ARGUMENT_NAME$$) {
@@ -21,13 +23,17 @@ class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 			$$VALIDATE_OBJECT$$;
 		}
 
+		// Create object to avoid null/undefind TypeError
+		if ($$UNDEFINED_CHECK$$)
+			$$ARGUMENT_NAME$$ = {};
+
 		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
+	 * Check if the given '$$ARGUMENT_NAME$$' contains the expected keys and instances to match the '$$TYPENAME$$' class.
 	 * @name tryParse
 	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$.tryParse
-	 * @description Check if the given '$$ARGUMENT_NAME$$' contains the expected keys and instances to match the '$$TYPENAME$$' class.
 	 * @param {Object=} $$ARGUMENT_NAME$$ The object to parse.
 	 * @return {boolean} If the given '$$ARGUMENT_NAME$$' can match the '$$TYPENAME$$' class.
 	 */

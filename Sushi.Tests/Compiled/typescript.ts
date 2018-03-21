@@ -1,9 +1,9 @@
-// ECMA 6 - ModelWithManyLists
-
 /**
  * A model with a LOT of lists.
  *
  * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
+ * @name ModelWithManyLists
+ * @namespace Sushi.Tests.Models.ModelWithManyLists
  */
 export class ModelWithManyLists  {
 
@@ -140,11 +140,11 @@ export class ModelWithManyLists  {
 		}
 	}
 }
-// ECMA 6 - NameModel
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.NameModel.
+ * @name NameModel
+ * @namespace Sushi.Tests.Models.NameModel
  */
 export class NameModel  {
 
@@ -214,11 +214,11 @@ export class NameModel  {
 		}
 	}
 }
-// ECMA 6 - PersonReferenceToUser
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
+ * @name PersonReferenceToUser
+ * @namespace Sushi.Tests.Models.PersonReferenceToUser
  */
 export class PersonReferenceToUser  {
 
@@ -298,11 +298,11 @@ export class PersonReferenceToUser  {
 		}
 	}
 }
-// ECMA 6 - UserReferenceToPerson
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
+ * @name UserReferenceToPerson
+ * @namespace Sushi.Tests.Models.UserReferenceToPerson
  */
 export class UserReferenceToPerson  {
 
@@ -344,7 +344,7 @@ export class UserReferenceToPerson  {
 				throw new TypeError("Given object property 'Person' is expected to be a object.");
 		}
 
-		this.RegisteredOn = value.RegisteredOn || "2018-03-21T13:53:20.1180932+01:00";
+		this.RegisteredOn = value.RegisteredOn || "2018-03-21T14:39:10.6891458+01:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";
@@ -392,11 +392,11 @@ export class UserReferenceToPerson  {
 		}
 	}
 }
-// ECMA 6 - TypeModel
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.TypeModel.
+ * @name TypeModel
+ * @namespace Sushi.Tests.Models.TypeModel
  */
 export class TypeModel  {
 
@@ -486,11 +486,11 @@ export class TypeModel  {
 		}
 	}
 }
-// ECMA 6 - Gender
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
+ * @name Gender
+ * @namespace Sushi.Tests.Models.Inheritance.Gender
  */
 export class Gender  {
 
@@ -524,11 +524,11 @@ export class Gender  {
 		}
 	}
 }
-// ECMA 6 - PersonModel
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
+ * @name PersonModel
+ * @namespace Sushi.Tests.Models.Inheritance.PersonModel
  */
 export class PersonModel  {
 
@@ -588,11 +588,11 @@ export class PersonModel  {
 		}
 	}
 }
-// ECMA 6 - StudentModel
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
+ * @name StudentModel
+ * @namespace Sushi.Tests.Models.Inheritance.StudentModel
  */
 export class StudentModel  implements PersonModel {
 
@@ -690,11 +690,11 @@ export class StudentModel  implements PersonModel {
 		}
 	}
 }
-// ECMA 6 - DoNotIgnoreMe
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
+ * @name DoNotIgnoreMe
+ * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
  */
 export class DoNotIgnoreMe  implements IgnoreTestRoot {
 
@@ -744,11 +744,11 @@ export class DoNotIgnoreMe  implements IgnoreTestRoot {
 		}
 	}
 }
-// ECMA 6 - IgnoreTestRoot
-
 /**
  *
  * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
+ * @name IgnoreTestRoot
+ * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
  */
 export class IgnoreTestRoot  {
 

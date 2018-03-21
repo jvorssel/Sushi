@@ -2,12 +2,12 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable WrongExpressionStatement
 // ReSharper disable UseOfImplicitGlobalInFunctionScope
-// ECMA 6 - $$TYPENAME$$
-
 /**
  * $$SUMMARY$$
  *
  * Server-side generated model: $$TYPE_NAMESPACE$$.$$TYPENAME$$.
+ * @name $$TYPENAME$$
+ * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
  */
 export class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 
