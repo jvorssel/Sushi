@@ -1,40 +1,59 @@
 // ECMA 6 - ModelWithManyLists
 
 /**
- * @summary Server-side generated model for the 'ModelWithManyLists' class.
+ * A model with a LOT of lists.
+ *
+ * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
  */
-class ModelWithManyLists {
-
-	List: any;
-	HashSet: any;
-	Enumerable: any;
-	Collection: any;
-	ReadOnlyList: any;
-	Dictionary: any;
+export class ModelWithManyLists  {
 
 	/**
-	 * @name ModelWithManyLists
-	 * @namespace Sushi.Tests.Models.ModelWithManyLists
-	 * @class ModelWithManyLists
-	 * @classdesc Server-side generated constructor for the 'ModelWithManyLists' class.
+	  * A beautiful list!
+	  */
+	List: Array<string>;
+	/**
+	  * Another one!
+	  */
+	HashSet: Array<string>;
+	/**
+	  * Wow another one!
+	  */
+	Enumerable: Array<any>;
+	/**
+	  * Dude another one! WOW!
+	  */
+	Collection: Array<string>;
+	/**
+	  * This one is readonly? WOAH!
+	  */
+	ReadOnlyList: Array<number>;
+	/**
+	  * DUDE THIS IS NOT A LIST BUT AN OBJECT!
+	  */
+	Dictionary: Array<string>;
+
+	/**
+	 * A model with a LOT of lists.
+	 *
+	 * FullName: Sushi.Tests.Models.ModelWithManyLists
 	 * @param {Object<ModelWithManyLists>} [value] The object to convert to the match the 'ModelWithManyLists' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('List'))
-				throw new TypeError("Given object is expected to have a property with name: 'List'.");
+				throw new TypeError("Given object is expected to have a property with name: 'List'."); 
 			if (!value.hasOwnProperty('HashSet'))
-				throw new TypeError("Given object is expected to have a property with name: 'HashSet'.");
+				throw new TypeError("Given object is expected to have a property with name: 'HashSet'."); 
 			if (!value.hasOwnProperty('Enumerable'))
-				throw new TypeError("Given object is expected to have a property with name: 'Enumerable'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Enumerable'."); 
 			if (!value.hasOwnProperty('Collection'))
-				throw new TypeError("Given object is expected to have a property with name: 'Collection'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Collection'."); 
 			if (!value.hasOwnProperty('ReadOnlyList'))
-				throw new TypeError("Given object is expected to have a property with name: 'ReadOnlyList'.");
+				throw new TypeError("Given object is expected to have a property with name: 'ReadOnlyList'."); 
 			if (!value.hasOwnProperty('Dictionary'))
-				throw new TypeError("Given object is expected to have a property with name: 'Dictionary'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Dictionary'."); 
+			
 			// Check property type match.
 			if (typeof (value['List']) !== 'object')
 				throw new TypeError("Given object property 'List' is expected to be a object.");
@@ -50,41 +69,55 @@ class ModelWithManyLists {
 				throw new TypeError("Given object property 'Dictionary' is expected to be a object.");
 		}
 
+		/**
+		  * @summary A beautiful list!
+		  */
 		this.List = value.List || [];
+		/**
+		  * @summary Another one!
+		  */
 		this.HashSet = value.HashSet || [];
+		/**
+		  * @summary Wow another one!
+		  */
 		this.Enumerable = value.Enumerable || [];
+		/**
+		  * @summary Dude another one! WOW!
+		  */
 		this.Collection = value.Collection || [];
+		/**
+		  * @summary This one is readonly? WOAH!
+		  */
 		this.ReadOnlyList = value.ReadOnlyList || [];
+		/**
+		  * @summary DUDE THIS IS NOT A LIST BUT AN OBJECT!
+		  */
 		this.Dictionary = value.Dictionary || {};
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.ModelWithManyLists.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'ModelWithManyLists' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'ModelWithManyLists' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'ModelWithManyLists' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('List'))
-				throw new TypeError("Given object is expected to have a property with name: 'List'.");
+				throw new TypeError("Given object is expected to have a property with name: 'List'."); 
 			if (!value.hasOwnProperty('HashSet'))
-				throw new TypeError("Given object is expected to have a property with name: 'HashSet'.");
+				throw new TypeError("Given object is expected to have a property with name: 'HashSet'."); 
 			if (!value.hasOwnProperty('Enumerable'))
-				throw new TypeError("Given object is expected to have a property with name: 'Enumerable'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Enumerable'."); 
 			if (!value.hasOwnProperty('Collection'))
-				throw new TypeError("Given object is expected to have a property with name: 'Collection'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Collection'."); 
 			if (!value.hasOwnProperty('ReadOnlyList'))
-				throw new TypeError("Given object is expected to have a property with name: 'ReadOnlyList'.");
+				throw new TypeError("Given object is expected to have a property with name: 'ReadOnlyList'."); 
 			if (!value.hasOwnProperty('Dictionary'))
-				throw new TypeError("Given object is expected to have a property with name: 'Dictionary'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Dictionary'."); 
+			
 			// Check property type match.
 			if (typeof (value['List']) !== 'object')
 				throw new TypeError("Given object property 'List' is expected to be a object.");
@@ -110,31 +143,30 @@ class ModelWithManyLists {
 // ECMA 6 - NameModel
 
 /**
- * @summary Server-side generated model for the 'NameModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.NameModel.
  */
-class NameModel {
+export class NameModel  {
 
 	Name: string;
 	Insertion: string;
 	Surname: string;
 
 	/**
-	 * @name NameModel
-	 * @namespace Sushi.Tests.Models.NameModel
-	 * @class NameModel
-	 * @classdesc Server-side generated constructor for the 'NameModel' class.
+	 *
+	 * FullName: Sushi.Tests.Models.NameModel
 	 * @param {Object<NameModel>} [value] The object to convert to the match the 'NameModel' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Insertion'))
-				throw new TypeError("Given object is expected to have a property with name: 'Insertion'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Insertion'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -147,29 +179,25 @@ class NameModel {
 		this.Name = value.Name || "Jeroen";
 		this.Insertion = value.Insertion || '';
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.NameModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'NameModel' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Insertion'))
-				throw new TypeError("Given object is expected to have a property with name: 'Insertion'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Insertion'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -189,34 +217,33 @@ class NameModel {
 // ECMA 6 - PersonReferenceToUser
 
 /**
- * @summary Server-side generated model for the 'PersonReferenceToUser' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
  */
-class PersonReferenceToUser {
+export class PersonReferenceToUser  {
 
 	Name: string;
 	Insertion: string;
 	Surname: string;
-	User: UserReferenceToPerson | any;
+	User: any;
 
 	/**
-	 * @name PersonReferenceToUser
-	 * @namespace Sushi.Tests.Models.PersonReferenceToUser
-	 * @class PersonReferenceToUser
-	 * @classdesc Server-side generated constructor for the 'PersonReferenceToUser' class.
+	 *
+	 * FullName: Sushi.Tests.Models.PersonReferenceToUser
 	 * @param {Object<PersonReferenceToUser>} [value] The object to convert to the match the 'PersonReferenceToUser' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Insertion'))
-				throw new TypeError("Given object is expected to have a property with name: 'Insertion'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Insertion'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
 			if (!value.hasOwnProperty('User'))
-				throw new TypeError("Given object is expected to have a property with name: 'User'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'User'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -232,31 +259,27 @@ class PersonReferenceToUser {
 		this.Insertion = value.Insertion || '';
 		this.Surname = value.Surname || '';
 		this.User = value.User || null;
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.PersonReferenceToUser.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'PersonReferenceToUser' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Insertion'))
-				throw new TypeError("Given object is expected to have a property with name: 'Insertion'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Insertion'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
 			if (!value.hasOwnProperty('User'))
-				throw new TypeError("Given object is expected to have a property with name: 'User'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'User'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -278,37 +301,36 @@ class PersonReferenceToUser {
 // ECMA 6 - UserReferenceToPerson
 
 /**
- * @summary Server-side generated model for the 'UserReferenceToPerson' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
  */
-class UserReferenceToPerson {
+export class UserReferenceToPerson  {
 
 	RegisteredOn: any;
 	Guid: any;
 	Username: string;
 	Password: string;
-	Person: PersonReferenceToUser | any;
+	Person: any;
 
 	/**
-	 * @name UserReferenceToPerson
-	 * @namespace Sushi.Tests.Models.UserReferenceToPerson
-	 * @class UserReferenceToPerson
-	 * @classdesc Server-side generated constructor for the 'UserReferenceToPerson' class.
+	 *
+	 * FullName: Sushi.Tests.Models.UserReferenceToPerson
 	 * @param {Object<UserReferenceToPerson>} [value] The object to convert to the match the 'UserReferenceToPerson' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('RegisteredOn'))
-				throw new TypeError("Given object is expected to have a property with name: 'RegisteredOn'.");
+				throw new TypeError("Given object is expected to have a property with name: 'RegisteredOn'."); 
 			if (!value.hasOwnProperty('Guid'))
-				throw new TypeError("Given object is expected to have a property with name: 'Guid'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Guid'."); 
 			if (!value.hasOwnProperty('Username'))
-				throw new TypeError("Given object is expected to have a property with name: 'Username'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Username'."); 
 			if (!value.hasOwnProperty('Password'))
-				throw new TypeError("Given object is expected to have a property with name: 'Password'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Password'."); 
 			if (!value.hasOwnProperty('Person'))
-				throw new TypeError("Given object is expected to have a property with name: 'Person'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Person'."); 
+			
 			// Check property type match.
 			if (typeof (value['RegisteredOn']) !== 'object')
 				throw new TypeError("Given object property 'RegisteredOn' is expected to be a object.");
@@ -322,38 +344,34 @@ class UserReferenceToPerson {
 				throw new TypeError("Given object property 'Person' is expected to be a object.");
 		}
 
-		this.RegisteredOn = value.RegisteredOn || "2018-03-19T01:32:06.2331421+01:00";
+		this.RegisteredOn = value.RegisteredOn || "2018-03-21T13:53:20.1180932+01:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";
 		this.Person = value.Person || null;
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.UserReferenceToPerson.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'UserReferenceToPerson' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('RegisteredOn'))
-				throw new TypeError("Given object is expected to have a property with name: 'RegisteredOn'.");
+				throw new TypeError("Given object is expected to have a property with name: 'RegisteredOn'."); 
 			if (!value.hasOwnProperty('Guid'))
-				throw new TypeError("Given object is expected to have a property with name: 'Guid'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Guid'."); 
 			if (!value.hasOwnProperty('Username'))
-				throw new TypeError("Given object is expected to have a property with name: 'Username'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Username'."); 
 			if (!value.hasOwnProperty('Password'))
-				throw new TypeError("Given object is expected to have a property with name: 'Password'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Password'."); 
 			if (!value.hasOwnProperty('Person'))
-				throw new TypeError("Given object is expected to have a property with name: 'Person'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Person'."); 
+			
 			// Check property type match.
 			if (typeof (value['RegisteredOn']) !== 'object')
 				throw new TypeError("Given object property 'RegisteredOn' is expected to be a object.");
@@ -377,9 +395,10 @@ class UserReferenceToPerson {
 // ECMA 6 - TypeModel
 
 /**
- * @summary Server-side generated model for the 'TypeModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.TypeModel.
  */
-class TypeModel {
+export class TypeModel  {
 
 	Name: string;
 	Number: number;
@@ -388,26 +407,24 @@ class TypeModel {
 	Char: string;
 
 	/**
-	 * @name TypeModel
-	 * @namespace Sushi.Tests.Models.TypeModel
-	 * @class TypeModel
-	 * @classdesc Server-side generated constructor for the 'TypeModel' class.
+	 *
+	 * FullName: Sushi.Tests.Models.TypeModel
 	 * @param {Object<TypeModel>} [value] The object to convert to the match the 'TypeModel' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Number'))
-				throw new TypeError("Given object is expected to have a property with name: 'Number'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Number'."); 
 			if (!value.hasOwnProperty('Decimal'))
-				throw new TypeError("Given object is expected to have a property with name: 'Decimal'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Decimal'."); 
 			if (!value.hasOwnProperty('Value'))
-				throw new TypeError("Given object is expected to have a property with name: 'Value'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Value'."); 
 			if (!value.hasOwnProperty('Char'))
-				throw new TypeError("Given object is expected to have a property with name: 'Char'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Char'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -426,33 +443,29 @@ class TypeModel {
 		this.Decimal = value.Decimal || 1.47;
 		this.Value = value.Value || true;
 		this.Char = value.Char || "a";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.TypeModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'TypeModel' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Number'))
-				throw new TypeError("Given object is expected to have a property with name: 'Number'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Number'."); 
 			if (!value.hasOwnProperty('Decimal'))
-				throw new TypeError("Given object is expected to have a property with name: 'Decimal'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Decimal'."); 
 			if (!value.hasOwnProperty('Value'))
-				throw new TypeError("Given object is expected to have a property with name: 'Value'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Value'."); 
 			if (!value.hasOwnProperty('Char'))
-				throw new TypeError("Given object is expected to have a property with name: 'Char'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Char'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -476,33 +489,28 @@ class TypeModel {
 // ECMA 6 - Gender
 
 /**
- * @summary Server-side generated model for the 'Gender' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
  */
-class Gender {
+export class Gender  {
 
 
 	/**
-	 * @name Gender
-	 * @namespace Sushi.Tests.Models.Inheritance.Gender
-	 * @class Gender
-	 * @classdesc Server-side generated constructor for the 'Gender' class.
+	 *
+	 * FullName: Sushi.Tests.Models.Inheritance.Gender
 	 * @param {Object<Gender>} [value] The object to convert to the match the 'Gender' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 		}
 
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Inheritance.Gender.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'Gender' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'Gender' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'Gender' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -519,28 +527,27 @@ class Gender {
 // ECMA 6 - PersonModel
 
 /**
- * @summary Server-side generated model for the 'PersonModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
  */
-class PersonModel {
+export class PersonModel  {
 
 	Name: string;
 	Surname: string;
 
 	/**
-	 * @name PersonModel
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel
-	 * @class PersonModel
-	 * @classdesc Server-side generated constructor for the 'PersonModel' class.
+	 *
+	 * FullName: Sushi.Tests.Models.Inheritance.PersonModel
 	 * @param {Object<PersonModel>} [value] The object to convert to the match the 'PersonModel' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -550,27 +557,23 @@ class PersonModel {
 
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'PersonModel' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
+			
 			// Check property type match.
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
@@ -588,37 +591,36 @@ class PersonModel {
 // ECMA 6 - StudentModel
 
 /**
- * @summary Server-side generated model for the 'StudentModel' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
  */
-class StudentModel extends PersonModel {
+export class StudentModel  implements PersonModel {
 
 	Grade: number;
 	School: string;
-	Gender: Gender | Array<number>;
+	Gender: number;
 	Name: string;
 	Surname: string;
 
 	/**
-	 * @name StudentModel
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel
-	 * @class StudentModel
-	 * @classdesc Server-side generated constructor for the 'StudentModel' class.
+	 *
+	 * FullName: Sushi.Tests.Models.Inheritance.StudentModel
 	 * @param {Object<StudentModel>} [value] The object to convert to the match the 'StudentModel' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Grade'))
-				throw new TypeError("Given object is expected to have a property with name: 'Grade'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Grade'."); 
 			if (!value.hasOwnProperty('School'))
-				throw new TypeError("Given object is expected to have a property with name: 'School'.");
+				throw new TypeError("Given object is expected to have a property with name: 'School'."); 
 			if (!value.hasOwnProperty('Gender'))
-				throw new TypeError("Given object is expected to have a property with name: 'Gender'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Gender'."); 
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
+			
 			// Check property type match.
 			if (typeof (value['Grade']) !== 'number')
 				throw new TypeError("Given object property 'Grade' is expected to be a number.");
@@ -630,7 +632,7 @@ class StudentModel extends PersonModel {
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
 			if (typeof (value['Surname']) !== 'string')
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
-
+			
 			// Check property class instance match.
 			if (!(value['Gender'] === void 0 || value['Gender'] === null) && !(value['Gender'] instanceof Gender))
 				throw new TypeError("Given object property 'Gender' is expected to be an instance of the 'Gender' constructor.");
@@ -641,33 +643,29 @@ class StudentModel extends PersonModel {
 		this.Gender = value.Gender || 0;
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'StudentModel' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('Grade'))
-				throw new TypeError("Given object is expected to have a property with name: 'Grade'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Grade'."); 
 			if (!value.hasOwnProperty('School'))
-				throw new TypeError("Given object is expected to have a property with name: 'School'.");
+				throw new TypeError("Given object is expected to have a property with name: 'School'."); 
 			if (!value.hasOwnProperty('Gender'))
-				throw new TypeError("Given object is expected to have a property with name: 'Gender'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Gender'."); 
 			if (!value.hasOwnProperty('Name'))
-				throw new TypeError("Given object is expected to have a property with name: 'Name'.");
+				throw new TypeError("Given object is expected to have a property with name: 'Name'."); 
 			if (!value.hasOwnProperty('Surname'))
-				throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'Surname'."); 
+			
 			// Check property type match.
 			if (typeof (value['Grade']) !== 'number')
 				throw new TypeError("Given object property 'Grade' is expected to be a number.");
@@ -679,7 +677,7 @@ class StudentModel extends PersonModel {
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
 			if (typeof (value['Surname']) !== 'string')
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
-
+			
 			// Check property class instance match.
 			if (!(value['Gender'] === void 0 || value['Gender'] === null) && !(value['Gender'] instanceof Gender))
 				throw new TypeError("Given object property 'Gender' is expected to be an instance of the 'Gender' constructor.");
@@ -695,50 +693,45 @@ class StudentModel extends PersonModel {
 // ECMA 6 - DoNotIgnoreMe
 
 /**
- * @summary Server-side generated model for the 'DoNotIgnoreMe' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
  */
-class DoNotIgnoreMe extends IgnoreTestRoot {
+export class DoNotIgnoreMe  implements IgnoreTestRoot {
 
 	ShouldExist: string;
 
 	/**
-	 * @name DoNotIgnoreMe
-	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
-	 * @class DoNotIgnoreMe
-	 * @classdesc Server-side generated constructor for the 'DoNotIgnoreMe' class.
+	 *
+	 * FullName: Sushi.Tests.Models.Ignore.DoNotIgnoreMe
 	 * @param {Object<DoNotIgnoreMe>} [value] The object to convert to the match the 'DoNotIgnoreMe' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('ShouldExist'))
-				throw new TypeError("Given object is expected to have a property with name: 'ShouldExist'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'ShouldExist'."); 
+			
 			// Check property type match.
 			if (typeof (value['ShouldExist']) !== 'string')
 				throw new TypeError("Given object property 'ShouldExist' is expected to be a string.");
 		}
 
 		this.ShouldExist = value.ShouldExist || '';
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'DoNotIgnoreMe' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'DoNotIgnoreMe' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'DoNotIgnoreMe' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
 
 			// Check property keys.
 			if (!value.hasOwnProperty('ShouldExist'))
-				throw new TypeError("Given object is expected to have a property with name: 'ShouldExist'.");
-
+				throw new TypeError("Given object is expected to have a property with name: 'ShouldExist'."); 
+			
 			// Check property type match.
 			if (typeof (value['ShouldExist']) !== 'string')
 				throw new TypeError("Given object property 'ShouldExist' is expected to be a string.");
@@ -754,33 +747,28 @@ class DoNotIgnoreMe extends IgnoreTestRoot {
 // ECMA 6 - IgnoreTestRoot
 
 /**
- * @summary Server-side generated model for the 'IgnoreTestRoot' class.
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
  */
-class IgnoreTestRoot {
+export class IgnoreTestRoot  {
 
 
 	/**
-	 * @name IgnoreTestRoot
-	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
-	 * @class IgnoreTestRoot
-	 * @classdesc Server-side generated constructor for the 'IgnoreTestRoot' class.
+	 *
+	 * FullName: Sushi.Tests.Models.Ignore.IgnoreTestRoot
 	 * @param {Object<IgnoreTestRoot>} [value] The object to convert to the match the 'IgnoreTestRoot' class.
 	 */
-	constructor(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 		}
 
-		$$SET_PROPERTY_VALUES$$;
 	}
 
 	/**
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot.tryParse
-	 * @description Check if the given 'value' contains the expected keys and instances to match the 'IgnoreTestRoot' class.
+	 * Check if the given 'value' contains the expected keys and instances to match the 'IgnoreTestRoot' class.
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'IgnoreTestRoot' class.
 	 */
-	static tryParse(value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.

@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Script\CompileWithSummaryTests.cs" />
-    <Compile Include="Script\DefinitelyTypedTests.cs" />
     <Compile Include="Models\Ignore\DoNotIgnoreMe.cs" />
     <Compile Include="Models\Ignore\IgnoreMe.cs" />
     <Compile Include="Models\Ignore\IgnoreTestRoot.cs" />
@@ -70,6 +69,11 @@
     <Compile Include="UtilityTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Compiled\complete.V5.js" />
+    <Content Include="Compiled\complete.V6.js" />
+    <Content Include="Compiled\inherits.V5.js" />
+    <Content Include="Compiled\inherits.V6.js" />
+    <Content Include="Compiled\summary.V5.js" />
     <Content Include="Result\result.minified.js" />
     <Content Include="Result\result.propertyGroup.js" />
     <None Include="packages.config" />
@@ -80,9 +84,7 @@
   <ItemGroup>
     <Content Include="Result\result V6.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Compiled\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
       <Project>{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}</Project>
@@ -96,6 +98,10 @@
       <Project>{6476FF8A-3AE9-45E4-A7F3-014C9318B2AA}</Project>
       <Name>Sushi</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Compiled\reference.d.ts" />
+    <TypeScriptCompile Include="Compiled\typescript.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sushi.Extensions;
+using Sushi.TypeScript;
+using Sushi.TypeScript.Enum;
 
 namespace Sushi.Tests.Script
 {
@@ -10,9 +15,20 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileTypeScriptFileTest()
         {
-            using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
+            var assembly = typeof(TypeScriptTests).Assembly;
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
             {
-                CompileTypeScript(kernel, "typescript", null);
+                CompileTypeScript(kernel);
+            }
+        }
+
+        [TestMethod]
+        public void CompileDefinitelyTypedFileTest()
+        {
+            var assembly = typeof(TypeScriptTests).Assembly;
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            {
+                CompileDefinitelyTyped(kernel);
             }
         }
 

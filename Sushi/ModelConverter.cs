@@ -110,7 +110,7 @@ namespace Sushi
                     modelBuilder.Append(propertyValueBuilder);
                 }
                 // Define
-                if (row.Contains(CLASS_PROPERTIES_KEY))
+                else if (row.Contains(CLASS_PROPERTIES_KEY))
                 {
                     var indent = row.Before(CLASS_PROPERTIES_KEY);
                     var propertyDefinitionBuilder = new StringBuilder();

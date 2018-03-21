@@ -63,7 +63,6 @@ function ModelWithManyLists(value) {
 	  * @summary DUDE THIS IS NOT A LIST BUT AN OBJECT!
 	  */
 	this.Dictionary = value.Dictionary || {};
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -146,7 +145,6 @@ function NameModel(value) {
 	this.Name = value.Name || "Jeroen";
 	this.Insertion = value.Insertion || '';
 	this.Surname = value.Surname || "Vorsselman";
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -226,7 +224,6 @@ function PersonReferenceToUser(value) {
 	this.Insertion = value.Insertion || '';
 	this.Surname = value.Surname || '';
 	this.User = value.User || null;
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -314,12 +311,11 @@ function UserReferenceToPerson(value) {
 			throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 	}
 
-	this.RegisteredOn = value.RegisteredOn || "2018-03-19T11:37:36.6110028+01:00";
+	this.RegisteredOn = value.RegisteredOn || "2018-03-21T13:27:07.1629783+01:00";
 	this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 	this.Username = value.Username || "MrAwesome";
 	this.Password = value.Password || "Secret";
 	this.Person = value.Person || null;
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -412,7 +408,6 @@ function TypeModel(value) {
 	this.Decimal = value.Decimal || 1.47;
 	this.Value = value.Value || true;
 	this.Char = value.Char || "a";
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -473,7 +468,6 @@ function Gender(value) {
 	if (value !== void 0 && value !== null) {
 	}
 
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -524,7 +518,6 @@ function PersonModel(value) {
 
 	this.Name = value.Name || "Jeroen";
 	this.Surname = value.Surname || "Vorsselman";
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;
@@ -601,7 +594,6 @@ function StudentModel(value) {
 	this.Gender = value.Gender || 0;
 	this.Name = value.Name || "Jeroen";
 	this.Surname = value.Surname || "Vorsselman";
-	$$SET_PROPERTY_VALUES$$;
 }
 
 StudentModel.prototype = new PersonModel();;
@@ -670,7 +662,6 @@ function DoNotIgnoreMe(value) {
 	}
 
 	this.ShouldExist = value.ShouldExist || '';
-	$$SET_PROPERTY_VALUES$$;
 }
 
 DoNotIgnoreMe.prototype = new IgnoreTestRoot();;
@@ -715,7 +706,6 @@ function IgnoreTestRoot(value) {
 	if (value !== void 0 && value !== null) {
 	}
 
-	$$SET_PROPERTY_VALUES$$;
 }
 
 ;

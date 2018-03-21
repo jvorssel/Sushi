@@ -21,6 +21,8 @@ namespace Sushi
 
         public XmlDocumentationReader Documentation { get; private set; } = null;
 
+        public string BaseDirectoryPath = AppDomain.CurrentDomain.BaseDirectory;
+
         public long ModelCount => Models.Count;
 
         public string ArgumentName { get; set; }
@@ -108,9 +110,18 @@ namespace Sushi
         }
 
         /// <summary>
+        ///     Use the xml documentation file in bin folder for the given <paramref name="assembly"/>.
+        /// </summary>
+        public ConversionKernel LoadXmlDocumentation(Assembly assembly)
+        {
+            var assemblyName = assembly.GetProjectName();
+            var xmlDocPath = Path.Combine(BaseDirectoryPath, $"{assemblyName}.xml");
+            return LoadXmlDocumentation(xmlDocPath);
+        }
+
+        /// <summary>
         ///     Use the xml documentation generated on build.
         /// </summary>
-        /// <param name="path">The <paramref name="path"/> to the xml file.</param>
         public ConversionKernel LoadXmlDocumentation(string path)
         {
             var extension = Path.GetExtension(path);
