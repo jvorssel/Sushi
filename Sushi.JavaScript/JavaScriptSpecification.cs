@@ -14,6 +14,9 @@ namespace Sushi.JavaScript
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
+        public override string Extension { get; } = ".js";
+
+        /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
             var value = FormatValueForProperty(property, property.Value);

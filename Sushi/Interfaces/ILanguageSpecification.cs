@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sushi.Consistency;
 using Sushi.Enum;
 using Sushi.Models;
 
@@ -16,6 +17,11 @@ namespace Sushi.Interfaces
         ///     The directory path to the template file.
         /// </summary>
         string FilePath { get; }
+
+        /// <summary>
+        ///     What file extension should be used for this <see cref="ILanguageSpecification"/>.
+        /// </summary>
+        string Extension { get; }
 
         /// <summary>
         ///     The <see cref="Language"/> (key) for this <see cref="LanguageSpecification"/>.
@@ -66,6 +72,11 @@ namespace Sushi.Interfaces
         ///     Use the given <paramref name="template"/>.
         /// </summary>
         LanguageSpecification UseTemplate(string template);
+
+        /// <summary>
+        ///     List the <see cref="TemplateKeys"/> that are not used by the given <paramref name="template"/>.
+        /// </summary>
+        IEnumerable<string> ValidateTemplate(string template);
 
         /// <summary>
         ///     Format the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.

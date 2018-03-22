@@ -45,11 +45,13 @@
     <Compile Include="Documentation\Models\MemberSummary.cs" />
     <Compile Include="Enum\CSharpNativeType.cs" />
     <Compile Include="Enum\StatementType.cs" />
+    <Compile Include="Enum\TemplateKeyType.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileWriter.cs" />
     <Compile Include="Helpers\StringLineEnumerator.cs" />
+    <Compile Include="Helpers\TemplateConsistency.cs" />
     <Compile Include="Helpers\TypeConversionHelper.cs" />
     <Compile Include="Models\Statement.cs" />
     <Compile Include="Models\DataModel.cs" />

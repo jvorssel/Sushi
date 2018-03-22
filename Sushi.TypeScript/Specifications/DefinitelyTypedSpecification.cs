@@ -9,6 +9,9 @@ namespace Sushi.TypeScript.Specifications
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
+        public override string Extension { get; } = @".d.ts";
+
+        /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
             yield break;

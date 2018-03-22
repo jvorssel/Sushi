@@ -14,6 +14,9 @@ namespace Sushi.TypeScript.Specifications
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
+        public override string Extension { get; } = @".ts";
+
+        /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
             var value = FormatValueForProperty(property, property.Value);

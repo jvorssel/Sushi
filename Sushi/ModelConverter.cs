@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
+using Sushi.Consistency;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
@@ -44,7 +46,7 @@ namespace Sushi
         ///     Join one or more given <paramref name="models"/> and maybe <paramref name="minify"/>
         ///     them to create one <see cref="string"/>.
         /// </summary>
-        public string JoinModels(IEnumerable<DataModel> models, bool minify = false)
+        public string MergeModelsToString(IEnumerable<DataModel> models, bool minify = false)
         {
             var builder = new StringBuilder();
             foreach (var model in models)
@@ -189,5 +191,60 @@ namespace Sushi
 
             return model;
         }
+
+        /// <summary>
+        ///     Write the given <see cref="DataModel"/> <paramref name="models"/> to the 
+        ///     <paramref name="fileName"/> in the given folder <paramref name="path"/>.
+        /// </summary>
+        /// <param name="models">The <see cref="DataModel"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
+        /// <param name="path">The <paramref name="path"/> to the folder to store the file in.</param>
+        /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
+        /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
+        /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
+        public void FlushToFile(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
+        {
+            if (path.IsEmpty())
+                throw new ArgumentNullException(nameof(path));
+
+            if (fileName.IsEmpty())
+                throw new ArgumentNullException(nameof(fileName));
+
+            if (models.EmptyIfNull().All(x => x.Script?.IsEmpty() ?? true))
+                throw Errors.NoScriptAvailableInModels(nameof(models));
+
+            if (encoding == null)
+                encoding = Encoding.Default;
+
+            var writer = new FileWriter(this, path, Language.Extension, minify, encoding);
+            writer.FlushToFile(models, fileName);
+        }
+
+        /// <summary>
+        ///     Write the given <see cref="DataModel"/> <paramref name="models"/> to the 
+        ///     <paramref name="fileName"/> in the given folder <paramref name="path"/> asynchronously.
+        /// </summary>
+        /// <param name="models">The <see cref="DataModel"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
+        /// <param name="path">The <paramref name="path"/> to the folder to store the file in.</param>
+        /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
+        /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
+        /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
+        public async Task FlushToFileAsync(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
+        {
+            if (path.IsEmpty())
+                throw new ArgumentNullException(nameof(path));
+
+            if (fileName.IsEmpty())
+                throw new ArgumentNullException(nameof(fileName));
+
+            if (models.EmptyIfNull().All(x => x.Script?.IsEmpty() ?? true))
+                throw Errors.NoScriptAvailableInModels(nameof(models));
+
+            if (encoding == null)
+                encoding = Encoding.Default;
+
+            var writer = new FileWriter(this, path, Language.Extension, minify, encoding);
+            await writer.FlushToFileAsync(models, fileName);
+        }
+
     }
 }

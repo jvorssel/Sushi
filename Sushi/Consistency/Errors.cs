@@ -46,5 +46,12 @@ namespace Sushi.Consistency
 
         public static InvalidOperationException EnumUnavailable(Property property)
             => new InvalidOperationException($@"The {property.Type.FullName} {nameof(System.Enum)} for the given {nameof(property)} is expected to be available.");
+
+        public static ArgumentNullException NoScriptAvailableInModels(string paramName)
+            => new ArgumentNullException(paramName, $@"No members found with its '{nameof(DataModel.Script)}' set, call {nameof(ModelConverter.Compile)} first.");
+
+        public static InvalidOperationException NoPlaceholdersInTemplate()
+            => new InvalidOperationException(@"The given template does not have any placeholders to use.");
+
     }
 }

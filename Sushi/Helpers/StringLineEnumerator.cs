@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace Sushi.Helpers
 {
-    public class StringEnumerator : IEnumerator<string>
+    /// <summary>
+    ///     Split the given <see cref="string"/> with a specific <see cref="char"/> and iterate over each occurrence.
+    /// </summary>
+    public class StringEnumerator : IEnumerator<string>, IEnumerable<string>
     {
         private readonly string _complete;
         private readonly string[] _split;
@@ -37,7 +40,7 @@ namespace Sushi.Helpers
             if (Index > Count)
                 return false;
 
-            Current = _split[Index] + (Index < Count  ? Split.ToString() : "");
+            Current = _split[Index] + (Index < Count ? Split.ToString() : "");
             Index++;
 
             return true;
@@ -55,6 +58,16 @@ namespace Sushi.Helpers
 
         /// <inheritdoc />
         object IEnumerator.Current => Current;
+
+        #endregion
+
+        #region Implementation of IEnumerable
+
+        /// <inheritdoc />
+        public IEnumerator<string> GetEnumerator() => this;
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         #endregion
     }

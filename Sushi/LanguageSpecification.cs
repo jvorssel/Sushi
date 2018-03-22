@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Sushi.Consistency;
 using Sushi.Enum;
+using Sushi.Extensions;
+using Sushi.Helpers;
 using Sushi.Interfaces;
 using Sushi.Models;
 
@@ -19,6 +22,9 @@ namespace Sushi
 
         /// <inheritdoc />
         public string FilePath { get; } = string.Empty;
+
+        /// <inheritdoc />
+        public abstract string Extension { get; }
 
         /// <inheritdoc />
         public string Language { get; } = string.Empty;
@@ -41,6 +47,10 @@ namespace Sushi
 
         /// <inheritdoc />
         public string Template { get; private set; } = string.Empty;
+
+        /// <inheritdoc />
+        public IEnumerable<string> ValidateTemplate(string template)
+            => TemplateConsistency.TestTemplate(template);
 
         /// <inheritdoc />
         public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
@@ -143,7 +153,13 @@ namespace Sushi
         /// <inheritdoc />
         public LanguageSpecification UseTemplate(string template)
         {
-            Template = template ?? throw new ArgumentNullException(nameof(template));
+            if (template.IsEmpty())
+                throw new ArgumentNullException(nameof(template));
+
+            if(TemplateConsistency.TestTemplate(template).Count() == TemplateConsistency.Keys.Count())
+                throw Errors.NoPlaceholdersInTemplate();
+
+            Template = template;
             return this;
         }
 

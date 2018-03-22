@@ -26,8 +26,6 @@ namespace Sushi.Tests
             var converter = kernel.CreateConverterForJavaScript(version, isolated);
             var converted = converter.Convert(predicate);
 
-            var writer = new FileWriter(converter, FilePath, ".js", minify);
-
             fileName += $".{version.ToString().ToLowerInvariant()}";
 
             if (isolated)
@@ -36,8 +34,7 @@ namespace Sushi.Tests
             if (minify)
                 fileName += ".min";
 
-
-            writer.FlushToFile(converted, fileName);
+            converter.FlushToFile(converted, FilePath, fileName, minify);
         }
 
         /// <summary>
@@ -48,11 +45,10 @@ namespace Sushi.Tests
             var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
             var converted = converter.Convert(predicate);
 
-            var writer = new FileWriter(converter, FilePath, ".ts", minify);
             if (minify)
                 fileName += ".min";
 
-            writer.FlushToFile(converted, fileName);
+            converter.FlushToFile(converted, FilePath, fileName, minify);
         }
 
         /// <summary>
@@ -68,11 +64,10 @@ namespace Sushi.Tests
             var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
             var converted = converter.Convert();
 
-            var writer = new FileWriter(converter, FilePath, ".d.ts", minify);
             if (minify)
                 fileName += ".min";
 
-            writer.FlushToFile(converted, fileName);
+            converter.FlushToFile(converted, FilePath, fileName, minify);
         }
     }
 }
