@@ -72,9 +72,7 @@
     <Content Include="About.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Package.nuspec">
-      <Link>Package.nuspec</Link>
-    </None>
+    <None Include="Package.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
