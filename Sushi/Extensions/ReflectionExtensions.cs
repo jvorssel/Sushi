@@ -103,12 +103,13 @@ namespace Sushi.Extensions
                 yield break;
 
             var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
-            var instance = Activator.CreateInstance(type);
             var properties = type.GetProperties();
 
+            var instance = !type.IsAbstract ? Activator.CreateInstance(type) : null;
             foreach (var prp in properties)
             {
-                var defaultValue = prp.GetValue(instance);
+                var defaultValue = instance != null ? prp.GetValue(instance) : null;
+
                 yield return new KeyValuePair<PropertyInfo, object>(prp, defaultValue);
             }
         }

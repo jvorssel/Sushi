@@ -1,15 +1,44 @@
-(function (window) {
-	"use strict";
+/**
+ * A model with a LOT of lists.
+ *
+ * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
+ * @name ModelWithManyLists
+ * @namespace Sushi.Tests.Models.ModelWithManyLists
+ */
+export class ModelWithManyLists  {
+
+	/**
+	  * A beautiful list!
+	  */
+	List: Array<string>;
+	/**
+	  * Another one!
+	  */
+	HashSet: Array<string>;
+	/**
+	  * Wow another one!
+	  */
+	Enumerable: Array<any>;
+	/**
+	  * Dude another one! WOW!
+	  */
+	Collection: Array<string>;
+	/**
+	  * This one is readonly? WOAH!
+	  */
+	ReadOnlyList: Array<number>;
+	/**
+	  * DUDE THIS IS NOT A LIST BUT AN OBJECT!
+	  */
+	Dictionary: Array<string>;
 
 	/**
 	 * A model with a LOT of lists.
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.ModelWithManyLists.
-	 * @name ModelWithManyLists
-	 * @namespace Sushi.Tests.Models.ModelWithManyLists
+	 * FullName: Sushi.Tests.Models.ModelWithManyLists
 	 * @param {Object<ModelWithManyLists>} [value] The object to convert to the match the 'ModelWithManyLists' class.
 	 */
-	function ModelWithManyLists(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('List'))
@@ -39,10 +68,6 @@
 			if (typeof (value['Dictionary']) !== 'object')
 				throw new TypeError("Given object property 'Dictionary' is expected to be a object.");
 		}
-
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
 
 		/**
 		  * @summary A beautiful list!
@@ -70,18 +95,11 @@
 		this.Dictionary = value.Dictionary || {};
 	}
 
-	window.ModelWithManyLists = ModelWithManyLists;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'ModelWithManyLists' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.ModelWithManyLists.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'ModelWithManyLists' class.
 	 */
-	ModelWithManyLists.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -121,19 +139,25 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.NameModel.
+ * @name NameModel
+ * @namespace Sushi.Tests.Models.NameModel
+ */
+export class NameModel  {
 
-})(window);
-(function (window) {
-	"use strict";
+	Name: string;
+	Insertion: string;
+	Surname: string;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.NameModel.
-	 * @name NameModel
-	 * @namespace Sushi.Tests.Models.NameModel
+	 * FullName: Sushi.Tests.Models.NameModel
 	 * @param {Object<NameModel>} [value] The object to convert to the match the 'NameModel' class.
 	 */
-	function NameModel(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -152,27 +176,16 @@
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
 
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
-
 		this.Name = value.Name || "Jeroen";
 		this.Insertion = value.Insertion || '';
 		this.Surname = value.Surname || "Vorsselman";
 	}
 
-	window.NameModel = NameModel;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'NameModel' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.NameModel.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'NameModel' class.
 	 */
-	NameModel.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -200,19 +213,26 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
+ * @name PersonReferenceToUser
+ * @namespace Sushi.Tests.Models.PersonReferenceToUser
+ */
+export class PersonReferenceToUser  {
 
-})(window);
-(function (window) {
-	"use strict";
+	Name: string;
+	Insertion: string;
+	Surname: string;
+	User: any;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.PersonReferenceToUser.
-	 * @name PersonReferenceToUser
-	 * @namespace Sushi.Tests.Models.PersonReferenceToUser
+	 * FullName: Sushi.Tests.Models.PersonReferenceToUser
 	 * @param {Object<PersonReferenceToUser>} [value] The object to convert to the match the 'PersonReferenceToUser' class.
 	 */
-	function PersonReferenceToUser(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -233,15 +253,7 @@
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 			if (typeof (value['User']) !== 'object')
 				throw new TypeError("Given object property 'User' is expected to be a object.");
-			
-			// Check property class instance match.
-			if (!(value['User'] === void 0 || value['User'] === null) && !(value['User'] instanceof UserReferenceToPerson))
-				throw new TypeError("Given object property 'User' is expected to be an instance of the 'UserReferenceToPerson' constructor.");
 		}
-
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
 
 		this.Name = value.Name || '';
 		this.Insertion = value.Insertion || '';
@@ -249,18 +261,11 @@
 		this.User = value.User || null;
 	}
 
-	window.PersonReferenceToUser = PersonReferenceToUser;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonReferenceToUser' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.PersonReferenceToUser.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'PersonReferenceToUser' class.
 	 */
-	PersonReferenceToUser.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -284,10 +289,6 @@
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 			if (typeof (value['User']) !== 'object')
 				throw new TypeError("Given object property 'User' is expected to be a object.");
-			
-			// Check property class instance match.
-			if (!(value['User'] === void 0 || value['User'] === null) && !(value['User'] instanceof UserReferenceToPerson))
-				throw new TypeError("Given object property 'User' is expected to be an instance of the 'UserReferenceToPerson' constructor.");
 
 			return true;
 		}
@@ -296,19 +297,27 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
+ * @name UserReferenceToPerson
+ * @namespace Sushi.Tests.Models.UserReferenceToPerson
+ */
+export class UserReferenceToPerson  {
 
-})(window);
-(function (window) {
-	"use strict";
+	RegisteredOn: any;
+	Guid: any;
+	Username: string;
+	Password: string;
+	Person: any;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.UserReferenceToPerson.
-	 * @name UserReferenceToPerson
-	 * @namespace Sushi.Tests.Models.UserReferenceToPerson
+	 * FullName: Sushi.Tests.Models.UserReferenceToPerson
 	 * @param {Object<UserReferenceToPerson>} [value] The object to convert to the match the 'UserReferenceToPerson' class.
 	 */
-	function UserReferenceToPerson(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('RegisteredOn'))
@@ -333,35 +342,20 @@
 				throw new TypeError("Given object property 'Password' is expected to be a string.");
 			if (typeof (value['Person']) !== 'object')
 				throw new TypeError("Given object property 'Person' is expected to be a object.");
-			
-			// Check property class instance match.
-			if (!(value['Person'] === void 0 || value['Person'] === null) && !(value['Person'] instanceof PersonReferenceToUser))
-				throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 		}
 
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
-
-		this.RegisteredOn = value.RegisteredOn || "2018-03-30T00:22:48.673775+02:00";
+		this.RegisteredOn = value.RegisteredOn || "2018-03-30T00:22:49.2107161+02:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";
 		this.Person = value.Person || null;
 	}
 
-	window.UserReferenceToPerson = UserReferenceToPerson;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'UserReferenceToPerson' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.UserReferenceToPerson.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'UserReferenceToPerson' class.
 	 */
-	UserReferenceToPerson.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -389,10 +383,6 @@
 				throw new TypeError("Given object property 'Password' is expected to be a string.");
 			if (typeof (value['Person']) !== 'object')
 				throw new TypeError("Given object property 'Person' is expected to be a object.");
-			
-			// Check property class instance match.
-			if (!(value['Person'] === void 0 || value['Person'] === null) && !(value['Person'] instanceof PersonReferenceToUser))
-				throw new TypeError("Given object property 'Person' is expected to be an instance of the 'PersonReferenceToUser' constructor.");
 
 			return true;
 		}
@@ -401,19 +391,27 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.TypeModel.
+ * @name TypeModel
+ * @namespace Sushi.Tests.Models.TypeModel
+ */
+export class TypeModel  {
 
-})(window);
-(function (window) {
-	"use strict";
+	Name: string;
+	Number: number;
+	Decimal: number;
+	Value: boolean;
+	Char: string;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.TypeModel.
-	 * @name TypeModel
-	 * @namespace Sushi.Tests.Models.TypeModel
+	 * FullName: Sushi.Tests.Models.TypeModel
 	 * @param {Object<TypeModel>} [value] The object to convert to the match the 'TypeModel' class.
 	 */
-	function TypeModel(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -439,10 +437,6 @@
 			if (typeof (value['Char']) !== 'string')
 				throw new TypeError("Given object property 'Char' is expected to be a string.");
 		}
-
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
 
 		this.Name = value.Name || "Jeroen";
 		this.Number = value.Number || 1337;
@@ -451,18 +445,11 @@
 		this.Char = value.Char || "a";
 	}
 
-	window.TypeModel = TypeModel;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'TypeModel' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.TypeModel.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'TypeModel' class.
 	 */
-	TypeModel.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -498,40 +485,32 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
+ * @name Gender
+ * @namespace Sushi.Tests.Models.Inheritance.Gender
+ */
+export class Gender  {
 
-})(window);
-(function (window) {
-	"use strict";
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.Inheritance.Gender.
-	 * @name Gender
-	 * @namespace Sushi.Tests.Models.Inheritance.Gender
+	 * FullName: Sushi.Tests.Models.Inheritance.Gender
 	 * @param {Object<Gender>} [value] The object to convert to the match the 'Gender' class.
 	 */
-	function Gender(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 		}
 
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
-
 	}
-
-	window.Gender = Gender;
-
-	;
 
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'Gender' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Inheritance.Gender.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'Gender' class.
 	 */
-	Gender.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -544,19 +523,24 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
+ * @name PersonModel
+ * @namespace Sushi.Tests.Models.Inheritance.PersonModel
+ */
+export class PersonModel  {
 
-})(window);
-(function (window) {
-	"use strict";
+	Name: string;
+	Surname: string;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.Inheritance.PersonModel.
-	 * @name PersonModel
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel
+	 * FullName: Sushi.Tests.Models.Inheritance.PersonModel
 	 * @param {Object<PersonModel>} [value] The object to convert to the match the 'PersonModel' class.
 	 */
-	function PersonModel(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Name'))
@@ -570,27 +554,16 @@
 			if (typeof (value['Surname']) !== 'string')
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
 		}
-
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
 
 		this.Name = value.Name || "Jeroen";
 		this.Surname = value.Surname || "Vorsselman";
 	}
 
-	window.PersonModel = PersonModel;
-
-	;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'PersonModel' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Inheritance.PersonModel.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'PersonModel' class.
 	 */
-	PersonModel.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -614,19 +587,27 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
+ * @name StudentModel
+ * @namespace Sushi.Tests.Models.Inheritance.StudentModel
+ */
+export class StudentModel  implements PersonModel {
 
-})(window);
-(function (window) {
-	"use strict";
+	Grade: number;
+	School: string;
+	Gender: number;
+	Name: string;
+	Surname: string;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.Inheritance.StudentModel.
-	 * @name StudentModel
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel
+	 * FullName: Sushi.Tests.Models.Inheritance.StudentModel
 	 * @param {Object<StudentModel>} [value] The object to convert to the match the 'StudentModel' class.
 	 */
-	function StudentModel(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('Grade'))
@@ -645,17 +626,17 @@
 				throw new TypeError("Given object property 'Grade' is expected to be a number.");
 			if (typeof (value['School']) !== 'string')
 				throw new TypeError("Given object property 'School' is expected to be a string.");
-			if (typeof (value['Gender']) !== 'number')
-				throw new TypeError("Given object property 'Gender' is expected to be a number.");
+			if (typeof (value['Gender']) !== 'object')
+				throw new TypeError("Given object property 'Gender' is expected to be a object.");
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
 			if (typeof (value['Surname']) !== 'string')
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
+			
+			// Check property class instance match.
+			if (!(value['Gender'] === void 0 || value['Gender'] === null) && !(value['Gender'] instanceof Gender))
+				throw new TypeError("Given object property 'Gender' is expected to be an instance of the 'Gender' constructor.");
 		}
-
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
 
 		this.Grade = value.Grade || 9;
 		this.School = value.School || "Sint Jan";
@@ -664,18 +645,11 @@
 		this.Surname = value.Surname || "Vorsselman";
 	}
 
-	window.StudentModel = StudentModel;
-
-	StudentModel.prototype = new PersonModel();;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'StudentModel' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Inheritance.StudentModel.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'StudentModel' class.
 	 */
-	StudentModel.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -697,12 +671,16 @@
 				throw new TypeError("Given object property 'Grade' is expected to be a number.");
 			if (typeof (value['School']) !== 'string')
 				throw new TypeError("Given object property 'School' is expected to be a string.");
-			if (typeof (value['Gender']) !== 'number')
-				throw new TypeError("Given object property 'Gender' is expected to be a number.");
+			if (typeof (value['Gender']) !== 'object')
+				throw new TypeError("Given object property 'Gender' is expected to be a object.");
 			if (typeof (value['Name']) !== 'string')
 				throw new TypeError("Given object property 'Name' is expected to be a string.");
 			if (typeof (value['Surname']) !== 'string')
 				throw new TypeError("Given object property 'Surname' is expected to be a string.");
+			
+			// Check property class instance match.
+			if (!(value['Gender'] === void 0 || value['Gender'] === null) && !(value['Gender'] instanceof Gender))
+				throw new TypeError("Given object property 'Gender' is expected to be an instance of the 'Gender' constructor.");
 
 			return true;
 		}
@@ -711,19 +689,23 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
+ * @name DoNotIgnoreMe
+ * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
+ */
+export class DoNotIgnoreMe  implements IgnoreTestRoot {
 
-})(window);
-(function (window) {
-	"use strict";
+	ShouldExist: string;
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.Ignore.DoNotIgnoreMe.
-	 * @name DoNotIgnoreMe
-	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe
+	 * FullName: Sushi.Tests.Models.Ignore.DoNotIgnoreMe
 	 * @param {Object<DoNotIgnoreMe>} [value] The object to convert to the match the 'DoNotIgnoreMe' class.
 	 */
-	function DoNotIgnoreMe(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 			// Check property keys.
 			if (!value.hasOwnProperty('ShouldExist'))
@@ -733,26 +715,15 @@
 			if (typeof (value['ShouldExist']) !== 'string')
 				throw new TypeError("Given object property 'ShouldExist' is expected to be a string.");
 		}
-
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
 
 		this.ShouldExist = value.ShouldExist || '';
 	}
 
-	window.DoNotIgnoreMe = DoNotIgnoreMe;
-
-	DoNotIgnoreMe.prototype = new IgnoreTestRoot();;
-
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'DoNotIgnoreMe' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Ignore.DoNotIgnoreMe.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'DoNotIgnoreMe' class.
 	 */
-	DoNotIgnoreMe.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -772,40 +743,32 @@
 			return false;
 		}
 	}
+}
+/**
+ *
+ * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
+ * @name IgnoreTestRoot
+ * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
+ */
+export class IgnoreTestRoot  {
 
-})(window);
-(function (window) {
-	"use strict";
 
 	/**
 	 *
-	 * Server-side generated model: Sushi.Tests.Models.Ignore.IgnoreTestRoot.
-	 * @name IgnoreTestRoot
-	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot
+	 * FullName: Sushi.Tests.Models.Ignore.IgnoreTestRoot
 	 * @param {Object<IgnoreTestRoot>} [value] The object to convert to the match the 'IgnoreTestRoot' class.
 	 */
-	function IgnoreTestRoot(value) {
+	constructor(value : any) {
 		if (value !== void 0 && value !== null) {
 		}
 
-		// Create object to avoid null/undefind TypeError
-		if (value === void 0 || value === null)
-			value = {};
-
 	}
-
-	window.IgnoreTestRoot = IgnoreTestRoot;
-
-	;
 
 	/**
 	 * Check if the given 'value' contains the expected keys and instances to match the 'IgnoreTestRoot' class.
-	 * @name tryParse
-	 * @namespace Sushi.Tests.Models.Ignore.IgnoreTestRoot.tryParse
 	 * @param {Object=} value The object to parse.
-	 * @return {boolean} If the given 'value' can match the 'IgnoreTestRoot' class.
 	 */
-	IgnoreTestRoot.prototype.tryParse = function (value) {
+	static tryParse(value : any) : boolean {
 		try {
 			if (value === void 0 || value === null)
 				return false; // Empty, return false.
@@ -818,5 +781,4 @@
 			return false;
 		}
 	}
-
-})(window);
+}

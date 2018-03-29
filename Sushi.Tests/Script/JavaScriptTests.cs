@@ -15,7 +15,7 @@ namespace Sushi.Tests.Script
         public void CompileJavaScriptFileTest()
         {
             var assembly = typeof(JavaScriptTests).Assembly;
-            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileJavaScript(kernel, JavaScriptVersion.V5);
                 CompileJavaScript(kernel, JavaScriptVersion.V5, true);
@@ -27,7 +27,7 @@ namespace Sushi.Tests.Script
         public void CompileMinifiedJavaScriptFileTest()
         {
             var assembly = typeof(JavaScriptTests).Assembly;
-            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileJavaScript(kernel, JavaScriptVersion.V5, minify: true);
                 CompileJavaScript(kernel, JavaScriptVersion.V5, true, minify: true);

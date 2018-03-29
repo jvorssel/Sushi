@@ -15,10 +15,27 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileTypeScriptFileTest()
         {
+            // 1: Create an instance of the ConversionKernel
             var assembly = typeof(TypeScriptTests).Assembly;
-            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
-                CompileTypeScript(kernel);
+                // 2: Create the ModelConverter instance for the requested script-language
+                var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
+
+                // 3: Invoke the Convert method to generate the script.
+                var converted = converter.Convert();
+
+
+                // Merge the generated script model(s) to one string.
+                var contents = converter.MergeModelsToString(converted);
+
+                //
+                //if (minify)
+                //    fileName += ".min";
+
+                var fileName = "fileName";
+
+                converter.FlushToFile(converted, FilePath, fileName);
             }
         }
 
@@ -26,7 +43,7 @@ namespace Sushi.Tests.Script
         public void CompileMinifiedTypeScriptFileTest()
         {
             var assembly = typeof(TypeScriptTests).Assembly;
-            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileTypeScript(kernel, minify: true);
             }
@@ -36,7 +53,7 @@ namespace Sushi.Tests.Script
         public void CompileDefinitelyTypedFileTest()
         {
             var assembly = typeof(TypeScriptTests).Assembly;
-            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation(assembly))
+            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileDefinitelyTyped(kernel);
             }

@@ -345,7 +345,7 @@ class UserReferenceToPerson  {
 		if (value === void 0 || value === null)
 			value = {};
 
-		this.RegisteredOn = value.RegisteredOn || "2018-03-22T13:45:36.6127233+01:00";
+		this.RegisteredOn = value.RegisteredOn || "2018-03-30T00:22:48.673775+02:00";
 		this.Guid = value.Guid || "00000000-0000-0000-0000-000000000000";
 		this.Username = value.Username || "MrAwesome";
 		this.Password = value.Password || "Secret";

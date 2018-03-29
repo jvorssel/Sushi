@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Sushi.Models;
 
 namespace Sushi.Consistency
 {
@@ -43,8 +44,19 @@ namespace Sushi.Consistency
         /// </summary>
         public const string INHERIT_TYPE = @"$$INHERIT_TYPE$$";
 
+        /// <summary>
+        ///     Statement if the <see cref="Property"/> is defined / has a value.
+        /// </summary>
         public const string IS_DEFINED_CHECK = @"$$DEFINED_CHECK$$";
+
+        /// <summary>
+        ///     Statement if the <see cref="Property"/> is not defined / has no value.
+        /// </summary>
         public const string IS_UNDEFINED_CHECK = @"$$UNDEFINED_CHECK$$";
+
+        /// <summary>
+        ///     Placeholder for the argument of the object that should be used.
+        /// </summary>
         public const string ARGUMENT_NAME = @"$$ARGUMENT_NAME$$";
     }
 }
