@@ -65,6 +65,8 @@ This can be done in the `ModelConverter.MergeModelsToString` and `ModelConverter
 `Sushi` contains two base-classes for defining a language, the `LanguageSpecification` and `StatementPipeline`.<br>
 Directly linked to how certain placeholders in the template are generated so it can best be explained with including the placeholders.
 
+*Note:* The keys are ALWAYS paired with the '$$' prefix and suffix.
+
 KEY | USAGE | SUMMARY
 --- | --- | ---
 $$SUMMARY$$ | `LanguageSpecification.FormatProperty` | The summary doc for the specific `PropertyInfo`.

@@ -16,11 +16,20 @@ namespace Sushi.TypeScript.Specifications
         internal string FormatArrayType(Property property, string baseType)
         {
             if (!property.Type.IsArray())
+            {
+                var underlyingType = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+                if (underlyingType == typeof(Guid))
+                    return GetBaseType(CSharpNativeType.String);
+                
+                if (underlyingType == typeof(DateTime))
+                    return @"Date";
+
                 return baseType;
+            }
 
             var enumerable = property.Type.GetInterfaces().FirstOrDefault(x => x == typeof(IEnumerable));
-            var underlyingType = property.Type.GetUnderlyingPrimitiveType();
-            var underlyingCsType = GetBaseType(underlyingType.ToCSharpNativeType());
+            var underlyingPrimitiveType = property.Type.GetUnderlyingPrimitiveType();
+            var underlyingCsType = GetBaseType(underlyingPrimitiveType.ToCSharpNativeType());
 
             return enumerable == null ? $@"Array<{baseType}>" : $@"Array<{underlyingCsType}>";
         }
@@ -64,7 +73,7 @@ namespace Sushi.TypeScript.Specifications
 
             // Return the rows for the js-doc
             var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
-            if (summary != null)
+            if (summary?.HasValue ?? false)
             {
                 yield return $"/**";
                 yield return $"  * {summary.Summary}";
@@ -73,10 +82,14 @@ namespace Sushi.TypeScript.Specifications
 
             // Apply formatting for TypeScript its Array type.
             type = FormatArrayType(property, type);
+            var name = property.Name;
+
+            if (property.Type.IsNullable())
+                name += "?";
 
             var statement = property.IsReadonly ?
-                $@"readonly {property.Name}: {type};" :
-                $@"{property.Name}: {type};";
+                $@"readonly {name}: {type};" :
+                $@"{name}: {type};";
 
             yield return statement;
         }

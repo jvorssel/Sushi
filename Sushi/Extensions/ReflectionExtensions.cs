@@ -105,10 +105,13 @@ namespace Sushi.Extensions
             var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
             var properties = type.GetProperties();
 
-            var instance = !type.IsAbstract ? Activator.CreateInstance(type) : null;
+            var ctor = type.GetConstructor(Type.EmptyTypes);
+            var instance = !type.IsAbstract && ctor != null ? Activator.CreateInstance(type) : null;
             foreach (var prp in properties)
             {
-                var defaultValue = instance != null ? prp.GetValue(instance) : null;
+                var isReadonly = prp.CanWrite;
+
+                var defaultValue = instance != null && prp.CanWrite ? prp.GetValue(instance) : null;
 
                 yield return new KeyValuePair<PropertyInfo, object>(prp, defaultValue);
             }
@@ -334,5 +337,11 @@ namespace Sushi.Extensions
         /// </summary>
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> @this)
             => @this ?? Enumerable.Empty<T>();
+
+        /// <summary>
+        ///     Simple check if the given <see cref="Type"/> is <see cref="Nullable"/>.
+        /// </summary>
+        public static bool IsNullable(this Type @this)
+            => Nullable.GetUnderlyingType(@this) != null;
     }
 }

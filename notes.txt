@@ -1,0 +1,2 @@
+Nuget commands:
+nuget pack Sushi.TypeScript/Sushi.TypeScript.csproj -Prop Configuration=Release

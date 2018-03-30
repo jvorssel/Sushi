@@ -23,7 +23,7 @@ namespace Sushi.JavaScript
 
             // Return the rows for the js-doc
             var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
-            if (summary != null)
+            if (summary?.HasValue ?? false)
             {
                 yield return $"/**";
                 yield return $"  * @summary {summary.Summary}";
@@ -120,7 +120,12 @@ namespace Sushi.JavaScript
 
             var numberFormat = new NumberFormatInfo { CurrencyDecimalSeparator = "." };
             var type = property.NativeType;
-            return JsonConvert.SerializeObject(value);
+
+            var stringValue = JsonConvert.SerializeObject(value);
+            if (property.Type == typeof(DateTime))
+                return $"Date.parse({stringValue})";
+
+            return stringValue;
         }
 
         /// <inheritdoc />

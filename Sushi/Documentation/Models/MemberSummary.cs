@@ -1,4 +1,5 @@
 ﻿using System;
+using Sushi.Extensions;
 
 namespace Sushi.Documentation.Models
 {
@@ -10,6 +11,7 @@ namespace Sushi.Documentation.Models
         public string Namespace { get; }
         public string Summary { get; }
         public FieldType Field { get; }
+        public bool HasValue => !Summary.IsEmpty();
 
         /// <inheritdoc />
         public MemberSummary(string @namespace, string summary, FieldType field)

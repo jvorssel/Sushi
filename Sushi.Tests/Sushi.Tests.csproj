@@ -46,6 +46,9 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -75,7 +78,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Compiled\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
       <Project>{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}</Project>
@@ -89,19 +94,6 @@
       <Project>{6476FF8A-3AE9-45E4-A7F3-014C9318B2AA}</Project>
       <Name>Sushi</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Compiled\ecmascript.v5.isolated.js" />
-    <Content Include="Compiled\ecmascript.v5.isolated.min.js" />
-    <Content Include="Compiled\ecmascript.v5.js" />
-    <Content Include="Compiled\ecmascript.v5.min.js" />
-    <Content Include="Compiled\ecmascript.v6.js" />
-    <Content Include="Compiled\ecmascript.v6.min.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="Compiled\reference.d.ts" />
-    <TypeScriptCompile Include="Compiled\typescript.min.ts" />
-    <TypeScriptCompile Include="Compiled\typescript.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
