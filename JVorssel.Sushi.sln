@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{B2527344-2182-4388-BC0D-495E2ABC1054}"
 	ProjectSection(SolutionItems) = preProject
 		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+		notes.txt = notes.txt
 		Package.nuspec = Package.nuspec
 	EndProjectSection
 EndProject

@@ -80,3 +80,20 @@ $$DEFINED_CHECK$$ | `StatementPipeline.ArgumentDefinedStatement` | Statement if 
 $$UNDEFINED_CHECK$$ | `StatementPipeline.ArgumentUndefinedStatement` | Statement if the `Property` is not defined / has no value.
 $$ARGUMENT_NAME$$ | `ModelConverter.Compile>Replace` | Placeholder for the `argument` of the `object` that should be used.
 
+## Using another Template
+It is really easy to use another template for generating script models. These templates can also be tested for missing template-keys.
+<br>
+<br>
+**How to use another template:**
+1. Create an instance of the `LanguageSpecification` you want to use.
+2. Load the contents of the template into a string.
+3. Invoke `LanguageSpecification.UseTemplate(fileContents)`.
+
+Thats it! You're done. <br>
+
+**Testing the integrity of the template:**<br>
+The template can be checked for the amount of placeholders it uses. A template requires atleast one placeholder.<br>
+The template won't be allowed to use if it has no contents or no placeholders.<br><br>
+You can test the template if you invoke `TemplateConsistency.TestTemplate(fileContents)`.
+This will return the placeholder-keys that arent used by the template.
+
