@@ -73,7 +73,7 @@ namespace Sushi.TypeScript.Specifications
 
             // Return the rows for the js-doc
             var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
-            if (summary?.HasValue ?? false)
+            if (summary?.Summary.Length > 0)
             {
                 yield return $"/**";
                 yield return $"  * {summary.Summary}";

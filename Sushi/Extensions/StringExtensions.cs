@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using Sushi.Enum;
 
 namespace Sushi.Extensions
 {
@@ -84,5 +87,36 @@ namespace Sushi.Extensions
                     .Replace("\n", string.Empty)
                     .Replace("\t", string.Empty)
                     .Replace("\0", string.Empty);
+
+        /// <summary>
+        ///     Join the given <see cref="string"/> <see cref="IEnumerable{T}"/> to one string.
+        /// </summary>
+        public static string JoinString(this IEnumerable<string> @this, char separator, Except except = Except.None)
+        {
+            var sb = new StringBuilder();
+            switch (except)
+            {
+                case Except.First:
+                    {
+                        foreach (var str in @this.Where(x => x != @this.First()))
+                            sb.Append(str + separator);
+
+                        break;
+                    }
+                case Except.Last:
+                    {
+                        foreach (var str in @this.Where(x => x != @this.Last()))
+                            sb.Append(str + separator);
+
+                        break;
+                    }
+                case Except.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(except), except, null);
+            }
+
+            return sb.ToString().TrimEnd('.');
+        }
     }
 }

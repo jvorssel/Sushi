@@ -22,8 +22,8 @@ namespace Sushi.TypeScript.Specifications
             var value = FormatValueForProperty(property, property.Value);
 
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
-            if (summary != null)
+            var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
+            if (!(summary is null))
             {
                 yield return $"/**";
                 yield return $"  * @summary {summary.Summary}";

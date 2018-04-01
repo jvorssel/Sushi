@@ -10,24 +10,25 @@ namespace Sushi.Models
     public sealed class Property
     {
         public IEnumerable<string> Script { get; set; } = new List<string>();
-        private readonly PropertyInfo _property;
+        public readonly PropertyInfo PropertyType;
 
-        public string Name => _property.Name;
+        public string Name => PropertyType.Name;
 
-        public Type Type => _property.PropertyType;
-        public CSharpNativeType NativeType => _property.PropertyType.ToCSharpNativeType();
-        public string Namespace => $"{_property.DeclaringType.Namespace}.{_property.DeclaringType.Name}.{_property.Name}";
+        public Type Type => PropertyType.PropertyType;
+        public Type Container => PropertyType.DeclaringType;
+        public CSharpNativeType NativeType => PropertyType.PropertyType.ToCSharpNativeType();
+        public string Namespace => $"{PropertyType.DeclaringType.Namespace}.{PropertyType.DeclaringType.Name}.{PropertyType.Name}";
 
         public object Value { get; }
 
         public bool IsReadonly =>
-            !_property.CanWrite ||
-            Attribute.GetCustomAttribute(_property, typeof(ReadOnlyAttribute))
+            !PropertyType.CanWrite ||
+            Attribute.GetCustomAttribute(PropertyType, typeof(ReadOnlyAttribute))
                 is ReadOnlyAttribute attribute && attribute.IsReadOnly;
-        
+
         public Property(PropertyInfo property, object value)
         {
-            _property = property;
+            PropertyType = property;
             Value = value;
         }
     }

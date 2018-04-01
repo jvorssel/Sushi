@@ -87,6 +87,7 @@ namespace Sushi
             var models = assembly.ExportedTypes
                 .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)) || x.GetCustomAttributes(typeof(ConvertToScriptAttribute), true).Any())
                 .Where(x => !x.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
+                .Where(x => !x.IsInterface)
                 .ToList();
 
             Models = new HashSet<DataModel>(models.Select(x => new DataModel(x)));

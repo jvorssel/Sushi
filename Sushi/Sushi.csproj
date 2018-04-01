@@ -45,11 +45,12 @@
     <Compile Include="ConversionKernel.cs" />
     <Compile Include="Documentation\Models\FieldType.cs" />
     <Compile Include="Documentation\XmlDocumentationReader.cs" />
-    <Compile Include="Documentation\Models\MemberSummary.cs" />
+    <Compile Include="Documentation\Models\FieldDocumentation.cs" />
     <Compile Include="Enum\CSharpNativeType.cs" />
     <Compile Include="Enum\StatementType.cs" />
     <Compile Include="Enum\TemplateKeyType.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Enum\Except.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="FileWriter.cs" />

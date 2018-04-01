@@ -83,7 +83,7 @@ namespace Sushi
         public DataModel Compile(DataModel model, List<DataModel> referenceDataModels)
         {
             var modelBuilder = new StringBuilder();
-            var doc = _kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == model.Type.FullName);
+            var doc = _kernel.Documentation?.GetDocumentationForType(model.Type);
 
             var template = Language.Template
                 .Replace(TYPE_NAME_KEY, model.Name)

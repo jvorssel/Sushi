@@ -5,19 +5,24 @@ namespace Sushi.Documentation.Models
     public enum FieldType
     {
         /// <summary>
+        ///     <see cref="Undefined"/> field type
+        /// </summary>
+        Undefined = 0,
+
+        /// <summary>
         ///     Member redirects to a specific <see cref="Type"/> (T).
         /// </summary>
-        Type,
+        Type = 1,
 
         /// <summary>
         ///     Member redirects to a specific <see cref="Property"/> (P).
         /// </summary>
-        Property,
+        Property = 2,
 
         /// <summary>
         ///     Member redirects to a specific <see cref="Method"/> (M).
         /// </summary>
-        Method
+        Method = 3
     }
 
     public static class SummaryFieldTypeExtensions
@@ -33,7 +38,7 @@ namespace Sushi.Documentation.Models
                 case "M":
                     return FieldType.Method;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(specifier));
+                    return FieldType.Undefined;
             }
         }
     }
