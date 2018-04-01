@@ -25,13 +25,8 @@ namespace Sushi.Tests.Script
                 // 3: Invoke the Convert method to generate the script.
                 var converted = converter.Convert();
 
-
                 // Merge the generated script model(s) to one string.
                 var contents = converter.MergeModelsToString(converted);
-
-                //
-                //if (minify)
-                //    fileName += ".min";
 
                 var fileName = "typescript";
 
