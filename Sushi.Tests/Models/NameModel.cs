@@ -2,7 +2,7 @@
 
 namespace Sushi.Tests.Models
 {
-    public class NameModel : IModelToConvert
+    public class NameModel : IScriptModel
     {
         // Lets start with some person data-model.
         public string Name { get; set; } = @"Jeroen";

@@ -8,7 +8,7 @@ using Sushi.Interfaces;
 namespace Sushi.Tests.Models
 {
     /// <inheritdoc />
-    public class MySummaryIsInherited : IHaveTheSummary, IModelToConvert
+    public class MySummaryIsInherited : IHaveTheSummary, IScriptModel
     {
         /// <inheritdoc />
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace Sushi.Tests.Models
     /// <summary>
     ///     An awesome summary!
     /// </summary>
-    public interface IHaveTheSummary : IModelToConvert
+    public interface IHaveTheSummary : IScriptModel
     {
         /// <summary>
         ///     An awesome name!

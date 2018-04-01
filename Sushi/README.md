@@ -50,14 +50,14 @@ This will iterate through the populated `DataModel`(s) and join its `Script` con
 <br>
 <br>
 **Writing the generated script to a file:**<br>
-The `ModelConverter.FlushToFile'Async'` can be used to write the script contents to a file with a given name and path.
+The `ModelConverter.WriteToFile'Async'` can be used to write the script contents to a file with a given name and path.
 This method uses the `ModelConverter.MergeModelsToString` method internally to join the generated script(s) to one string.
 <br>
 > *PLEASE NOTE:* The `fileName` argument does not include its extension. This is defined in the language-specification.
 
 **Minifying the generated script:**<br>
 Basic script minification is supported. This only removes return-newline(s), tabs, comments and leading-whitespaces.
-This can be done in the `ModelConverter.MergeModelsToString` and `ModelConverter.FlushToFile'Async'` methods. Both have a `minify:boolean` argument.
+This can be done in the `ModelConverter.MergeModelsToString` and `ModelConverter.WriteToFile'Async'` methods. Both have a `minify:boolean` argument.
 <br>
 <br>
 
@@ -79,6 +79,7 @@ $$INHERIT_TYPE$$ | `LanguageSpecification.FormatInheritanceStatement` | Statemen
 $$DEFINED_CHECK$$ | `StatementPipeline.ArgumentDefinedStatement` | Statement if the `Property` is defined / has a value.
 $$UNDEFINED_CHECK$$ | `StatementPipeline.ArgumentUndefinedStatement` | Statement if the `Property` is not defined / has no value.
 $$ARGUMENT_NAME$$ | `ModelConverter.Compile>Replace` | Placeholder for the `argument` of the `object` that should be used.
+$$SCRIPT_MODELS$$ | `ModelConverter.MergeModelsToString` | Placeholder for the generated `SCRIPT_MODELS`. Mainly used for the `LanguageSpecification.WrapTemplate`.
 
 ## Using another Template
 It is really easy to use another template for generating script models. These templates can also be tested for missing template-keys.
@@ -97,3 +98,11 @@ The template won't be allowed to use if it has no contents or no placeholders.<b
 You can test the template if you invoke `TemplateConsistency.TestTemplate(fileContents)`.
 This will return the placeholder-keys that arent used by the template.
 
+## Wrapping the script models > V1.0.3
+The generated script models can now be wrapped in custom code-blocks. <br>
+A wrapper for `AMD` / `Dependency Injection` / `Node` and `Self Invoking Anonymous Functions` are available by default.<br>
+You can always choose to use your own wrapper template. This can be done when you invoke `LanguageSpecification.UseWrapTemplate`.<br>
+The method `CreateConverterForJavaScript` has a new `Wrap` enum argument that specifies what wrap to use. <br>
+
+> *Note:* A wrap template should always use the `$$SCRIPT_MODELS$$` placeholder. 
+> *Also:* It can use the `$$TYPENAME$$` and `$$TYPE_NAMESPACE$$` placeholders.

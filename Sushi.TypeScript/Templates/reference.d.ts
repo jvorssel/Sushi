@@ -1,5 +1,4 @@
 ﻿// ReSharper disable InconsistentNaming
-// Definitely Typed - $$TYPENAME$$
 
 /**
  * $$SUMMARY$$

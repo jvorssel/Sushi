@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Sushi.Enum;
+using Sushi.Helpers;
 
 namespace Sushi.Extensions
 {
@@ -117,6 +118,37 @@ namespace Sushi.Extensions
             }
 
             return sb.ToString().TrimEnd('.');
+        }
+
+        /// <summary>
+        ///     Get the indent for the <see cref="string"/> to <paramref name="find"/> 
+        ///     in the given <see cref="string"/> <paramref name="@this"/>.
+        /// </summary>
+        public static string GetIndentInRowWith(this string @this, string find)
+        {
+            foreach (var row in new StringEnumerator(@this))
+            {
+                if (!row.Contains(find))
+                    continue;
+
+                return row.Before(find);
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        ///     <paramref name="indent"/> each row in the given <see cref="string"/> <paramref name="@this"/>.
+        /// </summary>
+        public static string IndentEachRow(this string @this, string indent)
+        {
+            var sb = new StringBuilder();
+            foreach (var row in new StringEnumerator(@this))
+            {
+                sb.Append(indent + row);
+            }
+
+            return sb.ToString();
         }
     }
 }

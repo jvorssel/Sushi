@@ -1,5 +1,6 @@
 ﻿using System;
 using Sushi.Consistency;
+using Sushi.Enum;
 using Sushi.Interfaces;
 using Sushi.JavaScript.Enum;
 using Sushi.JavaScript.Properties;
@@ -13,9 +14,9 @@ namespace Sushi.JavaScript
         /// </summary>
         /// <param name="this">The <see cref="ConversionKernel"/> to use.</param>
         /// <param name="version">The ECMAScript <paramref name="version"/>.</param>
-        /// <param name="useIsolateScope">If the model should be generated in a <paramref name="useIsolateScope"/>.</param>
+        /// <param name="wrap">If a specific <see cref="Wrap"/> should be used for the generated script model(s).</param>
         /// <returns></returns>
-        public static ModelConverter CreateConverterForJavaScript(this ConversionKernel @this, JavaScriptVersion version, bool useIsolateScope = false)
+        public static ModelConverter CreateConverterForJavaScript(this ConversionKernel @this, JavaScriptVersion version, Wrap wrap = Wrap.None)
         {
             ILanguageSpecification language;
             switch (version)
@@ -24,11 +25,24 @@ namespace Sushi.JavaScript
                     language = new JavaScriptSpecification("JavaScript", new Version(6, 0)).UseTemplate(Resources.V6);
                     break;
                 case JavaScriptVersion.V5:
-                    language = new JavaScriptSpecification("JavaScript", new Version(5, 0))
-                        .UseTemplate(useIsolateScope ? Resources.V5_Isolated : Resources.V5);
+                    language = new JavaScriptSpecification("JavaScript", new Version(5, 0)).UseTemplate(Resources.V5);
                     break;
                 default:
                     throw Errors.LanguageNotFound();
+            }
+
+            switch (wrap)
+            {
+                case Wrap.AMD:
+                    language = language.UseWrapTemplate(Resources.dependency_injection, WrapTemplateUsage.Global);
+                    break;
+                case Wrap.SIAF:
+                    language = language.UseWrapTemplate(Resources.isolated_self_invokation, WrapTemplateUsage.Global);
+                    break;
+                case Wrap.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wrap), wrap, null);
             }
 
             var converter = @this.CreateConverterForTemplate(language);

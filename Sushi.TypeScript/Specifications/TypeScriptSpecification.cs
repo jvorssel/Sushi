@@ -120,8 +120,8 @@ namespace Sushi.TypeScript.Specifications
 
         #region Initializers
 
-        public TypeScriptSpecification(Version version, bool isIsolated = false)
-            : base("TypeScript", version, isIsolated)
+        public TypeScriptSpecification(Version version)
+            : base("TypeScript", version)
         {
             StatementPipeline = new TypeScriptStatements();
         }

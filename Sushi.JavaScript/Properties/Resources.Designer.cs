@@ -61,6 +61,42 @@ namespace Sushi.JavaScript.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ; (function (global, factory) {
+        ///    if (typeof exports === &apos;object&apos; &amp;&amp; typeof module !== &apos;undefined&apos;)
+        ///        module.exports = factory(global);
+        ///    else if (typeof define === &apos;function&apos; &amp;&amp; define.amd)
+        ///        define(factory());
+        ///    else
+        ///        factory(global);
+        ///
+        ///}(window, (function () {
+        ///    &apos;use strict&apos;;
+        ///
+        ///    $$SCIPT_MODELS$$
+        ///
+        ///})));
+        ///.
+        /// </summary>
+        internal static string dependency_injection {
+            get {
+                return ResourceManager.GetString("dependency_injection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (function (window) {
+        ///
+        ///    $$SCIPT_MODELS$$
+        ///
+        ///})(window);.
+        /// </summary>
+        internal static string isolated_self_invokation {
+            get {
+                return ResourceManager.GetString("isolated_self_invokation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to // ReSharper disable UndeclaredGlobalVariableUsing
         ///// ReSharper disable InconsistentNaming
         ///// ReSharper disable WrongExpressionStatement
@@ -68,11 +104,14 @@ namespace Sushi.JavaScript.Properties {
         ///// ECMA 5 - $$TYPENAME$$
         ///
         ////**
+        /// * $$SUMMARY$$
+        /// *
+        /// * Server-side generated model: $$TYPE_NAMESPACE$$.$$TYPENAME$$.
         /// * @name $$TYPENAME$$
         /// * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
-        /// * @class $$TYPENAME$$
-        /// * @classdesc Server-side generated constructor for the &apos;$$TYPENAME$$&apos; class.
-        /// * @param {Object&lt;$$TYPENAME$$&gt;} [$$ARGUMENT_NAME$$] The object to convert to the match the &apos;$$TYPENAME$$&apos; cl [rest of string was truncated]&quot;;.
+        /// * @param {Object&lt;$$TYPENAME$$&gt;} [$$ARGUMENT_NAME$$] The object to convert to the match the &apos;$$TYPENAME$$&apos; class.
+        /// */
+        ///functi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string V5 {
             get {
@@ -84,41 +123,21 @@ namespace Sushi.JavaScript.Properties {
         ///   Looks up a localized string similar to // ReSharper disable UndeclaredGlobalVariableUsing
         ///// ReSharper disable InconsistentNaming
         ///// ReSharper disable WrongExpressionStatement
-        ///(function (window) {
-        ///	&quot;use strict&quot;;
-        ///
-        ///	/**
-        ///	 * @name $$TYPENAME$$
-        ///	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
-        ///	 * @class $$TYPENAME$$
-        ///	 * @classdesc Server-side generated constructor for the &apos;$$TYPENAME$$&apos; class.
-        ///	 * @param {Object&lt;$$TYPENAME$$&gt;} [$$ARGUMENT_NAME$$] The object to convert to the match the &apos;$$TYPENAME$$&apos; class.
-        ///	 * @summary $$SUMMARY$$
-        ///	 */
-        ///	 [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string V5_Isolated {
-            get {
-                return ResourceManager.GetString("V5_Isolated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to // ReSharper disable UndeclaredGlobalVariableUsing
-        ///// ReSharper disable InconsistentNaming
-        ///// ReSharper disable WrongExpressionStatement
         ///// ReSharper disable UseOfImplicitGlobalInFunctionScope
         ///// ECMA 6 - $$TYPENAME$$
         ///
         ////**
-        /// * @summary Server-side generated model for the &apos;$$TYPENAME$$&apos; class.
+        /// * $$SUMMARY$$
+        /// *
+        /// * Server-side generated model: $$TYPE_NAMESPACE$$.$$TYPENAME$$.
+        /// * @name $$TYPENAME$$
+        /// * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
         /// */
         ///class $$TYPENAME$$ $$INHERIT_TYPE$$ {
         ///	/**
-        ///	 * @name $$TYPENAME$$
-        ///	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
-        ///	 * @class $$TYPENAME$$
-        ///	 * @classdesc Server-side generated constructor for the &apos;$$TYPE [rest of string was truncated]&quot;;.
+        ///	 * $$SUMMARY$$
+        ///	 *
+        ///	 * Server-side generated model: $$TYPE_NAMESPACE$$.$$ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string V6 {
             get {

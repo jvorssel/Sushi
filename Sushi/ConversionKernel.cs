@@ -78,14 +78,14 @@ namespace Sushi
 
         /// <summary>
         ///     Initialize a new <see cref="ConversionKernel"/> with models that 
-        ///     inherit <see cref="IModelToConvert"/> in the given <paramref name="assembly"/>.
+        ///     inherit <see cref="IScriptModel"/> in the given <paramref name="assembly"/>.
         /// </summary>
         public ConversionKernel(Assembly assembly)
         {
             _assembly = assembly;
             // Find the models in the given assembly.
             var models = assembly.ExportedTypes
-                .Where(x => x.IsTypeOrInheritsOf(typeof(IModelToConvert)) || x.GetCustomAttributes(typeof(ConvertToScriptAttribute), true).Any())
+                .Where(x => x.IsTypeOrInheritsOf(typeof(IScriptModel)) || x.GetCustomAttributes(typeof(ConvertToScriptAttribute), true).Any())
                 .Where(x => !x.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
                 .Where(x => !x.IsInterface)
                 .ToList();

@@ -33,9 +33,9 @@ namespace Sushi.Tests.Script
                 //if (minify)
                 //    fileName += ".min";
 
-                var fileName = "fileName";
+                var fileName = "typescript";
 
-                converter.FlushToFile(converted, FilePath, fileName);
+                converter.WriteToFile(converted, FilePath, fileName);
             }
         }
 

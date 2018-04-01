@@ -3,7 +3,7 @@ using Sushi.Interfaces;
 
 namespace Sushi.Tests.Models
 {
-    public class PersonReferenceToUser : IModelToConvert
+    public class PersonReferenceToUser : IScriptModel
     {
         public string Name { get; set; }
         public string Insertion { get; set; }
@@ -12,7 +12,7 @@ namespace Sushi.Tests.Models
         public UserReferenceToPerson User { get; set; }
     }
 
-    public class UserReferenceToPerson : IModelToConvert
+    public class UserReferenceToPerson : IScriptModel
     {
         public DateTime RegisteredOn { get; set; } = DateTime.Now;
         public Guid Guid { get; set; } = Guid.Empty;

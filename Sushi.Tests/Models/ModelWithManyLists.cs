@@ -6,7 +6,7 @@ namespace Sushi.Tests.Models
     /// <summary>
     ///     A model with a LOT of lists.
     /// </summary>
-    public class ModelWithManyLists : IModelToConvert
+    public class ModelWithManyLists : IScriptModel
     {
         /// <summary>
         ///     A beautiful list!

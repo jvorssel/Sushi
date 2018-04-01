@@ -118,11 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="dependency_injection" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\Wrap\dependency_injection.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="isolated_self_invokation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Templates\Wrap\isolated_self_invokation.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="V5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Templates\V5.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="V5_Isolated" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Templates\V5 Isolated.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="V6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Templates\V6.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>

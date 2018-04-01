@@ -33,9 +33,6 @@ namespace Sushi
         public Version Version { get; } = new Version();
 
         /// <inheritdoc />
-        public bool IsIsolated { get; }
-
-        /// <inheritdoc />
         public string TargetObject
         {
             get => _targetObject;
@@ -47,6 +44,12 @@ namespace Sushi
 
         /// <inheritdoc />
         public string Template { get; private set; } = string.Empty;
+
+        /// <inheritdoc />
+        public string WrapTemplate { get; private set; } = string.Empty;
+
+        /// <inheritdoc />
+        public WrapTemplateUsage WrapUsage { get; private set; } = WrapTemplateUsage.None;
 
         /// <inheritdoc />
         public IEnumerable<string> ValidateTemplate(string template)
@@ -84,30 +87,29 @@ namespace Sushi
         {
         }
 
-        protected LanguageSpecification(string scriptLanguage, Version version, bool isIsolated = false)
+        protected LanguageSpecification(string scriptLanguage, Version version)
         {
             if (scriptLanguage == string.Empty)
                 throw new ArgumentNullException(nameof(scriptLanguage));
 
             Language = scriptLanguage;
             Version = version ?? throw new ArgumentNullException(nameof(version));
-            IsIsolated = isIsolated;
         }
 
-        protected LanguageSpecification(string scriptLanguage, string version, bool isIsolated = false)
-            : this(scriptLanguage, Version.Parse(version), isIsolated)
+        protected LanguageSpecification(string scriptLanguage, string version)
+            : this(scriptLanguage, Version.Parse(version))
         {
 
         }
 
-        protected LanguageSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
-            : this(path, scriptLanguage, Version.Parse(version), isIsolated)
+        protected LanguageSpecification(string path, string scriptLanguage, string version)
+            : this(path, scriptLanguage, Version.Parse(version))
         {
 
         }
 
-        protected LanguageSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
-            : this(scriptLanguage, version, isIsolated)
+        protected LanguageSpecification(string path, string scriptLanguage, Version version)
+            : this(scriptLanguage, version)
         {
             if (path == string.Empty)
                 throw new ArgumentNullException(nameof(path));
@@ -156,12 +158,28 @@ namespace Sushi
             if (template.IsEmpty())
                 throw new ArgumentNullException(nameof(template));
 
-            if(TemplateConsistency.TestTemplate(template).Count() == TemplateConsistency.Keys.Count())
+            if (TemplateConsistency.TestTemplate(template).Count() == TemplateConsistency.Keys.Count())
                 throw Errors.NoPlaceholdersInTemplate();
 
             Template = template;
             return this;
         }
+
+
+        /// <inheritdoc />
+        public LanguageSpecification UseWrapTemplate(string template, WrapTemplateUsage usage)
+        {
+            if (template.IsEmpty())
+                throw new ArgumentNullException(nameof(template));
+
+            if (!TemplateConsistency.TestWrapTemplate(template))
+                throw Errors.NoPlaceholdersInTemplate();
+
+            WrapTemplate = template;
+            WrapUsage = usage;
+            return this;
+        }
+
 
         #region Equality members
 
@@ -172,7 +190,7 @@ namespace Sushi
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase) && string.Equals(Language, other.Language, StringComparison.InvariantCultureIgnoreCase) && Equals(Version, other.Version) && IsIsolated == other.IsIsolated;
+            return string.Equals(FilePath, other.FilePath, StringComparison.InvariantCultureIgnoreCase) && string.Equals(Language, other.Language, StringComparison.InvariantCultureIgnoreCase) && Equals(Version, other.Version);
         }
 
         /// <inheritdoc />
@@ -195,7 +213,6 @@ namespace Sushi
                 var hashCode = (FilePath != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(FilePath) : 0);
                 hashCode = (hashCode * 397) ^ (Language != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(Language) : 0);
                 hashCode = (hashCode * 397) ^ (Version != null ? Version.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ IsIsolated.GetHashCode();
                 return hashCode;
             }
         }

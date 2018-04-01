@@ -34,11 +34,6 @@ namespace Sushi.Interfaces
         Version Version { get; }
 
         /// <summary>
-        ///     If this <see cref="ILanguageSpecification"/> refers to a isolated model instance.
-        /// </summary>
-        bool IsIsolated { get; }
-
-        /// <summary>
         ///     What object path the generated model should be assigned to.
         /// </summary>
         string TargetObject { get; set; }
@@ -52,6 +47,16 @@ namespace Sushi.Interfaces
         ///     The <see cref="Template"/> text that has been loaded into this <see cref="ILanguageSpecification"/>.
         /// </summary>
         string Template { get; }
+
+        /// <summary>
+        ///     The <see cref="WrapTemplate"/> text that will be used to place the <see cref="TemplateKeys"/>
+        /// </summary>
+        string WrapTemplate { get; }
+
+        /// <summary>
+        ///     When the <see cref="WrapTemplate"/> is used.
+        /// </summary>
+        WrapTemplateUsage WrapUsage { get; }
 
         /// <summary>
         ///     The <see cref="StatementPipeline"/> used to format different validation / recognition statements.
@@ -72,6 +77,14 @@ namespace Sushi.Interfaces
         ///     Use the given <paramref name="template"/>.
         /// </summary>
         LanguageSpecification UseTemplate(string template);
+
+        /// <summary>
+        ///     Use the given <paramref name="template"/> to wrap around the generated <see cref="TemplateKeys.SCRIPT_MODELS"/>.
+        /// </summary>
+        /// <remarks>
+        ///     Requires the <see cref="TemplateKeys.SCRIPT_MODELS"/> placeholder to be available.
+        /// </remarks>
+        LanguageSpecification UseWrapTemplate(string template, WrapTemplateUsage usage);
 
         /// <summary>
         ///     List the <see cref="TemplateKeys"/> that are not used by the given <paramref name="template"/>.

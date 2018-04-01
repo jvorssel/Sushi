@@ -39,7 +39,12 @@ namespace Sushi.Helpers
         ///     Find what <see cref="TemplateKeys"/> are not used by the given <paramref name="templateContent"/>.
         /// </summary>
         /// <returns>The <see cref="List{T}"/> of missing <see cref="TemplateKeys"/>.</returns>
-        public static IEnumerable<string> TestTemplate(string templateContent) 
+        public static IEnumerable<string> TestTemplate(string templateContent)
             => Keys.Where(key => !templateContent.Contains(key));
+
+        /// <summary>
+        ///     If the given <paramref name="template"/> uses the correct $$<see cref="TemplateKeys.SCRIPT_MODELS"/>$$ placeholder.
+        /// </summary>
+        public static bool TestWrapTemplate(string template) => template.Contains(SCRIPT_MODELS);
     }
 }

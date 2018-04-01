@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Sushi.Interfaces;
 using Sushi.Models;
 
 namespace Sushi.Consistency
@@ -58,5 +59,11 @@ namespace Sushi.Consistency
         ///     Placeholder for the argument of the object that should be used.
         /// </summary>
         public const string ARGUMENT_NAME = @"$$ARGUMENT_NAME$$";
+
+        /// <summary>
+        ///     Placeholder for the generated <see cref="SCRIPT_MODELS"/>.
+        ///     Mainly used in the <see cref="ILanguageSpecification.WrapTemplate"/>.
+        /// </summary>
+        public const string SCRIPT_MODELS = @"$$SCRIPT_MODELS$$";
     }
 }

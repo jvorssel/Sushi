@@ -53,5 +53,7 @@ namespace Sushi.Consistency
         public static InvalidOperationException NoPlaceholdersInTemplate()
             => new InvalidOperationException(@"The given template does not have any placeholders to use.");
 
+        public static InvalidOperationException NoWrapTemplateAvailable()
+            => new InvalidOperationException(@"Expected a template to be available to wrap around one or more available script model(s).");
     }
 }

@@ -18,23 +18,23 @@ namespace Sushi.Tests
         /// </summary>
         protected static void CompileJavaScript(ConversionKernel kernel,
             JavaScriptVersion version,
-            bool isolated = false,
             Func<DataModel, bool> predicate = null,
             string fileName = "ecmascript",
-            bool minify = false)
+            bool minify = false,
+            Wrap wrap = Wrap.None)
         {
-            var converter = kernel.CreateConverterForJavaScript(version, isolated);
+            var converter = kernel.CreateConverterForJavaScript(version, wrap);
             var converted = converter.Convert(predicate);
 
             fileName += $".{version.ToString().ToLowerInvariant()}";
 
-            if (isolated)
-                fileName += ".isolated";
+            if (wrap != Wrap.None)
+                fileName += "." + wrap;
 
             if (minify)
                 fileName += ".min";
 
-            converter.FlushToFile(converted, FilePath, fileName, minify);
+            converter.WriteToFile(converted, FilePath, fileName, minify);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Sushi.Tests
             if (minify)
                 fileName += ".min";
 
-            converter.FlushToFile(converted, FilePath, fileName, minify);
+            converter.WriteToFile(converted, FilePath, fileName, minify);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Sushi.Tests
             if (minify)
                 fileName += ".min";
 
-            converter.FlushToFile(converted, FilePath, fileName, minify);
+            converter.WriteToFile(converted, FilePath, fileName, minify);
         }
     }
 }

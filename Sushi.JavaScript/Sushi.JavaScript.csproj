@@ -47,6 +47,7 @@
     <Compile Include="ConversionKernelExtensions.cs" />
     <Compile Include="Enum\ErrorType.cs" />
     <Compile Include="Enum\HostOrNativeObject.cs" />
+    <Compile Include="Enum\Wrap.cs" />
     <Compile Include="JavaScriptSpecification.cs" />
     <Compile Include="JavaScriptStatements.cs" />
     <Compile Include="Enum\JavaScriptType.cs" />
@@ -65,9 +66,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Templates\V5 Isolated.js" />
     <Content Include="Templates\V5.js" />
     <Content Include="Templates\V6.js" />
+    <Content Include="Templates\Wrap\isolated_self_invokation.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -79,6 +80,7 @@
   <ItemGroup>
     <None Include="Package.nuspec" />
     <None Include="packages.config" />
+    <Content Include="Templates\Wrap\dependency_injection.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

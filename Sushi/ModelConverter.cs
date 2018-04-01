@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Sushi.Consistency;
+using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
@@ -51,10 +52,40 @@ namespace Sushi
             var builder = new StringBuilder();
             foreach (var model in models)
             {
-                builder.AppendLine(minify ? Minify(model) : model.Script);
+                var script = minify ? Minify(model) : model.Script;
+                switch (Language.WrapUsage)
+                {
+                    case WrapTemplateUsage.Global:
+                    case WrapTemplateUsage.None:
+                        builder.AppendLine(script);
+                        break;
+                    case WrapTemplateUsage.Each:
+                        if (Language.WrapTemplate.IsEmpty())
+                            throw Errors.NoWrapTemplateAvailable();
+
+                        script = Language.WrapTemplate
+                            .Replace(SCRIPT_MODELS, script)
+                            .Replace(TYPE_NAME_KEY, model.Name)
+                            .Replace(TYPE_NAMESPACE_KEY, model.FullName);
+
+                        builder.AppendLine(script);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
             }
 
-            return builder.ToString();
+            var result = builder.ToString();
+
+            if (Language.WrapUsage == WrapTemplateUsage.Global)
+            {
+                var indent = Language.WrapTemplate.GetIndentInRowWith(SCRIPT_MODELS);
+                result = result.IndentEachRow(indent);
+                result = Language.WrapTemplate.Replace(SCRIPT_MODELS, result);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -201,7 +232,7 @@ namespace Sushi
         /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
         /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
         /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
-        public void FlushToFile(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
+        public void WriteToFile(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
         {
             if (path.IsEmpty())
                 throw new ArgumentNullException(nameof(path));
@@ -228,7 +259,7 @@ namespace Sushi
         /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
         /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
         /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
-        public async Task FlushToFileAsync(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
+        public async Task WriteToFileAsync(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
         {
             if (path.IsEmpty())
                 throw new ArgumentNullException(nameof(path));

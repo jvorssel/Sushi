@@ -73,7 +73,7 @@ namespace Sushi.JavaScript
             if (Version.Major >= 6)
                 script = $@" extends {inherits.Name}";
             else if (Version.Major <= 5)
-                script = $@"{model.Name}.prototype = new {inherits.Name}();";
+                script = $"{model.Name}.prototype = new {inherits.Name}();";
             else
                 throw Errors.LanguageVersionMismatch(Version);
 
@@ -141,26 +141,26 @@ namespace Sushi.JavaScript
             StatementPipeline = new JavaScriptStatements();
         }
 
-        public JavaScriptSpecification(string scriptLanguage, Version version, bool isIsolated = false)
-             : base(scriptLanguage, version, isIsolated)
+        public JavaScriptSpecification(string scriptLanguage, Version version)
+             : base(scriptLanguage, version)
         {
             StatementPipeline = new JavaScriptStatements();
         }
 
-        public JavaScriptSpecification(string scriptLanguage, string version, bool isIsolated = false)
-            : base(scriptLanguage, Version.Parse(version), isIsolated)
+        public JavaScriptSpecification(string scriptLanguage, string version)
+            : base(scriptLanguage, Version.Parse(version))
         {
             StatementPipeline = new JavaScriptStatements();
         }
 
-        public JavaScriptSpecification(string path, string scriptLanguage, string version, bool isIsolated = false)
-            : base(path, scriptLanguage, Version.Parse(version), isIsolated)
+        public JavaScriptSpecification(string path, string scriptLanguage, string version)
+            : base(path, scriptLanguage, Version.Parse(version))
         {
             StatementPipeline = new JavaScriptStatements();
         }
 
-        public JavaScriptSpecification(string path, string scriptLanguage, Version version, bool isIsolated = false)
-            : base(path, scriptLanguage, version, isIsolated)
+        public JavaScriptSpecification(string path, string scriptLanguage, Version version)
+            : base(path, scriptLanguage, version)
         {
             StatementPipeline = new JavaScriptStatements();
         }

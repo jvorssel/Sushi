@@ -20,7 +20,7 @@ namespace Sushi.TypeScript.Specifications
                 var underlyingType = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
                 if (underlyingType == typeof(Guid))
                     return GetBaseType(CSharpNativeType.String);
-                
+
                 if (underlyingType == typeof(DateTime))
                     return @"Date";
 
@@ -72,7 +72,7 @@ namespace Sushi.TypeScript.Specifications
             var enumerable = property.Type.GetInterfaces().FirstOrDefault(x => x == typeof(IEnumerable));
 
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.Members.SingleOrDefault(x => x.Namespace == property.Namespace);
+            var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
             if (summary?.Summary.Length > 0)
             {
                 yield return $"/**";
@@ -104,8 +104,8 @@ namespace Sushi.TypeScript.Specifications
 
         #endregion
 
-        protected TypeScriptSpecificationBase(string scriptName, Version version, bool isIsolated = false)
-            : base(scriptName, version, isIsolated)
+        protected TypeScriptSpecificationBase(string scriptName, Version version)
+            : base(scriptName, version)
         {
 
         }

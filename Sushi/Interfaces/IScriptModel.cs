@@ -1,6 +1,6 @@
 ﻿namespace Sushi.Interfaces
 {
-    public interface IModelToConvert
+    public interface IScriptModel
     {
 
     }

@@ -18,7 +18,8 @@ namespace Sushi.Tests.Script
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileJavaScript(kernel, JavaScriptVersion.V5);
-                CompileJavaScript(kernel, JavaScriptVersion.V5, true);
+                CompileJavaScript(kernel, JavaScriptVersion.V5, wrap: Wrap.AMD);
+                CompileJavaScript(kernel, JavaScriptVersion.V5, wrap: Wrap.SIAF);
                 CompileJavaScript(kernel, JavaScriptVersion.V6);
             }
         }
@@ -30,7 +31,6 @@ namespace Sushi.Tests.Script
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileJavaScript(kernel, JavaScriptVersion.V5, minify: true);
-                CompileJavaScript(kernel, JavaScriptVersion.V5, true, minify: true);
                 CompileJavaScript(kernel, JavaScriptVersion.V6, minify: true);
             }
         }
