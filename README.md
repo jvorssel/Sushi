@@ -1,9 +1,12 @@
 # Sushi
 Library for converting .NET models to different script languages.
 
+Use server-side classes / models in whatever script language you prefer!
+Also generates javascript reference files:<br>
+![Intellisense preview](https://raw.githubusercontent.com/jvorssel/Sushi/master/intellisense.png)
+
 **Developed by:** Jeroen Vorsselman @ 2018<br>
 **[GitHub](https://github.com/jvorssel)** **[LinkedIn](https://www.linkedin.com/in/j-vorsselman/)**
-
 
 ##  Main features
 > Main framework for generating script files.
