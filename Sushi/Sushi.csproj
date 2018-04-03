@@ -71,9 +71,6 @@
     <Compile Include="StatementPipeline.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Package.nuspec" />
     <None Include="README.md" />
   </ItemGroup>
