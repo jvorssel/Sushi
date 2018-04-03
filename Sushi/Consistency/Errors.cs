@@ -55,5 +55,8 @@ namespace Sushi.Consistency
 
         public static InvalidOperationException NoWrapTemplateAvailable()
             => new InvalidOperationException(@"Expected a template to be available to wrap around one or more available script model(s).");
+
+        public static InvalidOperationException OneAssemblyExpected()
+            => new InvalidOperationException(@"Expected the given types to originate from the same assembly.");
     }
 }

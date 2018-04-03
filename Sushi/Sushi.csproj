@@ -43,7 +43,7 @@
     <Compile Include="Attributes\IgnoreForScript.cs" />
     <Compile Include="Consistency\TemplateKeys.cs" />
     <Compile Include="ConversionKernel.cs" />
-    <Compile Include="Documentation\Models\FieldType.cs" />
+    <Compile Include="Documentation\Models\ReferenceType.cs" />
     <Compile Include="Documentation\XmlDocumentationReader.cs" />
     <Compile Include="Documentation\Models\FieldDocumentation.cs" />
     <Compile Include="Enum\CSharpNativeType.cs" />

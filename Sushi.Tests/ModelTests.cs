@@ -1,29 +1,31 @@
 ﻿using System.Linq;
+using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Tests.Models;
-using Sushi.Tests.Models.Inheritance;
+using Sushi.TestModels;
+using Sushi.TestModels.Inheritance;
 
 namespace Sushi.Tests
 {
     [TestClass]
     public class ModelTests
     {
+        private readonly Assembly _assembly = typeof(PersonModel).Assembly;
         public TestContext Context { get; set; }
 
         [TestMethod]
         public void ModelsInAssemblyTest()
         {
-            using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
+            using (var kernel = new ConversionKernel(_assembly))
             {
-                Assert.IsTrue(kernel.ModelCount > 0);
-                Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(NameModel)));
+                Assert.IsTrue(kernel.ModelCount > 0, "Expected atleast one model to be available.");
+                Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(NameModel)), "Expected atleast one ");
             }
         }
 
         [TestMethod]
         public void ModelPropertyRecognitionTest()
         {
-            using (var kernel = new ConversionKernel(typeof(ModelTests).Assembly))
+            using (var kernel = new ConversionKernel(_assembly))
             {
                 var personModel = kernel.Models.SingleOrDefault(x => x.Name == nameof(PersonModel));
                 Assert.IsNotNull(personModel);

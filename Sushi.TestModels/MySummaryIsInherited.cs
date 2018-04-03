@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sushi.Interfaces;
+﻿using Sushi.Interfaces;
 
-namespace Sushi.Tests.Models
+namespace Sushi.TestModels
 {
     /// <inheritdoc />
     public class MySummaryIsInherited : IHaveTheSummary, IScriptModel

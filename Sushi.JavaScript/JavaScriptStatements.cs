@@ -36,8 +36,7 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public override Statement CreateKeyCheckStatement(ConversionKernel kernel, Property property)
         {
-            var doesKeyExistStatement = $"if (!{kernel.ArgumentName}.hasOwnProperty('{property.Name}'))" +
-                $"\n\tthrow new TypeError(\"{string.Format(kernel.ObjectPropertyMissing, property.Name)}\"); ";
+            var doesKeyExistStatement = $"if (!{kernel.ArgumentName}.hasOwnProperty('{property.Name}')) throw new TypeError(\"{string.Format(kernel.ObjectPropertyMissing, property.Name)}\");";
 
             return new Statement(doesKeyExistStatement, StatementType.Key);
         }
@@ -45,9 +44,7 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public override Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property, IEnumerable<DataModel> dataModels)
         {
-            var instanceCheck =
-                $@"if (!({CreateUndefinedStatement(kernel, property)}) && !({kernel.ArgumentName}['{{0}}'] instanceof {{1}}))" +
-                $"\n\tthrow new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
+            var instanceCheck = $"if (!({CreateUndefinedStatement(kernel, property)}) && !({kernel.ArgumentName}['{{0}}'] instanceof {{1}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
 
             var models = dataModels.ToList();
             var script = string.Empty;
@@ -87,9 +84,7 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public override Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property)
         {
-            var typeCheck =
-                $@"if (typeof ({kernel.ArgumentName}['{{0}}']) !== '{{1}}')" +
-                $"\n\tthrow new TypeError(\"{kernel.PropertyTypeMismatch}\");";
+            var typeCheck = $"if (typeof ({kernel.ArgumentName}['{{0}}']) !== '{{1}}') throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
 
             var script = string.Empty;
             var scriptType = property.NativeType.ToJavaScriptType();

@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Extensions;
+using Sushi.TestModels;
 using Sushi.TypeScript;
 using Sushi.TypeScript.Enum;
 
@@ -16,7 +17,7 @@ namespace Sushi.Tests.Script
         public void CompileTypeScriptFileTest()
         {
             // 1: Create an instance of the ConversionKernel
-            var assembly = typeof(TypeScriptTests).Assembly;
+            var assembly = typeof(NameModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 // 2: Create the ModelConverter instance for the requested script-language
@@ -37,7 +38,7 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileMinifiedTypeScriptFileTest()
         {
-            var assembly = typeof(TypeScriptTests).Assembly;
+            var assembly = typeof(NameModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileTypeScript(kernel, minify: true);
@@ -47,14 +48,11 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileDefinitelyTypedFileTest()
         {
-            var assembly = typeof(TypeScriptTests).Assembly;
+            var assembly = typeof(NameModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileDefinitelyTyped(kernel);
             }
         }
-
-
-
     }
 }

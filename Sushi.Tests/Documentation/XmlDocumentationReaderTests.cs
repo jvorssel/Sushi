@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Documentation;
 using Sushi.Documentation.Models;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
 
 namespace Sushi.Tests.Documentation
 {
@@ -26,7 +26,7 @@ namespace Sushi.Tests.Documentation
         [TestInitialize]
         public void Initialize()
         {
-            Assembly = typeof(Models.MySummaryIsInherited).Assembly;
+            Assembly = typeof(MySummaryIsInherited).Assembly;
             FilePath = Path.Combine(BaseDirectoryPath, $"{Assembly.FullName.Split(',')[0]}.xml");
             Reader = new XmlDocumentationReader(FilePath);
         }
@@ -40,7 +40,7 @@ namespace Sushi.Tests.Documentation
             // ASSERT
             Assert.IsTrue(Reader.Members.Count > 0);
             Assert.IsTrue(Reader.Members.Any(x => x.IsInherited));
-            Assert.IsTrue(Reader.Members.Where(x => x.FieldType == FieldType.Property).All(x => x.DeclaringTypeName.Length > 0), "Expected each field to have a declaring type name.");
+            Assert.IsTrue(Reader.Members.Where(x => x.FieldType == ReferenceType.Property).All(x => x.DeclaringTypeName.Length > 0), "Expected each field to have a declaring type name.");
             Assert.IsTrue(Reader.Initialized);
         }
 
@@ -69,7 +69,7 @@ namespace Sushi.Tests.Documentation
 
             // ASSERT
             Assert.IsNotNull(doc);
-            Assert.AreEqual(FieldType.Type, doc.FieldType);
+            Assert.AreEqual(ReferenceType.Type, doc.FieldType);
             Assert.AreEqual(nameof(IHaveTheSummary), doc.Name);
             Assert.IsTrue(doc.Summary.Length > 0);
         }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Xml;
 using System.Xml.Linq;
 using Sushi.Consistency;
 using Sushi.Documentation.Models;
@@ -29,7 +30,7 @@ namespace Sushi.Documentation
 
         private XDocument _doc;
 
-        public static Regex RemoveMethodArgs = new Regex(@"^([a-zA-Z.]*)");
+        public static readonly Regex RemoveMethodArgs = new Regex(@"^([a-zA-Z.]*)");
 
         public XmlDocumentationReader(string path)
         {
@@ -38,6 +39,28 @@ namespace Sushi.Documentation
 
             Path = path;
             Initialized = false;
+        }
+
+        private string ResolveXmlBody(XElement element)
+        {
+            var body = string.Empty;
+            var nodes = element.Nodes().ToList();
+            if (!nodes.Any())
+                return element.Value;
+
+            var text = "";
+            foreach (var node in nodes)
+            {
+                if (node is XText textNode)
+                    text += textNode.Value;
+                else if (node is XElement elementNode)
+                {
+                    var crefValue = elementNode.Attribute("cref")?.Value ?? string.Empty;
+                    text += crefValue.Split('.').Last();
+                }
+            }
+
+            return text.Trim().RemoveEscapedCharacters();
         }
 
         private void ProcessXmlFileContents()
@@ -60,45 +83,28 @@ namespace Sushi.Documentation
             if (membersElement == null)
                 throw Errors.IncompatibleXmlDocument("doc > members");
 
-            // Types first
             var members = membersElement.Elements("member").ToList();
             foreach (var member in members)
             {
                 var @namespace = member.Attribute("name")?.Value ?? string.Empty;
                 var split = @namespace.Split(':');
                 var fieldType = split[0].GetFieldType();
-                if (fieldType == FieldType.Method)
+                if (fieldType == ReferenceType.Method)
                     continue;
 
                 var descendants = member.Descendants().ToList();
-
                 var dict = new Dictionary<string, string>();
                 foreach (var desc in descendants)
-                    dict[desc.Name.LocalName] = desc.Value;
+                {
+                    // Process the inner elements
+                    dict[desc.Name.LocalName] = ResolveXmlBody(desc);
+                }
 
-                var namespaceUri = RemoveMethodArgs.Match(split[1]).Value.Split('.');
-
-                var model = new FieldDocumentation(
-                    namespaceUri.JoinString('.', Except.Last),
-                    namespaceUri.Last(),
-                    fieldType,
-                    dict
-                );
-
+                var model = new FieldDocumentation(split[1], fieldType, dict);
                 Members.Add(model);
             }
 
             Members = Members.OrderBy(x => x.FieldType).ToList();
-            foreach (var member in Members.Where(x => x.FieldType != FieldType.Type))
-            {
-                var split = member.Namespace.Split('.');
-                if (Members.Where(x => x.FieldType == FieldType.Type).All(x => split.Last() != x.Name))
-                    continue;
-
-                member.DeclaringTypeName = split.Last();
-                member.Namespace = split.JoinString('.', Except.Last);
-            }
-
             Initialized = true;
         }
 
@@ -134,7 +140,7 @@ namespace Sushi.Documentation
             if (!Initialized)
                 Initialize();
 
-            var typeMembers = Members.Where(x => x.FieldType == FieldType.Type);
+            var typeMembers = Members.Where(x => x.FieldType == ReferenceType.Type);
             var doc = typeMembers.SingleOrDefault(x => x == type);
 
             if (!(doc is null) && !doc.IsInherited)
@@ -144,7 +150,7 @@ namespace Sushi.Documentation
             foreach (var interfaceType in interfaces)
             {
                 var interfaceNamespace = interfaceType?.Namespace?.Split(',')[0];
-                doc = Members.SingleOrDefault(x => x.FieldType == FieldType.Type && x == interfaceType);
+                doc = Members.SingleOrDefault(x => x.FieldType == ReferenceType.Type && x == interfaceType);
 
                 if (!(doc is null))
                     return doc;

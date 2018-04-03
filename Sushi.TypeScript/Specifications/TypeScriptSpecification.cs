@@ -20,16 +20,6 @@ namespace Sushi.TypeScript.Specifications
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
             var value = FormatValueForProperty(property, property.Value);
-
-            // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
-            if (!(summary is null))
-            {
-                yield return $"/**";
-                yield return $"  * @summary {summary.Summary}";
-                yield return $"  */";
-            }
-
             yield return $"this.{property.Name} = {kernel.ArgumentName}.{property.Name} || {value};";
         }
 

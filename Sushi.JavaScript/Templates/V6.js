@@ -9,7 +9,7 @@
  *
  * Server-side generated model: $$TYPE_NAMESPACE$$.$$TYPENAME$$.
  * @name $$TYPENAME$$
- * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
+ * @namespace $$TYPE_NAMESPACE$$
  */
 class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 	/**
@@ -23,7 +23,7 @@ class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 			$$VALIDATE_OBJECT$$;
 		}
 
-		// Create object to avoid null/undefind TypeError
+		// Create object to avoid null/undefined TypeError
 		if ($$UNDEFINED_CHECK$$)
 			$$ARGUMENT_NAME$$ = {};
 
@@ -33,7 +33,7 @@ class $$TYPENAME$$ $$INHERIT_TYPE$$ {
 	/**
 	 * Check if the given '$$ARGUMENT_NAME$$' contains the expected keys and instances to match the '$$TYPENAME$$' class.
 	 * @name tryParse
-	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$.tryParse
+	 * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
 	 * @param {Object=} $$ARGUMENT_NAME$$ The object to parse.
 	 * @return {boolean} If the given '$$ARGUMENT_NAME$$' can match the '$$TYPENAME$$' class.
 	 */

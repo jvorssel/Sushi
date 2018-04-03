@@ -64,8 +64,21 @@ namespace Sushi
         ///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="types"/> for <see cref="Models"/>.
         /// </summary>
         public ConversionKernel(IEnumerable<Type> types)
-            : this(types.Select(x => new DataModel(x)))
         {
+            _assembly = types.First().Assembly;
+            if (types.Any(x => x.Assembly != _assembly))
+                throw Errors.OneAssemblyExpected();
+
+            foreach (var type in types)
+            {
+                var hasScriptAttr = type.GetCustomAttributes(typeof(ConvertToScriptAttribute)).Any();
+                var isScriptModel = type.IsTypeOrInheritsOf(typeof(IScriptModel));
+                var attrs = type.GetCustomAttributes(typeof(IgnoreForScript), true);
+                if (attrs.Any() || (!isScriptModel && !hasScriptAttr))
+                    continue;
+
+                Models.Add(new DataModel(type));
+            }
         }
 
         /// <summary>
@@ -87,7 +100,7 @@ namespace Sushi
             var models = assembly.ExportedTypes
                 .Where(x => x.IsTypeOrInheritsOf(typeof(IScriptModel)) || x.GetCustomAttributes(typeof(ConvertToScriptAttribute), true).Any())
                 .Where(x => !x.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
-                .Where(x => !x.IsInterface)
+                .Where(x => !x.IsInterface && x.BaseType != typeof(System.Enum))
                 .ToList();
 
             Models = new HashSet<DataModel>(models.Select(x => new DataModel(x)));

@@ -1,8 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sushi.JavaScript;
 using Sushi.JavaScript.Enum;
-using Sushi.Models;
-using Sushi.Tests.Models.Inheritance;
+using Sushi.TestModels;
 
 namespace Sushi.Tests.Script
 {
@@ -14,24 +13,17 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileJavaScriptFileTest()
         {
-            var assembly = typeof(JavaScriptTests).Assembly;
+            var assembly = typeof(NameModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
-                CompileJavaScript(kernel, JavaScriptVersion.V5);
-                CompileJavaScript(kernel, JavaScriptVersion.V5, wrap: Wrap.AMD);
-                CompileJavaScript(kernel, JavaScriptVersion.V5, wrap: Wrap.SIAF);
-                CompileJavaScript(kernel, JavaScriptVersion.V6);
-            }
-        }
+                foreach (var model in kernel.Models)
+                {
+                    var converter = kernel.CreateConverterForJavaScript(JavaScriptVersion.V5, Wrap.SIAF);
+                    var converted = converter.Convert(x => x.Type == model.Type);
+                    var fileName = model.Name + ".model";
 
-        [TestMethod]
-        public void CompileMinifiedJavaScriptFileTest()
-        {
-            var assembly = typeof(JavaScriptTests).Assembly;
-            using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
-            {
-                CompileJavaScript(kernel, JavaScriptVersion.V5, minify: true);
-                CompileJavaScript(kernel, JavaScriptVersion.V6, minify: true);
+                    converter.WriteToFile(converted, FilePath, fileName);
+                }
             }
         }
     }

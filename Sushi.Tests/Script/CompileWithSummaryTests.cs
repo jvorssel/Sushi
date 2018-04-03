@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Extensions;
 using Sushi.JavaScript.Enum;
+using Sushi.TestModels;
 
 namespace Sushi.Tests
 {
@@ -15,7 +16,7 @@ namespace Sushi.Tests
         [TestMethod]
         public void LoadCorrectlyTest()
         {
-            var assembly = typeof(ModelToConvertTests).Assembly;
+            var assembly = typeof(NameModel).Assembly;
             using (var kernel = new ConversionKernel(assembly))
             {
                 // Make sure the XML documentation is loaded
@@ -32,7 +33,7 @@ namespace Sushi.Tests
         [TestMethod]
         public void CompileTest()
         {
-            var assembly = typeof(ModelToConvertTests).Assembly;
+            var assembly = typeof(NameModel).Assembly;
             using (var kernel = new ConversionKernel(assembly))
             {
                 // Make sure the XML documentation is loaded

@@ -92,29 +92,17 @@ namespace Sushi.Extensions
         /// <summary>
         ///     Join the given <see cref="string"/> <see cref="IEnumerable{T}"/> to one string.
         /// </summary>
-        public static string JoinString(this IEnumerable<string> @this, char separator, Except except = Except.None)
+        public static string JoinString(this List<string> @this, char separator, int amount = 0)
         {
             var sb = new StringBuilder();
-            switch (except)
+            if (amount == 0)
+                amount = @this.Count;
+
+            for (int i = 0; i < amount; i++)
             {
-                case Except.First:
-                    {
-                        foreach (var str in @this.Where(x => x != @this.First()))
-                            sb.Append(str + separator);
 
-                        break;
-                    }
-                case Except.Last:
-                    {
-                        foreach (var str in @this.Where(x => x != @this.Last()))
-                            sb.Append(str + separator);
 
-                        break;
-                    }
-                case Except.None:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(except), except, null);
+                sb.Append(@this[i] + separator);
             }
 
             return sb.ToString().TrimEnd('.');

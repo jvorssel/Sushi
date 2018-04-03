@@ -58,8 +58,7 @@ namespace Sushi.Tests
         {
             // Make sure the XML documentation is loaded
             var assemblyName = typeof(TestBase).Assembly.GetProjectName();
-            var xmlDocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{assemblyName}.xml");
-            kernel.LoadXmlDocumentation(xmlDocPath);
+            kernel.LoadXmlDocumentation();
 
             var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
             var converted = converter.Convert();

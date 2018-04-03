@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sushi.Interfaces;
 
-namespace Sushi.Tests.Models
+namespace Sushi.TestModels
 {
     /// <summary>
     ///     A model with a LOT of lists.

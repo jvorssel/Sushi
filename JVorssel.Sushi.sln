@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{B2
 		Package.nuspec = Package.nuspec
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sushi.TestModels", "Sushi.TestModels\Sushi.TestModels.csproj", "{FFCD28E6-9725-402C-9993-A945999F9B82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{95648804-9558-4B82-A5EA-70CB323F657C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95648804-9558-4B82-A5EA-70CB323F657C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95648804-9558-4B82-A5EA-70CB323F657C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFCD28E6-9725-402C-9993-A945999F9B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFCD28E6-9725-402C-9993-A945999F9B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFCD28E6-9725-402C-9993-A945999F9B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFCD28E6-9725-402C-9993-A945999F9B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

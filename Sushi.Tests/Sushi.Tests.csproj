@@ -57,18 +57,8 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Documentation\XmlDocumentationReaderTests.cs" />
-    <Compile Include="Models\MySummaryIsInherited.cs" />
+    <Compile Include="IgnoreAttributeTest.cs" />
     <Compile Include="Script\CompileWithSummaryTests.cs" />
-    <Compile Include="Models\Ignore\DoNotIgnoreMe.cs" />
-    <Compile Include="Models\Ignore\IgnoreMe.cs" />
-    <Compile Include="Models\Ignore\IgnoreTestRoot.cs" />
-    <Compile Include="Models\Inheritance\Gender.cs" />
-    <Compile Include="Models\Inheritance\Person.cs" />
-    <Compile Include="Models\Inheritance\StudentModel.cs" />
-    <Compile Include="Models\ModelWithManyLists.cs" />
-    <Compile Include="Models\NameModel.cs" />
-    <Compile Include="Models\ReferenceToUser.cs" />
-    <Compile Include="Models\TypeModel.cs" />
     <Compile Include="ModelToConvertTests.cs" />
     <Compile Include="Script\JavaScriptTests.cs" />
     <Compile Include="ModelTests.cs" />
@@ -82,11 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Compiled\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
       <Project>{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}</Project>
       <Name>Sushi.JavaScript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sushi.TestModels\Sushi.TestModels.csproj">
+      <Project>{FFCD28E6-9725-402C-9993-A945999F9B82}</Project>
+      <Name>Sushi.TestModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sushi.TypeScript\Sushi.TypeScript.csproj">
       <Project>{95648804-9558-4B82-A5EA-70CB323F657C}</Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Sushi.Extensions;
 
@@ -11,10 +12,35 @@ namespace Sushi.Documentation.Models
     public class FieldDocumentation : IEquatable<FieldDocumentation>
     {
         public Dictionary<string, string> Values { get; }
-        public string Namespace { get; internal set; }
+        public string RawName { get; }
         public string Name { get; }
-        public string DeclaringTypeName { get; internal set; }
-        public FieldType FieldType { get; }
+        public string Namespace { get; }
+        public string DeclaringTypeName { get; }
+        public string FullName
+        {
+            get
+            {
+                switch (FieldType)
+                {
+                    case ReferenceType.Namespace:
+                        return $"{Namespace}";
+                    case ReferenceType.Error:
+                    case ReferenceType.Type:
+                        return $"{Namespace}.{Name}";
+                    case ReferenceType.Method:
+                    case ReferenceType.Property:
+                    case ReferenceType.Field:
+                    case ReferenceType.Event:
+                        return $"{Namespace}.{DeclaringTypeName}.{Name}";
+                    case ReferenceType.Undefined:
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+
+        public ReferenceType FieldType { get; }
 
         // FIELDS
         public bool IsInherited { get; }
@@ -23,12 +49,54 @@ namespace Sushi.Documentation.Models
 
 
         /// <inheritdoc />
-        public FieldDocumentation(string @namespace, string name, FieldType field, Dictionary<string, string> values)
+        public FieldDocumentation(string name, ReferenceType field, Dictionary<string, string> values)
         {
-            Namespace = @namespace ?? throw new ArgumentNullException(nameof(@namespace));
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+            if (name.IsEmpty())
+                throw new ArgumentNullException(nameof(name));
+
+            RawName = XmlDocumentationReader.RemoveMethodArgs.Match(name).Value;
             Values = values ?? throw new ArgumentNullException(nameof(values));
             FieldType = field;
+
+            var split = RawName.Split('.').ToList();
+            switch (field)
+            {
+                case ReferenceType.Type:
+                    Name = split.Last();
+                    DeclaringTypeName = split.Last();
+                    Namespace = split.JoinString('.', split.Count - 1);
+                    break;
+                case ReferenceType.Property:
+                    Name = split.Last();
+                    DeclaringTypeName = split[split.Count - 2];
+                    Namespace = split.JoinString('.', split.Count - 2);
+                    break;
+                case ReferenceType.Method:
+                    Name = split.Last();
+                    DeclaringTypeName = split[split.Count - 2];
+                    Namespace = split.JoinString('.', split.Count - 2);
+                    break;
+                case ReferenceType.Namespace:
+                    Name = split.JoinString('.');
+                    Namespace = Name;
+                    break;
+                case ReferenceType.Field:
+                    Name = split.Last();
+                    DeclaringTypeName = split[split.Count - 2];
+                    Namespace = split.JoinString('.', split.Count - 2);
+                    break;
+                case ReferenceType.Event:
+                    Name = split.Last();
+                    DeclaringTypeName = split[split.Count - 2];
+                    Namespace = split.JoinString('.', split.Count - 2);
+                    break;
+                case ReferenceType.Error:
+                    Name = split.JoinString('.');
+                    break;
+                case ReferenceType.Undefined:
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(field), field, null);
+            }
 
             // FIELDS
             Summary = values.ContainsKey("summary") ? Trim(Values["summary"]) : string.Empty;
@@ -39,14 +107,69 @@ namespace Sushi.Documentation.Models
         private string Trim(string value)
             => value.Trim().TrimStart('\n').TrimEnd('\n');
 
-        public static bool operator ==(FieldDocumentation ms, Type type)
-            => type is null && ms is null || ms?.Namespace == type?.Namespace && ms?.Name == type?.Name;
+        public static bool operator ==(FieldDocumentation fd, Type type)
+        {
+            if (type is null && fd is null)
+                return true;
+
+            if (type is null && !(fd is null))
+                return false;
+
+            if (!(type is null) && fd is null)
+                return false;
+
+            switch (fd.FieldType)
+            {
+                case ReferenceType.Type:
+                    return fd.Name == type.Name && fd.Namespace == type.Namespace;
+                case ReferenceType.Method:
+                case ReferenceType.Field:
+                case ReferenceType.Property:
+                    return fd.Namespace == type.Namespace;
+                case ReferenceType.Namespace:
+                case ReferenceType.Event:
+                case ReferenceType.Error:
+                case ReferenceType.Undefined:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         public static bool operator !=(FieldDocumentation ms, Type type)
             => !(ms == type);
 
         public static bool operator ==(FieldDocumentation fd, PropertyInfo prop)
-            => fd is null && prop is null || fd?.Namespace == prop?.DeclaringType?.Namespace && fd?.Name == prop?.Name;
+        {
+            if (prop is null && fd is null)
+                return true;
+
+            if (prop is null && !(fd is null))
+                return false;
+
+            if (!(prop is null) && fd is null)
+                return false;
+
+            switch (fd.FieldType)
+            {
+                case ReferenceType.Type:
+                    return prop.DeclaringType?.Name == fd.DeclaringTypeName &&
+                        prop.PropertyType?.Name == fd.Name &&
+                        prop.DeclaringType?.Namespace == fd.Namespace;
+                case ReferenceType.Method:
+                case ReferenceType.Field:
+                case ReferenceType.Property:
+                    return prop.DeclaringType?.Name == fd.DeclaringTypeName &&
+                        prop.DeclaringType?.Namespace == fd.Namespace &&
+                        prop.Name == fd.Name;
+                case ReferenceType.Namespace:
+                case ReferenceType.Event:
+                case ReferenceType.Error:
+                case ReferenceType.Undefined:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+        }
 
         public static bool operator !=(FieldDocumentation fd, PropertyInfo prop)
             => !(fd == prop);
@@ -55,7 +178,7 @@ namespace Sushi.Documentation.Models
 
         /// <inheritdoc />
         public override string ToString()
-            => Summary;
+            => FullName;
 
         #endregion
 
@@ -68,7 +191,7 @@ namespace Sushi.Documentation.Models
                 return false;
             if (ReferenceEquals(this, other))
                 return true;
-            return string.Equals(Namespace, other.Namespace) && string.Equals(Summary, other.Summary) && FieldType == other.FieldType;
+            return string.Equals(Name, other.Name) && string.Equals(Namespace, other.Namespace) && string.Equals(DeclaringTypeName, other.DeclaringTypeName) && FieldType == other.FieldType;
         }
 
         /// <inheritdoc />
@@ -88,8 +211,9 @@ namespace Sushi.Documentation.Models
         {
             unchecked
             {
-                var hashCode = (Namespace != null ? Namespace.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Summary != null ? Summary.GetHashCode() : 0);
+                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Namespace != null ? Namespace.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (DeclaringTypeName != null ? DeclaringTypeName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (int)FieldType;
                 return hashCode;
             }
