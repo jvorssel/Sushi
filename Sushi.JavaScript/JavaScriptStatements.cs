@@ -107,7 +107,7 @@ namespace Sushi.JavaScript
                 case JavaScriptType.RegExp:
                 case JavaScriptType.Array:
                 case JavaScriptType.Object:
-                    script = string.Format(typeCheck, property.Name, "object");
+                    script = string.Format(typeCheck, property.Name, property.Type == typeof(Guid) ? "string" : "object");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

@@ -74,5 +74,8 @@
     <None Include="Package.nuspec" />
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="intellisense preview.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

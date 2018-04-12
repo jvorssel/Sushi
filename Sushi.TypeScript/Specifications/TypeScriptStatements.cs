@@ -102,7 +102,7 @@ namespace Sushi.TypeScript.Specifications
                 case TypeScriptType.Enum:
                 case TypeScriptType.Undefined:
                 case TypeScriptType.Null:
-                    script = string.Format(typeCheck, property.Name, "object");
+                    script = string.Format(typeCheck, property.Name, property.Type == typeof(Guid) ? "string" : "object");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
