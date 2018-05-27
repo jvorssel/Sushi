@@ -16,7 +16,7 @@ namespace Sushi.Tests
         [TestMethod]
         public void LoadCorrectlyTest()
         {
-            var assembly = typeof(NameModel).Assembly;
+            var assembly = typeof(SchoolViewModel).Assembly;
             using (var kernel = new ConversionKernel(assembly))
             {
                 // Make sure the XML documentation is loaded
@@ -33,7 +33,7 @@ namespace Sushi.Tests
         [TestMethod]
         public void CompileTest()
         {
-            var assembly = typeof(NameModel).Assembly;
+            var assembly = typeof(SchoolViewModel).Assembly;
             using (var kernel = new ConversionKernel(assembly))
             {
                 // Make sure the XML documentation is loaded
@@ -43,6 +43,8 @@ namespace Sushi.Tests
 
                 // Convert the available models and look if the result is as expected.
                 CompileJavaScript(kernel, JavaScriptVersion.V5);
+                CompileTypeScript(kernel);
+                CompileDefinitelyTyped(kernel);
             }
         }
     }

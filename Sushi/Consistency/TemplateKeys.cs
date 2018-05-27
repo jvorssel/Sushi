@@ -41,11 +41,6 @@ namespace Sushi.Consistency
         public const string CTOR_PROPERTIES_KEY = @"$$SET_PROPERTY_VALUES$$";
 
         /// <summary>
-        ///     Placeholder for the name of the inherited <see cref="Type"/>.
-        /// </summary>
-        public const string INHERIT_TYPE = @"$$INHERIT_TYPE$$";
-
-        /// <summary>
         ///     Statement if the <see cref="Property"/> is defined / has a value.
         /// </summary>
         public const string IS_DEFINED_CHECK = @"$$DEFINED_CHECK$$";

@@ -26,7 +26,7 @@ namespace Sushi.Tests.Documentation
         [TestInitialize]
         public void Initialize()
         {
-            Assembly = typeof(MySummaryIsInherited).Assembly;
+            Assembly = typeof(SchoolViewModel).Assembly;
             FilePath = Path.Combine(BaseDirectoryPath, $"{Assembly.FullName.Split(',')[0]}.xml");
             Reader = new XmlDocumentationReader(FilePath);
         }
@@ -62,7 +62,7 @@ namespace Sushi.Tests.Documentation
         public void GetDocumentationForTypeTest()
         {
             // ARRANGE
-            var type = typeof(MySummaryIsInherited);
+            var type = typeof(SchoolViewModel);
 
             // ACT
             var doc = Reader.GetDocumentationForType(type);
@@ -70,7 +70,7 @@ namespace Sushi.Tests.Documentation
             // ASSERT
             Assert.IsNotNull(doc);
             Assert.AreEqual(ReferenceType.Type, doc.FieldType);
-            Assert.AreEqual(nameof(IHaveTheSummary), doc.Name);
+            Assert.AreEqual(nameof(SchoolViewModel), doc.Name);
             Assert.IsTrue(doc.Summary.Length > 0);
         }
 
@@ -78,7 +78,7 @@ namespace Sushi.Tests.Documentation
         public void GetDocumentationForProperty()
         {
             // ARRANGE
-            var instance = new MySummaryIsInherited();
+            var instance = new SchoolViewModel();
 
             // ACT
             var doc = Reader.GetDocumentationForProperty(instance, x => x.Name);

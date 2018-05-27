@@ -13,7 +13,7 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileJavaScriptFileTest()
         {
-            var assembly = typeof(NameModel).Assembly;
+            var assembly = typeof(SchoolViewModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 foreach (var model in kernel.Models)

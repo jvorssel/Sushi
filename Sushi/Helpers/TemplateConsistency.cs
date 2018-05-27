@@ -29,7 +29,6 @@ namespace Sushi.Helpers
                 CLASS_PROPERTIES_KEY,
                 CTOR_PROPERTIES_KEY,
                 ARGUMENT_NAME,
-                INHERIT_TYPE
             }}
         };
 

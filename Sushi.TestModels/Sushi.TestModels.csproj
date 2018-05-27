@@ -41,14 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inheritance\Gender.cs" />
-    <Compile Include="Inheritance\Person.cs" />
-    <Compile Include="Inheritance\StudentModel.cs" />
-    <Compile Include="ModelWithManyLists.cs" />
-    <Compile Include="MySummaryIsInherited.cs" />
-    <Compile Include="NameModel.cs" />
+    <Compile Include="Gender.cs" />
+    <Compile Include="PersonViewModel.cs" />
+    <Compile Include="SchoolViewModel.cs" />
+    <Compile Include="StudentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeModel.cs" />
+    <Compile Include="ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sushi\Sushi.csproj">

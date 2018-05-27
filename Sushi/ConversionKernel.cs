@@ -6,6 +6,7 @@ using System.Reflection;
 using Sushi.Attributes;
 using Sushi.Consistency;
 using Sushi.Documentation;
+using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Interfaces;
 using Sushi.Models;
@@ -37,6 +38,17 @@ namespace Sushi
 
         public string PropertyInstanceMismatch { get; set; }
             = @"Given object property '{0}' is expected to be an instance of the '{1}' constructor.";
+
+        /// <summary>
+        ///     Used to specify custom <see cref="CSharpNativeType"/> handling.
+        /// </summary>
+        public Dictionary<Type, CSharpNativeType> CustomTypeHandling { get; set; }
+            = new Dictionary<Type, CSharpNativeType>
+                {
+                    { typeof(Guid), CSharpNativeType.String },
+                    { typeof(DateTime), CSharpNativeType.String },
+                    { typeof(TimeSpan), CSharpNativeType.String },
+                };
 
         /// <summary>
         ///     Add the given <paramref name="types"/> to use for conversion.

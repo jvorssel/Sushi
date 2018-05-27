@@ -99,35 +99,23 @@ namespace Sushi.Interfaces
         /// <summary>
         ///     Format the validation for the <paramref name="properties"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> referenceDataModels);
-
-        /// <summary>
-        ///     Format the given <see cref="DataModel"/> <paramref name="inherits"/>
-        ///     to be available on the current <see cref="DataModel"/>.
-        /// </summary>
-        Statement FormatInheritanceStatement(DataModel model, DataModel inherits);
+        IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties);
 
         /// <summary>
         ///     Get the default <see cref="string"/> value that reflects the given <see cref="CSharpNativeType"/> 
         ///     for the current <see cref="Language"/>.
         /// </summary>
-        string GetDefaultForProperty(Property property);
+        string GetDefaultForProperty(ConversionKernel kernel, Property property);
 
         /// <summary>
         ///     Apply formatting to the given <paramref name="value"/> of <see cref="CSharpNativeType"/>.
         /// </summary>
-        string FormatValueForProperty(Property property, object value);
+        string FormatValueForProperty(ConversionKernel kernel, Property property, object value);
 
         /// <summary>
         ///     Format the given <see cref="property"/> to be defined in the current <see cref="Language"/>.
         /// </summary>
-        /// <param name="kernel"></param>
-        /// <param name="property"></param>
-        /// <param name="relatedTypes"></param>
-        /// <returns></returns>
-        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
-            Property property,
-            ICollection<DataModel> relatedTypes);
+        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,Property property);
 
         /// <summary>
         ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.

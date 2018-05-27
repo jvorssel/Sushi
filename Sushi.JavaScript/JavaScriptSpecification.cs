@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using Sushi.Consistency;
 using Sushi.Enum;
+using Sushi.Extensions;
 using Sushi.Models;
 
 namespace Sushi.JavaScript
@@ -19,24 +21,18 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
         {
-            var value = FormatValueForProperty(property, property.Value);
-
             // Return the rows for the js-doc
             var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
             if (summary?.Summary.Length > 0)
-            {
-                yield return $"/**";
-                yield return $"  * @summary {summary.Summary}";
-                yield return $"  */";
-            }
+                yield return $"/** {summary.Summary} */";
 
-            yield return $"this.{property.Name} = {kernel.ArgumentName}.{property.Name} || {value};";
+            // Specify the body of the property declaration.
+            var propertySpec = FormatValueForProperty(kernel, property, property.Value);
+            yield return $"this.{property.Name} = {propertySpec};";
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
-            Property property,
-            ICollection<DataModel> relatedTypes)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property)
         {
             yield break;
         }
@@ -46,7 +42,7 @@ namespace Sushi.JavaScript
             => SpecificationDefaults.RemoveCommentsFromModel(model);
 
         /// <inheritdoc />
-        public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels)
+        public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", StatementType.Key);
@@ -63,29 +59,29 @@ namespace Sushi.JavaScript
             yield return new Statement(string.Empty, StatementType.Instance, false, true);
             yield return FormatComment(@"Check property class instance match", StatementType.Instance);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateInstanceCheckStatement(kernel, prop, dataModels);
+                yield return StatementPipeline.CreateInstanceCheckStatement(kernel, prop);
         }
-
+        
         /// <inheritdoc />
-        public override Statement FormatInheritanceStatement(DataModel model, DataModel inherits)
+        public override string GetDefaultForProperty(ConversionKernel kernel, Property property)
         {
-            string script;
-            if (Version.Major >= 6)
-                script = $@" extends {inherits.Name}";
-            else if (Version.Major <= 5)
-                script = $"{model.Name}.prototype = new {inherits.Name}();";
-            else
-                throw Errors.LanguageVersionMismatch(Version);
+            var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+            if (type == typeof(DateTime))
+                return "new Date(\"0001-01-01T00:00:00.000Z\")"; // Default date value should be 0001-01-01
 
-            var statement = new Statement(script, StatementType.Inheritance);
-            return statement;
-        }
+            // Always return null if the given property is nullable.
+            if (property.IsNullable)
+                return "null";
 
-        /// <inheritdoc />
-        public override string GetDefaultForProperty(Property property)
-        {
-            var type = property.NativeType;
-            switch (type)
+            // Check if a different type is supposed to be used.
+            var csType = property.NativeType.IncludeOverride(kernel, type);
+
+            // A string also inherits the IEnumerable interface, exclude.
+            if (type.IsTypeOrInheritsOf(typeof(IEnumerable)) && type != typeof(string))
+                return "[]";
+
+            // Check the native type with certain exceptions.
+            switch (csType)
             {
                 case CSharpNativeType.Undefined:
                     return "void 0";
@@ -99,33 +95,40 @@ namespace Sushi.JavaScript
                 case CSharpNativeType.Long:
                 case CSharpNativeType.Short:
                     return "-1";
-                case CSharpNativeType.Null:
-                case CSharpNativeType.Object:
-                    return "null";
                 case CSharpNativeType.Char:
                 case CSharpNativeType.String:
                     return "''";
                 case CSharpNativeType.Enum:
                     return "0";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                case CSharpNativeType.Null:
+                case CSharpNativeType.Object:
+                    return "null";
             }
         }
 
         /// <inheritdoc />
-        public override string FormatValueForProperty(Property property, object value)
+        public override string FormatValueForProperty(ConversionKernel kernel, Property property, object value)
         {
-            if (value == null)
-                return GetDefaultForProperty(property);
+            // What default (fallback) value is suppossed to be used?
+            var defaultValue = GetDefaultForProperty(kernel, property);
 
+            // Correct the formatting for numeric values.
             var numberFormat = new NumberFormatInfo { CurrencyDecimalSeparator = "." };
-            var type = property.NativeType;
 
-            var stringValue = JsonConvert.SerializeObject(value);
-            if (property.Type == typeof(DateTime))
-                return $"Date.parse({stringValue})";
+            // Get the underlying type if the property is nullable.
+            var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
 
-            return stringValue;
+            // Date values should be parsed to a date-instance.
+            if (type == typeof(DateTime))
+                return $"!isNaN(Date.parse({kernel.ArgumentName}.{property.Name})) ? new Date({kernel.ArgumentName}.{property.Name}) : {defaultValue}";
+
+            // Use the converter to get the formatted string value.
+            var dataModel = kernel.Models.FirstOrDefault(x => x.FullName == type.FullName);
+            if (!ReferenceEquals(dataModel, null))
+                return $@"new {dataModel.Name}({kernel.ArgumentName}.{property.Name}) || null";
+
+            return $"{kernel.ArgumentName}.{property.Name} || {defaultValue}";
         }
 
         /// <inheritdoc />

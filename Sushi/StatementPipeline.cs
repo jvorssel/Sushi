@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sushi.Models;
+using Sushi.StatementPipelines;
 
 namespace Sushi
 {
@@ -28,64 +29,28 @@ namespace Sushi
         public abstract Statement CreateKeyCheckStatement(ConversionKernel kernel, Property property);
 
         /// <summary>
-        ///     Create a statement to check if the <see cref="Property.Name"/> is a instance in the given argument.
+        ///     Create a statement to check if the <see cref="Property.Name"/> is undefined or null in the <see cref="ConversionKernel.ArgumentName"/>.
         /// </summary>
         public abstract Statement CreateUndefinedStatement(ConversionKernel kernel, Property property);
 
         /// <summary>
+        ///     Create a statement to check if the <see cref="Property.Name"/> in the <see cref="ConversionKernel.ArgumentName"/> is defined.
+        /// </summary>
+        public abstract Statement CreateDefinedStatement(ConversionKernel kernel, Property property);
+
+        /// <summary>
         ///     Create a statement to check if the <see cref="Property.Name"/> is a instance of the expected class.
         /// </summary>
-        public abstract Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property, IEnumerable<DataModel> dataModels);
+        public abstract Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="Property.Name"/> is a instance of the expected type.
         /// </summary>
         public abstract Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property);
 
+        /// <summary>
+        ///     An <see cref="Empty"/> <see cref="StatementPipeline"/> without any <see cref="Statement"/>s defined.
+        /// </summary>
         public static EmptyStatementPipeline Empty => new EmptyStatementPipeline();
-    }
-
-    /// <inheritdoc />
-    public class EmptyStatementPipeline : StatementPipeline
-    {
-        #region Overrides of StatementPipeline
-
-        /// <inheritdoc />
-        public override Statement ArgumentDefinedStatement(ConversionKernel kernel)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public override Statement ArgumentUndefinedStatement(ConversionKernel kernel)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public override Statement CreateKeyCheckStatement(ConversionKernel kernel, Property property)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public override Statement CreateUndefinedStatement(ConversionKernel kernel, Property property)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public override Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property, IEnumerable<DataModel> dataModels)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public override Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        #endregion
     }
 }

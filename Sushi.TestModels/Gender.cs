@@ -1,8 +1,10 @@
 ﻿using Sushi.Attributes;
 
-namespace Sushi.TestModels.Inheritance
+namespace Sushi.TestModels
 {
-	[ConvertToScript]
+	/// <summary>
+    ///		Specify a biological Sex / <see cref="Gender"/>.
+    /// </summary>
 	public enum Gender
 	{
 		/// <summary>
@@ -18,11 +20,6 @@ namespace Sushi.TestModels.Inheritance
 		/// <summary>
 		///		The <see cref="Female"/> <see cref="Gender"/>.
 		/// </summary>
-		Female = 2,
-
-		/// <summary>
-		///		 An odd <see cref="Gender"/>.
-		/// </summary>
-		Other = 3,
+		Female = 2
 	}
 }

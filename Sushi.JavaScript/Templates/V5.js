@@ -23,7 +23,6 @@ function $$TYPENAME$$($$ARGUMENT_NAME$$) {
 	$$SET_PROPERTY_VALUES$$;
 }
 
-$$INHERIT_TYPE$$
 /**
  * Check if the given '$$ARGUMENT_NAME$$' contains the expected keys and instances to match the '$$TYPENAME$$' class.
  * @name tryParse

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 using Sushi.Enum;
 using Sushi.JavaScript.Enum;
 using Sushi.Models;
@@ -10,27 +11,39 @@ namespace Sushi.JavaScript
     /// <inheritdoc />
     public class JavaScriptStatements : StatementPipeline
     {
+        public const string IS_DEFINED_STATEMENT = @"{0} !== void 0 && {0} !== null";
+        public const string IS_UNDEFINED_STATEMENT = @"{0} === void 0 || {0} === null";
+        public const string IS_PROPERTY_DEFINED_STATEMENT = @"{0}.{1} !== void 0 && {0}.{1} !== null";
+        public const string IS_PROPERTY_UNDEFINED_STATEMENT = @"{0}.{1} === void 0 || {0}.{1} === null";
+
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
         public override Statement CreateUndefinedStatement(ConversionKernel kernel, Property property)
         {
-            var isDefinedStatement = $@"{kernel.ArgumentName}['{property.Name}'] === void 0 || {kernel.ArgumentName}['{property.Name}'] === null";
-            return new Statement(isDefinedStatement, StatementType.Type);
+            var statement = string.Format(IS_PROPERTY_UNDEFINED_STATEMENT, kernel.ArgumentName, property.Name);
+            return new Statement(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
-        public override Statement ArgumentDefinedStatement(ConversionKernel kernel)
+        public override Statement CreateDefinedStatement(ConversionKernel kernel, Property property)
         {
-            var isDefinedStatement = $@"{kernel.ArgumentName} !== void 0 && {kernel.ArgumentName} !== null";
-            return new Statement(isDefinedStatement, StatementType.Type);
+            var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, kernel.ArgumentName, property.Name);
+            return new Statement(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
         public override Statement ArgumentUndefinedStatement(ConversionKernel kernel)
         {
-            var isDefinedStatement = $@"{kernel.ArgumentName} === void 0 || {kernel.ArgumentName} === null";
-            return new Statement(isDefinedStatement, StatementType.Type);
+            var statement = string.Format(IS_UNDEFINED_STATEMENT, kernel.ArgumentName);
+            return new Statement(statement, StatementType.Type);
+        }
+
+        /// <inheritdoc />
+        public override Statement ArgumentDefinedStatement(ConversionKernel kernel)
+        {
+            var statement = string.Format(IS_DEFINED_STATEMENT, kernel.ArgumentName);
+            return new Statement(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
@@ -42,13 +55,15 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property, IEnumerable<DataModel> dataModels)
+        public override Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property)
         {
-            var instanceCheck = $"if (!({CreateUndefinedStatement(kernel, property)}) && !({kernel.ArgumentName}['{{0}}'] instanceof {{1}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
+            var instanceCheck = $"if ({CreateDefinedStatement(kernel, property)} && !{{1}}.tryParse({kernel.ArgumentName}.{{0}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
 
-            var models = dataModels.ToList();
             var script = string.Empty;
-            var scriptType = property.NativeType.ToJavaScriptType();
+            var scriptType = property.NativeType
+                .IncludeOverride(kernel, property.Type)
+                .ToJavaScriptType();
+
             switch (scriptType)
             {
                 case JavaScriptType.Undefined:
@@ -67,7 +82,7 @@ namespace Sushi.JavaScript
                     script = string.Format(instanceCheck, property.Name, "Array");
                     break;
                 case JavaScriptType.Object:
-                    var propertyWithName = models.FirstOrDefault(x => x.FullName == property.Type.FullName);
+                    var propertyWithName = kernel.Models.FirstOrDefault(x => x.FullName == property.Type.FullName);
                     if (!ReferenceEquals(propertyWithName, null))
                         script = string.Format(instanceCheck, property.Name, propertyWithName.Name);
 
@@ -84,10 +99,13 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public override Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property)
         {
-            var typeCheck = $"if (typeof ({kernel.ArgumentName}['{{0}}']) !== '{{1}}') throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
+            var typeCheck = $"if (typeof {kernel.ArgumentName}.{{0}} !== '{{1}}') throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
 
             var script = string.Empty;
-            var scriptType = property.NativeType.ToJavaScriptType();
+            var scriptType = property.NativeType
+                .IncludeOverride(kernel, property.Type)
+                .ToJavaScriptType();
+
             switch (scriptType)
             {
                 case JavaScriptType.Undefined:

@@ -4,9 +4,6 @@
  * $$SUMMARY$$
  * FullName = $$TYPE_NAMESPACE$$.$$TYPENAME$$
  */
-interface $$TYPENAME$$Constructor$$INHERIT_TYPE$$ {
+export interface $$TYPENAME$$ {
 	$$DEFINE_PROPERTIES$$;
 }
-
-declare const $$TYPENAME$$: $$TYPENAME$$Constructor;
-

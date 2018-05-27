@@ -2,14 +2,13 @@
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.TestModels;
-using Sushi.TestModels.Inheritance;
 
 namespace Sushi.Tests
 {
     [TestClass]
     public class ModelTests
     {
-        private readonly Assembly _assembly = typeof(PersonModel).Assembly;
+        private readonly Assembly _assembly = typeof(PersonViewModel).Assembly;
         public TestContext Context { get; set; }
 
         [TestMethod]
@@ -18,7 +17,7 @@ namespace Sushi.Tests
             using (var kernel = new ConversionKernel(_assembly))
             {
                 Assert.IsTrue(kernel.ModelCount > 0, "Expected atleast one model to be available.");
-                Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(NameModel)), "Expected atleast one ");
+                Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(SchoolViewModel)), "Expected atleast one ");
             }
         }
 
@@ -27,18 +26,18 @@ namespace Sushi.Tests
         {
             using (var kernel = new ConversionKernel(_assembly))
             {
-                var personModel = kernel.Models.SingleOrDefault(x => x.Name == nameof(PersonModel));
+                var personModel = kernel.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
                 Assert.IsNotNull(personModel);
 
                 // PersonModel has 2 properties
                 Assert.AreEqual(2, personModel.Properties.Count);
 
                 // The name property
-                var name = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonModel.Name));
+                var name = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonViewModel.Name));
                 Assert.IsNotNull(name);
 
                 // The surname property
-                var surname = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonModel.Surname));
+                var surname = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonViewModel.Surname));
                 Assert.IsNotNull(surname);
 
                 // Check their default values

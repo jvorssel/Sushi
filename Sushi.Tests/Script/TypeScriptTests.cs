@@ -17,7 +17,7 @@ namespace Sushi.Tests.Script
         public void CompileTypeScriptFileTest()
         {
             // 1: Create an instance of the ConversionKernel
-            var assembly = typeof(NameModel).Assembly;
+            var assembly = typeof(SchoolViewModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 // 2: Create the ModelConverter instance for the requested script-language
@@ -38,7 +38,7 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileMinifiedTypeScriptFileTest()
         {
-            var assembly = typeof(NameModel).Assembly;
+            var assembly = typeof(SchoolViewModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileTypeScript(kernel, minify: true);
@@ -48,7 +48,7 @@ namespace Sushi.Tests.Script
         [TestMethod]
         public void CompileDefinitelyTypedFileTest()
         {
-            var assembly = typeof(NameModel).Assembly;
+            var assembly = typeof(SchoolViewModel).Assembly;
             using (var kernel = new ConversionKernel(assembly).LoadXmlDocumentation())
             {
                 CompileDefinitelyTyped(kernel);

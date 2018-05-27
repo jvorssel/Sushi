@@ -9,7 +9,7 @@
  * @name $$TYPENAME$$
  * @namespace $$TYPE_NAMESPACE$$.$$TYPENAME$$
  */
-export class $$TYPENAME$$ $$INHERIT_TYPE$$ {
+export class $$TYPENAME$$ {
 
 	$$DEFINE_PROPERTIES$$;
 

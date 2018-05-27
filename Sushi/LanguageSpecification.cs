@@ -59,9 +59,7 @@ namespace Sushi
         public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
-        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
-            Property property,
-            ICollection<DataModel> relatedTypes);
+        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
         public abstract Statement FormatComment(string comment, StatementType statementType);
@@ -70,16 +68,13 @@ namespace Sushi
         public abstract string RemoveComments(DataModel model);
 
         /// <inheritdoc />
-        public abstract IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels);
+        public abstract IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties);
 
         /// <inheritdoc />
-        public abstract Statement FormatInheritanceStatement(DataModel model, DataModel inherits);
+        public abstract string GetDefaultForProperty(ConversionKernel kernel, Property property);
 
         /// <inheritdoc />
-        public abstract string GetDefaultForProperty(Property property);
-
-        /// <inheritdoc />
-        public abstract string FormatValueForProperty(Property property, object value);
+        public abstract string FormatValueForProperty(ConversionKernel kernel, Property property, object value);
 
         #region Initializers
 

@@ -11,7 +11,7 @@
  * @name $$TYPENAME$$
  * @namespace $$TYPE_NAMESPACE$$
  */
-class $$TYPENAME$$ $$INHERIT_TYPE$$ {
+class $$TYPENAME$$ {
 	/**
 	 * $$SUMMARY$$
 	 *

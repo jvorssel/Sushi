@@ -18,17 +18,17 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties, List<DataModel> dataModels)
+        public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override string GetDefaultForProperty(Property property)
+        public override string GetDefaultForProperty(ConversionKernel kernel, Property property)
             => string.Empty;
 
         /// <inheritdoc />
-        public override string FormatValueForProperty(Property property, object value)
+        public override string FormatValueForProperty(ConversionKernel kernel,Property property, object value)
             => string.Empty;
 
         /// <inheritdoc />

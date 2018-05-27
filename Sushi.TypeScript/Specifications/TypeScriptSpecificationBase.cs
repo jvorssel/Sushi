@@ -5,33 +5,30 @@ using System.Linq;
 using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
+using Sushi.JavaScript;
 using Sushi.Models;
 
 namespace Sushi.TypeScript.Specifications
 {
-    public abstract class TypeScriptSpecificationBase : LanguageSpecification
+    public abstract class TypeScriptSpecificationBase : JavaScriptSpecification
     {
         #region Overrides of LanguageSpecification
 
-        internal string FormatArrayType(Property property, string baseType)
+        internal string FormatPropertyType(ConversionKernel kernel, Property property)
         {
-            if (!property.Type.IsArray())
+            var tsTypeName = GetBaseType(property.NativeType.IncludeOverride(kernel, property.Type));
+            var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+            if (type == typeof(DateTime))
+                tsTypeName = "Date";
+            else
             {
-                var underlyingType = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
-                if (underlyingType == typeof(Guid))
-                    return GetBaseType(CSharpNativeType.String);
-
-                if (underlyingType == typeof(DateTime))
-                    return @"Date";
-
-                return baseType;
+                // Check if any of the available models have the same name and should be used.
+                var dataModel = kernel.Models.FirstOrDefault(x => x.FullName == type.FullName);
+                if (!ReferenceEquals(dataModel, null))
+                    tsTypeName = dataModel.Name;
             }
 
-            var enumerable = property.Type.GetInterfaces().FirstOrDefault(x => x == typeof(IEnumerable));
-            var underlyingPrimitiveType = property.Type.GetUnderlyingPrimitiveType();
-            var underlyingCsType = GetBaseType(underlyingPrimitiveType.ToCSharpNativeType());
-
-            return enumerable == null ? $@"Array<{baseType}>" : $@"Array<{underlyingCsType}>";
+            return type.IsTypeOrInheritsOf(typeof(IEnumerable)) && type != typeof(string) ? $@"Array<{tsTypeName}>" : tsTypeName;
         }
 
         internal string GetBaseType(CSharpNativeType type)
@@ -64,24 +61,16 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,
-            Property property,
-            ICollection<DataModel> relatedTypes)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property)
         {
-            var type = GetBaseType(property.NativeType);
-            var enumerable = property.Type.GetInterfaces().FirstOrDefault(x => x == typeof(IEnumerable));
 
             // Return the rows for the js-doc
             var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
             if (summary?.Summary.Length > 0)
-            {
-                yield return $"/**";
-                yield return $"  * {summary.Summary}";
-                yield return $"  */";
-            }
+                yield return $"/** {summary.Summary} */";
 
             // Apply formatting for TypeScript its Array type.
-            type = FormatArrayType(property, type);
+            var type = FormatPropertyType(kernel, property);
             var name = property.Name;
 
             if (property.Type.IsNullable())
@@ -93,10 +82,6 @@ namespace Sushi.TypeScript.Specifications
 
             yield return statement;
         }
-
-        /// <inheritdoc />
-        public override Statement FormatInheritanceStatement(DataModel model, DataModel inherits)
-            => new Statement($@" extends {inherits.Name}Constructor", StatementType.Inheritance);
 
         /// <inheritdoc />
         public override Statement FormatComment(string comment, StatementType relatedType)

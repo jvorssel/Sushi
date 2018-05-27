@@ -150,7 +150,7 @@ namespace Sushi
                     var propertyDefinitionBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
-                        foreach (var line in Language.FormatPropertyDefinition(_kernel, property, referenceDataModels))
+                        foreach (var line in Language.FormatPropertyDefinition(_kernel, property))
                             propertyDefinitionBuilder.AppendLine(indent + line);
                     }
 
@@ -161,7 +161,7 @@ namespace Sushi
                 {
                     var indent = row.Before(VALIDATION_KEY);
                     var statementBuilder = new StringBuilder();
-                    var statements = Language.FormatStatements(_kernel, model.Properties.ToList(), referenceDataModels).GroupBy(x => x.Type);
+                    var statements = Language.FormatStatements(_kernel, model.Properties.ToList()).GroupBy(x => x.Type);
 
                     foreach (var group in statements)
                     {
@@ -188,19 +188,6 @@ namespace Sushi
                     var statement = Language.StatementPipeline.ArgumentUndefinedStatement(_kernel);
                     var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
-                }
-                // Base type check
-                else if (row.Contains(INHERIT_TYPE))
-                {
-                    var inherits = referenceDataModels.SingleOrDefault(x => x == model.BaseType);
-                    if (ReferenceEquals(inherits, null))
-                    {
-                        modelBuilder.Append(row.Replace(INHERIT_TYPE, string.Empty)); // No inheritance member available, add row.
-                        continue;
-                    }
-
-                    var statement = Language.FormatInheritanceStatement(model, inherits);
-                    modelBuilder.Append(row.Replace(INHERIT_TYPE, statement.ToString()));
                 }
                 // JsDoc
                 else if (row.Contains(SUMMARY_KEY))
