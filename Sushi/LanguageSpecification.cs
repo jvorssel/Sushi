@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Sushi.Consistency;
+using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
-using Sushi.Models;
 
 namespace Sushi
 {
@@ -56,25 +56,25 @@ namespace Sushi
             => TemplateConsistency.TestTemplate(template);
 
         /// <inheritdoc />
-        public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
+        public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <inheritdoc />
-        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property);
+        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <inheritdoc />
-        public abstract Statement FormatComment(string comment, StatementType statementType);
+        public abstract ScriptConditionDescriptor FormatComment(string comment, StatementType statementType);
 
         /// <inheritdoc />
-        public abstract string RemoveComments(DataModel model);
+        public abstract string RemoveComments(ClassDescriptor model);
 
         /// <inheritdoc />
-        public abstract IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties);
+        public abstract IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties);
 
         /// <inheritdoc />
-        public abstract string GetDefaultForProperty(ConversionKernel kernel, Property property);
+        public abstract string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <inheritdoc />
-        public abstract string FormatValueForProperty(ConversionKernel kernel, Property property, object value);
+        public abstract string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value);
 
         #region Initializers
 

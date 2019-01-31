@@ -56,30 +56,30 @@ namespace Sushi.TypeScript.Enum
 
     public static class TypeScriptTypeExtensions
     {
-        public static TypeScriptType ToTypeScriptType(this CSharpNativeType @this)
+        public static TypeScriptType ToTypeScriptType(this NativeType @this)
         {
             switch (@this)
             {
-                case CSharpNativeType.Undefined:
+                case NativeType.Undefined:
                     return TypeScriptType.Undefined;
-                case CSharpNativeType.Bool:
+                case NativeType.Bool:
                     return TypeScriptType.Boolean;
-                case CSharpNativeType.String:
-                case CSharpNativeType.Char:
+                case NativeType.String:
+                case NativeType.Char:
                     return TypeScriptType.String;
-                case CSharpNativeType.Byte:
-                case CSharpNativeType.Decimal:
-                case CSharpNativeType.Double:
-                case CSharpNativeType.Float:
-                case CSharpNativeType.Int:
-                case CSharpNativeType.Long:
-                case CSharpNativeType.Short:
+                case NativeType.Byte:
+                case NativeType.Decimal:
+                case NativeType.Double:
+                case NativeType.Float:
+                case NativeType.Int:
+                case NativeType.Long:
+                case NativeType.Short:
                     return TypeScriptType.Number;
-                case CSharpNativeType.Object:
+                case NativeType.Object:
                     return TypeScriptType.Object;
-                case CSharpNativeType.Null:
+                case NativeType.Null:
                     return TypeScriptType.Null;
-                case CSharpNativeType.Enum:
+                case NativeType.Enum:
                     return TypeScriptType.Enum;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(@this), @this, null);

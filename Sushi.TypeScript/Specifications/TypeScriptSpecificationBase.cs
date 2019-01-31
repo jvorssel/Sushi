@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.JavaScript;
-using Sushi.Models;
 
 namespace Sushi.TypeScript.Specifications
 {
@@ -14,7 +14,7 @@ namespace Sushi.TypeScript.Specifications
     {
         #region Overrides of LanguageSpecification
 
-        internal string FormatPropertyType(ConversionKernel kernel, Property property)
+        internal string FormatPropertyType(ConversionKernel kernel, PropertyDescriptor property)
         {
             var tsTypeName = GetBaseType(property.NativeType.IncludeOverride(kernel, property.Type));
             var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
@@ -31,29 +31,29 @@ namespace Sushi.TypeScript.Specifications
             return type.IsTypeOrInheritsOf(typeof(IEnumerable)) && type != typeof(string) ? $@"Array<{tsTypeName}>" : tsTypeName;
         }
 
-        internal string GetBaseType(CSharpNativeType type)
+        internal string GetBaseType(NativeType type)
         {
             switch (type)
             {
-                case CSharpNativeType.Undefined:
+                case NativeType.Undefined:
                     return @"void";
-                case CSharpNativeType.Bool:
+                case NativeType.Bool:
                     return @"boolean";
-                case CSharpNativeType.Enum:
-                case CSharpNativeType.Byte:
-                case CSharpNativeType.Short:
-                case CSharpNativeType.Long:
-                case CSharpNativeType.Int:
-                case CSharpNativeType.Double:
-                case CSharpNativeType.Float:
-                case CSharpNativeType.Decimal:
+                case NativeType.Enum:
+                case NativeType.Byte:
+                case NativeType.Short:
+                case NativeType.Long:
+                case NativeType.Int:
+                case NativeType.Double:
+                case NativeType.Float:
+                case NativeType.Decimal:
                     return @"number";
-                case CSharpNativeType.Object:
+                case NativeType.Object:
                     return @"any";
-                case CSharpNativeType.Char:
-                case CSharpNativeType.String:
+                case NativeType.Char:
+                case NativeType.String:
                     return @"string";
-                case CSharpNativeType.Null:
+                case NativeType.Null:
                     return @"null";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -61,11 +61,11 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property)
         {
 
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
+            var summary = kernel.Documentation?.GetDocumentationForProperty(property.Property);
             if (summary?.Summary.Length > 0)
                 yield return $"/** {summary.Summary} */";
 
@@ -84,7 +84,7 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override Statement FormatComment(string comment, StatementType relatedType)
+        public override ScriptConditionDescriptor FormatComment(string comment, StatementType relatedType)
             => SpecificationDefaults.FormatInlineComment(comment, relatedType);
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("A framework for generating models for multiple script-languages.")]
@@ -14,3 +15,4 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("1.1.0.0")]
 [assembly: AssemblyFileVersion("1.1.0.0")]
+[assembly: InternalsVisibleTo("Sushi.Tests")]

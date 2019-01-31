@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sushi.Models;
+using Sushi.Descriptors;
 
 namespace Sushi.TypeScript.Specifications
 {
@@ -12,27 +12,27 @@ namespace Sushi.TypeScript.Specifications
         public override string Extension { get; } = @".d.ts";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
+        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override string GetDefaultForProperty(ConversionKernel kernel, Property property)
+        public override string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property)
             => string.Empty;
 
         /// <inheritdoc />
-        public override string FormatValueForProperty(ConversionKernel kernel,Property property, object value)
+        public override string FormatValueForProperty(ConversionKernel kernel,PropertyDescriptor property, object value)
             => string.Empty;
 
         /// <inheritdoc />
-        public override string RemoveComments(DataModel model)
+        public override string RemoveComments(ClassDescriptor model)
             => model.Script;
 
         #endregion

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sushi.Consistency;
+using Sushi.Descriptors;
 using Sushi.Enum;
-using Sushi.Models;
 
 namespace Sushi.Interfaces
 {
@@ -94,37 +94,37 @@ namespace Sushi.Interfaces
         /// <summary>
         ///     Format the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property);
+        IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
         ///     Format the validation for the <paramref name="properties"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties);
+        IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties);
 
         /// <summary>
-        ///     Get the default <see cref="string"/> value that reflects the given <see cref="CSharpNativeType"/> 
+        ///     Get the default <see cref="string"/> value that reflects the given <see cref="NativeType"/> 
         ///     for the current <see cref="Language"/>.
         /// </summary>
-        string GetDefaultForProperty(ConversionKernel kernel, Property property);
+        string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
-        ///     Apply formatting to the given <paramref name="value"/> of <see cref="CSharpNativeType"/>.
+        ///     Apply formatting to the given <paramref name="value"/> of <see cref="NativeType"/>.
         /// </summary>
-        string FormatValueForProperty(ConversionKernel kernel, Property property, object value);
+        string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value);
 
         /// <summary>
         ///     Format the given <see cref="property"/> to be defined in the current <see cref="Language"/>.
         /// </summary>
-        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,Property property);
+        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,PropertyDescriptor property);
 
         /// <summary>
         ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.
         /// </summary>
-        Statement FormatComment(string comment, StatementType relatedType);
+        ScriptConditionDescriptor FormatComment(string comment, StatementType relatedType);
 
         /// <summary>
-        ///     Remove comments from the <see cref="DataModel.Script"/>.
+        ///     Remove comments from the <see cref="ClassDescriptor.Script"/>.
         /// </summary>
-        string RemoveComments(DataModel model);
+        string RemoveComments(ClassDescriptor model);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Sushi.Models;
+using Sushi.Descriptors;
 using Sushi.StatementPipelines;
 
 namespace Sushi
@@ -16,40 +16,40 @@ namespace Sushi
         /// <summary>
         ///     Create a statement to check if the given <see cref="ConversionKernel.ArgumentName"/> has a value.
         /// </summary>
-        public abstract Statement ArgumentDefinedStatement(ConversionKernel kernel);
+        public abstract ScriptConditionDescriptor ArgumentDefinedStatement(ConversionKernel kernel);
 
         /// <summary>
         ///     Create a statement to check if the given <see cref="ConversionKernel.ArgumentName"/> has no value.
         /// </summary>
-        public abstract Statement ArgumentUndefinedStatement(ConversionKernel kernel);
+        public abstract ScriptConditionDescriptor ArgumentUndefinedStatement(ConversionKernel kernel);
 
         /// <summary>
-        ///     Create a statement to check if the <see cref="Property.Name"/> exists in the given argument.
+        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> exists in the given argument.
         /// </summary>
-        public abstract Statement CreateKeyCheckStatement(ConversionKernel kernel, Property property);
+        public abstract ScriptConditionDescriptor CreateKeyCheckStatement(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
-        ///     Create a statement to check if the <see cref="Property.Name"/> is undefined or null in the <see cref="ConversionKernel.ArgumentName"/>.
+        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is undefined or null in the <see cref="ConversionKernel.ArgumentName"/>.
         /// </summary>
-        public abstract Statement CreateUndefinedStatement(ConversionKernel kernel, Property property);
+        public abstract ScriptConditionDescriptor CreateUndefinedStatement(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
-        ///     Create a statement to check if the <see cref="Property.Name"/> in the <see cref="ConversionKernel.ArgumentName"/> is defined.
+        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> in the <see cref="ConversionKernel.ArgumentName"/> is defined.
         /// </summary>
-        public abstract Statement CreateDefinedStatement(ConversionKernel kernel, Property property);
+        public abstract ScriptConditionDescriptor CreateDefinedStatement(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
-        ///     Create a statement to check if the <see cref="Property.Name"/> is a instance of the expected class.
+        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected class.
         /// </summary>
-        public abstract Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property);
+        public abstract ScriptConditionDescriptor CreateInstanceCheckStatement(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
-        ///     Create a statement to check if the <see cref="Property.Name"/> is a instance of the expected type.
+        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected type.
         /// </summary>
-        public abstract Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property);
+        public abstract ScriptConditionDescriptor CreateTypeCheckStatement(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
-        ///     An <see cref="Empty"/> <see cref="StatementPipeline"/> without any <see cref="Statement"/>s defined.
+        ///     An <see cref="Empty"/> <see cref="StatementPipeline"/> without any <see cref="ScriptConditionDescriptor"/>s defined.
         /// </summary>
         public static EmptyStatementPipeline Empty => new EmptyStatementPipeline();
     }

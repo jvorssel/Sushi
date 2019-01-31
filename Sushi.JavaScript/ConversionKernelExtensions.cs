@@ -52,7 +52,7 @@ namespace Sushi.JavaScript
         /// <summary>
         ///     Simple fix to include the <see cref="ConversionKernel.CustomTypeHandling"/>.
         /// </summary>
-        public static CSharpNativeType IncludeOverride(this CSharpNativeType @this, ConversionKernel kernel, Type type) 
+        public static NativeType IncludeOverride(this NativeType @this, ConversionKernel kernel, Type type) 
             => kernel.CustomTypeHandling.ContainsKey(type) ? kernel.CustomTypeHandling[type] : @this;
     }
 }

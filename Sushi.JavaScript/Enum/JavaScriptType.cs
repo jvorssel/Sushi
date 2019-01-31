@@ -62,31 +62,31 @@ namespace Sushi.JavaScript.Enum
     public static class JavaScriptTypeExtensions
     {
         /// <summary>
-        ///     Convert given <see cref="CSharpNativeType"/> to its corresponding <see cref="JavaScriptType"/>.
+        ///     Convert given <see cref="NativeType"/> to its corresponding <see cref="JavaScriptType"/>.
         /// </summary>
-        public static JavaScriptType ToJavaScriptType(this CSharpNativeType type)
+        public static JavaScriptType ToJavaScriptType(this NativeType type)
         {
             switch (type)
             {
-                case CSharpNativeType.Bool:
+                case NativeType.Bool:
                     return JavaScriptType.Boolean;
-                case CSharpNativeType.Short:
-                case CSharpNativeType.Long:
-                case CSharpNativeType.Int:
-                case CSharpNativeType.Float:
-                case CSharpNativeType.Double: // TODO Create a default base-model for showing a decimal correctly.
-                case CSharpNativeType.Decimal:
-                case CSharpNativeType.Byte:
-                case CSharpNativeType.Enum:
+                case NativeType.Short:
+                case NativeType.Long:
+                case NativeType.Int:
+                case NativeType.Float:
+                case NativeType.Double: // TODO Create a default base-model for showing a decimal correctly.
+                case NativeType.Decimal:
+                case NativeType.Byte:
+                case NativeType.Enum:
                     return JavaScriptType.Number;
-                case CSharpNativeType.String:
-                case CSharpNativeType.Char:
+                case NativeType.String:
+                case NativeType.Char:
                     return JavaScriptType.String;
-                case CSharpNativeType.Object:
+                case NativeType.Object:
                     return JavaScriptType.Object;
-                case CSharpNativeType.Undefined:
+                case NativeType.Undefined:
                     return JavaScriptType.Undefined;
-                case CSharpNativeType.Null:
+                case NativeType.Null:
                     return JavaScriptType.Null;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

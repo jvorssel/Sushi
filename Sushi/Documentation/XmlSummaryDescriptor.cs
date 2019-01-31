@@ -4,18 +4,41 @@ using System.Linq;
 using System.Reflection;
 using Sushi.Extensions;
 
-namespace Sushi.Documentation.Models
+namespace Sushi.Documentation
 {
     /// <summary>
-    ///     A class representation for a member in the XML document.
+    ///     Describes xml-summary about a field, property or method.
     /// </summary>
-    public class FieldDocumentation : IEquatable<FieldDocumentation>
+    public class XmlSummaryDescriptor : IEquatable<XmlSummaryDescriptor>
     {
+        /// <summary>
+        ///     <see cref="Dictionary{TKey,TValue}"/> that describes direct child-elements of the member.
+        /// </summary>
         public Dictionary<string, string> Values { get; }
+
+        /// <summary>
+        ///     The <see cref="RawName"/> value of the member.
+        /// </summary>
         public string RawName { get; }
+
+        /// <summary>
+        ///     The last-part of the <see cref="RawName"/> that describes the actual <see cref="Name"/>.
+        /// </summary>
         public string Name { get; }
+        
+        /// <summary>
+        ///     The full-<see cref="Namespace"/> that the <see cref="Name"/> belongs in.
+        /// </summary>
         public string Namespace { get; }
+
+        /// <summary>
+        ///     The type-name of the class this <see cref="Name"/> belongs to.
+        /// </summary>
         public string DeclaringTypeName { get; }
+
+        /// <summary>
+        ///     The complete, formatted <see cref="FullName"/>.
+        /// </summary>
         public string FullName
         {
             get
@@ -39,7 +62,9 @@ namespace Sushi.Documentation.Models
             }
         }
 
-
+        /// <summary>
+        ///     What <see cref="ReferenceType"/> does the xml-doc reflect.
+        /// </summary>
         public ReferenceType FieldType { get; }
 
         // FIELDS
@@ -49,7 +74,7 @@ namespace Sushi.Documentation.Models
 
 
         /// <inheritdoc />
-        public FieldDocumentation(string name, ReferenceType field, Dictionary<string, string> values)
+        public XmlSummaryDescriptor(string name, ReferenceType field, Dictionary<string, string> values)
         {
             if (name.IsEmpty())
                 throw new ArgumentNullException(nameof(name));
@@ -104,10 +129,13 @@ namespace Sushi.Documentation.Models
             IsInherited = values.ContainsKey("inheritdoc");
         }
 
+        /// <summary>
+        ///     Custom method to <see cref="Trim"/> the inner-body of the xml-doc.
+        /// </summary>
         private string Trim(string value)
             => value.Trim().TrimStart('\n').TrimEnd('\n');
 
-        public static bool operator ==(FieldDocumentation fd, Type type)
+        public static bool operator ==(XmlSummaryDescriptor fd, Type type)
         {
             if (type is null && fd is null)
                 return true;
@@ -135,10 +163,10 @@ namespace Sushi.Documentation.Models
             }
         }
 
-        public static bool operator !=(FieldDocumentation ms, Type type)
+        public static bool operator !=(XmlSummaryDescriptor ms, Type type)
             => !(ms == type);
 
-        public static bool operator ==(FieldDocumentation fd, PropertyInfo prop)
+        public static bool operator ==(XmlSummaryDescriptor fd, PropertyInfo prop)
         {
             if (prop is null && fd is null)
                 return true;
@@ -171,7 +199,7 @@ namespace Sushi.Documentation.Models
 
         }
 
-        public static bool operator !=(FieldDocumentation fd, PropertyInfo prop)
+        public static bool operator !=(XmlSummaryDescriptor fd, PropertyInfo prop)
             => !(fd == prop);
 
         #region Overrides of Object
@@ -185,7 +213,7 @@ namespace Sushi.Documentation.Models
         #region Equality members
 
         /// <inheritdoc />
-        public bool Equals(FieldDocumentation other)
+        public bool Equals(XmlSummaryDescriptor other)
         {
             if (ReferenceEquals(null, other))
                 return false;
@@ -203,7 +231,7 @@ namespace Sushi.Documentation.Models
                 return true;
             if (obj.GetType() != this.GetType())
                 return false;
-            return Equals((FieldDocumentation)obj);
+            return Equals((XmlSummaryDescriptor)obj);
         }
 
         /// <inheritdoc />

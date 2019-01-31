@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Documentation;
-using Sushi.Documentation.Models;
 using Sushi.TestModels;
 
 namespace Sushi.Tests.Documentation

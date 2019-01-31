@@ -4,9 +4,12 @@ using System.Linq;
 using Sushi.Attributes;
 using Sushi.Extensions;
 
-namespace Sushi.Models
+namespace Sushi.Descriptors
 {
-    public sealed class DataModel : IEquatable<DataModel>
+    /// <summary>
+    ///     Describes a <see cref="System.Type"/>.
+    /// </summary>
+    public sealed class ClassDescriptor : IEquatable<ClassDescriptor>
     {
         public readonly Type Type;
 
@@ -21,7 +24,7 @@ namespace Sushi.Models
         public string FullName => Type.FullName;
 
         /// <summary>
-        ///     The generated <see cref="Script"/> for this <see cref="DataModel"/>.
+        ///     The generated <see cref="Script"/> for this <see cref="ClassDescriptor"/>.
         /// </summary>
         public string Script { get; set; }
 
@@ -35,35 +38,35 @@ namespace Sushi.Models
         /// </summary>
         public bool HasBaseType => BaseType != typeof(Type);
 
-        public DataModel(Type type)
+        public ClassDescriptor(Type type)
         {
             Type = type;
 
             // Get the available properties in the given type
             Properties = type.GetPropertiesWithStaticValue()
                 .Where(x => !x.Key.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
-                .Select(x => new Property(x.Key, x.Value))
+                .Select(x => new PropertyDescriptor(x.Key, x.Value))
                 .ToList();
         }
 
-        public IReadOnlyList<Property> Properties { get; }
+        public IReadOnlyList<PropertyDescriptor> Properties { get; }
 
-        public static bool operator ==(DataModel m1, DataModel m2)
+        public static bool operator ==(ClassDescriptor m1, ClassDescriptor m2)
             => m1?.Type == m2?.Type;
 
-        public static bool operator !=(DataModel m1, DataModel m2)
+        public static bool operator !=(ClassDescriptor m1, ClassDescriptor m2)
             => !(m1 == m2);
 
-        public static bool operator ==(DataModel m1, Type m2)
+        public static bool operator ==(ClassDescriptor m1, Type m2)
             => m1?.Type == m2;
 
-        public static bool operator !=(DataModel m1, Type m2)
+        public static bool operator !=(ClassDescriptor m1, Type m2)
             => !(m1 == m2);
 
         #region Equality members
 
         /// <inheritdoc />
-        public bool Equals(DataModel other)
+        public bool Equals(ClassDescriptor other)
         {
             if (ReferenceEquals(null, other))
                 return false;
@@ -79,7 +82,7 @@ namespace Sushi.Models
                 return false;
             if (ReferenceEquals(this, obj))
                 return true;
-            return obj is DataModel model && Equals(model);
+            return obj is ClassDescriptor model && Equals(model);
         }
 
         /// <inheritdoc />

@@ -1,16 +1,16 @@
 ﻿using System.Text.RegularExpressions;
 using Sushi.Consistency;
+using Sushi.Descriptors;
 using Sushi.Enum;
-using Sushi.Models;
 
 namespace Sushi {
     public static class SpecificationDefaults
     {
         /// <summary>
         ///     Remove single- & multi-line comments from 
-        ///     the given <see cref="DataModel.Script"/>.
+        ///     the given <see cref="ClassDescriptor.Script"/>.
         /// </summary>
-        public static string RemoveCommentsFromModel(DataModel model)
+        public static string RemoveCommentsFromModel(ClassDescriptor model)
         {
             var script = model.Script;
 
@@ -27,7 +27,7 @@ namespace Sushi {
         /// <summary>
         ///     Make sure the given <paramref name="comment"/> is formatted as a single-line comment.
         /// </summary>
-        public static Statement FormatInlineComment(string comment, StatementType relatedType)
+        public static ScriptConditionDescriptor FormatInlineComment(string comment, StatementType relatedType)
         {
             if (comment.Contains("\n"))
                 throw Errors.OnlyInlineCommentsSupported(comment);
@@ -35,7 +35,7 @@ namespace Sushi {
             if (comment.EndsWith("."))
                 comment = comment.Substring(0, comment.Length - 1);
 
-            return new Statement($@"// {comment}.", relatedType, true);
+            return new ScriptConditionDescriptor($@"// {comment}.", relatedType, true);
         }
     }
 }

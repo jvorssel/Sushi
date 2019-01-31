@@ -1,4 +1,4 @@
-﻿namespace Sushi.Documentation.Models
+﻿namespace Sushi.Documentation
 {
 	public enum ReferenceType
 	{
@@ -43,8 +43,11 @@
 		Error = 7
 	}
 
-	public static class SummaryFieldTypeExtensions
+	public static class ReferenceTypeExtensions
 	{
+		/// <summary>
+        ///		What <see cref="ReferenceType"/> belongs to the given <paramref name="specifier"/>.
+        /// </summary>
 		public static ReferenceType GetFieldType(this string specifier)
 		{
 			switch (specifier)

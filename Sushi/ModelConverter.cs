@@ -5,11 +5,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Sushi.Consistency;
+using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
-using Sushi.Models;
 using static Sushi.Consistency.TemplateKeys;
 
 namespace Sushi
@@ -31,7 +31,7 @@ namespace Sushi
         /// <summary>
         ///     Convert the available models in the <see cref="ConversionKernel"/> that match the given <paramref name="predicate"/>.
         /// </summary>
-        public IEnumerable<DataModel> Convert(Func<DataModel, bool> predicate = null)
+        public IEnumerable<ClassDescriptor> Convert(Func<ClassDescriptor, bool> predicate = null)
         {
             var enumerable = (predicate == null ? _kernel.Models : _kernel.Models.Where(predicate)).ToList();
 
@@ -47,7 +47,7 @@ namespace Sushi
         ///     Join one or more given <paramref name="models"/> and maybe <paramref name="minify"/>
         ///     them to create one <see cref="string"/>.
         /// </summary>
-        public string MergeModelsToString(IEnumerable<DataModel> models, bool minify = false)
+        public string MergeModelsToString(IEnumerable<ClassDescriptor> models, bool minify = false)
         {
             var builder = new StringBuilder();
             foreach (var model in models)
@@ -91,7 +91,7 @@ namespace Sushi
         /// <summary>
         ///     Remove leading whitespaces, newlines and tabs and comments.
         /// </summary>
-        public string Minify(DataModel model)
+        public string Minify(ClassDescriptor model)
         {
             // Run regex to replace comments if defined.
             var result = Language.RemoveComments(model);
@@ -109,9 +109,9 @@ namespace Sushi
         /// <summary>
         ///     Compile the given <paramref name="model"/> with the current <see cref="LanguageSpecification"/>.
         /// </summary>
-        /// <param name="model">The <see cref="DataModel"/> to convert to the given <see cref="Language"/>.</param>
-        /// <param name="referenceDataModels">Check type reference for found <see cref="DataModel"/>(s).</param>
-        public DataModel Compile(DataModel model, List<DataModel> referenceDataModels)
+        /// <param name="model">The <see cref="ClassDescriptor"/> to convert to the given <see cref="Language"/>.</param>
+        /// <param name="referenceDataModels">Check type reference for found <see cref="ClassDescriptor"/>(s).</param>
+        public ClassDescriptor Compile(ClassDescriptor model, List<ClassDescriptor> referenceDataModels)
         {
             var modelBuilder = new StringBuilder();
             var doc = _kernel.Documentation?.GetDocumentationForType(model.Type);
@@ -211,15 +211,15 @@ namespace Sushi
         }
 
         /// <summary>
-        ///     Write the given <see cref="DataModel"/> <paramref name="models"/> to the 
+        ///     Write the given <see cref="ClassDescriptor"/> <paramref name="models"/> to the 
         ///     <paramref name="fileName"/> in the given folder <paramref name="path"/>.
         /// </summary>
-        /// <param name="models">The <see cref="DataModel"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
+        /// <param name="models">The <see cref="ClassDescriptor"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
         /// <param name="path">The <paramref name="path"/> to the folder to store the file in.</param>
         /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
         /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
         /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
-        public void WriteToFile(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
+        public void WriteToFile(IEnumerable<ClassDescriptor> models, string path, string fileName, bool minify = false, Encoding encoding = null)
         {
             if (path.IsEmpty())
                 throw new ArgumentNullException(nameof(path));
@@ -238,15 +238,15 @@ namespace Sushi
         }
 
         /// <summary>
-        ///     Write the given <see cref="DataModel"/> <paramref name="models"/> to the 
+        ///     Write the given <see cref="ClassDescriptor"/> <paramref name="models"/> to the 
         ///     <paramref name="fileName"/> in the given folder <paramref name="path"/> asynchronously.
         /// </summary>
-        /// <param name="models">The <see cref="DataModel"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
+        /// <param name="models">The <see cref="ClassDescriptor"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
         /// <param name="path">The <paramref name="path"/> to the folder to store the file in.</param>
         /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
         /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
         /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
-        public async Task WriteToFileAsync(IEnumerable<DataModel> models, string path, string fileName, bool minify = false, Encoding encoding = null)
+        public async Task WriteToFileAsync(IEnumerable<ClassDescriptor> models, string path, string fileName, bool minify = false, Encoding encoding = null)
         {
             if (path.IsEmpty())
                 throw new ArgumentNullException(nameof(path));

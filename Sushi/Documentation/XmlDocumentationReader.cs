@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Linq;
 using Sushi.Consistency;
-using Sushi.Documentation.Models;
 using Sushi.Enum;
 using Sushi.Extensions;
 
@@ -16,7 +15,7 @@ namespace Sushi.Documentation
 {
     /// <summary>
     ///     Reads the given XML document and populates 
-    ///     its <see cref="Members"/> with <see cref="FieldDocumentation"/>(s) that
+    ///     its <see cref="Members"/> with <see cref="XmlSummaryDescriptor"/>(s) that
     ///     describe property / field / method / class documentation.
     /// </summary>
     public class XmlDocumentationReader
@@ -24,7 +23,7 @@ namespace Sushi.Documentation
         public string Path { get; }
         public string AssemblyName { get; private set; }
 
-        public List<FieldDocumentation> Members { get; private set; } = new List<FieldDocumentation>();
+        public List<XmlSummaryDescriptor> Members { get; private set; } = new List<XmlSummaryDescriptor>();
 
         public bool Initialized { get; private set; }
 
@@ -100,7 +99,7 @@ namespace Sushi.Documentation
                     dict[desc.Name.LocalName] = ResolveXmlBody(desc);
                 }
 
-                var model = new FieldDocumentation(split[1], fieldType, dict);
+                var model = new XmlSummaryDescriptor(split[1], fieldType, dict);
                 Members.Add(model);
             }
 
@@ -132,9 +131,9 @@ namespace Sushi.Documentation
         }
 
         /// <summary>
-        ///     Try to resolve the <see cref="FieldDocumentation"/> for the given <see cref="Type"/>.
+        ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the given <see cref="Type"/>.
         /// </summary>
-        public FieldDocumentation GetDocumentationForType(Type type)
+        public XmlSummaryDescriptor GetDocumentationForType(Type type)
         {
             // No members, initialize.
             if (!Initialized)
@@ -160,9 +159,9 @@ namespace Sushi.Documentation
         }
 
         /// <summary>
-        ///     Try to resolve the <see cref="FieldDocumentation"/> for the selected <paramref name="property"/>.
+        ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the selected <paramref name="property"/>.
         /// </summary>
-        public FieldDocumentation GetDocumentationForProperty<T>(T instance, Expression<Func<T, object>> property)
+        public XmlSummaryDescriptor GetDocumentationForProperty<T>(T instance, Expression<Func<T, object>> property)
         {
             // Get the PropertyInfo that the given expression selects.
             var info = instance.GetPropertyInfo(property);
@@ -172,9 +171,9 @@ namespace Sushi.Documentation
         }
 
         /// <summary>
-        ///     Try to resolve the <see cref="FieldDocumentation"/> for the given <see cref="PropertyInfo"/>.
+        ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the given <see cref="PropertyInfo"/>.
         /// </summary>
-        public FieldDocumentation GetDocumentationForProperty(PropertyInfo property)
+        public XmlSummaryDescriptor GetDocumentationForProperty(PropertyInfo property)
         {
             // No members, initialize.
             if (!Initialized)

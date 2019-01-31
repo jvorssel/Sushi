@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Sushi.Enum;
 
-namespace Sushi.Models
+namespace Sushi.Descriptors
 {
-    public sealed class Statement
+    public sealed class ScriptConditionDescriptor
     {
         public string Script { get; }
         public StatementType Type { get; }
@@ -15,7 +15,7 @@ namespace Sushi.Models
         public IEnumerable<string> Lines => Script.Split('\n');
 
 
-        public Statement(string script, StatementType type, bool isComment = false, bool isEmptyLine = false)
+        public ScriptConditionDescriptor(string script, StatementType type, bool isComment = false, bool isEmptyLine = false)
         {
             Script = script;
             Type = type;

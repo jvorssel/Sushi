@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Sushi.Models;
+using Sushi.Descriptors;
 
 namespace Sushi.StatementPipelines
 {
@@ -9,43 +9,43 @@ namespace Sushi.StatementPipelines
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
-        public override Statement ArgumentDefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentDefinedStatement(ConversionKernel kernel)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override Statement ArgumentUndefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentUndefinedStatement(ConversionKernel kernel)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override Statement CreateKeyCheckStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateKeyCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override Statement CreateUndefinedStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateUndefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override Statement CreateDefinedStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateDefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateInstanceCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateTypeCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }

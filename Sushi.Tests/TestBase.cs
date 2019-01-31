@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
+using Sushi.Descriptors;
 using Sushi.Extensions;
 using Sushi.JavaScript;
 using Sushi.JavaScript.Enum;
-using Sushi.Models;
 using Sushi.TypeScript;
 using Sushi.TypeScript.Enum;
 
@@ -18,7 +18,7 @@ namespace Sushi.Tests
         /// </summary>
         protected static void CompileJavaScript(ConversionKernel kernel,
             JavaScriptVersion version,
-            Func<DataModel, bool> predicate = null,
+            Func<ClassDescriptor, bool> predicate = null,
             string fileName = "ecmascript",
             bool minify = false,
             Wrap wrap = Wrap.None)
@@ -40,7 +40,7 @@ namespace Sushi.Tests
         /// <summary>
         ///     Compile a model for TypeScript.
         /// </summary>
-        protected static void CompileTypeScript(ConversionKernel kernel, string fileName = "typescript", Func<DataModel, bool> predicate = null, bool minify = false)
+        protected static void CompileTypeScript(ConversionKernel kernel, string fileName = "typescript", Func<ClassDescriptor, bool> predicate = null, bool minify = false)
         {
             var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
             var converted = converter.Convert(predicate);

@@ -5,9 +5,9 @@ using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using Sushi.Consistency;
+using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
-using Sushi.Models;
 
 namespace Sushi.JavaScript
 {
@@ -19,10 +19,10 @@ namespace Sushi.JavaScript
         public override string Extension { get; } = ".js";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, Property property)
+        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property)
         {
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(property.PropertyType);
+            var summary = kernel.Documentation?.GetDocumentationForProperty(property.Property);
             if (summary?.Summary.Length > 0)
                 yield return $"/** {summary.Summary} */";
 
@@ -32,17 +32,17 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, Property property)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override string RemoveComments(DataModel model)
+        public override string RemoveComments(ClassDescriptor model)
             => SpecificationDefaults.RemoveCommentsFromModel(model);
 
         /// <inheritdoc />
-        public override IEnumerable<Statement> FormatStatements(ConversionKernel kernel, List<Property> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", StatementType.Key);
@@ -50,20 +50,20 @@ namespace Sushi.JavaScript
                 yield return StatementPipeline.CreateKeyCheckStatement(kernel, prop);
 
             // Type check
-            yield return new Statement(string.Empty, StatementType.Type, false, true);
+            yield return new ScriptConditionDescriptor(string.Empty, StatementType.Type, false, true);
             yield return FormatComment(@"Check property type match", StatementType.Type);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateTypeCheckStatement(kernel, prop);
 
             // Instance check
-            yield return new Statement(string.Empty, StatementType.Instance, false, true);
+            yield return new ScriptConditionDescriptor(string.Empty, StatementType.Instance, false, true);
             yield return FormatComment(@"Check property class instance match", StatementType.Instance);
             foreach (var prop in properties)
                 yield return StatementPipeline.CreateInstanceCheckStatement(kernel, prop);
         }
         
         /// <inheritdoc />
-        public override string GetDefaultForProperty(ConversionKernel kernel, Property property)
+        public override string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property)
         {
             var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
             if (type == typeof(DateTime))
@@ -83,32 +83,32 @@ namespace Sushi.JavaScript
             // Check the native type with certain exceptions.
             switch (csType)
             {
-                case CSharpNativeType.Undefined:
+                case NativeType.Undefined:
                     return "void 0";
-                case CSharpNativeType.Bool:
+                case NativeType.Bool:
                     return "false";
-                case CSharpNativeType.Byte:
-                case CSharpNativeType.Decimal:
-                case CSharpNativeType.Double:
-                case CSharpNativeType.Float:
-                case CSharpNativeType.Int:
-                case CSharpNativeType.Long:
-                case CSharpNativeType.Short:
+                case NativeType.Byte:
+                case NativeType.Decimal:
+                case NativeType.Double:
+                case NativeType.Float:
+                case NativeType.Int:
+                case NativeType.Long:
+                case NativeType.Short:
                     return "-1";
-                case CSharpNativeType.Char:
-                case CSharpNativeType.String:
+                case NativeType.Char:
+                case NativeType.String:
                     return "''";
-                case CSharpNativeType.Enum:
+                case NativeType.Enum:
                     return "0";
                 default:
-                case CSharpNativeType.Null:
-                case CSharpNativeType.Object:
+                case NativeType.Null:
+                case NativeType.Object:
                     return "null";
             }
         }
 
         /// <inheritdoc />
-        public override string FormatValueForProperty(ConversionKernel kernel, Property property, object value)
+        public override string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value)
         {
             // What default (fallback) value is suppossed to be used?
             var defaultValue = GetDefaultForProperty(kernel, property);
@@ -132,7 +132,7 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override Statement FormatComment(string comment, StatementType relatedType)
+        public override ScriptConditionDescriptor FormatComment(string comment, StatementType relatedType)
             => SpecificationDefaults.FormatInlineComment(comment, relatedType);
 
         #endregion

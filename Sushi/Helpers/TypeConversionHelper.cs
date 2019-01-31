@@ -6,48 +6,48 @@ namespace Sushi.Helpers
     public static class TypeConversionHelper
     {
         /// <summary>
-        ///     Convert the given <paramref name="type"/> to its corresponding <see cref="CSharpNativeType"/>.
+        ///     Convert the given <paramref name="type"/> to its corresponding <see cref="NativeType"/>.
         /// </summary>
-        public static CSharpNativeType ToCSharpNativeType(this Type type)
+        public static NativeType ToNativeTypeEnum(this Type type)
         {
             if (type == null)
-                return CSharpNativeType.Undefined;
+                return NativeType.Undefined;
 
             if (type == typeof(bool))
-                return CSharpNativeType.Bool;
+                return NativeType.Bool;
 
             if (type == typeof(byte))
-                return CSharpNativeType.Byte;
+                return NativeType.Byte;
 
             if (type == typeof(short))
-                return CSharpNativeType.Short;
+                return NativeType.Short;
 
             if (type == typeof(long))
-                return CSharpNativeType.Long;
+                return NativeType.Long;
 
             if (type == typeof(int))
-                return CSharpNativeType.Int;
+                return NativeType.Int;
 
             if (type == typeof(float))
-                return CSharpNativeType.Float;
+                return NativeType.Float;
 
             if (type == typeof(double))
-                return CSharpNativeType.Double;
+                return NativeType.Double;
 
             if (type == typeof(decimal))
-                return CSharpNativeType.Decimal;
+                return NativeType.Decimal;
 
             if (type == typeof(string))
-                return CSharpNativeType.String;
+                return NativeType.String;
 
             if (type == typeof(char))
-                return CSharpNativeType.Char;
+                return NativeType.Char;
 
             if (type == typeof(System.Enum) || type.BaseType == typeof(System.Enum))
-                return CSharpNativeType.Enum;
+                return NativeType.Enum;
 
             // Null value already defined above, use Object as default.
-            return CSharpNativeType.Object;
+            return NativeType.Object;
         }
     }
 }

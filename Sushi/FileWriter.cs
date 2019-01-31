@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Sushi.Descriptors;
 using Sushi.Extensions;
-using Sushi.Models;
 
 namespace Sushi
 {
@@ -35,24 +35,24 @@ namespace Sushi
 		}
 
 		/// <summary>
-		///		Flush the generated <see cref="DataModel.Script"/> in the given <paramref name="model"/>
+		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="model"/>
 		///		to the <paramref name="fileName"/>.
 		/// </summary>
-		public void FlushToFile(DataModel model, string fileName = "")
-			=> FlushToFile(new List<DataModel> { model }, fileName);
+		public void FlushToFile(ClassDescriptor model, string fileName = "")
+			=> FlushToFile(new List<ClassDescriptor> { model }, fileName);
 
 		/// <summary>
-		///		Flush the generated <see cref="DataModel.Script"/> in the given <paramref name="model"/>
+		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="model"/>
 		///		to the <paramref name="fileName"/> asynchronously.
 		/// </summary>
-		public async Task FlushToFileAsync(DataModel model, string fileName = "")
-			=> await FlushToFileAsync(new List<DataModel> { model }, fileName);
+		public async Task FlushToFileAsync(ClassDescriptor model, string fileName = "")
+			=> await FlushToFileAsync(new List<ClassDescriptor> { model }, fileName);
 
 		/// <summary>
-		///		Flush the generated <see cref="DataModel.Script"/> in the given <paramref name="models"/>
+		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="models"/>
 		///		to the <paramref name="fileName"/>.
 		/// </summary>
-		public void FlushToFile(IEnumerable<DataModel> models, string fileName = "")
+		public void FlushToFile(IEnumerable<ClassDescriptor> models, string fileName = "")
 		{
 			// Default to model name as name
 			if (fileName.IsEmpty())
@@ -65,10 +65,10 @@ namespace Sushi
 		}
 
 		/// <summary>
-		///		Flush the generated <see cref="DataModel.Script"/> in the given <paramref name="models"/>
+		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="models"/>
 		///		to the <paramref name="fileName"/>.
 		/// </summary>
-		public async Task FlushToFileAsync(IEnumerable<DataModel> models, string fileName = "")
+		public async Task FlushToFileAsync(IEnumerable<ClassDescriptor> models, string fileName = "")
 		{
 			// Default to model name as name
 			if (fileName.IsEmpty())

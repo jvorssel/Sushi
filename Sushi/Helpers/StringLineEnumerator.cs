@@ -24,15 +24,8 @@ namespace Sushi.Helpers
             Count = _split.Length - 1;
         }
 
-
-        #region Implementation of IDisposable
-
         /// <inheritdoc />
         public void Dispose() { }
-
-        #endregion
-
-        #region Implementation of IEnumerator
 
         /// <inheritdoc />
         public bool MoveNext()
@@ -40,7 +33,7 @@ namespace Sushi.Helpers
             if (Index > Count)
                 return false;
 
-            Current = _split[Index] + (Index < Count ? Split.ToString() : "");
+            Current = _split[Index] + (Index < Count ? Split.ToString() : string.Empty);
             Index++;
 
             return true;
@@ -59,16 +52,10 @@ namespace Sushi.Helpers
         /// <inheritdoc />
         object IEnumerator.Current => Current;
 
-        #endregion
-
-        #region Implementation of IEnumerable
-
         /// <inheritdoc />
         public IEnumerator<string> GetEnumerator() => this;
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
     }
 }

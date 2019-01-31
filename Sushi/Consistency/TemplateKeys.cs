@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
+using Sushi.Descriptors;
 using Sushi.Interfaces;
-using Sushi.Models;
 
 namespace Sushi.Consistency
 {
@@ -41,12 +41,12 @@ namespace Sushi.Consistency
         public const string CTOR_PROPERTIES_KEY = @"$$SET_PROPERTY_VALUES$$";
 
         /// <summary>
-        ///     Statement if the <see cref="Property"/> is defined / has a value.
+        ///     Statement if the <see cref="PropertyDescriptor"/> is defined / has a value.
         /// </summary>
         public const string IS_DEFINED_CHECK = @"$$DEFINED_CHECK$$";
 
         /// <summary>
-        ///     Statement if the <see cref="Property"/> is not defined / has no value.
+        ///     Statement if the <see cref="PropertyDescriptor"/> is not defined / has no value.
         /// </summary>
         public const string IS_UNDEFINED_CHECK = @"$$UNDEFINED_CHECK$$";
 

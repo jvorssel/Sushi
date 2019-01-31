@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
+using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.JavaScript.Enum;
-using Sushi.Models;
 
 namespace Sushi.JavaScript
 {
@@ -19,43 +19,43 @@ namespace Sushi.JavaScript
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
-        public override Statement CreateUndefinedStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateUndefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             var statement = string.Format(IS_PROPERTY_UNDEFINED_STATEMENT, kernel.ArgumentName, property.Name);
-            return new Statement(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
-        public override Statement CreateDefinedStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateDefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, kernel.ArgumentName, property.Name);
-            return new Statement(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
-        public override Statement ArgumentUndefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentUndefinedStatement(ConversionKernel kernel)
         {
             var statement = string.Format(IS_UNDEFINED_STATEMENT, kernel.ArgumentName);
-            return new Statement(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
-        public override Statement ArgumentDefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentDefinedStatement(ConversionKernel kernel)
         {
             var statement = string.Format(IS_DEFINED_STATEMENT, kernel.ArgumentName);
-            return new Statement(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, StatementType.Type);
         }
 
         /// <inheritdoc />
-        public override Statement CreateKeyCheckStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateKeyCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             var doesKeyExistStatement = $"if (!{kernel.ArgumentName}.hasOwnProperty('{property.Name}')) throw new TypeError(\"{string.Format(kernel.ObjectPropertyMissing, property.Name)}\");";
 
-            return new Statement(doesKeyExistStatement, StatementType.Key);
+            return new ScriptConditionDescriptor(doesKeyExistStatement, StatementType.Key);
         }
 
         /// <inheritdoc />
-        public override Statement CreateInstanceCheckStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateInstanceCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             var instanceCheck = $"if ({CreateDefinedStatement(kernel, property)} && !{{1}}.tryParse({kernel.ArgumentName}.{{0}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
 
@@ -93,11 +93,11 @@ namespace Sushi.JavaScript
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Statement(script, StatementType.Instance);
+            return new ScriptConditionDescriptor(script, StatementType.Instance);
         }
 
         /// <inheritdoc />
-        public override Statement CreateTypeCheckStatement(ConversionKernel kernel, Property property)
+        public override ScriptConditionDescriptor CreateTypeCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
         {
             var typeCheck = $"if (typeof {kernel.ArgumentName}.{{0}} !== '{{1}}') throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
 
@@ -131,7 +131,7 @@ namespace Sushi.JavaScript
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Statement(script, StatementType.Type);
+            return new ScriptConditionDescriptor(script, StatementType.Type);
         }
 
         #endregion
