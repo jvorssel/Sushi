@@ -7,11 +7,11 @@ export interface PersonViewModel {
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
-	Name: string;
+	Name: void;
 	/** The Surname of the person. */
-	Surname: string;
+	Surname: void;
 	/** The Gender of the person. */
-	Gender: number;
+	Gender: void;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
@@ -25,21 +25,21 @@ export interface PersonViewModel {
  */
 export interface SchoolViewModel {
 	/** The Name of this SchoolViewModel. */
-	Name: string;
+	Name: void;
 	/** The Owner of this SchoolViewModel. */
 	Owner: PersonViewModel;
 	/** The AmountOfStudents of this SchoolViewModel. */
-	AmountOfStudents: number;
+	AmountOfStudents: void;
 	/** The Address of this SchoolViewModel. */
-	Address: string;
+	Address: void;
 	/** The ZipCode of this SchoolViewModel. */
-	ZipCode: string;
+	ZipCode: void;
 	/** The HouseNumber of this SchoolViewModel. */
-	HouseNumber: number;
+	HouseNumber: void;
 	/** The HouseNumberAddition of this SchoolViewModel. */
-	HouseNumberAddition: string;
+	HouseNumberAddition: void;
 	/** The Students of this SchoolViewModel. */
-	Students: Array<any>;
+	Students: Array<void>;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
@@ -53,17 +53,17 @@ export interface SchoolViewModel {
  */
 export interface StudentViewModel {
 	/** What Grade the Student is in. */
-	Grade: number;
+	Grade: void;
 	/** The name of the School. */
 	School: SchoolViewModel;
 	/** The Gender of the Student. */
-	Gender: number;
+	Gender: void;
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
-	Name: string;
+	Name: void;
 	/** The Surname of the person. */
-	Surname: string;
+	Surname: void;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */

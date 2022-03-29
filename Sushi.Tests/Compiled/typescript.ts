@@ -10,11 +10,11 @@ export class PersonViewModel {
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
-	Name: string;
+	Name: void;
 	/** The Surname of the person. */
-	Surname: string;
+	Surname: void;
 	/** The Gender of the person. */
-	Gender: number;
+	Gender: void;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
@@ -38,9 +38,6 @@ export class PersonViewModel {
 			
 			// Check property type match.
 			if (typeof value.Identifier !== 'string') throw new TypeError("Given object property 'Identifier' is expected to be a string.");
-			if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-			if (typeof value.Surname !== 'string') throw new TypeError("Given object property 'Surname' is expected to be a string.");
-			if (typeof value.Gender !== 'number') throw new TypeError("Given object property 'Gender' is expected to be a number.");
 			if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
 			if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
 		}
@@ -48,11 +45,11 @@ export class PersonViewModel {
 		/** The Identifier that this Model refers to. */
 		this.Identifier = value.Identifier || '';
 		/** The Name of the person. */
-		this.Name = value.Name || '';
+		this.Name = value.Name || void 0;
 		/** The Surname of the person. */
-		this.Surname = value.Surname || '';
+		this.Surname = value.Surname || void 0;
 		/** The Gender of the person. */
-		this.Gender = value.Gender || 0;
+		this.Gender = value.Gender || void 0;
 		/** The Guid Idenfifier. */
 		this.Guid = value.Guid || '';
 		/** The DateTime that this ViewModel was CreatedOn. */
@@ -78,9 +75,6 @@ export class PersonViewModel {
 			
 			// Check property type match.
 			if (typeof value.Identifier !== 'string') throw new TypeError("Given object property 'Identifier' is expected to be a string.");
-			if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-			if (typeof value.Surname !== 'string') throw new TypeError("Given object property 'Surname' is expected to be a string.");
-			if (typeof value.Gender !== 'number') throw new TypeError("Given object property 'Gender' is expected to be a number.");
 			if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
 			if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
 
@@ -102,21 +96,21 @@ export class PersonViewModel {
 export class SchoolViewModel {
 
 	/** The Name of this SchoolViewModel. */
-	Name: string;
+	Name: void;
 	/** The Owner of this SchoolViewModel. */
 	Owner: PersonViewModel;
 	/** The AmountOfStudents of this SchoolViewModel. */
-	AmountOfStudents: number;
+	AmountOfStudents: void;
 	/** The Address of this SchoolViewModel. */
-	Address: string;
+	Address: void;
 	/** The ZipCode of this SchoolViewModel. */
-	ZipCode: string;
+	ZipCode: void;
 	/** The HouseNumber of this SchoolViewModel. */
-	HouseNumber: number;
+	HouseNumber: void;
 	/** The HouseNumberAddition of this SchoolViewModel. */
-	HouseNumberAddition: string;
+	HouseNumberAddition: void;
 	/** The Students of this SchoolViewModel. */
-	Students: Array<any>;
+	Students: Array<void>;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
@@ -143,35 +137,24 @@ export class SchoolViewModel {
 			if (!value.hasOwnProperty('CreatedOn')) throw new TypeError("Given object is expected to have a property with name: 'CreatedOn'.");
 			
 			// Check property type match.
-			if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-			if (typeof value.Owner !== 'object') throw new TypeError("Given object property 'Owner' is expected to be a object.");
-			if (typeof value.AmountOfStudents !== 'number') throw new TypeError("Given object property 'AmountOfStudents' is expected to be a number.");
-			if (typeof value.Address !== 'string') throw new TypeError("Given object property 'Address' is expected to be a string.");
-			if (typeof value.ZipCode !== 'string') throw new TypeError("Given object property 'ZipCode' is expected to be a string.");
-			if (typeof value.HouseNumber !== 'number') throw new TypeError("Given object property 'HouseNumber' is expected to be a number.");
-			if (typeof value.HouseNumberAddition !== 'string') throw new TypeError("Given object property 'HouseNumberAddition' is expected to be a string.");
-			if (typeof value.Students !== 'object') throw new TypeError("Given object property 'Students' is expected to be a object.");
 			if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
 			if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
-			
-			// Check property class instance match.
-			if (value.Owner !== void 0 && value.Owner !== null && !PersonViewModel.tryParse(value.Owner)) throw new TypeError("Given object property 'Owner' is expected to be an instance of the 'PersonViewModel' constructor.");
 		}
 
 		/** The Name of this SchoolViewModel. */
-		this.Name = value.Name || '';
+		this.Name = value.Name || void 0;
 		/** The Owner of this SchoolViewModel. */
 		this.Owner = new PersonViewModel(value.Owner) || null;
 		/** The AmountOfStudents of this SchoolViewModel. */
-		this.AmountOfStudents = value.AmountOfStudents || -1;
+		this.AmountOfStudents = value.AmountOfStudents || void 0;
 		/** The Address of this SchoolViewModel. */
-		this.Address = value.Address || '';
+		this.Address = value.Address || void 0;
 		/** The ZipCode of this SchoolViewModel. */
-		this.ZipCode = value.ZipCode || '';
+		this.ZipCode = value.ZipCode || void 0;
 		/** The HouseNumber of this SchoolViewModel. */
-		this.HouseNumber = value.HouseNumber || -1;
+		this.HouseNumber = value.HouseNumber || void 0;
 		/** The HouseNumberAddition of this SchoolViewModel. */
-		this.HouseNumberAddition = value.HouseNumberAddition || '';
+		this.HouseNumberAddition = value.HouseNumberAddition || void 0;
 		/** The Students of this SchoolViewModel. */
 		this.Students = value.Students || [];
 		/** The Guid Idenfifier. */
@@ -202,19 +185,8 @@ export class SchoolViewModel {
 			if (!value.hasOwnProperty('CreatedOn')) throw new TypeError("Given object is expected to have a property with name: 'CreatedOn'.");
 			
 			// Check property type match.
-			if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-			if (typeof value.Owner !== 'object') throw new TypeError("Given object property 'Owner' is expected to be a object.");
-			if (typeof value.AmountOfStudents !== 'number') throw new TypeError("Given object property 'AmountOfStudents' is expected to be a number.");
-			if (typeof value.Address !== 'string') throw new TypeError("Given object property 'Address' is expected to be a string.");
-			if (typeof value.ZipCode !== 'string') throw new TypeError("Given object property 'ZipCode' is expected to be a string.");
-			if (typeof value.HouseNumber !== 'number') throw new TypeError("Given object property 'HouseNumber' is expected to be a number.");
-			if (typeof value.HouseNumberAddition !== 'string') throw new TypeError("Given object property 'HouseNumberAddition' is expected to be a string.");
-			if (typeof value.Students !== 'object') throw new TypeError("Given object property 'Students' is expected to be a object.");
 			if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
 			if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
-			
-			// Check property class instance match.
-			if (value.Owner !== void 0 && value.Owner !== null && !PersonViewModel.tryParse(value.Owner)) throw new TypeError("Given object property 'Owner' is expected to be an instance of the 'PersonViewModel' constructor.");
 
 			return true;
 		}
@@ -234,17 +206,17 @@ export class SchoolViewModel {
 export class StudentViewModel {
 
 	/** What Grade the Student is in. */
-	Grade: number;
+	Grade: void;
 	/** The name of the School. */
 	School: SchoolViewModel;
 	/** The Gender of the Student. */
-	Gender: number;
+	Gender: void;
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
-	Name: string;
+	Name: void;
 	/** The Surname of the person. */
-	Surname: string;
+	Surname: void;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
@@ -269,31 +241,23 @@ export class StudentViewModel {
 			if (!value.hasOwnProperty('CreatedOn')) throw new TypeError("Given object is expected to have a property with name: 'CreatedOn'.");
 			
 			// Check property type match.
-			if (typeof value.Grade !== 'number') throw new TypeError("Given object property 'Grade' is expected to be a number.");
-			if (typeof value.School !== 'object') throw new TypeError("Given object property 'School' is expected to be a object.");
-			if (typeof value.Gender !== 'number') throw new TypeError("Given object property 'Gender' is expected to be a number.");
 			if (typeof value.Identifier !== 'string') throw new TypeError("Given object property 'Identifier' is expected to be a string.");
-			if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-			if (typeof value.Surname !== 'string') throw new TypeError("Given object property 'Surname' is expected to be a string.");
 			if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
 			if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
-			
-			// Check property class instance match.
-			if (value.School !== void 0 && value.School !== null && !SchoolViewModel.tryParse(value.School)) throw new TypeError("Given object property 'School' is expected to be an instance of the 'SchoolViewModel' constructor.");
 		}
 
 		/** What Grade the Student is in. */
-		this.Grade = value.Grade || -1;
+		this.Grade = value.Grade || void 0;
 		/** The name of the School. */
 		this.School = new SchoolViewModel(value.School) || null;
 		/** The Gender of the Student. */
-		this.Gender = value.Gender || 0;
+		this.Gender = value.Gender || void 0;
 		/** The Identifier that this Model refers to. */
 		this.Identifier = value.Identifier || '';
 		/** The Name of the person. */
-		this.Name = value.Name || '';
+		this.Name = value.Name || void 0;
 		/** The Surname of the person. */
-		this.Surname = value.Surname || '';
+		this.Surname = value.Surname || void 0;
 		/** The Guid Idenfifier. */
 		this.Guid = value.Guid || '';
 		/** The DateTime that this ViewModel was CreatedOn. */
@@ -320,17 +284,9 @@ export class StudentViewModel {
 			if (!value.hasOwnProperty('CreatedOn')) throw new TypeError("Given object is expected to have a property with name: 'CreatedOn'.");
 			
 			// Check property type match.
-			if (typeof value.Grade !== 'number') throw new TypeError("Given object property 'Grade' is expected to be a number.");
-			if (typeof value.School !== 'object') throw new TypeError("Given object property 'School' is expected to be a object.");
-			if (typeof value.Gender !== 'number') throw new TypeError("Given object property 'Gender' is expected to be a number.");
 			if (typeof value.Identifier !== 'string') throw new TypeError("Given object property 'Identifier' is expected to be a string.");
-			if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-			if (typeof value.Surname !== 'string') throw new TypeError("Given object property 'Surname' is expected to be a string.");
 			if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
 			if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
-			
-			// Check property class instance match.
-			if (value.School !== void 0 && value.School !== null && !SchoolViewModel.tryParse(value.School)) throw new TypeError("Given object property 'School' is expected to be an instance of the 'SchoolViewModel' constructor.");
 
 			return true;
 		}

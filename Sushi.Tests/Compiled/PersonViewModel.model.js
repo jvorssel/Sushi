@@ -22,9 +22,6 @@
     		
     		// Check property type match.
     		if (typeof value.Identifier !== 'string') throw new TypeError("Given object property 'Identifier' is expected to be a string.");
-    		if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-    		if (typeof value.Surname !== 'string') throw new TypeError("Given object property 'Surname' is expected to be a string.");
-    		if (typeof value.Gender !== 'number') throw new TypeError("Given object property 'Gender' is expected to be a number.");
     		if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
     		if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
     	}
@@ -36,11 +33,11 @@
     	/** The Identifier that this Model refers to. */
     	this.Identifier = value.Identifier || '';
     	/** The Name of the person. */
-    	this.Name = value.Name || '';
+    	this.Name = value.Name || void 0;
     	/** The Surname of the person. */
-    	this.Surname = value.Surname || '';
+    	this.Surname = value.Surname || void 0;
     	/** The Gender of the person. */
-    	this.Gender = value.Gender || 0;
+    	this.Gender = value.Gender || void 0;
     	/** The Guid Idenfifier. */
     	this.Guid = value.Guid || '';
     	/** The DateTime that this ViewModel was CreatedOn. */
@@ -69,9 +66,6 @@
     		
     		// Check property type match.
     		if (typeof value.Identifier !== 'string') throw new TypeError("Given object property 'Identifier' is expected to be a string.");
-    		if (typeof value.Name !== 'string') throw new TypeError("Given object property 'Name' is expected to be a string.");
-    		if (typeof value.Surname !== 'string') throw new TypeError("Given object property 'Surname' is expected to be a string.");
-    		if (typeof value.Gender !== 'number') throw new TypeError("Given object property 'Gender' is expected to be a number.");
     		if (typeof value.Guid !== 'string') throw new TypeError("Given object property 'Guid' is expected to be a string.");
     		if (typeof value.CreatedOn !== 'string') throw new TypeError("Given object property 'CreatedOn' is expected to be a string.");
     
