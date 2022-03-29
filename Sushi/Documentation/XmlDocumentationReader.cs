@@ -5,10 +5,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Xml;
 using System.Xml.Linq;
 using Sushi.Consistency;
-using Sushi.Enum;
 using Sushi.Extensions;
 
 namespace Sushi.Documentation
@@ -115,17 +113,6 @@ namespace Sushi.Documentation
             _doc = XDocument.Load(Path);
 
             ProcessXmlFileContents();
-
-            return this;
-        }
-
-        /// <summary>
-        ///     Clear the stored values.
-        /// </summary>
-        public XmlDocumentationReader Clear()
-        {
-            Members.Clear();
-            Initialized = false;
 
             return this;
         }

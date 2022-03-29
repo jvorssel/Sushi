@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sushi.Descriptors;
 
 namespace Sushi.TypeScript.Specifications
@@ -9,7 +8,7 @@ namespace Sushi.TypeScript.Specifications
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
-        public override string Extension { get; } = @".d.ts";
+        public override string Extension => @".d.ts";
 
         /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property)
@@ -36,14 +35,5 @@ namespace Sushi.TypeScript.Specifications
             => model.Script;
 
         #endregion
-
-        #region Initializers
-
-        public DefinitelyTypedSpecification()
-        : base("DefinitelyTyped", new Version(1, 0, 0))
-        {
-        }
-
-        #endregion Initializers
     }
 }

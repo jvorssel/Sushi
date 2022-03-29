@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Enum;
@@ -35,10 +34,8 @@ namespace Sushi
         {
             var enumerable = (predicate == null ? _kernel.Models : _kernel.Models.Where(predicate)).ToList();
 
-            foreach (var model in enumerable)
+            foreach (var scriptModel in enumerable.Select(Compile))
             {
-                var scriptModel = Compile(model, enumerable);
-
                 yield return scriptModel;
             }
         }
@@ -111,7 +108,7 @@ namespace Sushi
         /// </summary>
         /// <param name="model">The <see cref="ClassDescriptor"/> to convert to the given <see cref="Language"/>.</param>
         /// <param name="referenceDataModels">Check type reference for found <see cref="ClassDescriptor"/>(s).</param>
-        public ClassDescriptor Compile(ClassDescriptor model, List<ClassDescriptor> referenceDataModels)
+        public ClassDescriptor Compile(ClassDescriptor model)
         {
             var modelBuilder = new StringBuilder();
             var doc = _kernel.Documentation?.GetDocumentationForType(model.Type);
@@ -178,14 +175,14 @@ namespace Sushi
                 // Defined check
                 else if (row.Contains(IS_DEFINED_CHECK))
                 {
-                    var statement = Language.StatementPipeline.ArgumentDefinedCheck(_kernel);
+                    var statement = Language.ConditionPipeline.ArgumentDefinedCheck(_kernel);
                     var rowWithStatement = row.Replace(IS_DEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
                 // Undefined check
                 else if (row.Contains(IS_UNDEFINED_CHECK))
                 {
-                    var statement = Language.StatementPipeline.ArgumentUndefinedCheck(_kernel);
+                    var statement = Language.ConditionPipeline.ArgumentUndefinedCheck(_kernel);
                     var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
@@ -197,9 +194,7 @@ namespace Sushi
                         modelBuilder.Append(enumerator.Current.Replace(SUMMARY_KEY, summary));
                 }
                 // Comments & Empty lines
-                else if (row.StartsWith("// ReSharper")) // Remove resharper comments.
-                    continue;
-                else
+                else if (!row.StartsWith("// ReSharper")) // Remove resharper comments.
                     modelBuilder.Append(enumerator.Current);
             }
 
@@ -237,32 +232,7 @@ namespace Sushi
             writer.FlushToFile(models, fileName);
         }
 
-        /// <summary>
-        ///     Write the given <see cref="ClassDescriptor"/> <paramref name="models"/> to the 
-        ///     <paramref name="fileName"/> in the given folder <paramref name="path"/> asynchronously.
-        /// </summary>
-        /// <param name="models">The <see cref="ClassDescriptor"/> <see cref="IEnumerable{T}"/> with the models to write.</param>
-        /// <param name="path">The <paramref name="path"/> to the folder to store the file in.</param>
-        /// <param name="fileName">The <paramref name="fileName"/> for the generated file.</param>
-        /// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
-        /// <param name="encoding">What <see cref="Encoding"/> method should be used to create the file.</param>
-        public async Task WriteToFileAsync(IEnumerable<ClassDescriptor> models, string path, string fileName, bool minify = false, Encoding encoding = null)
-        {
-            if (path.IsEmpty())
-                throw new ArgumentNullException(nameof(path));
-
-            if (fileName.IsEmpty())
-                throw new ArgumentNullException(nameof(fileName));
-
-            if (models.EmptyIfNull().All(x => x.Script?.IsEmpty() ?? true))
-                throw Errors.NoScriptAvailableInModels(nameof(models));
-
-            if (encoding == null)
-                encoding = Encoding.Default;
-
-            var writer = new FileWriter(this, path, Language.Extension, minify, encoding);
-            await writer.FlushToFileAsync(models, fileName);
-        }
+     
 
     }
 }

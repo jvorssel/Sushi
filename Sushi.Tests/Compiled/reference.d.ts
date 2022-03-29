@@ -56,14 +56,14 @@ export interface StudentViewModel {
 	Grade: void;
 	/** The name of the School. */
 	School: SchoolViewModel;
-	/** The Gender of the Student. */
-	Gender: void;
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
 	Name: void;
 	/** The Surname of the person. */
 	Surname: void;
+	/** The Gender of the person. */
+	Gender: void;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */

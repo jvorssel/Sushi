@@ -51,31 +51,9 @@ namespace Sushi
 			};
 
 		/// <summary>
-		///     Add the given <paramref name="types"/> to use for conversion.
-		/// </summary>
-		public ConversionKernel AddModes(IEnumerable<Type> types)
-		{
-			foreach (var model in types.Select(x => new ClassDescriptor(x)))
-				Models.Add(model);
-
-			return this;
-		}
-
-		/// <summary>
-		///     Add the given <paramref name="types"/> to use for conversion.
-		/// </summary>
-		public ConversionKernel AddModels(params Type[] types)
-		{
-			foreach (var model in types.Select(x => new ClassDescriptor(x)))
-				Models.Add(model);
-
-			return this;
-		}
-
-		/// <summary>
 		///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="types"/> for <see cref="Models"/>.
 		/// </summary>
-		public ConversionKernel(IEnumerable<Type> types)
+		public ConversionKernel(ICollection<Type> types)
 		{
 			_assembly = types.First().Assembly;
 			if (types.Any(x => x.Assembly != _assembly))
@@ -93,13 +71,6 @@ namespace Sushi
 			}
 		}
 
-		/// <summary>
-		///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="models"/>.
-		/// </summary>
-		public ConversionKernel(IEnumerable<ClassDescriptor> models)
-		{
-			Models = new HashSet<ClassDescriptor>(models);
-		}
 
 		/// <summary>
 		///     Initialize a new <see cref="ConversionKernel"/> with models that 
@@ -129,7 +100,7 @@ namespace Sushi
 		}
 
 		/// <summary>
-		///     Use the xml documentation file in bin folder for the given <paramref name="assembly"/>.
+		///     Use the xml documentation file in bin folder for project assembly.
 		/// </summary>
 		public ConversionKernel LoadXmlDocumentation()
 		{

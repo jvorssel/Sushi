@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Extensions;
 using Sushi.TestModels;
 using Sushi.TypeScript;
 using Sushi.TypeScript.Enum;
@@ -24,7 +22,7 @@ namespace Sushi.Tests.Script
                 var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
 
                 // 3: Invoke the Convert method to generate the script.
-                var converted = converter.Convert();
+                var converted = converter.Convert().ToList();
 
                 // Merge the generated script model(s) to one string.
                 var contents = converter.MergeModelsToString(converted);

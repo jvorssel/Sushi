@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using Sushi.Enum;
 using Sushi.Helpers;
 
 namespace Sushi.Extensions
@@ -24,19 +22,6 @@ namespace Sushi.Extensions
             using (var streamReader = new StreamReader(reader))
             {
                 return streamReader.ReadToEnd();
-            }
-        }
-
-        /// <summary>
-        ///     Enumerate over each available line in the given <see cref="string"/> <paramref name="this"/>.
-        /// </summary>
-        public static IEnumerable<string> GetLines(this string @this)
-        {
-            using (var reader = new StringReader(@this))
-            {
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                    yield return line;
             }
         }
 
@@ -66,7 +51,7 @@ namespace Sushi.Extensions
         }
 
         /// <summary>
-        ///     Get the UTC timestamp.s
+        ///     Get the UTC timestamp.
         /// </summary>
         public static string GetTimeStamp(this string @this)
         {

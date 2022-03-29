@@ -20,7 +20,7 @@ namespace Sushi.TypeScript
             switch (specification)
             {
                 case Enum.TypeScriptSpecification.TypeScript:
-                    language = new TypeScriptSpecification(new Version(1, 0, 0))
+                    language = new TypeScriptSpecification()
                         .UseTemplate(Resources.template.GetString());
                     break;
                 case Enum.TypeScriptSpecification.Declaration:

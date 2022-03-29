@@ -209,14 +209,14 @@ export class StudentViewModel {
 	Grade: void;
 	/** The name of the School. */
 	School: SchoolViewModel;
-	/** The Gender of the Student. */
-	Gender: void;
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
 	Name: void;
 	/** The Surname of the person. */
 	Surname: void;
+	/** The Gender of the person. */
+	Gender: void;
 	/** The Guid Idenfifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
@@ -233,10 +233,10 @@ export class StudentViewModel {
 			// Check property keys.
 			if (!value.hasOwnProperty('Grade')) throw new TypeError("Given object is expected to have a property with name: 'Grade'.");
 			if (!value.hasOwnProperty('School')) throw new TypeError("Given object is expected to have a property with name: 'School'.");
-			if (!value.hasOwnProperty('Gender')) throw new TypeError("Given object is expected to have a property with name: 'Gender'.");
 			if (!value.hasOwnProperty('Identifier')) throw new TypeError("Given object is expected to have a property with name: 'Identifier'.");
 			if (!value.hasOwnProperty('Name')) throw new TypeError("Given object is expected to have a property with name: 'Name'.");
 			if (!value.hasOwnProperty('Surname')) throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
+			if (!value.hasOwnProperty('Gender')) throw new TypeError("Given object is expected to have a property with name: 'Gender'.");
 			if (!value.hasOwnProperty('Guid')) throw new TypeError("Given object is expected to have a property with name: 'Guid'.");
 			if (!value.hasOwnProperty('CreatedOn')) throw new TypeError("Given object is expected to have a property with name: 'CreatedOn'.");
 			
@@ -250,14 +250,14 @@ export class StudentViewModel {
 		this.Grade = value.Grade || void 0;
 		/** The name of the School. */
 		this.School = new SchoolViewModel(value.School) || null;
-		/** The Gender of the Student. */
-		this.Gender = value.Gender || void 0;
 		/** The Identifier that this Model refers to. */
 		this.Identifier = value.Identifier || '';
 		/** The Name of the person. */
 		this.Name = value.Name || void 0;
 		/** The Surname of the person. */
 		this.Surname = value.Surname || void 0;
+		/** The Gender of the person. */
+		this.Gender = value.Gender || void 0;
 		/** The Guid Idenfifier. */
 		this.Guid = value.Guid || '';
 		/** The DateTime that this ViewModel was CreatedOn. */
@@ -276,10 +276,10 @@ export class StudentViewModel {
 			// Check property keys.
 			if (!value.hasOwnProperty('Grade')) throw new TypeError("Given object is expected to have a property with name: 'Grade'.");
 			if (!value.hasOwnProperty('School')) throw new TypeError("Given object is expected to have a property with name: 'School'.");
-			if (!value.hasOwnProperty('Gender')) throw new TypeError("Given object is expected to have a property with name: 'Gender'.");
 			if (!value.hasOwnProperty('Identifier')) throw new TypeError("Given object is expected to have a property with name: 'Identifier'.");
 			if (!value.hasOwnProperty('Name')) throw new TypeError("Given object is expected to have a property with name: 'Name'.");
 			if (!value.hasOwnProperty('Surname')) throw new TypeError("Given object is expected to have a property with name: 'Surname'.");
+			if (!value.hasOwnProperty('Gender')) throw new TypeError("Given object is expected to have a property with name: 'Gender'.");
 			if (!value.hasOwnProperty('Guid')) throw new TypeError("Given object is expected to have a property with name: 'Guid'.");
 			if (!value.hasOwnProperty('CreatedOn')) throw new TypeError("Given object is expected to have a property with name: 'CreatedOn'.");
 			

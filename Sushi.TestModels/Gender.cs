@@ -1,5 +1,4 @@
-﻿using Sushi.Attributes;
-
+﻿// ReSharper disable UnusedMember.Global
 namespace Sushi.TestModels
 {
 	/// <summary>

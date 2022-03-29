@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Newtonsoft.Json;
-using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
@@ -16,7 +14,7 @@ namespace Sushi.JavaScript
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
-        public override string Extension { get; } = ".js";
+        public override string Extension => ".js";
 
         /// <inheritdoc />
         public override IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property)
@@ -47,19 +45,19 @@ namespace Sushi.JavaScript
             // Key check
             yield return FormatComment(@"Check property keys", ConditionType.Key);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateKeyExistsCheck(kernel, prop);
+                yield return ConditionPipeline.CreateKeyExistsCheck(kernel, prop);
 
             // Type check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Type, false, true);
             yield return FormatComment(@"Check property type match", ConditionType.Type);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateTypeCheck(kernel, prop);
+                yield return ConditionPipeline.CreateTypeCheck(kernel, prop);
 
             // Instance check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Instance, false, true);
             yield return FormatComment(@"Check property class instance match", ConditionType.Instance);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateInstanceCheck(kernel, prop);
+                yield return ConditionPipeline.CreateInstanceCheck(kernel, prop);
         }
         
         /// <inheritdoc />
@@ -137,37 +135,10 @@ namespace Sushi.JavaScript
 
         #endregion
 
-        #region Initializers
-
+        /// <inheritdoc />
         public JavaScriptSpecification()
         {
-            StatementPipeline = new JavaScriptConditions();
+            ConditionPipeline = new JavaScriptConditions();
         }
-
-        public JavaScriptSpecification(string scriptLanguage, Version version)
-             : base(scriptLanguage, version)
-        {
-            StatementPipeline = new JavaScriptConditions();
-        }
-
-        public JavaScriptSpecification(string scriptLanguage, string version)
-            : base(scriptLanguage, Version.Parse(version))
-        {
-            StatementPipeline = new JavaScriptConditions();
-        }
-
-        public JavaScriptSpecification(string path, string scriptLanguage, string version)
-            : base(path, scriptLanguage, Version.Parse(version))
-        {
-            StatementPipeline = new JavaScriptConditions();
-        }
-
-        public JavaScriptSpecification(string path, string scriptLanguage, Version version)
-            : base(path, scriptLanguage, version)
-        {
-            StatementPipeline = new JavaScriptConditions();
-        }
-
-        #endregion Initializers
     }
 }

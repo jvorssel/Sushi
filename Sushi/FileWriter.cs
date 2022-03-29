@@ -35,20 +35,6 @@ namespace Sushi
 		}
 
 		/// <summary>
-		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="model"/>
-		///		to the <paramref name="fileName"/>.
-		/// </summary>
-		public void FlushToFile(ClassDescriptor model, string fileName = "")
-			=> FlushToFile(new List<ClassDescriptor> { model }, fileName);
-
-		/// <summary>
-		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="model"/>
-		///		to the <paramref name="fileName"/> asynchronously.
-		/// </summary>
-		public async Task FlushToFileAsync(ClassDescriptor model, string fileName = "")
-			=> await FlushToFileAsync(new List<ClassDescriptor> { model }, fileName);
-
-		/// <summary>
 		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="models"/>
 		///		to the <paramref name="fileName"/>.
 		/// </summary>
@@ -62,29 +48,6 @@ namespace Sushi
 			var filePath = $@"{_path}\{fileName}{_extension}";
 
 			File.WriteAllText(filePath, fileContent, _encoding);
-		}
-
-		/// <summary>
-		///		Flush the generated <see cref="ClassDescriptor.Script"/> in the given <paramref name="models"/>
-		///		to the <paramref name="fileName"/>.
-		/// </summary>
-		public async Task FlushToFileAsync(IEnumerable<ClassDescriptor> models, string fileName = "")
-		{
-			// Default to model name as name
-			if (fileName.IsEmpty())
-				fileName = $@"Generated_{"".GetTimeStamp()}";
-
-			var fileContent = _converter.MergeModelsToString(models, _minify);
-			var filePath = $@"{_path}\{fileName}{_extension}";
-
-			using (var writer = new StreamWriter(filePath, false, _encoding))
-			{
-				await writer.WriteAsync(fileContent);
-				await writer.FlushAsync();
-
-				writer.Close();
-				writer.Dispose();
-			}
 		}
 	}
 }

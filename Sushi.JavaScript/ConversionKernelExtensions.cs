@@ -22,10 +22,10 @@ namespace Sushi.JavaScript
             switch (version)
             {
                 case JavaScriptVersion.V6:
-                    language = new JavaScriptSpecification("JavaScript", new Version(6, 0)).UseTemplate(Resources.V6);
+                    language = new JavaScriptSpecification().UseTemplate(Resources.V6);
                     break;
                 case JavaScriptVersion.V5:
-                    language = new JavaScriptSpecification("JavaScript", new Version(5, 0)).UseTemplate(Resources.V5);
+                    language = new JavaScriptSpecification().UseTemplate(Resources.V5);
                     break;
                 default:
                     throw Errors.LanguageNotFound();

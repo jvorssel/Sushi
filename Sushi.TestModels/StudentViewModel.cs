@@ -1,4 +1,5 @@
-﻿namespace Sushi.TestModels
+﻿// ReSharper disable UnusedMember.Global
+namespace Sushi.TestModels
 {
     /// <summary>
     ///		Represents a Student in a school.
@@ -15,9 +16,5 @@
         /// </summary>
         public SchoolViewModel School { get; set; }
 
-        /// <summary>
-        ///		The <see cref="Gender"/> of the Student.
-        /// </summary>
-        public Gender Gender { get; set; } = Gender.Undefined;
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Sushi.Descriptors;
-using Sushi.StatementPipelines;
+﻿using Sushi.Descriptors;
 
 namespace Sushi
 {
@@ -27,16 +25,6 @@ namespace Sushi
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> exists in the given argument.
         /// </summary>
         public abstract ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, PropertyDescriptor property);
-
-        /// <summary>
-        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is undefined or null in the <see cref="ConversionKernel.ArgumentName"/>.
-        /// </summary>
-        public abstract ScriptConditionDescriptor CreateUndefinedCheck(ConversionKernel kernel, PropertyDescriptor property);
-
-        /// <summary>
-        ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> in the <see cref="ConversionKernel.ArgumentName"/> is defined.
-        /// </summary>
-        public abstract ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected class.

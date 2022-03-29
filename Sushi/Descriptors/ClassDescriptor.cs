@@ -28,16 +28,6 @@ namespace Sushi.Descriptors
         /// </summary>
         public string Script { get; set; }
 
-        /// <summary>
-        ///     The base <see cref="System.Type"/> of the given <see cref="System.Type"/>.
-        /// </summary>
-        public Type BaseType => Type.BaseType;
-
-        /// <summary>
-        ///     If the <see cref="BaseType"/> is not a default <see cref="System.Type"/> instance.
-        /// </summary>
-        public bool HasBaseType => BaseType != typeof(Type);
-
         public ClassDescriptor(Type type)
         {
             Type = type;

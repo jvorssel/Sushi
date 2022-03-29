@@ -5,7 +5,6 @@ using System.Linq;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
-using Sushi.Helpers;
 using Sushi.JavaScript;
 
 namespace Sushi.TypeScript.Specifications
@@ -88,11 +87,5 @@ namespace Sushi.TypeScript.Specifications
             => SpecificationDefaults.FormatInlineComment(comment, relatedType);
 
         #endregion
-
-        protected TypeScriptSpecificationBase(string scriptName, Version version)
-            : base(scriptName, version)
-        {
-
-        }
     }
 }

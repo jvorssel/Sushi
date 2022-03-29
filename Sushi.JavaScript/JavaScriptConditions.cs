@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.JavaScript.Enum;
@@ -14,19 +12,10 @@ namespace Sushi.JavaScript
         public const string IS_DEFINED_STATEMENT = @"{0} !== void 0 && {0} !== null";
         public const string IS_UNDEFINED_STATEMENT = @"{0} === void 0 || {0} === null";
         public const string IS_PROPERTY_DEFINED_STATEMENT = @"{0}.{1} !== void 0 && {0}.{1} !== null";
-        public const string IS_PROPERTY_UNDEFINED_STATEMENT = @"{0}.{1} === void 0 || {0}.{1} === null";
 
         #region Overrides of StatementPipeline
 
-        /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateUndefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
-        {
-            var statement = string.Format(IS_PROPERTY_UNDEFINED_STATEMENT, kernel.ArgumentName, property.Name);
-            return new ScriptConditionDescriptor(statement, ConditionType.Type);
-        }
-
-        /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
+        public ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, kernel.ArgumentName, property.Name);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);

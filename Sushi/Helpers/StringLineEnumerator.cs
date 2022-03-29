@@ -8,7 +8,6 @@ namespace Sushi.Helpers
     /// </summary>
     public class StringEnumerator : IEnumerator<string>, IEnumerable<string>
     {
-        private readonly string _complete;
         private readonly string[] _split;
 
         public readonly char Split;
@@ -17,7 +16,6 @@ namespace Sushi.Helpers
 
         public StringEnumerator(string complete, char split = '\n')
         {
-            _complete = complete;
             _split = complete.Split(split);
 
             Split = split;

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Sushi.TestModels {
+// ReSharper disable UnusedMember.Global
+namespace Sushi.TestModels
+{
 	/// <summary>
 	///		Basic information about a School.
 	/// </summary>

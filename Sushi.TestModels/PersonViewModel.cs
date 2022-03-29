@@ -1,6 +1,6 @@
 ﻿using System;
-using Sushi.Interfaces;
 
+// ReSharper disable UnusedMember.Global
 namespace Sushi.TestModels
 {
     /// <summary>
