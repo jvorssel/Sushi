@@ -178,14 +178,14 @@ namespace Sushi
                 // Defined check
                 else if (row.Contains(IS_DEFINED_CHECK))
                 {
-                    var statement = Language.StatementPipeline.ArgumentDefinedStatement(_kernel);
+                    var statement = Language.StatementPipeline.ArgumentDefinedCheck(_kernel);
                     var rowWithStatement = row.Replace(IS_DEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
                 // Undefined check
                 else if (row.Contains(IS_UNDEFINED_CHECK))
                 {
-                    var statement = Language.StatementPipeline.ArgumentUndefinedStatement(_kernel);
+                    var statement = Language.StatementPipeline.ArgumentUndefinedCheck(_kernel);
                     var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }

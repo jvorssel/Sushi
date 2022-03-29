@@ -21,21 +21,21 @@ namespace Sushi.TypeScript.Specifications
         public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties)
         {
             // Key check
-            yield return FormatComment(@"Check property keys", StatementType.Key);
+            yield return FormatComment(@"Check property keys", ConditionType.Key);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateKeyCheckStatement(kernel, prop);
+                yield return StatementPipeline.CreateKeyExistsCheck(kernel, prop);
 
             // Type check
-            yield return new ScriptConditionDescriptor(string.Empty, StatementType.Type, false, true);
-            yield return FormatComment(@"Check property type match", StatementType.Type);
+            yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Type, false, true);
+            yield return FormatComment(@"Check property type match", ConditionType.Type);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateTypeCheckStatement(kernel, prop);
+                yield return StatementPipeline.CreateTypeCheck(kernel, prop);
 
             // Instance check
-            yield return new ScriptConditionDescriptor(string.Empty, StatementType.Instance, false, true);
-            yield return FormatComment(@"Check property class instance match", StatementType.Instance);
+            yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Instance, false, true);
+            yield return FormatComment(@"Check property class instance match", ConditionType.Instance);
             foreach (var prop in properties)
-                yield return StatementPipeline.CreateInstanceCheckStatement(kernel, prop);
+                yield return StatementPipeline.CreateInstanceCheck(kernel, prop);
         }
 
         #endregion
@@ -45,7 +45,7 @@ namespace Sushi.TypeScript.Specifications
         public TypeScriptSpecification(Version version)
             : base("TypeScript", version)
         {
-            StatementPipeline = new JavaScriptStatements();
+            StatementPipeline = new JavaScriptConditions();
         }
 
         #endregion Initializers

@@ -4,48 +4,48 @@ using Sushi.Descriptors;
 namespace Sushi.StatementPipelines
 {
     /// <inheritdoc />
-    public class NotImplementedStatementPipeline : StatementPipeline
+    public class NotImplementedStatementPipeline : ConditionPipeline
     {
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentDefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentDefinedCheck(ConversionKernel kernel)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentUndefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentUndefinedCheck(ConversionKernel kernel)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateKeyCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateUndefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateUndefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateDefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateInstanceCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateInstanceCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateTypeCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateTypeCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             throw new System.NotImplementedException();
         }

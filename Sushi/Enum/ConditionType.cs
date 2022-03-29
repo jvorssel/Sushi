@@ -1,9 +1,9 @@
 ﻿namespace Sushi.Enum
 {
     /// <summary>
-    ///     Basic <see cref="StatementType"/> for validating a property.
+    ///     Basic <see cref="ConditionType"/> for validating a property.
     /// </summary>
-    public enum StatementType
+    public enum ConditionType
     {
         Key,
         Type,

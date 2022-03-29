@@ -6,7 +6,7 @@ namespace Sushi.Descriptors
     public sealed class ScriptConditionDescriptor
     {
         public string Script { get; }
-        public StatementType Type { get; }
+        public ConditionType Type { get; }
         public bool IsComment { get; }
         public bool IsEmptyLine { get; }
 
@@ -15,7 +15,7 @@ namespace Sushi.Descriptors
         public IEnumerable<string> Lines => Script.Split('\n');
 
 
-        public ScriptConditionDescriptor(string script, StatementType type, bool isComment = false, bool isEmptyLine = false)
+        public ScriptConditionDescriptor(string script, ConditionType type, bool isComment = false, bool isEmptyLine = false)
         {
             Script = script;
             Type = type;

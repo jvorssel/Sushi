@@ -27,7 +27,7 @@ namespace Sushi {
         /// <summary>
         ///     Make sure the given <paramref name="comment"/> is formatted as a single-line comment.
         /// </summary>
-        public static ScriptConditionDescriptor FormatInlineComment(string comment, StatementType relatedType)
+        public static ScriptConditionDescriptor FormatInlineComment(string comment, ConditionType relatedType)
         {
             if (comment.Contains("\n"))
                 throw Errors.OnlyInlineCommentsSupported(comment);

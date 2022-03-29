@@ -49,7 +49,7 @@
     <Compile Include="Enum\HostOrNativeObject.cs" />
     <Compile Include="Enum\Wrap.cs" />
     <Compile Include="JavaScriptSpecification.cs" />
-    <Compile Include="JavaScriptStatements.cs" />
+    <Compile Include="JavaScriptConditions.cs" />
     <Compile Include="Enum\JavaScriptType.cs" />
     <Compile Include="Enum\JavaScriptVersion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

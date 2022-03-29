@@ -18,7 +18,7 @@ namespace Sushi
         private string _targetObject = @"window";
 
         /// <inheritdoc />
-        public StatementPipeline StatementPipeline { get; protected set; }
+        public ConditionPipeline StatementPipeline { get; protected set; }
 
         /// <inheritdoc />
         public string FilePath { get; } = string.Empty;
@@ -62,7 +62,7 @@ namespace Sushi
         public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property);
 
         /// <inheritdoc />
-        public abstract ScriptConditionDescriptor FormatComment(string comment, StatementType statementType);
+        public abstract ScriptConditionDescriptor FormatComment(string comment, ConditionType statementType);
 
         /// <inheritdoc />
         public abstract string RemoveComments(ClassDescriptor model);

@@ -61,7 +61,7 @@ namespace Sushi.Interfaces
         /// <summary>
         ///     The <see cref="StatementPipeline"/> used to format different validation / recognition statements.
         /// </summary>
-        StatementPipeline StatementPipeline { get; }
+        ConditionPipeline StatementPipeline { get; }
 
         /// <summary>
         ///     Load the file that the <see cref="LanguageSpecification.FilePath"/> directs to.
@@ -120,7 +120,7 @@ namespace Sushi.Interfaces
         /// <summary>
         ///     Format the given <paramref name="comment"/> for this <see cref="Language"/>.
         /// </summary>
-        ScriptConditionDescriptor FormatComment(string comment, StatementType relatedType);
+        ScriptConditionDescriptor FormatComment(string comment, ConditionType relatedType);
 
         /// <summary>
         ///     Remove comments from the <see cref="ClassDescriptor.Script"/>.

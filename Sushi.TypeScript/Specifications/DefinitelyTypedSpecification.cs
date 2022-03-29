@@ -42,7 +42,6 @@ namespace Sushi.TypeScript.Specifications
         public DefinitelyTypedSpecification()
         : base("DefinitelyTyped", new Version(1, 0, 0))
         {
-            StatementPipeline = StatementPipeline.Empty;
         }
 
         #endregion Initializers

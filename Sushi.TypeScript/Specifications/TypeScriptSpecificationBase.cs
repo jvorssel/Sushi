@@ -84,7 +84,7 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor FormatComment(string comment, StatementType relatedType)
+        public override ScriptConditionDescriptor FormatComment(string comment, ConditionType relatedType)
             => SpecificationDefaults.FormatInlineComment(comment, relatedType);
 
         #endregion

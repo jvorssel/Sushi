@@ -9,7 +9,7 @@ using Sushi.JavaScript.Enum;
 namespace Sushi.JavaScript
 {
     /// <inheritdoc />
-    public class JavaScriptStatements : StatementPipeline
+    public sealed class JavaScriptConditions : ConditionPipeline
     {
         public const string IS_DEFINED_STATEMENT = @"{0} !== void 0 && {0} !== null";
         public const string IS_UNDEFINED_STATEMENT = @"{0} === void 0 || {0} === null";
@@ -19,45 +19,45 @@ namespace Sushi.JavaScript
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateUndefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateUndefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             var statement = string.Format(IS_PROPERTY_UNDEFINED_STATEMENT, kernel.ArgumentName, property.Name);
-            return new ScriptConditionDescriptor(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateDefinedStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, kernel.ArgumentName, property.Name);
-            return new ScriptConditionDescriptor(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentUndefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentUndefinedCheck(ConversionKernel kernel)
         {
             var statement = string.Format(IS_UNDEFINED_STATEMENT, kernel.ArgumentName);
-            return new ScriptConditionDescriptor(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentDefinedStatement(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentDefinedCheck(ConversionKernel kernel)
         {
             var statement = string.Format(IS_DEFINED_STATEMENT, kernel.ArgumentName);
-            return new ScriptConditionDescriptor(statement, StatementType.Type);
+            return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateKeyCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             var doesKeyExistStatement = $"if (!{kernel.ArgumentName}.hasOwnProperty('{property.Name}')) throw new TypeError(\"{string.Format(kernel.ObjectPropertyMissing, property.Name)}\");";
 
-            return new ScriptConditionDescriptor(doesKeyExistStatement, StatementType.Key);
+            return new ScriptConditionDescriptor(doesKeyExistStatement, ConditionType.Key);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateInstanceCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateInstanceCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
-            var instanceCheck = $"if ({CreateDefinedStatement(kernel, property)} && !{{1}}.tryParse({kernel.ArgumentName}.{{0}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
+            var instanceCheck = $"if ({CreateDefinedCheck(kernel, property)} && !{{1}}.tryParse({kernel.ArgumentName}.{{0}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
 
             var script = string.Empty;
             var scriptType = property.NativeType
@@ -93,11 +93,11 @@ namespace Sushi.JavaScript
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new ScriptConditionDescriptor(script, StatementType.Instance);
+            return new ScriptConditionDescriptor(script, ConditionType.Instance);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateTypeCheckStatement(ConversionKernel kernel, PropertyDescriptor property)
+        public override ScriptConditionDescriptor CreateTypeCheck(ConversionKernel kernel, PropertyDescriptor property)
         {
             var typeCheck = $"if (typeof {kernel.ArgumentName}.{{0}} !== '{{1}}') throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
 
@@ -131,7 +131,7 @@ namespace Sushi.JavaScript
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new ScriptConditionDescriptor(script, StatementType.Type);
+            return new ScriptConditionDescriptor(script, ConditionType.Type);
         }
 
         #endregion
