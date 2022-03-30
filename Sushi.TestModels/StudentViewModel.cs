@@ -1,5 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
-namespace Sushi.TestModels
+﻿namespace Sushi.TestModels
 {
     /// <summary>
     ///		Represents a Student in a school.
@@ -15,6 +14,5 @@ namespace Sushi.TestModels
         ///		The name of the <see cref="School"/>.
         /// </summary>
         public SchoolViewModel School { get; set; }
-
     }
 }
