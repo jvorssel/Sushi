@@ -14,10 +14,5 @@
         ///		The name of the <see cref="School"/>.
         /// </summary>
         public SchoolViewModel School { get; set; }
-
-        /// <summary>
-        ///		The <see cref="Gender"/> of the Student.
-        /// </summary>
-        public Gender Gender { get; set; } = Gender.Undefined;
     }
 }
