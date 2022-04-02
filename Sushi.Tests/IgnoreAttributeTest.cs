@@ -29,24 +29,24 @@ namespace Sushi.Tests
 		[TestMethod]
 		public void FindModelWithAttributeTest()
 		{
-			var kernel = new ConversionKernel(_types);
+			var converter = new Converter(_types);
 
 			// Have the ConvertToScript attribute, should exist in queue.
-			Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(DoNotIgnoreMe) || x.Name == nameof(IgnoreTestRoot)),
+			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(DoNotIgnoreMe) || x.Name == nameof(IgnoreTestRoot)),
 				$"Expected the {nameof(DoNotIgnoreMe)} and {nameof(IgnoreTestRoot)} classes to be available.");
 
 			// IgnoreMe has the ignore attribute, should not exist in queue.
-			Assert.IsTrue(kernel.Models.All(x => x.Name != nameof(IgnoreMe)),
+			Assert.IsTrue(converter.Models.All(x => x.Name != nameof(IgnoreMe)),
 				$"Expected the {nameof(IgnoreMe)} class not to be available.");
 		}
 
 		[TestMethod]
 		public void ExcludePropertyWithAttributeTest()
 		{
-			var kernel = new ConversionKernel(_types);
+			var converter = new Converter(_types);
 
 			// Get the model with the properties that should use the Ignore attribute.
-			var model = kernel.Models.SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));
+			var model = converter.Models.SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));
 			Assert.IsNotNull(model);
 
 			Assert.IsTrue(model.Properties.Any(x => x.Name == nameof(DoNotIgnoreMe.ShouldExist)),

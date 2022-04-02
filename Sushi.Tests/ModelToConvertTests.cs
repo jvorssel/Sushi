@@ -15,9 +15,9 @@ namespace Sushi.Tests
 		[TestMethod]
 		public void FindModelWithInterfaceTest()
 		{
-			var kernel = new ConversionKernel(typeof(PersonViewModel).Assembly);
+			var converter = new Converter(typeof(PersonViewModel).Assembly);
 			// NameModel inherits the interface, should be true.
-			Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(SchoolViewModel)));
+			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(SchoolViewModel)));
 		}
 	}
 }

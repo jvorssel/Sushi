@@ -17,42 +17,42 @@ namespace Sushi.JavaScript
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override ScriptConditionDescriptor CreateDefinedCheck(Converter converter, IPropertyDescriptor descriptor)
         {
-            var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, kernel.ArgumentName, descriptor.Name);
+            var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, converter.ArgumentName, descriptor.Name);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
         
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentUndefinedCheck(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentUndefinedCheck(Converter converter)
         {
-            var statement = string.Format(IS_UNDEFINED_STATEMENT, kernel.ArgumentName);
+            var statement = string.Format(IS_UNDEFINED_STATEMENT, converter.ArgumentName);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentDefinedCheck(ConversionKernel kernel)
+        public override ScriptConditionDescriptor ArgumentDefinedCheck(Converter converter)
         {
-            var statement = string.Format(IS_DEFINED_STATEMENT, kernel.ArgumentName);
+            var statement = string.Format(IS_DEFINED_STATEMENT, converter.ArgumentName);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override ScriptConditionDescriptor CreateKeyExistsCheck(Converter converter, IPropertyDescriptor descriptor)
         {
-            var doesKeyExistStatement = $"if (!{kernel.ArgumentName}.hasOwnProperty('{descriptor.Name}')) throw new TypeError(\"{string.Format(kernel.ObjectPropertyMissing, descriptor.Name)}\");";
+            var doesKeyExistStatement = $"if (!{converter.ArgumentName}.hasOwnProperty('{descriptor.Name}')) throw new TypeError(\"{string.Format(converter.ObjectPropertyMissing, descriptor.Name)}\");";
 
             return new ScriptConditionDescriptor(doesKeyExistStatement, ConditionType.Key);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateInstanceCheck(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override ScriptConditionDescriptor CreateInstanceCheck(Converter converter, IPropertyDescriptor descriptor)
         {
-            var instanceCheck = $"if ({CreateDefinedCheck(kernel, descriptor)} && !{{1}}.tryParse({kernel.ArgumentName}.{{0}})) throw new TypeError(\"{kernel.PropertyInstanceMismatch}\");";
+            var instanceCheck = $"if ({CreateDefinedCheck(converter, descriptor)} && !{{1}}.tryParse({converter.ArgumentName}.{{0}})) throw new TypeError(\"{converter.PropertyInstanceMismatch}\");";
 
             var script = string.Empty;
             var scriptType = descriptor.NativeType
-                .IncludeOverride(kernel, descriptor.Type)
+                .IncludeOverride(converter, descriptor.Type)
                 .ToJavaScriptType();
 
             switch (scriptType)
@@ -73,7 +73,7 @@ namespace Sushi.JavaScript
                     script = string.Format(instanceCheck, descriptor.Name, "Array");
                     break;
                 case JavaScriptType.Object:
-                    var propertyWithName = kernel.Models.FirstOrDefault(x => x.FullName == descriptor.Type.FullName);
+                    var propertyWithName = converter.Models.FirstOrDefault(x => x.FullName == descriptor.Type.FullName);
                     if (!ReferenceEquals(propertyWithName, null))
                         script = string.Format(instanceCheck, descriptor.Name, propertyWithName.Name);
 
@@ -88,13 +88,13 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateTypeCheck(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override ScriptConditionDescriptor CreateTypeCheck(Converter converter, IPropertyDescriptor descriptor)
         {
-            var typeCheck = $"if (typeof {kernel.ArgumentName}.{{0}} !== '{{1}}') throw new TypeError(\"{kernel.PropertyTypeMismatch}\");";
+            var typeCheck = $"if (typeof {converter.ArgumentName}.{{0}} !== '{{1}}') throw new TypeError(\"{converter.PropertyTypeMismatch}\");";
 
             var script = string.Empty;
             var scriptType = descriptor.NativeType
-                .IncludeOverride(kernel, descriptor.Type)
+                .IncludeOverride(converter, descriptor.Type)
                 .ToJavaScriptType();
 
             switch (scriptType)

@@ -18,20 +18,20 @@ namespace Sushi.JavaScript
         public override string Extension => ".js";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override IEnumerable<string> FormatProperty(Converter converter, IPropertyDescriptor descriptor)
         {
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(descriptor);
+            var summary = converter.Documentation?.GetDocumentationForProperty(descriptor);
             if (summary?.Summary.Length > 0)
                 yield return $"/** {summary.Summary} */";
 
             // Specify the body of the property declaration.
-            var propertySpec = GetDefaultForProperty(kernel, descriptor);
+            var propertySpec = GetDefaultForProperty(converter, descriptor);
             yield return $"this.{descriptor.Name} = {propertySpec};";
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override IEnumerable<string> FormatPropertyDefinition(Converter converter, IPropertyDescriptor descriptor)
         {
             yield break;
         }
@@ -41,28 +41,28 @@ namespace Sushi.JavaScript
             => SpecificationDefaults.RemoveCommentsFromModel(model);
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", ConditionType.Key);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateKeyExistsCheck(kernel, prop);
+                yield return ConditionPipeline.CreateKeyExistsCheck(converter, prop);
 
             // Type check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Type, false, true);
             yield return FormatComment(@"Check property type match", ConditionType.Type);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateTypeCheck(kernel, prop);
+                yield return ConditionPipeline.CreateTypeCheck(converter, prop);
 
             // Instance check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Instance, false, true);
             yield return FormatComment(@"Check property class instance match", ConditionType.Instance);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateInstanceCheck(kernel, prop);
+                yield return ConditionPipeline.CreateInstanceCheck(converter, prop);
         }
         
         /// <inheritdoc />
-        public override string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override string GetDefaultForProperty(Converter converter, IPropertyDescriptor descriptor)
         {
             var type = Nullable.GetUnderlyingType(descriptor.Type) ?? descriptor.Type;
             if (type == typeof(DateTime))
@@ -73,7 +73,7 @@ namespace Sushi.JavaScript
                 return "null";
 
             // Check if a different type is supposed to be used.
-            var csType = descriptor.NativeType.IncludeOverride(kernel, type);
+            var csType = descriptor.NativeType.IncludeOverride(converter, type);
 
             // A string also inherits the IEnumerable interface, exclude.
             if (type.IsTypeOrInheritsOf(typeof(IEnumerable)) && type != typeof(string))
@@ -107,10 +107,10 @@ namespace Sushi.JavaScript
         }
         
         /// <inheritdoc />
-        public string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value)
+        public string FormatValueForProperty(Converter converter, PropertyDescriptor property, object value)
         {
             // What default (fallback) value is suppossed to be used?
-            var defaultValue = GetDefaultForProperty(kernel, property);
+            var defaultValue = GetDefaultForProperty(converter, property);
 
             // Correct the formatting for numeric values.
             var numberFormat = new NumberFormatInfo { CurrencyDecimalSeparator = "." };
@@ -120,14 +120,14 @@ namespace Sushi.JavaScript
 
             // Date values should be parsed to a date-instance.
             if (type == typeof(DateTime))
-                return $"!isNaN(Date.parse({kernel.ArgumentName}.{property.Name})) ? new Date({kernel.ArgumentName}.{property.Name}) : {defaultValue}";
+                return $"!isNaN(Date.parse({converter.ArgumentName}.{property.Name})) ? new Date({converter.ArgumentName}.{property.Name}) : {defaultValue}";
 
             // Use the converter to get the formatted string value.
-            var dataModel = kernel.Models.FirstOrDefault(x => x.FullName == type.FullName);
+            var dataModel = converter.Models.FirstOrDefault(x => x.FullName == type.FullName);
             if (!ReferenceEquals(dataModel, null))
-                return $@"new {dataModel.Name}({kernel.ArgumentName}.{property.Name}) || null";
+                return $@"new {dataModel.Name}({converter.ArgumentName}.{property.Name}) || null";
 
-            return $"{kernel.ArgumentName}.{property.Name} || {defaultValue}";
+            return $"{converter.ArgumentName}.{property.Name} || {defaultValue}";
         }
 
         /// <inheritdoc />

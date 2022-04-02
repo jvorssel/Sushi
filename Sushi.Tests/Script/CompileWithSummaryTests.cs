@@ -17,33 +17,33 @@ namespace Sushi.Tests
 		public void LoadCorrectlyTest()
 		{
 			var assembly = typeof(SchoolViewModel).Assembly;
-			var kernel = new ConversionKernel(assembly);
+			var converter = new Converter(assembly);
 			
 			// Make sure the XML documentation is loaded
 			var assemblyName = assembly.GetProjectName();
 			var xmlDocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{assemblyName}.xml");
-			kernel.LoadXmlDocumentation(xmlDocPath);
+			converter.LoadXmlDocumentation(xmlDocPath);
 
-			Assert.IsNotNull(kernel.Documentation);
-			Assert.IsTrue(kernel.Documentation.Initialized);
-			Assert.IsTrue(kernel.Documentation.Members.Any());
+			Assert.IsNotNull(converter.Documentation);
+			Assert.IsTrue(converter.Documentation.Initialized);
+			Assert.IsTrue(converter.Documentation.Members.Any());
 		}
 
 		[TestMethod]
 		public void CompileTest()
 		{
 			var assembly = typeof(SchoolViewModel).Assembly;
-			var kernel = new ConversionKernel(assembly);
+			var converter = new Converter(assembly);
 			
 			// Make sure the XML documentation is loaded
 			var assemblyName = assembly.GetProjectName();
 			var xmlDocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{assemblyName}.xml");
-			kernel.LoadXmlDocumentation(xmlDocPath);
+			converter.LoadXmlDocumentation(xmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			CompileJavaScript(kernel, JavaScriptVersion.V5);
-			CompileTypeScript(kernel);
-			CompileDefinitelyTyped(kernel);
+			CompileJavaScript(converter, JavaScriptVersion.V5);
+			CompileTypeScript(converter);
+			CompileDefinitelyTyped(converter);
 		}
 	}
 }

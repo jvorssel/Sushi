@@ -12,19 +12,19 @@ namespace Sushi.TypeScript.Specifications
         public override string Extension => @".d.ts";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override IEnumerable<string> FormatProperty(Converter converter, IPropertyDescriptor descriptor)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> descriptor)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> descriptor)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override string GetDefaultForProperty(Converter converter, IPropertyDescriptor descriptor)
             => string.Empty;
 
         /// <inheritdoc />

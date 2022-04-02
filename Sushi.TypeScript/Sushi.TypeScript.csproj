@@ -47,7 +47,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ConversionKernelExtensions.cs" />
+    <Compile Include="ConverterExtensions.cs" />
     <Compile Include="Specifications\DefinitelyTypedSpecification.cs" />
     <Compile Include="Enum\TypeScriptSpecification.cs" />
     <Compile Include="Enum\TypeScriptType.cs" />

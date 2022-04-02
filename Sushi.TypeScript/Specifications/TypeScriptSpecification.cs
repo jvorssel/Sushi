@@ -14,24 +14,24 @@ namespace Sushi.TypeScript.Specifications
         public override string Extension => @".ts";
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", ConditionType.Key);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateKeyExistsCheck(kernel, prop);
+                yield return ConditionPipeline.CreateKeyExistsCheck(converter, prop);
 
             // Type check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Type, false, true);
             yield return FormatComment(@"Check property type match", ConditionType.Type);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateTypeCheck(kernel, prop);
+                yield return ConditionPipeline.CreateTypeCheck(converter, prop);
 
             // Instance check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Instance, false, true);
             yield return FormatComment(@"Check property class instance match", ConditionType.Instance);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateInstanceCheck(kernel, prop);
+                yield return ConditionPipeline.CreateInstanceCheck(converter, prop);
         }
 
         #endregion

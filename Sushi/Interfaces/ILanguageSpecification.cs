@@ -51,23 +51,23 @@ namespace Sushi.Interfaces
         /// <summary>
         ///     Format the <paramref name="descriptor"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        IEnumerable<string> FormatProperty(Converter converter, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Format the validation for the <paramref name="descriptors"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> descriptors);
+        IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> descriptors);
 
         /// <summary>
         ///     Get the default <see cref="string"/> value that reflects the given <see cref="NativeType"/> 
         ///     for the current Language.
         /// </summary>
-        string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        string GetDefaultForProperty(Converter converter, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Format the given <see cref="descriptor"/> to be defined in the current Language.
         /// </summary>
-        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        IEnumerable<string> FormatPropertyDefinition(Converter converter, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Format the given <paramref name="comment"/> for this Language.

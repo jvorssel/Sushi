@@ -16,15 +16,15 @@ namespace Sushi.Tests
         /// <summary>
         ///     Compile a model for JavaScript.
         /// </summary>
-        protected static void CompileJavaScript(ConversionKernel kernel,
+        protected static void CompileJavaScript(Converter converter,
             JavaScriptVersion version,
             Func<ClassDescriptor, bool> predicate = null,
             string fileName = "ecmascript",
             bool minify = false,
             Wrap wrap = Wrap.None)
         {
-            var converter = kernel.CreateConverterForJavaScript(version, wrap);
-            var converted = converter.Convert(predicate);
+            var javaScriptConverter = converter.CreateConverterForJavaScript(version, wrap);
+            var converted = javaScriptConverter.Convert(predicate);
 
             fileName += $".{version.ToString().ToLowerInvariant()}";
 
@@ -34,39 +34,39 @@ namespace Sushi.Tests
             if (minify)
                 fileName += ".min";
 
-            converter.WriteToFile(converted, FilePath, fileName, minify);
+            javaScriptConverter.WriteToFile(converted, FilePath, fileName, minify);
         }
 
         /// <summary>
         ///     Compile a model for TypeScript.
         /// </summary>
-        protected static void CompileTypeScript(ConversionKernel kernel, string fileName = "typescript", Func<ClassDescriptor, bool> predicate = null, bool minify = false)
+        protected static void CompileTypeScript(Converter converter, string fileName = "typescript", Func<ClassDescriptor, bool> predicate = null, bool minify = false)
         {
-            var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
-            var converted = converter.Convert(predicate);
+            var javaScriptConverter = converter.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
+            var converted = javaScriptConverter.Convert(predicate);
 
             if (minify)
                 fileName += ".min";
 
-            converter.WriteToFile(converted, FilePath, fileName, minify);
+            javaScriptConverter.WriteToFile(converted, FilePath, fileName, minify);
         }
 
         /// <summary>
         ///     Compile a model for DefinitelyTyped.
         /// </summary>
-        protected static void CompileDefinitelyTyped(ConversionKernel kernel, string fileName = "reference", bool minify = false)
+        protected static void CompileDefinitelyTyped(Converter converter, string fileName = "reference", bool minify = false)
         {
             // Make sure the XML documentation is loaded
             var assemblyName = typeof(TestBase).Assembly.GetProjectName();
-            kernel.LoadXmlDocumentation();
+            converter.LoadXmlDocumentation();
 
-            var converter = kernel.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
-            var converted = converter.Convert();
+            var javaScriptConverter = converter.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
+            var converted = javaScriptConverter.Convert();
 
             if (minify)
                 fileName += ".min";
 
-            converter.WriteToFile(converted, FilePath, fileName, minify);
+            javaScriptConverter.WriteToFile(converted, FilePath, fileName, minify);
         }
     }
 }

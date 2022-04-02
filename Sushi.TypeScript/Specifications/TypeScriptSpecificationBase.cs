@@ -14,16 +14,16 @@ namespace Sushi.TypeScript.Specifications
     {
         #region Overrides of LanguageSpecification
 
-        internal string FormatPropertyType(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        internal string FormatPropertyType(Converter converter, IPropertyDescriptor descriptor)
         {
-            var tsTypeName = GetBaseType(descriptor.NativeType.IncludeOverride(kernel, descriptor.Type));
+            var tsTypeName = GetBaseType(descriptor.NativeType.IncludeOverride(converter, descriptor.Type));
             var type = Nullable.GetUnderlyingType(descriptor.Type) ?? descriptor.Type;
             if (type == typeof(DateTime))
                 tsTypeName = "Date";
             else
             {
                 // Check if any of the available models have the same name and should be used.
-                var dataModel = kernel.Models.FirstOrDefault(x => x.FullName == type.FullName);
+                var dataModel = converter.Models.FirstOrDefault(x => x.FullName == type.FullName);
                 if (!ReferenceEquals(dataModel, null))
                     tsTypeName = dataModel.Name;
             }
@@ -61,16 +61,16 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor)
+        public override IEnumerable<string> FormatPropertyDefinition(Converter converter, IPropertyDescriptor descriptor)
         {
 
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(descriptor);
+            var summary = converter.Documentation?.GetDocumentationForProperty(descriptor);
             if (summary?.Summary.Length > 0)
                 yield return $"/** {summary.Summary} */";
 
             // Apply formatting for TypeScript its Array type.
-            var type = FormatPropertyType(kernel, descriptor);
+            var type = FormatPropertyType(converter, descriptor);
             var name = descriptor.Name;
 
             if (descriptor.Type.IsNullable())

@@ -7,16 +7,16 @@ using Sushi.JavaScript.Properties;
 
 namespace Sushi.JavaScript
 {
-    public static class ConversionKernelExtensions
+    public static class ConverterExtensions
     {
         /// <summary>
         ///     Initialize a <see cref="ModelConverter"/> to work with ECMAScript with a specific <paramref name="version"/>.
         /// </summary>
-        /// <param name="this">The <see cref="ConversionKernel"/> to use.</param>
+        /// <param name="this">The <see cref="Converter"/> to use.</param>
         /// <param name="version">The ECMAScript <paramref name="version"/>.</param>
         /// <param name="wrap">If a specific <see cref="Wrap"/> should be used for the generated script model(s).</param>
         /// <returns></returns>
-        public static ModelConverter CreateConverterForJavaScript(this ConversionKernel @this, JavaScriptVersion version, Wrap wrap = Wrap.None)
+        public static ModelConverter CreateConverterForJavaScript(this Converter @this, JavaScriptVersion version, Wrap wrap = Wrap.None)
         {
             ILanguageSpecification language;
             switch (version)
@@ -50,9 +50,9 @@ namespace Sushi.JavaScript
         }
 
         /// <summary>
-        ///     Simple fix to include the <see cref="ConversionKernel.CustomTypeHandling"/>.
+        ///     Simple fix to include the <see cref="Converter.CustomTypeHandling"/>.
         /// </summary>
-        public static NativeType IncludeOverride(this NativeType @this, ConversionKernel kernel, Type type) 
-            => kernel.CustomTypeHandling.ContainsKey(type) ? kernel.CustomTypeHandling[type] : @this;
+        public static NativeType IncludeOverride(this NativeType @this, Converter converter, Type type) 
+            => converter.CustomTypeHandling.ContainsKey(type) ? converter.CustomTypeHandling[type] : @this;
     }
 }

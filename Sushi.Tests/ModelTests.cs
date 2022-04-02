@@ -14,17 +14,17 @@ namespace Sushi.Tests
 		[TestMethod]
 		public void ModelsInAssemblyTest()
 		{
-			var kernel = new ConversionKernel(_assembly);
-			Assert.IsTrue(kernel.ModelCount > 0, "Expected atleast one model to be available.");
-			Assert.IsTrue(kernel.Models.Any(x => x.Name == nameof(SchoolViewModel)), "Expected atleast one ");
+			var converter = new Converter(_assembly);
+			Assert.IsTrue(converter.ModelCount > 0, "Expected atleast one model to be available.");
+			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(SchoolViewModel)), "Expected atleast one ");
 		}
 
 		[TestMethod]
 		public void ModelPropertyRecognitionTest()
 		{
-			var kernel = new ConversionKernel(_assembly);
+			var converter = new Converter(_assembly);
 
-			var personModel = kernel.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
+			var personModel = converter.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
 			Assert.IsNotNull(personModel);
 
 			// PersonModel has 2 properties

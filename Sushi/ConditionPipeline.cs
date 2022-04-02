@@ -15,31 +15,31 @@ namespace Sushi
     public abstract class ConditionPipeline
     {
         /// <summary>
-        ///     Create a statement to check if the given <see cref="ConversionKernel.ArgumentName"/> has a value.
+        ///     Create a statement to check if the given <see cref="Converter.ArgumentName"/> has a value.
         /// </summary>
-        public abstract ScriptConditionDescriptor ArgumentDefinedCheck(ConversionKernel kernel);
+        public abstract ScriptConditionDescriptor ArgumentDefinedCheck(Converter converter);
 
         /// <summary>
-        ///     Create a statement to check if the given <see cref="ConversionKernel.ArgumentName"/> has no value.
+        ///     Create a statement to check if the given <see cref="Converter.ArgumentName"/> has no value.
         /// </summary>
-        public abstract ScriptConditionDescriptor ArgumentUndefinedCheck(ConversionKernel kernel);
+        public abstract ScriptConditionDescriptor ArgumentUndefinedCheck(Converter converter);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> exists in the given argument.
         /// </summary>
-        public abstract ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        public abstract ScriptConditionDescriptor CreateKeyExistsCheck(Converter converter, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected class.
         /// </summary>
-        public abstract ScriptConditionDescriptor CreateInstanceCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        public abstract ScriptConditionDescriptor CreateInstanceCheck(Converter converter, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected type.
         /// </summary>
-        public abstract ScriptConditionDescriptor CreateTypeCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        public abstract ScriptConditionDescriptor CreateTypeCheck(Converter converter, IPropertyDescriptor descriptor);
 
         /// <inheritdoc cref=""/>
-        public abstract ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
+        public abstract ScriptConditionDescriptor CreateDefinedCheck(Converter converter, IPropertyDescriptor descriptor);
     }
 }

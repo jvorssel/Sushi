@@ -15,24 +15,24 @@ namespace Sushi
 {
     public class ModelConverter
     {
-        private readonly ConversionKernel _kernel;
+        private readonly Converter _converter;
         public ILanguageSpecification Language { get; }
 
         /// <summary>
         ///     The amount of <see cref="Models"/> found in the given <see cref="Assembly"/>.
         /// </summary>
-        public ModelConverter(ConversionKernel kernel, ILanguageSpecification language)
+        public ModelConverter(Converter converter, ILanguageSpecification language)
         {
             Language = language;
-            _kernel = kernel;
+            _converter = converter;
         }
 
         /// <summary>
-        ///     Convert the available models in the <see cref="ConversionKernel"/> that match the given <paramref name="predicate"/>.
+        ///     Convert the available models in the <see cref="Converter"/> that match the given <paramref name="predicate"/>.
         /// </summary>
         public IEnumerable<ClassDescriptor> Convert(Func<ClassDescriptor, bool> predicate = null)
         {
-            var enumerable = (predicate == null ? _kernel.Models : _kernel.Models.Where(predicate)).ToList();
+            var enumerable = (predicate == null ? _converter.Models : _converter.Models.Where(predicate)).ToList();
 
             foreach (var scriptModel in enumerable.Select(Compile))
             {
@@ -111,12 +111,12 @@ namespace Sushi
         public ClassDescriptor Compile(ClassDescriptor model)
         {
             var modelBuilder = new StringBuilder();
-            var doc = _kernel.Documentation?.GetDocumentationForType(model.Type);
+            var doc = _converter.Documentation?.GetDocumentationForType(model.Type);
 
             var template = Language.Template
                 .Replace(TYPE_NAME_KEY, model.Name)
                 .Replace(TYPE_NAMESPACE_KEY, model.Type.Namespace)
-                .Replace(ARGUMENT_NAME, _kernel.ArgumentName)
+                .Replace(ARGUMENT_NAME, _converter.ArgumentName)
                 ;
 
             var enumerator = new StringEnumerator(template);
@@ -134,7 +134,7 @@ namespace Sushi
                     var propertyValueBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
-                        foreach (var line in Language.FormatProperty(_kernel, property))
+                        foreach (var line in Language.FormatProperty(_converter, property))
                             propertyValueBuilder.AppendLine(indent + line);
                     }
 
@@ -147,7 +147,7 @@ namespace Sushi
                     var propertyDefinitionBuilder = new StringBuilder();
                     foreach (var property in model.Properties)
                     {
-                        foreach (var line in Language.FormatPropertyDefinition(_kernel, property))
+                        foreach (var line in Language.FormatPropertyDefinition(_converter, property))
                             propertyDefinitionBuilder.AppendLine(indent + line);
                     }
 
@@ -158,7 +158,7 @@ namespace Sushi
                 {
                     var indent = row.Before(VALIDATION_KEY);
                     var statementBuilder = new StringBuilder();
-                    var statements = Language.FormatStatements(_kernel, model.Properties.ToList()).GroupBy(x => x.Type);
+                    var statements = Language.FormatStatements(_converter, model.Properties.ToList()).GroupBy(x => x.Type);
 
                     foreach (var group in statements)
                     {
@@ -175,14 +175,14 @@ namespace Sushi
                 // Defined check
                 else if (row.Contains(IS_DEFINED_CHECK))
                 {
-                    var statement = Language.ConditionPipeline.ArgumentDefinedCheck(_kernel);
+                    var statement = Language.ConditionPipeline.ArgumentDefinedCheck(_converter);
                     var rowWithStatement = row.Replace(IS_DEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
                 // Undefined check
                 else if (row.Contains(IS_UNDEFINED_CHECK))
                 {
-                    var statement = Language.ConditionPipeline.ArgumentUndefinedCheck(_kernel);
+                    var statement = Language.ConditionPipeline.ArgumentUndefinedCheck(_converter);
                     var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }

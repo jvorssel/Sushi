@@ -43,7 +43,7 @@
     <Compile Include="Attributes\ConvertToScriptAttribute.cs" />
     <Compile Include="Attributes\IgnoreForScript.cs" />
     <Compile Include="Consistency\TemplateKeys.cs" />
-    <Compile Include="ConversionKernel.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="Descriptors\FieldDescriptor.cs" />
     <Compile Include="Documentation\ReferenceType.cs" />
     <Compile Include="Documentation\XmlDocumentationReader.cs" />

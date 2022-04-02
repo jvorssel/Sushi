@@ -14,9 +14,9 @@ using Sushi.Interfaces;
 namespace Sushi
 {
 	/// <summary>
-	///     Root <see cref="ConversionKernel"/> for converting given <see cref="Models"/> to one of the specified <see cref="Languages"/>.
+	///     Root <see cref="Converter"/> for converting given <see cref="Models"/> to one of the specified <see cref="Languages"/>.
 	/// </summary>
-	public sealed class ConversionKernel
+	public sealed class Converter
 	{
 		public HashSet<ClassDescriptor> Models { get; } = new HashSet<ClassDescriptor>();
 
@@ -51,9 +51,9 @@ namespace Sushi
 			};
 
 		/// <summary>
-		///     Initialize a new <see cref="ConversionKernel"/> with given <paramref name="types"/> for <see cref="Models"/>.
+		///     Initialize a new <see cref="Converter"/> with given <paramref name="types"/> for <see cref="Models"/>.
 		/// </summary>
-		public ConversionKernel(ICollection<Type> types)
+		public Converter(ICollection<Type> types)
 		{
 			_assembly = types.First().Assembly;
 			if (types.Any(x => x.Assembly != _assembly))
@@ -73,10 +73,10 @@ namespace Sushi
 
 
 		/// <summary>
-		///     Initialize a new <see cref="ConversionKernel"/> with models that 
+		///     Initialize a new <see cref="Converter"/> with models that 
 		///     inherit <see cref="IScriptModel"/> in the given <paramref name="assembly"/>.
 		/// </summary>
-		public ConversionKernel(Assembly assembly)
+		public Converter(Assembly assembly)
 		{
 			_assembly = assembly;
 			// Find the models in the given assembly.
@@ -102,7 +102,7 @@ namespace Sushi
 		/// <summary>
 		///     Use the xml documentation file in bin folder for project assembly.
 		/// </summary>
-		public ConversionKernel LoadXmlDocumentation()
+		public Converter LoadXmlDocumentation()
 		{
 			var assemblyName = _assembly.GetProjectName();
 			var xmlDocPath = Path.Combine(BaseDirectoryPath, $"{assemblyName}.xml");
@@ -112,7 +112,7 @@ namespace Sushi
 		/// <summary>
 		///     Use the xml documentation generated on build.
 		/// </summary>
-		public ConversionKernel LoadXmlDocumentation(string path)
+		public Converter LoadXmlDocumentation(string path)
 		{
 			var extension = Path.GetExtension(path);
 			if (extension != ".xml")

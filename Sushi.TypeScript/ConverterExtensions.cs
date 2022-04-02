@@ -6,15 +6,15 @@ using Sushi.TypeScript.Specifications;
 
 namespace Sushi.TypeScript
 {
-    public static class ConversionKernelExtensions
+    public static class ConverterExtensions
     {
         /// <summary>
         ///     Initialize a <see cref="ModelConverter"/> to work with TypeScript.
         /// </summary>
-        /// <param name="this">The <see cref="ConversionKernel"/> to use.</param>
+        /// <param name="this">The <see cref="Converter"/> to use.</param>
         /// <param name="specification">What <see cref="TypeScriptSpecification"/> you want to use.</param>
         /// <returns></returns>
-        public static ModelConverter CreateConverterForTypeScript(this ConversionKernel @this, Enum.TypeScriptSpecification specification)
+        public static ModelConverter CreateConverterForTypeScript(this Converter @this, Enum.TypeScriptSpecification specification)
         {
             ILanguageSpecification language;
             switch (specification)
