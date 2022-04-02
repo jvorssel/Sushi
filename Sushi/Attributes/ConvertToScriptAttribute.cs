@@ -6,7 +6,7 @@ namespace Sushi.Attributes
     ///     Used to tell what classes should be converted to specified script language.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    public class ConvertToScriptAttribute : Attribute
+    public sealed class ConvertToScriptAttribute : Attribute
     {
     }
 }

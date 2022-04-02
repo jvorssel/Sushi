@@ -10,7 +10,7 @@ namespace Sushi.TestModels
 	public class ViewModel : IScriptModel
 	{
 		/// <summary>
-		///     The <see cref="Guid"/> Idenfifier.
+		///     The <see cref="Guid"/> Identifier.
 		/// </summary>
 		public Guid Guid { get; set; }
 

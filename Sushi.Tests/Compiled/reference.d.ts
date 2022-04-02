@@ -7,12 +7,12 @@ export interface PersonViewModel {
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
-	Name: void;
+	Name: string;
 	/** The Surname of the person. */
-	Surname: void;
+	Surname: string;
 	/** The Gender of the person. */
-	Gender: void;
-	/** The Guid Idenfifier. */
+	Gender: number;
+	/** The Guid Identifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
 	CreatedOn: Date;
@@ -25,22 +25,22 @@ export interface PersonViewModel {
  */
 export interface SchoolViewModel {
 	/** The Name of this SchoolViewModel. */
-	Name: void;
+	Name: string;
 	/** The Owner of this SchoolViewModel. */
 	Owner: PersonViewModel;
 	/** The AmountOfStudents of this SchoolViewModel. */
-	AmountOfStudents: void;
+	AmountOfStudents: number;
 	/** The Address of this SchoolViewModel. */
-	Address: void;
+	Address: string;
 	/** The ZipCode of this SchoolViewModel. */
-	ZipCode: void;
+	ZipCode: string;
 	/** The HouseNumber of this SchoolViewModel. */
-	HouseNumber: void;
+	HouseNumber: number;
 	/** The HouseNumberAddition of this SchoolViewModel. */
-	HouseNumberAddition: void;
+	HouseNumberAddition: string;
 	/** The Students of this SchoolViewModel. */
-	Students: Array<void>;
-	/** The Guid Idenfifier. */
+	Students: Array<any>;
+	/** The Guid Identifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
 	CreatedOn: Date;
@@ -53,21 +53,31 @@ export interface SchoolViewModel {
  */
 export interface StudentViewModel {
 	/** What Grade the Student is in. */
-	Grade: void;
+	Grade: number;
 	/** The name of the School. */
 	School: SchoolViewModel;
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
-	Name: void;
+	Name: string;
 	/** The Surname of the person. */
-	Surname: void;
+	Surname: string;
 	/** The Gender of the person. */
-	Gender: void;
-	/** The Guid Idenfifier. */
+	Gender: number;
+	/** The Guid Identifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
 	CreatedOn: Date;
+}
+
+
+/**
+ * Simple model to verify complex types.
+ * FullName = Sushi.TestModels.TypeModel
+ */
+export interface TypeModel {
+	/** A nullable boolean. */
+	NullableBool: boolean;
 }
 
 
@@ -76,7 +86,7 @@ export interface StudentViewModel {
  * FullName = Sushi.TestModels.ViewModel
  */
 export interface ViewModel {
-	/** The Guid Idenfifier. */
+	/** The Guid Identifier. */
 	Guid: string;
 	/** The DateTime that this ViewModel was CreatedOn. */
 	CreatedOn: Date;

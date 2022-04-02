@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sushi.Descriptors;
 using Sushi.Enum;
+using Sushi.Interfaces;
 using Sushi.JavaScript;
 
 namespace Sushi.TypeScript.Specifications
@@ -13,7 +14,7 @@ namespace Sushi.TypeScript.Specifications
         public override string Extension => @".ts";
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", ConditionType.Key);

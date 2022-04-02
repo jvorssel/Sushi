@@ -6,6 +6,7 @@ using System.Linq;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
+using Sushi.Interfaces;
 
 namespace Sushi.JavaScript
 {
@@ -17,20 +18,20 @@ namespace Sushi.JavaScript
         public override string Extension => ".js";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property)
+        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
         {
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(property.Property);
+            var summary = kernel.Documentation?.GetDocumentationForProperty(descriptor);
             if (summary?.Summary.Length > 0)
                 yield return $"/** {summary.Summary} */";
 
             // Specify the body of the property declaration.
-            var propertySpec = FormatValueForProperty(kernel, property, property.Value);
-            yield return $"this.{property.Name} = {propertySpec};";
+            var propertySpec = GetDefaultForProperty(kernel, descriptor);
+            yield return $"this.{descriptor.Name} = {propertySpec};";
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor)
         {
             yield break;
         }
@@ -40,7 +41,7 @@ namespace Sushi.JavaScript
             => SpecificationDefaults.RemoveCommentsFromModel(model);
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", ConditionType.Key);
@@ -61,18 +62,18 @@ namespace Sushi.JavaScript
         }
         
         /// <inheritdoc />
-        public override string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property)
+        public override string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
         {
-            var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+            var type = Nullable.GetUnderlyingType(descriptor.Type) ?? descriptor.Type;
             if (type == typeof(DateTime))
                 return "new Date(\"0001-01-01T00:00:00.000Z\")"; // Default date value should be 0001-01-01
 
             // Always return null if the given property is nullable.
-            if (property.IsNullable)
+            if (descriptor.IsNullable)
                 return "null";
 
             // Check if a different type is supposed to be used.
-            var csType = property.NativeType.IncludeOverride(kernel, type);
+            var csType = descriptor.NativeType.IncludeOverride(kernel, type);
 
             // A string also inherits the IEnumerable interface, exclude.
             if (type.IsTypeOrInheritsOf(typeof(IEnumerable)) && type != typeof(string))
@@ -104,9 +105,9 @@ namespace Sushi.JavaScript
                     return "null";
             }
         }
-
+        
         /// <inheritdoc />
-        public override string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value)
+        public string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value)
         {
             // What default (fallback) value is suppossed to be used?
             var defaultValue = GetDefaultForProperty(kernel, property);

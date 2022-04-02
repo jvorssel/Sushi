@@ -19,7 +19,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <LangVersion>10</LangVersion>
+    <LangVersion>latestmajor</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,12 +61,13 @@
     </Compile>
     <Compile Include="Documentation\XmlDocumentationReaderTests.cs" />
     <Compile Include="IgnoreAttributeTest.cs" />
+    <Compile Include="ModelDescriptors\FieldDescriptorTests.cs" />
+    <Compile Include="ModelDescriptors\PropertyDescriptorTests.cs" />
+    <Compile Include="ReflectionTests.cs" />
     <Compile Include="Script\CompileWithSummaryTests.cs" />
     <Compile Include="ModelToConvertTests.cs" />
-    <Compile Include="Script\JavaScriptTests.cs" />
     <Compile Include="ModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Script\TypeScriptTests.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="UtilityTest.cs" />
   </ItemGroup>
@@ -74,7 +75,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="ModelDescriptors\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
@@ -100,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Compiled\ecmascript.v5.js" />
+    <Compile Include="ModelDescriptors\ClassDescriptorTests.cs" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

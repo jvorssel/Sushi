@@ -6,7 +6,7 @@ namespace Sushi.TestModels
 	/// <summary>
 	///		Basic information about a School.
 	/// </summary>
-	public class SchoolViewModel : ViewModel
+	public sealed class SchoolViewModel : ViewModel
 	{
 		/// <summary>
 		///		The <see cref="Name"/> of this <see cref="SchoolViewModel"/>.
@@ -46,6 +46,6 @@ namespace Sushi.TestModels
 		/// <summary>
 		///     The <see cref="Students"/> of this <see cref="SchoolViewModel"/>.
 		/// </summary>
-		public virtual List<StudentViewModel> Students { get; set; } = new List<StudentViewModel>();
+		public List<StudentViewModel> Students { get; set; } = new List<StudentViewModel>();
 	}
 }

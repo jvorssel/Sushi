@@ -5,6 +5,7 @@ using System.Linq;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
+using Sushi.Interfaces;
 using Sushi.JavaScript;
 
 namespace Sushi.TypeScript.Specifications
@@ -13,10 +14,10 @@ namespace Sushi.TypeScript.Specifications
     {
         #region Overrides of LanguageSpecification
 
-        internal string FormatPropertyType(ConversionKernel kernel, PropertyDescriptor property)
+        internal string FormatPropertyType(ConversionKernel kernel, IPropertyDescriptor descriptor)
         {
-            var tsTypeName = GetBaseType(property.NativeType.IncludeOverride(kernel, property.Type));
-            var type = Nullable.GetUnderlyingType(property.Type) ?? property.Type;
+            var tsTypeName = GetBaseType(descriptor.NativeType.IncludeOverride(kernel, descriptor.Type));
+            var type = Nullable.GetUnderlyingType(descriptor.Type) ?? descriptor.Type;
             if (type == typeof(DateTime))
                 tsTypeName = "Date";
             else
@@ -60,22 +61,22 @@ namespace Sushi.TypeScript.Specifications
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property)
+        public override IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor)
         {
 
             // Return the rows for the js-doc
-            var summary = kernel.Documentation?.GetDocumentationForProperty(property.Property);
+            var summary = kernel.Documentation?.GetDocumentationForProperty(descriptor);
             if (summary?.Summary.Length > 0)
                 yield return $"/** {summary.Summary} */";
 
             // Apply formatting for TypeScript its Array type.
-            var type = FormatPropertyType(kernel, property);
-            var name = property.Name;
+            var type = FormatPropertyType(kernel, descriptor);
+            var name = descriptor.Name;
 
-            if (property.Type.IsNullable())
+            if (descriptor.Type.IsNullable())
                 name += "?";
 
-            var statement = property.IsReadonly ?
+            var statement = descriptor.IsReadonly ?
                 $@"readonly {name}: {type};" :
                 $@"{name}: {type};";
 

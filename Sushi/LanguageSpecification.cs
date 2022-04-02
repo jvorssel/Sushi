@@ -29,10 +29,10 @@ namespace Sushi
         public WrapTemplateUsage WrapUsage { get; private set; } = WrapTemplateUsage.None;
 
         /// <inheritdoc />
-        public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property);
+        public abstract IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <inheritdoc />
-        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, PropertyDescriptor property);
+        public abstract IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <inheritdoc />
         public abstract ScriptConditionDescriptor FormatComment(string comment, ConditionType statementType);
@@ -41,13 +41,10 @@ namespace Sushi
         public abstract string RemoveComments(ClassDescriptor model);
 
         /// <inheritdoc />
-        public abstract IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties);
+        public abstract IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> descriptors);
 
         /// <inheritdoc />
-        public abstract string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property);
-
-        /// <inheritdoc />
-        public abstract string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value);
+        public abstract string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <inheritdoc />
         public LanguageSpecification UseTemplate(string template)

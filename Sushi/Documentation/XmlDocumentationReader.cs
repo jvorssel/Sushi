@@ -7,7 +7,9 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Sushi.Consistency;
+using Sushi.Descriptors;
 using Sushi.Extensions;
+using Sushi.Interfaces;
 
 namespace Sushi.Documentation
 {
@@ -153,25 +155,25 @@ namespace Sushi.Documentation
             // Get the PropertyInfo that the given expression selects.
             var info = instance.GetPropertyInfo(property);
 
-            var doc = GetDocumentationForProperty(info);
+            var doc = GetDocumentationForProperty(new PropertyDescriptor(info));
             return doc;
         }
 
         /// <summary>
         ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the given <see cref="PropertyInfo"/>.
         /// </summary>
-        public XmlSummaryDescriptor GetDocumentationForProperty(PropertyInfo property)
+        public XmlSummaryDescriptor GetDocumentationForProperty(IPropertyDescriptor descriptor)
         {
             // No members, initialize.
             if (!Initialized)
                 Initialize();
 
-            var type = property.DeclaringType;
+            var type = descriptor.ClassType;
             if (type == null)
                 return null;
 
             var members = Members.Where(x => x.DeclaringTypeName == type.Name);
-            var doc = members.SingleOrDefault(x => x.Name == property.Name);
+            var doc = members.SingleOrDefault(x => x.Name == descriptor.Name);
             if (!(doc is null) && !doc.IsInherited)
                 return doc;
 
@@ -181,11 +183,11 @@ namespace Sushi.Documentation
                 var properties = interfaceType.GetProperties();
 
                 // Check if a interface has the expected summary.
-                if (properties.All(x => x.Name != property.Name))
+                if (properties.All(x => x.Name != descriptor.Name))
                     continue;
 
                 var membersWithInterface = Members.Where(x => x.DeclaringTypeName == interfaceType.Name);
-                doc = membersWithInterface.SingleOrDefault(x => x.Name == property.Name);
+                doc = membersWithInterface.SingleOrDefault(x => x.Name == descriptor.Name);
                 if (!(doc is null))
                     return doc;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sushi.Enum;
 
 namespace Sushi.Helpers
@@ -37,7 +38,7 @@ namespace Sushi.Helpers
             if (type == typeof(decimal))
                 return NativeType.Decimal;
 
-            if (type == typeof(string))
+            if (type == typeof(string) || type == typeof(Guid))
                 return NativeType.String;
 
             if (type == typeof(char))
@@ -46,6 +47,7 @@ namespace Sushi.Helpers
             if (type == typeof(System.Enum) || type.BaseType == typeof(System.Enum))
                 return NativeType.Enum;
 
+            
             // Null value already defined above, use Object as default.
             return NativeType.Object;
         }

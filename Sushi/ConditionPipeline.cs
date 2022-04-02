@@ -1,4 +1,7 @@
-﻿using Sushi.Descriptors;
+﻿using System;
+using Sushi.Descriptors;
+using Sushi.Enum;
+using Sushi.Interfaces;
 
 namespace Sushi
 {
@@ -24,16 +27,19 @@ namespace Sushi
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> exists in the given argument.
         /// </summary>
-        public abstract ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, PropertyDescriptor property);
+        public abstract ScriptConditionDescriptor CreateKeyExistsCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected class.
         /// </summary>
-        public abstract ScriptConditionDescriptor CreateInstanceCheck(ConversionKernel kernel, PropertyDescriptor property);
+        public abstract ScriptConditionDescriptor CreateInstanceCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Create a statement to check if the <see cref="PropertyDescriptor.Name"/> is a instance of the expected type.
         /// </summary>
-        public abstract ScriptConditionDescriptor CreateTypeCheck(ConversionKernel kernel, PropertyDescriptor property);
+        public abstract ScriptConditionDescriptor CreateTypeCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
+
+        /// <inheritdoc cref=""/>
+        public abstract ScriptConditionDescriptor CreateDefinedCheck(ConversionKernel kernel, IPropertyDescriptor descriptor);
     }
 }

@@ -16,7 +16,7 @@ namespace Sushi
 	/// <summary>
 	///     Root <see cref="ConversionKernel"/> for converting given <see cref="Models"/> to one of the specified <see cref="Languages"/>.
 	/// </summary>
-	public class ConversionKernel : IDisposable
+	public sealed class ConversionKernel
 	{
 		public HashSet<ClassDescriptor> Models { get; } = new HashSet<ClassDescriptor>();
 
@@ -122,17 +122,5 @@ namespace Sushi
 
 			return this;
 		}
-
-		#region IDisposable
-
-		/// <inheritdoc />
-		public void Dispose() { }
-
-		~ConversionKernel()
-		{
-			Dispose();
-		}
-
-		#endregion
 	}
 }

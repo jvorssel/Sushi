@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sushi.Attributes;
-using Sushi.Extensions;
+using Sushi.Helpers;
+using Sushi.Interfaces;
 
 namespace Sushi.Descriptors
 {
@@ -26,20 +26,19 @@ namespace Sushi.Descriptors
         /// <summary>
         ///     The generated <see cref="Script"/> for this <see cref="ClassDescriptor"/>.
         /// </summary>
-        public string Script { get; set; }
+        public string Script { get; set; } = string.Empty;
 
         public ClassDescriptor(Type type)
         {
             Type = type;
 
             // Get the available properties in the given type
-            Properties = type.GetPropertiesWithStaticValue()
-                .Where(x => !x.Key.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
-                .Select(x => new PropertyDescriptor(x.Key, x.Value))
-                .ToList();
+            var properties = Type.GetPropertyDescriptors();
+            var fields = Type.GetFieldDescriptors();
+            Properties = properties.Cast<IPropertyDescriptor>().Concat(fields).ToList();
         }
 
-        public IReadOnlyList<PropertyDescriptor> Properties { get; }
+        public IReadOnlyList<IPropertyDescriptor> Properties { get; }
 
         public static bool operator ==(ClassDescriptor m1, ClassDescriptor m2)
             => m1?.Type == m2?.Type;
@@ -60,8 +59,10 @@ namespace Sushi.Descriptors
         {
             if (ReferenceEquals(null, other))
                 return false;
+            
             if (ReferenceEquals(this, other))
                 return true;
+            
             return Type == other.Type;
         }
 
@@ -70,18 +71,19 @@ namespace Sushi.Descriptors
         {
             if (ReferenceEquals(null, obj))
                 return false;
+            
             if (ReferenceEquals(this, obj))
                 return true;
+            
             return obj is ClassDescriptor model && Equals(model);
         }
 
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return (Type != null ? Type.GetHashCode() : 0);
+            return Type != null ? Type.GetHashCode() : 0;
         }
 
         #endregion
     }
-
 }

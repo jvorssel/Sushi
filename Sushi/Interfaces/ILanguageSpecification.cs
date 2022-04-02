@@ -49,30 +49,25 @@ namespace Sushi.Interfaces
         LanguageSpecification UseWrapTemplate(string template, WrapTemplateUsage usage);
 
         /// <summary>
-        ///     Format the <paramref name="property"/> to compile for the current <see cref="LanguageSpecification"/>.
+        ///     Format the <paramref name="descriptor"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property);
+        IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <summary>
-        ///     Format the validation for the <paramref name="properties"/> to compile for the current <see cref="LanguageSpecification"/>.
+        ///     Format the validation for the <paramref name="descriptors"/> to compile for the current <see cref="LanguageSpecification"/>.
         ///  </summary>
-        IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties);
+        IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> descriptors);
 
         /// <summary>
         ///     Get the default <see cref="string"/> value that reflects the given <see cref="NativeType"/> 
         ///     for the current Language.
         /// </summary>
-        string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property);
+        string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <summary>
-        ///     Apply formatting to the given <paramref name="value"/> of <see cref="NativeType"/>.
+        ///     Format the given <see cref="descriptor"/> to be defined in the current Language.
         /// </summary>
-        string FormatValueForProperty(ConversionKernel kernel, PropertyDescriptor property, object value);
-
-        /// <summary>
-        ///     Format the given <see cref="property"/> to be defined in the current Language.
-        /// </summary>
-        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel,PropertyDescriptor property);
+        IEnumerable<string> FormatPropertyDefinition(ConversionKernel kernel, IPropertyDescriptor descriptor);
 
         /// <summary>
         ///     Format the given <paramref name="comment"/> for this Language.

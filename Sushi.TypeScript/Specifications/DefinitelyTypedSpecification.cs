@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sushi.Descriptors;
+using Sushi.Interfaces;
 
 namespace Sushi.TypeScript.Specifications
 {
@@ -11,23 +12,19 @@ namespace Sushi.TypeScript.Specifications
         public override string Extension => @".d.ts";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, PropertyDescriptor property)
+        public override IEnumerable<string> FormatProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<PropertyDescriptor> properties)
+        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(ConversionKernel kernel, List<IPropertyDescriptor> descriptor)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override string GetDefaultForProperty(ConversionKernel kernel, PropertyDescriptor property)
-            => string.Empty;
-
-        /// <inheritdoc />
-        public override string FormatValueForProperty(ConversionKernel kernel,PropertyDescriptor property, object value)
+        public override string GetDefaultForProperty(ConversionKernel kernel, IPropertyDescriptor descriptor)
             => string.Empty;
 
         /// <inheritdoc />

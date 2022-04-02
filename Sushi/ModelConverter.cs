@@ -231,8 +231,5 @@ namespace Sushi
             var writer = new FileWriter(this, path, Language.Extension, minify, encoding);
             writer.FlushToFile(models, fileName);
         }
-
-     
-
     }
 }
