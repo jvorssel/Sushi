@@ -62,15 +62,14 @@
     <Compile Include="Descriptors\ScriptConditionDescriptor.cs" />
     <Compile Include="Descriptors\ClassDescriptor.cs" />
     <Compile Include="Consistency\Errors.cs" />
+    <Compile Include="Interfaces\IConditionSpecification.cs" />
     <Compile Include="Interfaces\ILanguageSpecification.cs" />
     <Compile Include="Interfaces\IPropertyDescriptor.cs" />
     <Compile Include="Interfaces\IScriptModel.cs" />
-    <Compile Include="LanguageSpecification.cs" />
     <Compile Include="ModelConverter.cs" />
     <Compile Include="Descriptors\PropertyDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecificationDefaults.cs" />
-    <Compile Include="ConditionPipeline.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.nuspec" />

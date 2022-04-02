@@ -104,7 +104,7 @@ namespace Sushi
         }
 
         /// <summary>
-        ///     Compile the given <paramref name="model"/> with the current <see cref="LanguageSpecification"/>.
+        ///     Compile the given <paramref name="model"/> with the current <see cref="BaseLanguageSpecification"/>.
         /// </summary>
         /// <param name="model">The <see cref="ClassDescriptor"/> to convert to the given <see cref="Language"/>.</param>
         /// <param name="referenceDataModels">Check type reference for found <see cref="ClassDescriptor"/>(s).</param>
@@ -175,14 +175,14 @@ namespace Sushi
                 // Defined check
                 else if (row.Contains(IS_DEFINED_CHECK))
                 {
-                    var statement = Language.ConditionPipeline.ArgumentDefinedCheck(_converter);
+                    var statement = Language.ConditionSpecification.ArgumentDefinedCheck(_converter);
                     var rowWithStatement = row.Replace(IS_DEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }
                 // Undefined check
                 else if (row.Contains(IS_UNDEFINED_CHECK))
                 {
-                    var statement = Language.ConditionPipeline.ArgumentUndefinedCheck(_converter);
+                    var statement = Language.ConditionSpecification.ArgumentUndefinedCheck(_converter);
                     var rowWithStatement = row.Replace(IS_UNDEFINED_CHECK, statement.ToString());
                     modelBuilder.Append(rowWithStatement);
                 }

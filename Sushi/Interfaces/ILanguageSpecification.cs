@@ -33,12 +33,13 @@ namespace Sushi.Interfaces
         /// <summary>
         ///     The <see cref="ConditionPipeline"/> used to format different validation / recognition statements.
         /// </summary>
-        ConditionPipeline ConditionPipeline { get; }
+        
+        IConditionSpecification ConditionSpecification { get; }
 
         /// <summary>
         ///     Use the given <paramref name="template"/>.
         /// </summary>
-        LanguageSpecification UseTemplate(string template);
+        ILanguageSpecification UseTemplate(string template);
 
         /// <summary>
         ///     Use the given <paramref name="template"/> to wrap around the generated <see cref="TemplateKeys.SCRIPT_MODELS"/>.
@@ -46,15 +47,15 @@ namespace Sushi.Interfaces
         /// <remarks>
         ///     Requires the <see cref="TemplateKeys.SCRIPT_MODELS"/> placeholder to be available.
         /// </remarks>
-        LanguageSpecification UseWrapTemplate(string template, WrapTemplateUsage usage);
+        ILanguageSpecification UseWrapTemplate(string template, WrapTemplateUsage usage);
 
         /// <summary>
-        ///     Format the <paramref name="descriptor"/> to compile for the current <see cref="LanguageSpecification"/>.
+        ///     Format the <paramref name="descriptor"/> to compile for the current <see cref="BaseLanguageSpecification"/>.
         ///  </summary>
         IEnumerable<string> FormatProperty(Converter converter, IPropertyDescriptor descriptor);
 
         /// <summary>
-        ///     Format the validation for the <paramref name="descriptors"/> to compile for the current <see cref="LanguageSpecification"/>.
+        ///     Format the validation for the <paramref name="descriptors"/> to compile for the current <see cref="BaseLanguageSpecification"/>.
         ///  </summary>
         IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> descriptors);
 

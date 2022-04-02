@@ -8,7 +8,7 @@ using Sushi.JavaScript.Enum;
 namespace Sushi.JavaScript
 {
     /// <inheritdoc />
-    public sealed class JavaScriptConditions : ConditionPipeline
+    public sealed class JavaScriptConditions : IConditionSpecification
     {
         public const string IS_DEFINED_STATEMENT = @"{0} !== void 0 && {0} !== null";
         public const string IS_UNDEFINED_STATEMENT = @"{0} === void 0 || {0} === null";
@@ -17,28 +17,28 @@ namespace Sushi.JavaScript
         #region Overrides of StatementPipeline
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateDefinedCheck(Converter converter, IPropertyDescriptor descriptor)
+        public ScriptConditionDescriptor CreateDefinedCheck(Converter converter, IPropertyDescriptor descriptor)
         {
             var statement = string.Format(IS_PROPERTY_DEFINED_STATEMENT, converter.ArgumentName, descriptor.Name);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
         
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentUndefinedCheck(Converter converter)
+        public ScriptConditionDescriptor ArgumentUndefinedCheck(Converter converter)
         {
             var statement = string.Format(IS_UNDEFINED_STATEMENT, converter.ArgumentName);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor ArgumentDefinedCheck(Converter converter)
+        public ScriptConditionDescriptor ArgumentDefinedCheck(Converter converter)
         {
             var statement = string.Format(IS_DEFINED_STATEMENT, converter.ArgumentName);
             return new ScriptConditionDescriptor(statement, ConditionType.Type);
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateKeyExistsCheck(Converter converter, IPropertyDescriptor descriptor)
+        public ScriptConditionDescriptor CreateKeyExistsCheck(Converter converter, IPropertyDescriptor descriptor)
         {
             var doesKeyExistStatement = $"if (!{converter.ArgumentName}.hasOwnProperty('{descriptor.Name}')) throw new TypeError(\"{string.Format(converter.ObjectPropertyMissing, descriptor.Name)}\");";
 
@@ -46,7 +46,7 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateInstanceCheck(Converter converter, IPropertyDescriptor descriptor)
+        public ScriptConditionDescriptor CreateInstanceCheck(Converter converter, IPropertyDescriptor descriptor)
         {
             var instanceCheck = $"if ({CreateDefinedCheck(converter, descriptor)} && !{{1}}.tryParse({converter.ArgumentName}.{{0}})) throw new TypeError(\"{converter.PropertyInstanceMismatch}\");";
 
@@ -88,7 +88,7 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor CreateTypeCheck(Converter converter, IPropertyDescriptor descriptor)
+        public ScriptConditionDescriptor CreateTypeCheck(Converter converter, IPropertyDescriptor descriptor)
         {
             var typeCheck = $"if (typeof {converter.ArgumentName}.{{0}} !== '{{1}}') throw new TypeError(\"{converter.PropertyTypeMismatch}\");";
 

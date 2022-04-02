@@ -10,15 +10,35 @@ using Sushi.Interfaces;
 
 namespace Sushi.JavaScript
 {
-    public class JavaScriptSpecification : LanguageSpecification
+    public class JavaScriptSpecification : ILanguageSpecification
     {
         #region Overrides of LanguageSpecification
 
         /// <inheritdoc />
-        public override string Extension => ".js";
+        public virtual string Extension => ".js";
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatProperty(Converter converter, IPropertyDescriptor descriptor)
+        public string Template { get; }
+
+        /// <inheritdoc />
+        public string WrapTemplate { get; }
+
+        /// <inheritdoc />
+        public WrapTemplateUsage WrapUsage { get; }
+
+        /// <inheritdoc />
+        public IConditionSpecification ConditionSpecification { get; set; }
+
+        /// <inheritdoc />
+        public ILanguageSpecification UseTemplate(string template)
+            => throw new NotImplementedException();
+
+        /// <inheritdoc />
+        public ILanguageSpecification UseWrapTemplate(string template, WrapTemplateUsage usage)
+            => throw new NotImplementedException();
+
+        /// <inheritdoc />
+        public virtual IEnumerable<string> FormatProperty(Converter converter, IPropertyDescriptor descriptor)
         {
             // Return the rows for the js-doc
             var summary = converter.Documentation?.GetDocumentationForProperty(descriptor);
@@ -31,38 +51,38 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override IEnumerable<string> FormatPropertyDefinition(Converter converter, IPropertyDescriptor descriptor)
+        public virtual IEnumerable<string> FormatPropertyDefinition(Converter converter, IPropertyDescriptor descriptor)
         {
             yield break;
         }
 
         /// <inheritdoc />
-        public override string RemoveComments(ClassDescriptor model)
+        public virtual string RemoveComments(ClassDescriptor model)
             => SpecificationDefaults.RemoveCommentsFromModel(model);
 
         /// <inheritdoc />
-        public override IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> properties)
+        public virtual IEnumerable<ScriptConditionDescriptor> FormatStatements(Converter converter, List<IPropertyDescriptor> properties)
         {
             // Key check
             yield return FormatComment(@"Check property keys", ConditionType.Key);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateKeyExistsCheck(converter, prop);
+                yield return ConditionSpecification.CreateKeyExistsCheck(converter, prop);
 
             // Type check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Type, false, true);
             yield return FormatComment(@"Check property type match", ConditionType.Type);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateTypeCheck(converter, prop);
+                yield return ConditionSpecification.CreateTypeCheck(converter, prop);
 
             // Instance check
             yield return new ScriptConditionDescriptor(string.Empty, ConditionType.Instance, false, true);
             yield return FormatComment(@"Check property class instance match", ConditionType.Instance);
             foreach (var prop in properties)
-                yield return ConditionPipeline.CreateInstanceCheck(converter, prop);
+                yield return ConditionSpecification.CreateInstanceCheck(converter, prop);
         }
         
         /// <inheritdoc />
-        public override string GetDefaultForProperty(Converter converter, IPropertyDescriptor descriptor)
+        public virtual string GetDefaultForProperty(Converter converter, IPropertyDescriptor descriptor)
         {
             var type = Nullable.GetUnderlyingType(descriptor.Type) ?? descriptor.Type;
             if (type == typeof(DateTime))
@@ -107,7 +127,7 @@ namespace Sushi.JavaScript
         }
         
         /// <inheritdoc />
-        public string FormatValueForProperty(Converter converter, PropertyDescriptor property, object value)
+        public virtual string FormatValueForProperty(Converter converter, PropertyDescriptor property, object value)
         {
             // What default (fallback) value is suppossed to be used?
             var defaultValue = GetDefaultForProperty(converter, property);
@@ -131,7 +151,7 @@ namespace Sushi.JavaScript
         }
 
         /// <inheritdoc />
-        public override ScriptConditionDescriptor FormatComment(string comment, ConditionType relatedType)
+        public virtual ScriptConditionDescriptor FormatComment(string comment, ConditionType relatedType)
             => SpecificationDefaults.FormatInlineComment(comment, relatedType);
 
         #endregion
@@ -139,7 +159,7 @@ namespace Sushi.JavaScript
         /// <inheritdoc />
         public JavaScriptSpecification()
         {
-            ConditionPipeline = new JavaScriptConditions();
+            ConditionSpecification = new JavaScriptConditions();
         }
     }
 }
