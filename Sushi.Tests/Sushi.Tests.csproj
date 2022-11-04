@@ -29,7 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>bin\Debug\Sushi.Tests.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -39,7 +39,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>bin\Release\Sushi.Tests.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -61,11 +61,17 @@
     </Compile>
     <Compile Include="Documentation\XmlDocumentationReaderTests.cs" />
     <Compile Include="IgnoreAttributeTest.cs" />
+    <Compile Include="ModelDescriptors\DescriptorTreeBuilderTests.cs" />
     <Compile Include="ModelDescriptors\FieldDescriptorTests.cs" />
     <Compile Include="ModelDescriptors\PropertyDescriptorTests.cs" />
+    <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\PersonViewModel.cs" />
+    <Compile Include="Models\SchoolViewModel.cs" />
+    <Compile Include="Models\StudentViewModel.cs" />
+    <Compile Include="Models\TypeModel.cs" />
+    <Compile Include="Models\ViewModel.cs" />
     <Compile Include="ReflectionTests.cs" />
     <Compile Include="Script\CompileWithSummaryTests.cs" />
-    <Compile Include="ModelToConvertTests.cs" />
     <Compile Include="ModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBase.cs" />
@@ -78,30 +84,20 @@
     <Folder Include="ModelDescriptors\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
-      <Project>{A0DFEEAF-2D9A-4317-869A-04AF157C7A5B}</Project>
-      <Name>Sushi.JavaScript</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sushi.TestModels\Sushi.TestModels.csproj">
-      <Project>{FFCD28E6-9725-402C-9993-A945999F9B82}</Project>
-      <Name>Sushi.TestModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sushi.TypeScript\Sushi.TypeScript.csproj">
-      <Project>{95648804-9558-4B82-A5EA-70CB323F657C}</Project>
-      <Name>Sushi.TypeScript</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sushi\Sushi.csproj">
       <Project>{6476FF8A-3AE9-45E4-A7F3-014C9318B2AA}</Project>
       <Name>Sushi</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Compiled\reference.d.ts" />
-    <TypeScriptCompile Include="Compiled\typescript.ts" />
+    <Compile Include="ModelDescriptors\ClassDescriptorTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Compiled\ecmascript.v5.js" />
-    <Compile Include="ModelDescriptors\ClassDescriptorTests.cs" />
+    <Content Include="Compiled\models.es5.js" />
+    <Content Include="Compiled\models.es6.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Compiled\models.latest.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

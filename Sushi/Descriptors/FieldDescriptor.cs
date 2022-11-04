@@ -28,7 +28,7 @@ namespace Sushi.Descriptors
 		public string Name => _field.Name;
 
 		/// <inheritdoc />
-		public bool IsReadonly { get; } = true;
+		public bool IsReadonly => true;
 
 		/// <inheritdoc />
 		public Type Type { get; }
@@ -44,6 +44,9 @@ namespace Sushi.Descriptors
 
 		/// <inheritdoc />
 		public object DefaultValue { get; }
+
+		/// <inheritdoc />
+		public string ScriptTypeValue { get; set; }
 
 		#endregion
 

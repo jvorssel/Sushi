@@ -1,10 +1,25 @@
-﻿using System.ComponentModel;
+﻿// /***************************************************************************\
+// Module Name:       ClassDescriptorTests.cs
+// Project:                   Sushi.Tests
+// Author:                   Jeroen Vorsselman 04-11-2022
+// Copyright:              Royaldesk @ 2022
+// 
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+// \***************************************************************************/
+
+#region
+
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
-using Sushi.TestModels;
-using PropertyDescriptor = Sushi.Descriptors.PropertyDescriptor;
+using Sushi.Documentation;
+using Sushi.Tests.Models;
+
+#endregion
 
 namespace Sushi.Tests.ModelDescriptors
 {
@@ -54,29 +69,29 @@ namespace Sushi.Tests.ModelDescriptors
 				// Arrange
 				var m1 = new ClassDescriptor(typeof(ViewModel));
 				var m2 = new ClassDescriptor(typeof(ViewModel));
-				
+
 				// Act
 				var result = m1 == m2;
-				
+
 				// Assert
 				Assert.IsTrue(result);
 			}
-			
+
 			[TestMethod]
 			public void Equal_WithInheritedClass_ShouldNotBeEqual()
 			{
 				// Arrange
 				var m1 = new ClassDescriptor(typeof(ViewModel));
 				var m2 = new ClassDescriptor(typeof(PersonViewModel));
-				
+
 				// Act
 				var result = m1 == m2;
-				
+
 				// Assert
 				Assert.IsFalse(result);
 			}
 		}
-		
+
 		[TestClass]
 		public class PropertyDescriptorsTests
 		{
@@ -85,14 +100,14 @@ namespace Sushi.Tests.ModelDescriptors
 			{
 				// Arrange
 				var type = typeof(TypeModel);
-				
+
 				// Act
 				var descriptor = new ClassDescriptor(type);
-				
+
 				// Assert
-				Assert.AreEqual(4,descriptor.Properties.Count);
+				Assert.AreEqual(4, descriptor.Properties.Count);
 				Assert.AreEqual(3, descriptor.Properties.Count(x => x is PropertyDescriptor));
-				Assert.AreEqual(1, descriptor.Properties.Count(x=> x is FieldDescriptor));
+				Assert.AreEqual(1, descriptor.Properties.Count(x => x is FieldDescriptor));
 			}
 		}
 	}

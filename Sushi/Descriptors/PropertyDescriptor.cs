@@ -1,13 +1,26 @@
-﻿using System;
+﻿// /***************************************************************************\
+// Module Name:       PropertyDescriptor.cs
+// Project:                   Sushi
+// Author:                   Jeroen Vorsselman 04-11-2022
+// Copyright:              Royaldesk @ 2022
+// 
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+// \***************************************************************************/
+
+#region
+
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
 using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
+
+#endregion
 
 namespace Sushi.Descriptors
 {
@@ -39,6 +52,8 @@ namespace Sushi.Descriptors
 
 		public object DefaultValue { get; }
 
+		public string ScriptTypeValue { get; set; }
+
 		public PropertyDescriptor(PropertyInfo property)
 		{
 			var type = property.PropertyType;
@@ -57,7 +72,7 @@ namespace Sushi.Descriptors
 			var isReadOnlyFromAttr = readOnlyAttr is ReadOnlyAttribute attribute && attribute.IsReadOnly;
 
 			IsReadonly = !canWrite || isReadOnlyFromAttr;
-			DefaultValue = ClassType.GetDefaultValue(_property);	
+			DefaultValue = ClassType.GetDefaultValue(_property);
 		}
 
 		/// <inheritdoc />

@@ -29,7 +29,7 @@ namespace Sushi.Tests
 		[TestMethod]
 		public void FindModelWithAttributeTest()
 		{
-			var converter = new Converter(_types);
+			var converter = new SushiConverter(_types);
 
 			// Have the ConvertToScript attribute, should exist in queue.
 			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(DoNotIgnoreMe) || x.Name == nameof(IgnoreTestRoot)),
@@ -43,7 +43,7 @@ namespace Sushi.Tests
 		[TestMethod]
 		public void ExcludePropertyWithAttributeTest()
 		{
-			var converter = new Converter(_types);
+			var converter = new SushiConverter(_types);
 
 			// Get the model with the properties that should use the Ignore attribute.
 			var model = converter.Models.SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));

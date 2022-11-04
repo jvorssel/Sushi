@@ -6,7 +6,7 @@ namespace Sushi.Helpers
     /// <summary>
     ///     Split the given <see cref="string"/> with a specific <see cref="char"/> and iterate over each occurrence.
     /// </summary>
-    public class StringEnumerator : IEnumerator<string>, IEnumerable<string>
+    public sealed class StringEnumerator : IEnumerator<string>, IEnumerable<string>
     {
         private readonly string[] _split;
 

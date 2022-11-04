@@ -10,11 +10,10 @@
 // \***************************************************************************/
 
 using System;
-using System.Runtime.Remoting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Enum;
-using Sushi.TestModels;
+using Sushi.Tests.Models;
 
 namespace Sushi.Tests.ModelDescriptors
 {

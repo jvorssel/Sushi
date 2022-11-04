@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.TestModels;
+using Sushi.Tests.Models;
 
 namespace Sushi.Tests
 {
@@ -14,17 +14,17 @@ namespace Sushi.Tests
 		[TestMethod]
 		public void ModelsInAssemblyTest()
 		{
-			var converter = new Converter(_assembly);
-			Assert.IsTrue(converter.ModelCount > 0, "Expected atleast one model to be available.");
-			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(SchoolViewModel)), "Expected atleast one ");
+			var converter = new SushiConverter(_assembly);
+			Assert.IsTrue(converter.Models.Count > 0, "Expected at least one model to be available.");
+			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(ViewModel)), "Expected at least one ");
 		}
 
 		[TestMethod]
 		public void ModelPropertyRecognitionTest()
 		{
-			var converter = new Converter(_assembly);
+			var converter = new SushiConverter(_assembly);
 
-			var personModel = converter.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
+			var personModel = converter.Models.Flatten().SingleOrDefault(x => x.Name == nameof(PersonViewModel));
 			Assert.IsNotNull(personModel);
 
 			// PersonModel has 2 properties

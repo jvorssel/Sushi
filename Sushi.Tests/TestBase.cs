@@ -1,11 +1,5 @@
-﻿using System;
-using System.IO;
-using Sushi.Descriptors;
-using Sushi.Extensions;
-using Sushi.JavaScript;
-using Sushi.JavaScript.Enum;
-using Sushi.TypeScript;
-using Sushi.TypeScript.Enum;
+﻿using System.IO;
+using Sushi.Enum;
 
 namespace Sushi.Tests
 {
@@ -16,57 +10,26 @@ namespace Sushi.Tests
         /// <summary>
         ///     Compile a model for JavaScript.
         /// </summary>
-        protected static void CompileJavaScript(Converter converter,
-            JavaScriptVersion version,
-            Func<ClassDescriptor, bool> predicate = null,
-            string fileName = "ecmascript",
-            bool minify = false,
-            Wrap wrap = Wrap.None)
+        protected static void CompileJavaScript(SushiConverter converter, JavaScriptVersion version)
         {
-            var javaScriptConverter = converter.CreateConverterForJavaScript(version, wrap);
-            var converted = javaScriptConverter.Convert(predicate);
+            var jsConverter = converter.JavaScript(version);
+            jsConverter.Convert();
 
-            fileName += $".{version.ToString().ToLowerInvariant()}";
-
-            if (wrap != Wrap.None)
-                fileName += "." + wrap;
-
-            if (minify)
-                fileName += ".min";
-
-            javaScriptConverter.WriteToFile(converted, FilePath, fileName, minify);
+            var fileName = $"models.{version}.js".ToLowerInvariant();
+            jsConverter.WriteToFile(FilePath + fileName);
         }
 
         /// <summary>
         ///     Compile a model for TypeScript.
         /// </summary>
-        protected static void CompileTypeScript(Converter converter, string fileName = "typescript", Func<ClassDescriptor, bool> predicate = null, bool minify = false)
+        protected static void CompileTypeScript(SushiConverter converter, TypeScriptVersion version)
         {
-            var javaScriptConverter = converter.CreateConverterForTypeScript(TypeScriptSpecification.TypeScript);
-            var converted = javaScriptConverter.Convert(predicate);
-
-            if (minify)
-                fileName += ".min";
-
-            javaScriptConverter.WriteToFile(converted, FilePath, fileName, minify);
+            var tsConverter = converter.TypeScript(version);
+            tsConverter.Convert();
+            
+            const string fileName = "models.latest.ts";
+            tsConverter.WriteToFile(FilePath + fileName);
         }
 
-        /// <summary>
-        ///     Compile a model for DefinitelyTyped.
-        /// </summary>
-        protected static void CompileDefinitelyTyped(Converter converter, string fileName = "reference", bool minify = false)
-        {
-            // Make sure the XML documentation is loaded
-            var assemblyName = typeof(TestBase).Assembly.GetProjectName();
-            converter.LoadXmlDocumentation();
-
-            var javaScriptConverter = converter.CreateConverterForTypeScript(TypeScriptSpecification.Declaration);
-            var converted = javaScriptConverter.Convert();
-
-            if (minify)
-                fileName += ".min";
-
-            javaScriptConverter.WriteToFile(converted, FilePath, fileName, minify);
-        }
     }
 }

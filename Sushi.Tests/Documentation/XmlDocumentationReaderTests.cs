@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Documentation;
-using Sushi.TestModels;
+using Sushi.Tests.Models;
 
 namespace Sushi.Tests.Documentation
 {
@@ -15,15 +14,12 @@ namespace Sushi.Tests.Documentation
 
         public string FilePath { get; set; }
 
-        public Assembly Assembly { get; set; }
-
         public XmlDocumentationReader Reader { get; set; }
 
         [TestInitialize]
         public void Initialize()
         {
-            Assembly = typeof(SchoolViewModel).Assembly;
-            FilePath = Path.Combine(BaseDirectoryPath, $"{Assembly.FullName.Split(',')[0]}.xml");
+            FilePath = Path.Combine(BaseDirectoryPath, "Sushi.Tests.xml");
             Reader = new XmlDocumentationReader(FilePath);
         }
 

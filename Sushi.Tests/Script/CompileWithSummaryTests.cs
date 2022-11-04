@@ -2,27 +2,27 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Extensions;
-using Sushi.JavaScript.Enum;
-using Sushi.TestModels;
+using Sushi.Enum;
+using Sushi.Tests.Models;
 
-namespace Sushi.Tests
+namespace Sushi.Tests.Script
 {
 	[TestClass]
 	public class CompileWithSummaryTests : TestBase
 	{
-		public TestContext Context { get; set; }
+		public const string XML_FILE_NAME = "Sushi.tests.xml";
+		private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
+		
+		public TestContext Context { get; set; }		
 
 		[TestMethod]
 		public void LoadCorrectlyTest()
 		{
-			var assembly = typeof(SchoolViewModel).Assembly;
-			var converter = new Converter(assembly);
+			var assembly = typeof(SushiConverter).Assembly;
+			var converter = new SushiConverter(assembly);
 			
 			// Make sure the XML documentation is loaded
-			var assemblyName = assembly.GetProjectName();
-			var xmlDocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{assemblyName}.xml");
-			converter.LoadXmlDocumentation(xmlDocPath);
+			converter.LoadXmlDocumentation(XmlDocPath);
 
 			Assert.IsNotNull(converter.Documentation);
 			Assert.IsTrue(converter.Documentation.Initialized);
@@ -30,20 +30,43 @@ namespace Sushi.Tests
 		}
 
 		[TestMethod]
-		public void CompileTest()
+		public void JavascriptEs5_CompileTest()
 		{
-			var assembly = typeof(SchoolViewModel).Assembly;
-			var converter = new Converter(assembly);
+			var assembly = typeof(PersonViewModel).Assembly;
+			var converter = new SushiConverter(assembly);
 			
 			// Make sure the XML documentation is loaded
-			var assemblyName = assembly.GetProjectName();
-			var xmlDocPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{assemblyName}.xml");
-			converter.LoadXmlDocumentation(xmlDocPath);
+			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			CompileJavaScript(converter, JavaScriptVersion.V5);
-			CompileTypeScript(converter);
-			CompileDefinitelyTyped(converter);
+			CompileJavaScript(converter, JavaScriptVersion.ES5);
 		}
+		
+		[TestMethod]
+		public void JavascriptEs6_CompileTest()
+		{
+			var assembly = typeof(PersonViewModel).Assembly;
+			var converter = new SushiConverter(assembly);
+			
+			// Make sure the XML documentation is loaded
+			converter.LoadXmlDocumentation(XmlDocPath);
+
+			// Convert the available models and look if the result is as expected.
+			CompileJavaScript(converter, JavaScriptVersion.ES6);
+		}
+		
+		[TestMethod]
+		public void Typescript_CompileTest()
+		{
+			var assembly = typeof(PersonViewModel).Assembly;
+			var converter = new SushiConverter(assembly);
+			
+			// Make sure the XML documentation is loaded
+			converter.LoadXmlDocumentation(XmlDocPath);
+
+			// Convert the available models and look if the result is as expected.
+			CompileTypeScript(converter, TypeScriptVersion.Latest);
+		}
+
 	}
 }

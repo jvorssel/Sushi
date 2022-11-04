@@ -47,24 +47,14 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ConversionKernelExtensions.cs" />
-    <Compile Include="Specifications\DefinitelyTypedSpecification.cs" />
-    <Compile Include="Enum\TypeScriptSpecification.cs" />
-    <Compile Include="Enum\TypeScriptType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Specifications\TypeScriptSpecification.cs" />
-    <Compile Include="Specifications\TypeScriptSpecificationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sushi.JavaScript\Sushi.JavaScript.csproj">
-      <Project>{a0dfeeaf-2d9a-4317-869a-04af157c7a5b}</Project>
-      <Name>Sushi.JavaScript</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sushi\Sushi.csproj">
       <Project>{6476ff8a-3ae9-45e4-a7f3-014c9318b2aa}</Project>
       <Name>Sushi</Name>
@@ -84,6 +74,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="Templates\reference.d.ts" />
     <TypeScriptCompile Include="Templates\template.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enum" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

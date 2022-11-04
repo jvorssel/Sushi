@@ -10,6 +10,7 @@ using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Extensions;
 using Sushi.Interfaces;
+#pragma warning disable CS1591
 
 namespace Sushi.Documentation
 {
@@ -18,10 +19,10 @@ namespace Sushi.Documentation
     ///     its <see cref="Members"/> with <see cref="XmlSummaryDescriptor"/>(s) that
     ///     describe property / field / method / class documentation.
     /// </summary>
-    public class XmlDocumentationReader
+    public sealed class XmlDocumentationReader
     {
-        public string Path { get; }
-        public string AssemblyName { get; private set; }
+        private string Path { get; }
+        private string AssemblyName { get; set; }
 
         public List<XmlSummaryDescriptor> Members { get; private set; } = new List<XmlSummaryDescriptor>();
 
