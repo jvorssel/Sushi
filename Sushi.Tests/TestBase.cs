@@ -26,7 +26,8 @@ namespace Sushi.Tests
         {
             var tsConverter = converter.TypeScript(version);
             tsConverter.Convert();
-            
+            tsConverter.ConvertEnums();
+
             const string fileName = "models.latest.ts";
             tsConverter.WriteToFile(FilePath + fileName);
         }

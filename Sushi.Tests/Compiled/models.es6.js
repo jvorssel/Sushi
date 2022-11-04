@@ -1,3 +1,4 @@
+
 /**
  * Sushi.Tests.Models.ViewModel. 
  * @typedef {Object} ViewModel

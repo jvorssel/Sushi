@@ -19,7 +19,6 @@ using System.Reflection;
 using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Enum;
 using Sushi.Interfaces;
 
 #endregion
@@ -32,24 +31,30 @@ namespace Sushi
 	/// </summary>
 	public sealed class SushiConverter
 	{
-		public HashSet<ClassDescriptor> Models { get; } = new HashSet<ClassDescriptor>();
+		public HashSet<ClassDescriptor> Models { get; }
+		public HashSet<EnumDescriptor> EnumModels { get; }
 
 		public XmlDocumentationReader Documentation { get; set; }
 
 		/// <summary>
 		///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> for <see cref="Models" />.
 		/// </summary>
-		public SushiConverter(IEnumerable<Type> types)
+		public SushiConverter(ICollection<Type> types)
 		{
 			var treeBuilder = new DescriptorTreeBuilder(types);
 			Models = treeBuilder.BuildTree().ToHashSet();
+			
+			EnumModels = types
+				.Where(x => x.IsEnum)
+				.Select(x => new EnumDescriptor(x))
+				.ToHashSet();
 		}
 
 		/// <summary>
 		///     Initialize a new <see cref="SushiConverter" /> with models that
 		///     inherit <see cref="IScriptModel" /> in the given <paramref name="assembly" />.
 		/// </summary>
-		public SushiConverter(Assembly assembly) : this(assembly.ExportedTypes) { }
+		public SushiConverter(Assembly assembly) : this(assembly.ExportedTypes.ToList()) { }
 
 		/// <summary>
 		///     Use the xml documentation generated on build.

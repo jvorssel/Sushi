@@ -35,7 +35,7 @@ namespace Sushi.Converters
 		public JavaScriptConverter(SushiConverter converter, JavaScriptVersion version) : base(converter)
 		{
 			_version = version;
-			converter.Models.AssignScriptTypes();
+			converter.AssignScriptTypes();
 		}
 
 		public void AddPropertySummary(IPropertyDescriptor prop, StringBuilder builder)

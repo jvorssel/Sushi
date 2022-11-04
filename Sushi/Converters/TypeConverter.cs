@@ -12,9 +12,7 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Extensions;
 
@@ -24,9 +22,9 @@ namespace Sushi.Converters
 {
 	public static class TypeConverter
 	{
-		public static void AssignScriptTypes(this ICollection<ClassDescriptor> models)
+		public static void AssignScriptTypes(this SushiConverter converter)
 		{
-			var flat = models.Flatten().ToList();
+			var flat = converter.Models.Flatten().ToList();
 			foreach (var model in flat)
 			foreach (var prop in model.Properties)
 			{
@@ -34,9 +32,12 @@ namespace Sushi.Converters
 				var actualType = prop.Type.GetBaseType();
 
 				// Check if any of the available models have the same name and should be used.
-				var dataModel = flat.SingleOrDefault(x => x.Name == actualType.Name);
-				if (!ReferenceEquals(dataModel, null))
-					prop.ScriptTypeValue = $"{dataModel.Name} | null";
+				var classModel = flat.SingleOrDefault(x => x.Name               == actualType.Name);
+				var enumModel = converter.EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
+				if (!ReferenceEquals(classModel, null))
+					prop.ScriptTypeValue = $"{classModel.Name} | null";
+				else if (enumModel != null)
+					prop.ScriptTypeValue = $"{enumModel.Name} | number";
 				else if (actualType == typeof(DateTime))
 					prop.ScriptTypeValue = "Date";
 				else
@@ -57,11 +58,11 @@ namespace Sushi.Converters
 
 			while (type.IsGenericType)
 			{
-				 var genericType = type.GenericTypeArguments.SingleOrDefault() ?? type.BaseType;
-				 if (genericType == null)
-					 return type;
-				 
-				 type = genericType;
+				var genericType = type.GenericTypeArguments.SingleOrDefault() ?? type.BaseType;
+				if (genericType == null)
+					return type;
+
+				type = genericType;
 			}
 
 			return type;

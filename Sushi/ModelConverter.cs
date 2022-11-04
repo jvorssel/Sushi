@@ -31,6 +31,7 @@ namespace Sushi
 		protected readonly SushiConverter Converter;
 		protected readonly XmlDocumentationReader XmlDocument;
 		protected readonly HashSet<ClassDescriptor> Models;
+		protected readonly HashSet<EnumDescriptor> EnumModels;
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
@@ -40,6 +41,7 @@ namespace Sushi
 			Converter = converter;
 			XmlDocument = Converter.Documentation;
 			Models = converter.Models;
+			EnumModels = converter.EnumModels;
 		}
 
 
@@ -50,6 +52,9 @@ namespace Sushi
 		public string MergeModelsToString()
 		{
 			var builder = new StringBuilder();
+			foreach(var enumModel in EnumModels)
+				builder.AppendLine(enumModel.Script);
+			
 			foreach (var model in Models.Flatten())
 				builder.AppendLine(model.Script);
 

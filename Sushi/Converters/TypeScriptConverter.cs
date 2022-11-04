@@ -51,11 +51,26 @@ namespace Sushi.Converters
 			}
 		}
 
+		public void ConvertEnums()
+		{
+			foreach (var model in Converter.EnumModels)
+			{
+				var builder = new StringBuilder();
+				builder.AppendLine($"export enum {model.Name} {{");
+				foreach (var kvp in model.Values)
+					builder.AppendLine($"\t{kvp.Key} = {kvp.Value},");
+			
+				builder.AppendLine("}");
+				
+				model.Script = builder.ToString();
+			}
+		}
+
 		private string ToTypeScriptClass(ClassDescriptor model)
 		{
 			var builder = new StringBuilder();
 			builder.Append(Converter.JsDocClassSummary(model));
-			var classDeclaration = $"class {model.Name}";
+			var classDeclaration = $"export class {model.Name}";
 			if (model.Parent != (ClassDescriptor)null)
 				classDeclaration += $" extends {model.Parent.Name}";
 

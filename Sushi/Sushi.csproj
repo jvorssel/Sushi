@@ -48,6 +48,7 @@
     <Compile Include="Converters\TypeConverter.cs" />
     <Compile Include="Converters\TypeScriptConverter.cs" />
     <Compile Include="Descriptors\DescriptorTreeBuilder.cs" />
+    <Compile Include="Descriptors\EnumDescriptor.cs" />
     <Compile Include="Enum\TypeScriptVersion.cs" />
     <Compile Include="Converters\JavaScriptConverter.cs" />
     <Compile Include="Descriptors\FieldDescriptor.cs" />

@@ -1,8 +1,14 @@
+export enum Gender {
+	Undefined = 0,
+	Male = 1,
+	Female = 2,
+}
+
 /**
  * Sushi.Tests.Models.ViewModel. 
  * @typedef {Object} ViewModel
  */
-class ViewModel {
+export class ViewModel {
 	Guid: string;
 	CreatedOn: Date;
 
@@ -20,7 +26,7 @@ class ViewModel {
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
-class PersonViewModel extends ViewModel {
+export class PersonViewModel extends ViewModel {
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
@@ -28,7 +34,7 @@ class PersonViewModel extends ViewModel {
 	/** The Surname of the person. */
 	Surname: string;
 	/** The Gender of the person. */
-	Gender: number;
+	Gender: Gender | number;
 	Guid: string;
 	CreatedOn: Date;
 
@@ -52,7 +58,7 @@ class PersonViewModel extends ViewModel {
  * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
-class StudentViewModel extends PersonViewModel {
+export class StudentViewModel extends PersonViewModel {
 	/** What Grade the Student is in. */
 	Grade: number;
 	/** The name of the School. */
@@ -64,7 +70,7 @@ class StudentViewModel extends PersonViewModel {
 	/** The Surname of the person. */
 	Surname: string;
 	/** The Gender of the person. */
-	Gender: number;
+	Gender: Gender | number;
 	Guid: string;
 	CreatedOn: Date;
 
@@ -90,7 +96,7 @@ class StudentViewModel extends PersonViewModel {
  * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
-class SchoolViewModel extends ViewModel {
+export class SchoolViewModel extends ViewModel {
 	/** The Name of this SchoolViewModel. */
 	Name: string;
 	/** The Owner of this SchoolViewModel. */
@@ -134,7 +140,7 @@ class SchoolViewModel extends ViewModel {
  * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
-class TypeModel extends ViewModel {
+export class TypeModel extends ViewModel {
 	/** A nullable boolean. */
 	NullableBool: boolean;
 	Guid: string;
