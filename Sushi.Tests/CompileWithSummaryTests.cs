@@ -71,7 +71,18 @@ namespace Sushi.Tests
 				.ConvertClasses()
 				.ConvertEnums()
 				.WriteToFile(FilePath + "models.latest.ts");
+		}
+		
+		[TestMethod]
+		public void Typescript_WithoutComments_CompileTest()
+		{
+			var assembly = typeof(PersonViewModel).Assembly;
+			var converter = new SushiConverter(assembly);
 			
+			// Make sure the XML documentation is loaded
+			converter.LoadXmlDocumentation(XmlDocPath);
+
+			// Convert the available models and look if the result is as expected.
 			converter.TypeScript(TypeScriptVersion.Latest)
 				.NoComments()
 				.ConvertEnums()

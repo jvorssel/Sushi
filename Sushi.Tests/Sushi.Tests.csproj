@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Compiled\models.latest.ts" />
+    <TypeScriptCompile Include="Compiled\models.no-comments.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
