@@ -9,7 +9,12 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
+#region
+
 using System;
+using System.Collections.Generic;
+
+#endregion
 
 namespace Sushi.Tests.Models
 {
@@ -28,7 +33,12 @@ namespace Sushi.Tests.Models
 		/// </summary>
 		public readonly string ReadonlyString = "readonly";
 
-		/// <inheritdoc cref="Guid"/>
+		/// <inheritdoc cref="Guid" />
 		public new Guid Guid { get; set; } = Guid.NewGuid();
+
+		public StudentViewModel Student { get; set; } = new StudentViewModel();
+
+		public List<StudentViewModel> Students { get; set; }
+		public List<List<StudentViewModel>> StudentPerClass { get; set; }
 	}
 }

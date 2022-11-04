@@ -87,6 +87,9 @@ function TypeModel(value) {
 	/** A nullable boolean. */
 	this.NullableBool = value.NullableBool;
 	this.Guid = value.Guid;
+	this.Student = value.Student;
+	this.Students = value.Students;
+	this.StudentPerClass = value.StudentPerClass;
 	this.CreatedOn = value.CreatedOn;
 	/** A readonly string. */
 	this.ReadonlyString = value.ReadonlyString;

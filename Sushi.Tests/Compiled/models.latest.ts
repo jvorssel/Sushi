@@ -56,7 +56,7 @@ class StudentViewModel extends PersonViewModel {
 	/** What Grade the Student is in. */
 	Grade: number;
 	/** The name of the School. */
-	School: any;
+	School: SchoolViewModel | null;
 	/** The Identifier that this Model refers to. */
 	Identifier: string;
 	/** The Name of the person. */
@@ -94,7 +94,7 @@ class SchoolViewModel extends ViewModel {
 	/** The Name of this SchoolViewModel. */
 	Name: string;
 	/** The Owner of this SchoolViewModel. */
-	Owner: any;
+	Owner: PersonViewModel | null;
 	/** The AmountOfStudents of this SchoolViewModel. */
 	AmountOfStudents: number;
 	/** The Address of this SchoolViewModel. */
@@ -106,7 +106,7 @@ class SchoolViewModel extends ViewModel {
 	/** The HouseNumberAddition of this SchoolViewModel. */
 	HouseNumberAddition: string;
 	/** The Students of this SchoolViewModel. */
-	Students: any;
+	Students: Array<StudentViewModel | null>;
 	Guid: string;
 	CreatedOn: Date;
 
@@ -138,6 +138,9 @@ class TypeModel extends ViewModel {
 	/** A nullable boolean. */
 	NullableBool: boolean;
 	Guid: string;
+	Student: StudentViewModel | null;
+	Students: Array<StudentViewModel | null>;
+	StudentPerClass: Array<Array<StudentViewModel | null>>;
 	CreatedOn: Date;
 	/** A readonly string. */
 	ReadonlyString: string;
@@ -150,6 +153,9 @@ class TypeModel extends ViewModel {
 
 		this.NullableBool = value.NullableBool;
 		this.Guid = value.Guid;
+		this.Student = value.Student;
+		this.Students = value.Students;
+		this.StudentPerClass = value.StudentPerClass;
 		this.CreatedOn = value.CreatedOn;
 		this.ReadonlyString = value.ReadonlyString;
 	}

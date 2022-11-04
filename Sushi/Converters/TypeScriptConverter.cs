@@ -29,8 +29,11 @@ namespace Sushi.Converters
 		private readonly TypeScriptVersion _version;
 
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, TypeScriptVersion version) : base(converter, JavaScriptVersion.Es6)
-			=> _version = version;
+		public TypeScriptConverter(SushiConverter converter, TypeScriptVersion version)
+			: base(converter, JavaScriptVersion.Es6)
+		{
+			_version = version;
+		}
 
 		/// <inheritdoc />
 		public override void Convert()
@@ -40,7 +43,7 @@ namespace Sushi.Converters
 				switch (_version)
 				{
 					case TypeScriptVersion.Latest:
-						model.Script = CompileTypeScriptClasses(model);
+						model.Script = ToTypeScriptClass(model);
 						break;
 					default:
 						throw new ArgumentOutOfRangeException();
@@ -48,7 +51,7 @@ namespace Sushi.Converters
 			}
 		}
 
-		private string CompileTypeScriptClasses(ClassDescriptor model)
+		private string ToTypeScriptClass(ClassDescriptor model)
 		{
 			var builder = new StringBuilder();
 			builder.Append(Converter.JsDocClassSummary(model));

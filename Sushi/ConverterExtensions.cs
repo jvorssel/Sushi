@@ -36,12 +36,6 @@ namespace Sushi
 			=> new(converter, version);
 
         /// <summary>
-        ///     Simple fix to include the <see cref="SushiConverter.CustomTypeHandling" />.
-        /// </summary>
-        public static NativeType IncludeOverride(this NativeType @this, SushiConverter converter, Type type)
-			=> converter.CustomTypeHandling.ContainsKey(type) ? converter.CustomTypeHandling[type] : @this;
-
-        /// <summary>
         ///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
         /// </summary>
 		public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)

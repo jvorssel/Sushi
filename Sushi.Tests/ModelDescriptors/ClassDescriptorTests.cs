@@ -102,8 +102,8 @@ namespace Sushi.Tests.ModelDescriptors
 				var descriptor = new ClassDescriptor(type);
 
 				// Assert
-				Assert.AreEqual(4, descriptor.Properties.Count);
-				Assert.AreEqual(3, descriptor.Properties.Count(x => x is PropertyDescriptor));
+				Assert.AreEqual(7, descriptor.Properties.Count);
+				Assert.AreEqual(6, descriptor.Properties.Count(x => x is PropertyDescriptor));
 				Assert.AreEqual(1, descriptor.Properties.Count(x => x is FieldDescriptor));
 			}
 		}

@@ -45,6 +45,7 @@
     <Compile Include="Attributes\ConvertToScriptAttribute.cs" />
     <Compile Include="Attributes\IgnoreForScript.cs" />
     <Compile Include="ConverterExtensions.cs" />
+    <Compile Include="Converters\TypeConverter.cs" />
     <Compile Include="Converters\TypeScriptConverter.cs" />
     <Compile Include="Descriptors\DescriptorTreeBuilder.cs" />
     <Compile Include="Enum\TypeScriptVersion.cs" />

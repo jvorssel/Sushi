@@ -37,11 +37,6 @@ namespace Sushi
 		public XmlDocumentationReader Documentation { get; set; }
 
 		/// <summary>
-		///     Used to specify custom <see cref="NativeType" /> handling.
-		/// </summary>
-		public Dictionary<Type, NativeType> CustomTypeHandling { get; } = new();
-
-		/// <summary>
 		///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> for <see cref="Models" />.
 		/// </summary>
 		public SushiConverter(IEnumerable<Type> types)

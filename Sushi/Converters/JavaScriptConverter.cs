@@ -12,8 +12,7 @@
 #region
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
@@ -36,7 +35,7 @@ namespace Sushi.Converters
 		public JavaScriptConverter(SushiConverter converter, JavaScriptVersion version) : base(converter)
 		{
 			_version = version;
-			SetScriptTypes();
+			converter.Models.AssignScriptTypes();
 		}
 
 		public void AddPropertySummary(IPropertyDescriptor prop, StringBuilder builder)
@@ -44,59 +43,6 @@ namespace Sushi.Converters
 			var propertySummary = Converter.Documentation.JsDocPropertySummary(prop);
 			if (!propertySummary.IsEmpty())
 				builder.AppendLine($"\t{propertySummary}");
-		}
-
-		public void SetScriptTypes()
-		{
-			foreach (var model in Models.Flatten())
-			{
-				foreach (var prop in model.Properties)
-				{
-					var nativeType = prop.NativeType.IncludeOverride(Converter, prop.Type);
-					var type = Nullable.GetUnderlyingType(prop.Type) ?? prop.Type;
-					var isArray = type.IsTypeOrInheritsOf(typeof(IEnumerable<>)) && type != typeof(string);
-
-					// Check if any of the available models have the same name and should be used.
-					var dataModel = Models.FirstOrDefault(x => x.FullName == type.FullName);
-					if (!ReferenceEquals(dataModel, null))
-						prop.ScriptTypeValue = dataModel.Name;
-					else if (type == typeof(DateTime))
-						prop.ScriptTypeValue = "Date";
-					else
-						prop.ScriptTypeValue = ToScriptType(nativeType);
-					if (isArray)
-						prop.ScriptTypeValue = $"Array<{prop.ScriptTypeValue}>";
-				}
-			}
-		}
-
-		public static string ToScriptType(NativeType type)
-		{
-			switch (type)
-			{
-				case NativeType.Undefined:
-					return @"void";
-				case NativeType.Bool:
-					return @"boolean";
-				case NativeType.Enum:
-				case NativeType.Byte:
-				case NativeType.Short:
-				case NativeType.Long:
-				case NativeType.Int:
-				case NativeType.Double:
-				case NativeType.Float:
-				case NativeType.Decimal:
-					return @"number";
-				case NativeType.Object:
-					return @"any";
-				case NativeType.Char:
-				case NativeType.String:
-					return @"string";
-				case NativeType.Null:
-					return @"null";
-				default:
-					throw new ArgumentOutOfRangeException(nameof(type), type, null);
-			}
 		}
 
 		/// <inheritdoc />
