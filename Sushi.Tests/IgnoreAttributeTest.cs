@@ -46,7 +46,7 @@ namespace Sushi.Tests
 			var converter = new SushiConverter(_types);
 
 			// Get the model with the properties that should use the Ignore attribute.
-			var model = converter.Models.SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));
+			var model = converter.Models.Flatten().SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));
 			Assert.IsNotNull(model);
 
 			Assert.IsTrue(model.Properties.Any(x => x.Name == nameof(DoNotIgnoreMe.ShouldExist)),

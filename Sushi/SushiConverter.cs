@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Interfaces;
@@ -63,7 +62,7 @@ namespace Sushi
 		{
 			var extension = Path.GetExtension(path);
 			if (extension != ".xml")
-				throw Errors.XmlDocumentExpected(path);
+				throw new ArgumentException($"Expected the path '{path}' to lead to a XML file.");
 
 			Documentation = new XmlDocumentationReader(path).Initialize();
 

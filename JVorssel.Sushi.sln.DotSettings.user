@@ -10,17 +10,25 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/AutoDetectedNamingRules/=Property/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/AutoDetectedNamingRules/=PublicFields/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/AutoDetectedNamingRules/=TypesAndNamespaces/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\jvors\AppData\Local\JetBrains\Rider2022.2\resharper-host\temp\Rider\vAny\CoverageData\_JVorssel.Sushi.-1763812081\Snapshot\snapshot.utdcvr</s:String>
 	
 	<s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndex/@EntryValue">2</s:Int64>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a2db78b0_002D074a_002D4765_002Da54f_002D9b660902bcbc/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="True" ContinuousTestingMode="1" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2bbb0c4e_002D98eb_002D4853_002D87ea_002D799095d011c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;And&gt;&#xD;
     &lt;Project Location="C:\Users\jvors\Documents\GitHub\ModelConverter\Sushi.Tests" Presentation="&amp;lt;Sushi.Tests&amp;gt;" /&gt;&#xD;
     &lt;Namespace&gt;Sushi.Tests&lt;/Namespace&gt;&#xD;
   &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a577a787_002D5206_002D412c_002Da2c8_002D4a8d4d2ed789/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ModelPropertyRecognitionTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;MSTest::4C704286-6A75-42FD-A651-D8B02AAA24F0::.NETFramework,Version=v4.8::Sushi.Tests.ModelTests.ModelPropertyRecognitionTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=da882b30_002De3ad_002D43f9_002Dae90_002D6c746088fcf2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;And&gt;&#xD;
+    &lt;Project Location="C:\Users\jvors\Documents\GitHub\ModelConverter\Sushi.Tests" Presentation="&amp;lt;Sushi.Tests&amp;gt;" /&gt;&#xD;
+    &lt;Namespace&gt;Sushi.Tests&lt;/Namespace&gt;&#xD;
+  &lt;/And&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>

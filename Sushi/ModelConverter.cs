@@ -17,7 +17,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Sushi.Consistency;
 using Sushi.Converters;
 using Sushi.Descriptors;
 using Sushi.Documentation;
@@ -88,7 +87,7 @@ namespace Sushi
 				throw new ArgumentNullException(nameof(path));
 
 			if (Models.All(x => x.Script?.IsEmpty() ?? true))
-				throw Errors.NoScriptAvailableInModels(nameof(Models));
+				throw new ArgumentNullException(nameof(Models), $@"No descriptors with '{nameof(ClassDescriptor.Script)}', call Convert first.");
 
 			var fileContent = MergeModelsToString();
 			File.WriteAllText(path, fileContent, encoding ?? Encoding.Default);

@@ -60,10 +60,8 @@
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\DescriptorHelpers.cs" />
-    <Compile Include="Helpers\StringLineEnumerator.cs" />
     <Compile Include="Helpers\TypeConversionHelper.cs" />
     <Compile Include="Descriptors\ClassDescriptor.cs" />
-    <Compile Include="Consistency\Errors.cs" />
     <Compile Include="Interfaces\IPropertyDescriptor.cs" />
     <Compile Include="Interfaces\IScriptModel.cs" />
     <Compile Include="ModelConverter.cs" />
