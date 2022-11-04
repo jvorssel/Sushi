@@ -278,6 +278,17 @@ namespace Sushi.Documentation
 			return null;
 		}
 
+		public static string JsDocPropertySummary(this SushiConverter converter,  IPropertyDescriptor prop)
+		{
+			var builder = new StringBuilder();
+
+			var propertySummary = converter.Documentation.JsDocPropertySummary(prop);
+			if (!propertySummary.IsEmpty())
+				builder.AppendLine($"\t{propertySummary}");
+			
+			return builder.ToString();
+		}
+		
 		public static string JsDocClassSummary(this SushiConverter converter, ClassDescriptor descriptor)
 		{
 			var builder = new StringBuilder();

@@ -18,6 +18,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Sushi.Consistency;
+using Sushi.Converters;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Extensions;
@@ -26,12 +27,13 @@ using Sushi.Extensions;
 
 namespace Sushi
 {
-	public abstract class ModelConverter
+	public abstract class ModelConverter<TConverter> where TConverter: ModelConverter<TConverter>
 	{
 		protected readonly SushiConverter Converter;
 		protected readonly XmlDocumentationReader XmlDocument;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
+		public bool ExcludeComments { get; set; }
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
@@ -42,8 +44,15 @@ namespace Sushi
 			XmlDocument = Converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;
+			
+			converter.AssignScriptTypes();
 		}
 
+		public TConverter NoComments()
+		{
+			ExcludeComments = true;
+			return (TConverter)this;
+		}
 
 		/// <summary>
 		///     Join one or more given <paramref name="models" /> and maybe <paramref name="minify" />
@@ -66,7 +75,7 @@ namespace Sushi
 		/// <summary>
 		///     Compile the models in the converter.
 		/// </summary>
-		public abstract void Convert();
+		public abstract TConverter Convert();
 
 		/// <summary>
 		///     Write the generated script values to the file.

@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 04-11-2022
+// Author:                   Jeroen Vorsselman 05-11-2022
 // Copyright:              Royaldesk @ 2022
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -12,10 +12,12 @@
 #region
 
 using System;
+using System.Linq;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
+using Sushi.Extensions;
 
 #endregion
 
@@ -24,19 +26,17 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the TypeScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public class TypeScriptConverter : JavaScriptConverter
+	public sealed class TypeScriptConverter : ModelConverter<TypeScriptConverter>
 	{
 		private readonly TypeScriptVersion _version;
 
 		/// <inheritdoc />
 		public TypeScriptConverter(SushiConverter converter, TypeScriptVersion version)
-			: base(converter, JavaScriptVersion.Es6)
-		{
-			_version = version;
-		}
+			: base(converter)
+			=> _version = version;
 
 		/// <inheritdoc />
-		public override void Convert()
+		public override TypeScriptConverter Convert()
 		{
 			foreach (var model in Converter.Models.Flatten())
 			{
@@ -49,9 +49,11 @@ namespace Sushi.Converters
 						throw new ArgumentOutOfRangeException();
 				}
 			}
+
+			return this;
 		}
 
-		public void ConvertEnums()
+		public TypeScriptConverter ConvertEnums()
 		{
 			foreach (var model in Converter.EnumModels)
 			{
@@ -59,17 +61,24 @@ namespace Sushi.Converters
 				builder.AppendLine($"export enum {model.Name} {{");
 				foreach (var kvp in model.Values)
 					builder.AppendLine($"\t{kvp.Key} = {kvp.Value},");
-			
+
 				builder.AppendLine("}");
-				
+
 				model.Script = builder.ToString();
 			}
+
+			return this;
 		}
 
 		private string ToTypeScriptClass(ClassDescriptor model)
 		{
+			if (model.Properties.All(x => x.ScriptTypeValue.IsEmpty()))
+				throw new InvalidOperationException(
+					"Script type declaration missing on model properties, invoke converter.AssignScriptTypes() first.");
+
 			var builder = new StringBuilder();
-			builder.Append(Converter.JsDocClassSummary(model));
+			if (!ExcludeComments)
+				builder.Append(Converter.JsDocClassSummary(model));
 			var classDeclaration = $"export class {model.Name}";
 			if (model.Parent != (ClassDescriptor)null)
 				classDeclaration += $" extends {model.Parent.Name}";
@@ -79,7 +88,9 @@ namespace Sushi.Converters
 
 			foreach (var prop in model.Properties)
 			{
-				AddPropertySummary(prop, builder);
+				if (!ExcludeComments)
+					builder.Append(Converter.JsDocPropertySummary(prop));
+
 				builder.AppendLine($"\t{prop.Name}: {prop.ScriptTypeValue};");
 			}
 

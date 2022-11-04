@@ -20,6 +20,6 @@ namespace Sushi.Consistency
             => new($"Expected the node '{missingNode}' to exist in the loaded XML file.{XML_DOC_INSTRUCTIONS}");
 
         public static ArgumentNullException NoScriptAvailableInModels(string paramName)
-            => new(paramName, $@"No members found with its '{nameof(ClassDescriptor.Script)}' set, call {nameof(ModelConverter.Convert)} first.");
+            => new(paramName, $@"No members found with its '{nameof(ClassDescriptor.Script)}' set, call Convert first.");
     }
 }

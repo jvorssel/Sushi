@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       JavaScriptConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 04-11-2022
+// Author:                   Jeroen Vorsselman 05-11-2022
 // Copyright:              Royaldesk @ 2022
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -12,7 +12,6 @@
 #region
 
 using System;
-using System.Collections;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
@@ -27,7 +26,7 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public class JavaScriptConverter : ModelConverter
+	public class JavaScriptConverter : ModelConverter<JavaScriptConverter>
 	{
 		private readonly JavaScriptVersion _version;
 
@@ -35,18 +34,11 @@ namespace Sushi.Converters
 		public JavaScriptConverter(SushiConverter converter, JavaScriptVersion version) : base(converter)
 		{
 			_version = version;
-			converter.AssignScriptTypes();
-		}
-
-		public void AddPropertySummary(IPropertyDescriptor prop, StringBuilder builder)
-		{
-			var propertySummary = Converter.Documentation.JsDocPropertySummary(prop);
-			if (!propertySummary.IsEmpty())
-				builder.AppendLine($"\t{propertySummary}");
+			
 		}
 
 		/// <inheritdoc />
-		public override void Convert()
+		public override JavaScriptConverter Convert()
 		{
 			foreach (var model in Converter.Models.Flatten())
 			{
@@ -62,17 +54,22 @@ namespace Sushi.Converters
 						throw new ArgumentOutOfRangeException(nameof(_version), _version, null);
 				}
 			}
+			
+			return this;
 		}
 
-		public string CompileEcmaScript5Classes(ClassDescriptor model)
+		private string CompileEcmaScript5Classes(ClassDescriptor model)
 		{
 			var builder = new StringBuilder();
-			builder.Append(Converter.JsDocClassSummary(model));
+			if (!ExcludeComments)
+				builder.Append(Converter.JsDocClassSummary(model));
 			builder.AppendLine($"function {model.Name}(value) {{");
 			builder.AppendLine("\tif (!(value instanceof Object)) value = {};");
 			foreach (var prop in model.Properties)
 			{
-				AddPropertySummary(prop, builder);
+				if (!ExcludeComments)
+					builder.Append(Converter.JsDocPropertySummary(prop));
+				
 				builder.AppendLine($"\tthis.{prop.Name} = value.{prop.Name};");
 			}
 
@@ -82,10 +79,11 @@ namespace Sushi.Converters
 			return script;
 		}
 
-		public string CompileEcmaScript6Classes(ClassDescriptor model)
+		private string CompileEcmaScript6Classes(ClassDescriptor model)
 		{
 			var builder = new StringBuilder();
-			builder.Append(Converter.JsDocClassSummary(model));
+			if (!ExcludeComments)
+				builder.Append(Converter.JsDocClassSummary(model));
 			var classDeclaration = $"class {model.Name}";
 			if (model.Parent != (ClassDescriptor)null)
 				classDeclaration += $" extends {model.Parent.Name}";
@@ -95,7 +93,9 @@ namespace Sushi.Converters
 
 			foreach (var prop in model.Properties)
 			{
-				AddPropertySummary(prop, builder);
+				if (!ExcludeComments)
+					builder.Append(Converter.JsDocPropertySummary(prop));
+				
 				builder.AppendLine($"\t{prop.Name};");
 			}
 

@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Enum;
 using Sushi.Tests.Models;
 
-namespace Sushi.Tests.Script
+namespace Sushi.Tests
 {
 	[TestClass]
-	public class CompileWithSummaryTests : TestBase
+	public class HappyFlowTests : TestBase
 	{
 		public const string XML_FILE_NAME = "Sushi.tests.xml";
 		private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
