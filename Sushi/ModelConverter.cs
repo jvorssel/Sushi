@@ -75,7 +75,7 @@ namespace Sushi
 		/// <summary>
 		///     Compile the models in the converter.
 		/// </summary>
-		public abstract TConverter Convert();
+		public abstract TConverter ConvertClasses();
 
 		/// <summary>
 		///     Write the generated script values to the file.

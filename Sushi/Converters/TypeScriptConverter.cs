@@ -36,7 +36,7 @@ namespace Sushi.Converters
 			=> _version = version;
 
 		/// <inheritdoc />
-		public override TypeScriptConverter Convert()
+		public override TypeScriptConverter ConvertClasses()
 		{
 			foreach (var model in Converter.Models.Flatten())
 			{

@@ -22,30 +22,6 @@ namespace Sushi.Tests
 	{
 		protected static readonly string FilePath =
 			Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Compiled\");
-
-        /// <summary>
-        ///     Compile a model for JavaScript.
-        /// </summary>
-        protected static void CompileJavaScript(SushiConverter converter, JavaScriptVersion version)
-		{
-			var jsConverter = converter.JavaScript(version)
-				.Convert();
-
-			var fileName = $"models.{version}.js".ToLowerInvariant();
-			jsConverter.WriteToFile(FilePath + fileName);
-		}
-
-        /// <summary>
-        ///     Compile a model for TypeScript.
-        /// </summary>
-        protected static void CompileTypeScript(SushiConverter converter, TypeScriptVersion version)
-		{
-			var tsConverter = converter.TypeScript(version)
-				.ConvertEnums()
-				.Convert();
-
-			const string fileName = "models.latest.ts";
-			tsConverter.WriteToFile(FilePath + fileName);
-		}
+       
 	}
 }

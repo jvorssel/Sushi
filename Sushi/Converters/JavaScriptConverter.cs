@@ -38,7 +38,7 @@ namespace Sushi.Converters
 		}
 
 		/// <inheritdoc />
-		public override JavaScriptConverter Convert()
+		public override JavaScriptConverter ConvertClasses()
 		{
 			foreach (var model in Converter.Models.Flatten())
 			{
