@@ -13,8 +13,6 @@ namespace Sushi.Tests.Script
 		public const string XML_FILE_NAME = "Sushi.tests.xml";
 		private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
 		
-		public TestContext Context { get; set; }		
-
 		[TestMethod]
 		public void LoadCorrectlyTest()
 		{
@@ -39,7 +37,7 @@ namespace Sushi.Tests.Script
 			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			CompileJavaScript(converter, JavaScriptVersion.ES5);
+			CompileJavaScript(converter, JavaScriptVersion.Es5);
 		}
 		
 		[TestMethod]
@@ -52,7 +50,7 @@ namespace Sushi.Tests.Script
 			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			CompileJavaScript(converter, JavaScriptVersion.ES6);
+			CompileJavaScript(converter, JavaScriptVersion.Es6);
 		}
 		
 		[TestMethod]

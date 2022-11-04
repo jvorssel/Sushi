@@ -21,7 +21,6 @@ using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Extensions;
-using Sushi.Interfaces;
 
 #endregion
 
@@ -31,15 +30,13 @@ namespace Sushi
 	{
 		protected readonly SushiConverter Converter;
 		protected readonly XmlDocumentationReader XmlDocument;
-		protected readonly ILanguageSpecification Language ;
 		protected readonly HashSet<ClassDescriptor> Models;
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
 		/// </summary>
-		public ModelConverter(SushiConverter converter, ILanguageSpecification language)
+		public ModelConverter(SushiConverter converter)
 		{
-			Language = language;
 			Converter = converter;
 			XmlDocument = Converter.Documentation;
 			Models = converter.Models;
@@ -62,25 +59,21 @@ namespace Sushi
 
 
 		/// <summary>
-		///     Compile the models in the converter with the given <paramref name="version"/>.
+		///     Compile the models in the converter.
 		/// </summary>
 		public abstract void Convert();
 
 		/// <summary>
-		///     Write the given <see cref="ClassDescriptor" /> <paramref name="models" /> to the
-		///     <paramref name="fileName" /> in the given folder <paramref name="path" />.
+		///     Write the generated script values to the file.
 		/// </summary>
-		/// <param name="models">The <see cref="ClassDescriptor" /> <see cref="IEnumerable{T}" /> with the models to write.</param>
 		/// <param name="path">The <paramref name="path" /> to the folder to store the file in.</param>
-		/// <param name="fileName">The <paramref name="fileName" /> for the generated file.</param>
-		/// <param name="minify">If the comments, newline, tabs, etc should be removed from the file contents.</param>
 		/// <param name="encoding">What <see cref="Encoding" /> method should be used to create the file.</param>
 		public void WriteToFile(string path, Encoding encoding = null)
 		{
 			if (path.IsEmpty())
 				throw new ArgumentNullException(nameof(path));
 
-			if (Models.EmptyIfNull().All(x => x.Script?.IsEmpty() ?? true))
+			if (Models.All(x => x.Script?.IsEmpty() ?? true))
 				throw Errors.NoScriptAvailableInModels(nameof(Models));
 
 			var fileContent = MergeModelsToString();

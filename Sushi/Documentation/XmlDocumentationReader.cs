@@ -138,7 +138,7 @@ namespace Sushi.Documentation
             var interfaces = type.GetInterfaces();
             foreach (var interfaceType in interfaces)
             {
-                var interfaceNamespace = interfaceType?.Namespace?.Split(',')[0];
+                var interfaceNamespace = interfaceType.Namespace?.Split(',')[0];
                 doc = Members.SingleOrDefault(x => x.FieldType == ReferenceType.Type && x == interfaceType);
 
                 if (!(doc is null))

@@ -13,11 +13,9 @@
 
 using System;
 using System.Collections.Generic;
+using Sushi.Converters;
 using Sushi.Descriptors;
 using Sushi.Enum;
-using Sushi.Javascript;
-using Sushi.Typescript;
-using TypeScriptSpecification = Sushi.Typescript.TypeScriptSpecification;
 
 #endregion
 
@@ -29,13 +27,13 @@ namespace Sushi
         ///     Initialize a <see cref="ModelConverter" /> to work with ECMAScript with a specific <paramref name="version" />.
         /// </summary>
         public static JavaScriptConverter JavaScript(this SushiConverter converter, JavaScriptVersion version)
-			=> new(converter, new JavaScriptSpecification(), version);
+			=> new(converter, version);
 
         /// <summary>
         ///     Initialize a <see cref="ModelConverter" /> to work with TypeScript with a specific <paramref name="version" />.
         /// </summary>
         public static TypeScriptConverter TypeScript(this SushiConverter converter, TypeScriptVersion version)
-			=> new(converter, new TypeScriptSpecification(), version);
+			=> new(converter, version);
 
         /// <summary>
         ///     Simple fix to include the <see cref="SushiConverter.CustomTypeHandling" />.
@@ -46,14 +44,14 @@ namespace Sushi
         /// <summary>
         ///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
         /// </summary>
-		public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type find)
+		public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
 		{
 			foreach (var d in tree)
 			{
-				if (d.Type == find)
+				if (d.Type == type)
 					return d;
 
-				var child = FindDescriptor(d.Children, find);
+				var child = FindDescriptor(d.Children, type);
 				if (child != (ClassDescriptor)null)
 					return child;
 			}

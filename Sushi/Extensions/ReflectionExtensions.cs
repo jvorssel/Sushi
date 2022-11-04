@@ -95,18 +95,6 @@ namespace Sushi.Extensions
         }
 
         /// <summary>
-        ///     Get the actual project name for the given <see cref="Assembly"/>.
-        /// </summary>
-        public static string GetProjectName(this Assembly @this)
-            => @this.GetName().ToString().Split(',')[0];
-
-        /// <summary>
-        ///     Default to an empty <see cref="IEnumerable{T}"/> if <paramref name="@this"/> is null.
-        /// </summary>
-        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> @this)
-            => @this ?? Enumerable.Empty<T>();
-
-        /// <summary>
         ///     Simple check if the given <see cref="Type"/> is <see cref="Nullable"/>.
         /// </summary>
         public static bool IsNullable(this Type @this)

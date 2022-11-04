@@ -23,7 +23,7 @@ using Sushi.Interfaces;
 
 #endregion
 
-namespace Sushi.Javascript
+namespace Sushi.Converters
 {
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
@@ -33,8 +33,7 @@ namespace Sushi.Javascript
 		private readonly JavaScriptVersion _version;
 
 		/// <inheritdoc />
-		public JavaScriptConverter(SushiConverter converter, ILanguageSpecification language, JavaScriptVersion version)
-			: base(converter, language)
+		public JavaScriptConverter(SushiConverter converter, JavaScriptVersion version) : base(converter)
 		{
 			_version = version;
 			SetScriptTypes();
@@ -107,10 +106,10 @@ namespace Sushi.Javascript
 			{
 				switch (_version)
 				{
-					case JavaScriptVersion.ES5:
+					case JavaScriptVersion.Es5:
 						model.Script = CompileEcmaScript5Classes(model);
 						break;
-					case JavaScriptVersion.ES6:
+					case JavaScriptVersion.Es6:
 						model.Script = CompileEcmaScript6Classes(model);
 						break;
 					default:

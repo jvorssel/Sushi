@@ -16,12 +16,10 @@ using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
-using Sushi.Interfaces;
-using Sushi.Javascript;
 
 #endregion
 
-namespace Sushi.Typescript
+namespace Sushi.Converters
 {
 	/// <summary>
 	///     Add the TypeScript class declaration to the <see cref="SushiConverter.Models" />.
@@ -31,8 +29,7 @@ namespace Sushi.Typescript
 		private readonly TypeScriptVersion _version;
 
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, ILanguageSpecification language, TypeScriptVersion version)
-			: base(converter, language, JavaScriptVersion.ES6)
+		public TypeScriptConverter(SushiConverter converter, TypeScriptVersion version) : base(converter, JavaScriptVersion.Es6)
 			=> _version = version;
 
 		/// <inheritdoc />

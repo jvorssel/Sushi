@@ -9,7 +9,6 @@ namespace Sushi.Tests
 	public class ModelTests
 	{
 		private readonly Assembly _assembly = typeof(PersonViewModel).Assembly;
-		public TestContext Context { get; set; }
 
 		[TestMethod]
 		public void ModelsInAssemblyTest()

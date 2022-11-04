@@ -16,12 +16,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Sushi.Attributes;
 using Sushi.Consistency;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
-using Sushi.Extensions;
 using Sushi.Interfaces;
 
 #endregion

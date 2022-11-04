@@ -2,7 +2,7 @@
 {
     public enum JavaScriptVersion
     {
-        ES5,
-        ES6,
+        Es5,
+        Es6,
     }
 }

@@ -90,7 +90,6 @@ namespace Sushi.Documentation
 		public string Summary { get; }
 		public string Remarks { get; }
 
-		/// <inheritdoc />
 		public XmlSummaryDescriptor(string name, ReferenceType field, Dictionary<string, string> values)
 		{
 			if (name.IsEmpty())
@@ -157,10 +156,10 @@ namespace Sushi.Documentation
 			if (type is null && fd is null)
 				return true;
 
-			if (type is null && !(fd is null))
+			if (type is null)
 				return false;
 
-			if (!(type is null) && fd is null)
+			if (fd is null)
 				return false;
 
 			switch (fd.FieldType)
@@ -188,10 +187,10 @@ namespace Sushi.Documentation
 			if (prop is null && fd is null)
 				return true;
 
-			if (prop is null && !(fd is null))
+			if (prop is null)
 				return false;
 
-			if (!(prop is null) && fd is null)
+			if (fd is null)
 				return false;
 
 			switch (fd.FieldType)
