@@ -40,8 +40,6 @@ export class PersonViewModel extends ViewModel {
 	Surname: string;
 	/** The Gender of the person. */
 	Gender: Gender | number;
-	Guid: string;
-	CreatedOn: Date;
 
 	constructor();
 	constructor(value?: any) {
@@ -54,8 +52,6 @@ export class PersonViewModel extends ViewModel {
 		this.Name = value.Name;
 		this.Surname = value.Surname;
 		this.Gender = value.Gender;
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
 	}
 
 	static from(obj: any): PersonViewModel {
@@ -73,16 +69,6 @@ export class StudentViewModel extends PersonViewModel {
 	Grade: number;
 	/** The name of the School. */
 	School: SchoolViewModel | null;
-	/** The Identifier that this Model refers to. */
-	Identifier: string;
-	/** The Name of the person. */
-	Name: string;
-	/** The Surname of the person. */
-	Surname: string;
-	/** The Gender of the person. */
-	Gender: Gender | number;
-	Guid: string;
-	CreatedOn: Date;
 
 	constructor();
 	constructor(value?: any) {
@@ -93,12 +79,6 @@ export class StudentViewModel extends PersonViewModel {
 
 		this.Grade = value.Grade;
 		this.School = value.School;
-		this.Identifier = value.Identifier;
-		this.Name = value.Name;
-		this.Surname = value.Surname;
-		this.Gender = value.Gender;
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
 	}
 
 	static from(obj: any): StudentViewModel {
@@ -128,8 +108,6 @@ export class SchoolViewModel extends ViewModel {
 	HouseNumberAddition: string;
 	/** The Students of this SchoolViewModel. */
 	Students: Array<StudentViewModel | null>;
-	Guid: string;
-	CreatedOn: Date;
 
 	constructor();
 	constructor(value?: any) {
@@ -146,8 +124,6 @@ export class SchoolViewModel extends ViewModel {
 		this.HouseNumber = value.HouseNumber;
 		this.HouseNumberAddition = value.HouseNumberAddition;
 		this.Students = value.Students;
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
 	}
 
 	static from(obj: any): SchoolViewModel {
@@ -163,11 +139,9 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
 	/** A nullable boolean. */
 	NullableBool: boolean;
-	Guid: string;
 	Student: StudentViewModel | null;
 	Students: Array<StudentViewModel | null>;
 	StudentPerClass: Array<Array<StudentViewModel | null>>;
-	CreatedOn: Date;
 	/** A readonly string. */
 	ReadonlyString: string;
 
@@ -179,11 +153,9 @@ export class TypeModel extends ViewModel {
 			return;
 
 		this.NullableBool = value.NullableBool;
-		this.Guid = value.Guid;
 		this.Student = value.Student;
 		this.Students = value.Students;
 		this.StudentPerClass = value.StudentPerClass;
-		this.CreatedOn = value.CreatedOn;
 		this.ReadonlyString = value.ReadonlyString;
 	}
 

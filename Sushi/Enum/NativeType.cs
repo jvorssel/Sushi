@@ -20,4 +20,11 @@
         Null = 12,
         Enum = 13
     }
+
+    public enum PropertyInheritance
+    {
+        None, 
+        New,
+        Override
+    }
 }

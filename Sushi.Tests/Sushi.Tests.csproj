@@ -67,6 +67,7 @@
     <Compile Include="ModelDescriptors\PropertyDescriptorTests.cs" />
     <Compile Include="ModelDescriptors\TypeConverterTests.cs" />
     <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\InheritedViewModel.cs" />
     <Compile Include="Models\PersonViewModel.cs" />
     <Compile Include="Models\SchoolViewModel.cs" />
     <Compile Include="Models\StudentViewModel.cs" />

@@ -34,8 +34,6 @@ export class PersonViewModel extends ViewModel {
 	Surname;
 	/** The Gender of the person. */
 	Gender;
-	Guid;
-	CreatedOn;
 
 	constructor(value) {
 		super(value);
@@ -47,8 +45,6 @@ export class PersonViewModel extends ViewModel {
 		this.Name = value.Name;
 		this.Surname = value.Surname;
 		this.Gender = value.Gender;
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
 	}
 
 	static from(obj) {
@@ -66,16 +62,6 @@ export class StudentViewModel extends PersonViewModel {
 	Grade;
 	/** The name of the School. */
 	School;
-	/** The Identifier that this Model refers to. */
-	Identifier;
-	/** The Name of the person. */
-	Name;
-	/** The Surname of the person. */
-	Surname;
-	/** The Gender of the person. */
-	Gender;
-	Guid;
-	CreatedOn;
 
 	constructor(value) {
 		super(value);
@@ -85,12 +71,6 @@ export class StudentViewModel extends PersonViewModel {
 
 		this.Grade = value.Grade;
 		this.School = value.School;
-		this.Identifier = value.Identifier;
-		this.Name = value.Name;
-		this.Surname = value.Surname;
-		this.Gender = value.Gender;
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
 	}
 
 	static from(obj) {
@@ -120,8 +100,6 @@ export class SchoolViewModel extends ViewModel {
 	HouseNumberAddition;
 	/** The Students of this SchoolViewModel. */
 	Students;
-	Guid;
-	CreatedOn;
 
 	constructor(value) {
 		super(value);
@@ -137,8 +115,6 @@ export class SchoolViewModel extends ViewModel {
 		this.HouseNumber = value.HouseNumber;
 		this.HouseNumberAddition = value.HouseNumberAddition;
 		this.Students = value.Students;
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
 	}
 
 	static from(obj) {
@@ -154,11 +130,9 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
 	/** A nullable boolean. */
 	NullableBool;
-	Guid;
 	Student;
 	Students;
 	StudentPerClass;
-	CreatedOn;
 	/** A readonly string. */
 	ReadonlyString;
 
@@ -169,11 +143,9 @@ export class TypeModel extends ViewModel {
 			return;
 
 		this.NullableBool = value.NullableBool;
-		this.Guid = value.Guid;
 		this.Student = value.Student;
 		this.Students = value.Students;
 		this.StudentPerClass = value.StudentPerClass;
-		this.CreatedOn = value.CreatedOn;
 		this.ReadonlyString = value.ReadonlyString;
 	}
 

@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       ClassDescriptorTests.cs
 // Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 01-01-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -105,6 +105,48 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(7, descriptor.Properties.Count);
 				Assert.AreEqual(6, descriptor.Properties.Count(x => x is PropertyDescriptor));
 				Assert.AreEqual(1, descriptor.Properties.Count(x => x is FieldDescriptor));
+			}
+		}
+
+		[TestClass]
+		public class GetPropertiesTests : ClassDescriptorTests
+		{
+			[TestMethod]
+			public void GetProperties_IncludeInheritedTest()
+			{
+				// Arrange
+				var descriptor = new ClassDescriptor(typeof(InheritedViewModel))
+				{
+					Parent = new ClassDescriptor(typeof(BaseViewModel))
+				};
+
+				// Act
+				var properties = descriptor.GetProperties(false).ToList();
+
+				// Assert
+				Assert.IsTrue(properties.Any(x => x.Name == "Guid"));
+				Assert.IsTrue(properties.Any(x => x.Name == "Addition"));
+				Assert.IsTrue(properties.Any(x => x.Name == "Value"));
+				Assert.IsTrue(properties.Any(x => x.Name == "Base"));
+			}
+
+			[TestMethod]
+			public void GetProperties_ExcludeInheritedTest()
+			{
+				// Arrange
+				var descriptor = new ClassDescriptor(typeof(InheritedViewModel))
+				{
+					Parent = new ClassDescriptor(typeof(BaseViewModel))
+				};
+
+				// Act
+				var properties = descriptor.GetProperties(true).ToList();
+
+				// Assert
+				Assert.IsTrue(properties.Any(x => x.Name  == "Guid"));
+				Assert.IsTrue(properties.Any(x => x.Name  == "Addition"));
+				Assert.IsFalse(properties.Any(x => x.Name == "Value"));
+				Assert.IsFalse(properties.Any(x => x.Name == "Base"));
 			}
 		}
 	}

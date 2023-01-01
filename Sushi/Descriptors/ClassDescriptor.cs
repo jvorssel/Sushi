@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       ClassDescriptor.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 01-01-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -13,7 +13,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
@@ -24,6 +26,7 @@ namespace Sushi.Descriptors
 	/// <summary>
 	///     Describes a <see cref="System.Type" />.
 	/// </summary>
+	[DebuggerDisplay("Name = {Name}")]
 	public sealed class ClassDescriptor : IEquatable<ClassDescriptor>
 	{
 		public readonly Type Type;
@@ -54,6 +57,21 @@ namespace Sushi.Descriptors
 		}
 
 		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
+
+		/// <summary>
+		///		Get the <see cref="Properties"/> <see cref="List{T}"/> but allows filtering inherited properties.
+		/// </summary>
+		public IEnumerable<IPropertyDescriptor> GetProperties(bool excludeInherited)
+		{
+			foreach (var prop in Properties)
+			{
+				var isInherited = this.IsPropertyInherited(prop);
+				if (excludeInherited && isInherited)
+					continue;
+
+				yield return prop;
+			}
+		}
 
 		public ClassDescriptor Parent { get; set; }
 		public HashSet<ClassDescriptor> Children { get; } = new();

@@ -12,10 +12,13 @@
 #region
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
+using Sushi.Interfaces;
 
 #endregion
 
@@ -28,7 +31,8 @@ namespace Sushi.Converters
 	{
 		/// <inheritdoc />
 		public EcmaScript6Converter(SushiConverter converter) : base(converter)
-		{}
+		{
+		}
 
 		/// / <inheritdoc />
 		public override EcmaScript6Converter ConvertClasses()
@@ -39,10 +43,10 @@ namespace Sushi.Converters
 			return this;
 		}
 
-		protected virtual string CreatePropertyDeclaration(ClassDescriptor model, string indent = "\t")
+		protected virtual string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
 		{
 			var builder = new StringBuilder();
-			foreach (var prop in model.Properties)
+			foreach (var prop in properties)
 			{
 				if (!ExcludeComments)
 					builder.Append(Converter.JsDocPropertySummary(prop));
@@ -53,11 +57,11 @@ namespace Sushi.Converters
 			return builder.ToString();
 		}
 
-		protected virtual string CreateConstructorDeclaration(ClassDescriptor model, string indent = "\t")
+		protected virtual string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			builder.AppendLine(indent + "constructor(value) {");
-			if (model.HasParent)
+			if (hasParent)
 			{
 				builder.AppendLine(indent + indent + "super(value);");
 				builder.AppendLine("");
@@ -67,7 +71,7 @@ namespace Sushi.Converters
 			builder.AppendLine(indent + indent + indent + "return;");
 			builder.AppendLine();
 
-			foreach (var prop in model.Properties)
+			foreach (var prop in properties)
 				builder.AppendLine(indent + indent + $"this.{prop.Name} = value.{prop.Name};");
 
 			builder.Append(indent + "}");
@@ -76,10 +80,11 @@ namespace Sushi.Converters
 
 		private string Compile(ClassDescriptor model)
 		{
+			var properties = model.GetProperties(true).ToList();
 			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
 			var parentClass = !model.HasParent ? string.Empty : $" extends {model.Parent.Name}";
-			var propertyDeclaration = CreatePropertyDeclaration(model);
-			var constructorDeclaration = CreateConstructorDeclaration(model);
+			var propertyDeclaration = CreatePropertyDeclaration(properties);
+			var constructorDeclaration = CreateConstructorDeclaration(properties, model.HasParent);
 
 			var template =
 				@$"{summary}export class {model.Name}{parentClass} {{

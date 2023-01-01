@@ -10,6 +10,7 @@
 // \***************************************************************************/
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using Sushi.Enum;
 using Sushi.Extensions;
@@ -18,6 +19,7 @@ using Sushi.Interfaces;
 
 namespace Sushi.Descriptors
 {
+	[DebuggerDisplay("Name = {ClassType.Name}.{Name}, Default = {DefaultValue}, Type = {Type.Name}")]
 	public sealed class FieldDescriptor : IPropertyDescriptor
 	{
 		private readonly FieldInfo _field;

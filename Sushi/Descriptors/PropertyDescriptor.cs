@@ -27,7 +27,7 @@ namespace Sushi.Descriptors
 	/// <summary>
 	///     Describes a property in a class.
 	/// </summary>
-	[DebuggerDisplay(nameof(ToString))]
+	[DebuggerDisplay("Name = {ClassType.Name}.{Name}, Default = {DefaultValue}, Type = {Type.Name}")]
 	public sealed class PropertyDescriptor : IPropertyDescriptor
 	{
 		private readonly PropertyInfo _property;
