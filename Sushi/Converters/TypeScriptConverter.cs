@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 05-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 01-01-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -16,7 +16,6 @@ using System.Linq;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Enum;
 using Sushi.Extensions;
 
 #endregion
@@ -28,27 +27,15 @@ namespace Sushi.Converters
 	/// </summary>
 	public class TypeScriptConverter : ModelConverter<TypeScriptConverter>
 	{
-		private readonly TypeScriptVersion _version;
-
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, TypeScriptVersion version)
-			: base(converter)
-			=> _version = version;
+		public TypeScriptConverter(SushiConverter converter)
+			: base(converter) { }
 
 		/// <inheritdoc />
 		public override TypeScriptConverter ConvertClasses()
 		{
 			foreach (var model in Converter.Models.Flatten())
-			{
-				switch (_version)
-				{
-					case TypeScriptVersion.Latest:
-						model.Script = ToTypeScriptClass(model);
-						break;
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-			}
+				model.Script = ToTypeScriptClass(model);
 
 			return this;
 		}
@@ -59,8 +46,15 @@ namespace Sushi.Converters
 			{
 				var builder = new StringBuilder();
 				builder.AppendLine($"export enum {model.Name} {{");
+				var lastKey = model.Values.Last().Key;
 				foreach (var kvp in model.Values)
-					builder.AppendLine($"\t{kvp.Key} = {kvp.Value},");
+				{
+					var value = $"\t{kvp.Key} = {kvp.Value}";
+					if (lastKey != kvp.Key)
+						value += ",";
+
+					builder.AppendLine(value);
+				}
 
 				builder.AppendLine("}");
 
@@ -80,7 +74,7 @@ namespace Sushi.Converters
 
 				builder.AppendLine($"{indent}{prop.Name}: {prop.ScriptTypeValue};");
 			}
-			
+
 			return builder.ToString();
 		}
 
@@ -104,19 +98,21 @@ namespace Sushi.Converters
 			builder.Append(indent + "}");
 			return builder.ToString();
 		}
-		
+
 		private string ToTypeScriptClass(ClassDescriptor model)
 		{
 			if (model.Properties.All(x => x.ScriptTypeValue.IsEmpty()))
+			{
 				throw new InvalidOperationException(
 					"Script type declaration missing on model properties, invoke converter.AssignScriptTypes() first.");
+			}
 
 			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
 			var parentClass = !model.HasParent ? string.Empty : $" extends {model.Parent.Name}";
 			var propertyDeclaration = CreatePropertyDeclaration(model);
-			var constructorDeclaration  = CreateConstructorDeclaration(model);
-			var template = 
-@$"{summary}export class {model.Name}{parentClass} {{
+			var constructorDeclaration = CreateConstructorDeclaration(model);
+			var template =
+				@$"{summary}export class {model.Name}{parentClass} {{
 {propertyDeclaration}
 {constructorDeclaration}
 
@@ -125,7 +121,7 @@ namespace Sushi.Converters
 	}}
 }}
 ";
-			
+
 			return template;
 		}
 	}

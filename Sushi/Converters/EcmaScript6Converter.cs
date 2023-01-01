@@ -24,31 +24,17 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public class JavaScriptConverter : ModelConverter<JavaScriptConverter>
+	public class EcmaScript6Converter : ModelConverter<EcmaScript6Converter>
 	{
-		private readonly JavaScriptVersion _version;
-
 		/// <inheritdoc />
-		public JavaScriptConverter(SushiConverter converter, JavaScriptVersion version) : base(converter)
-			=> _version = version;
+		public EcmaScript6Converter(SushiConverter converter) : base(converter)
+		{}
 
-		/// <inheritdoc />
-		public override JavaScriptConverter ConvertClasses()
+		/// / <inheritdoc />
+		public override EcmaScript6Converter ConvertClasses()
 		{
 			foreach (var model in Converter.Models.Flatten())
-			{
-				switch (_version)
-				{
-					case JavaScriptVersion.Es5:
-						model.Script = CompileEcmaScript5Classes(model);
-						break;
-					case JavaScriptVersion.Es6:
-						model.Script = CompileEcmaScript6Classes(model);
-						break;
-					default:
-						throw new ArgumentOutOfRangeException(nameof(_version), _version, null);
-				}
-			}
+				model.Script = Compile(model);
 
 			return this;
 		}
@@ -88,26 +74,7 @@ namespace Sushi.Converters
 			return builder.ToString();
 		}
 
-		private string CompileEcmaScript5Classes(ClassDescriptor model)
-		{
-			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
-			var properties = new StringBuilder();
-			foreach (var prop in model.Properties)
-				properties.AppendLine($"\tthis.{prop.Name} = value.{prop.Name};");
-
-			var template =
-				$@"{summary}function {model.Name}(obj) {{
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {{}};
-
-{properties}
-}}
-";
-			return template;
-		}
-
-		private string CompileEcmaScript6Classes(ClassDescriptor model)
+		private string Compile(ClassDescriptor model)
 		{
 			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
 			var parentClass = !model.HasParent ? string.Empty : $" extends {model.Parent.Name}";

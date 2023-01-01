@@ -37,7 +37,7 @@ namespace Sushi.Tests
 			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			converter.JavaScript(JavaScriptVersion.Es5)
+			converter.EcmaScript5()
 				.ConvertClasses()
 				.WriteToFile(FilePath + "models.es5.js");
 		}
@@ -52,7 +52,7 @@ namespace Sushi.Tests
 			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			converter.JavaScript(JavaScriptVersion.Es6)
+			converter.EcmaScript6()
 				.ConvertClasses()
 				.WriteToFile(FilePath + "models.es6.js");
 		}
@@ -67,7 +67,7 @@ namespace Sushi.Tests
 			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			converter.TypeScript(TypeScriptVersion.Latest)
+			converter.TypeScript()
 				.ConvertClasses()
 				.ConvertEnums()
 				.WriteToFile(FilePath + "models.latest.ts");
@@ -83,7 +83,7 @@ namespace Sushi.Tests
 			converter.LoadXmlDocumentation(XmlDocPath);
 
 			// Convert the available models and look if the result is as expected.
-			converter.TypeScript(TypeScriptVersion.Latest)
+			converter.TypeScript()
 				.NoComments()
 				.ConvertEnums()
 				.ConvertClasses()

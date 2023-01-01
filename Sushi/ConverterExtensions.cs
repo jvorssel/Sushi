@@ -26,14 +26,20 @@ namespace Sushi
         /// <summary>
         ///     Initialize a <see cref="ModelConverter" /> to work with ECMAScript with a specific <paramref name="version" />.
         /// </summary>
-        public static JavaScriptConverter JavaScript(this SushiConverter converter, JavaScriptVersion version)
-			=> new(converter, version);
+        public static EcmaScript5Converter EcmaScript5(this SushiConverter converter)
+			=> new(converter);
+        
+        /// <summary>
+        ///     Initialize a <see cref="ModelConverter" /> to work with ECMAScript with a specific <paramref name="version" />.
+        /// </summary>
+        public static EcmaScript6Converter EcmaScript6(this SushiConverter converter)
+			=> new(converter);
 
         /// <summary>
         ///     Initialize a <see cref="ModelConverter" /> to work with TypeScript with a specific <paramref name="version" />.
         /// </summary>
-        public static TypeScriptConverter TypeScript(this SushiConverter converter, TypeScriptVersion version)
-			=> new(converter, version);
+        public static TypeScriptConverter TypeScript(this SushiConverter converter)
+			=> new(converter);
 
         /// <summary>
         ///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.

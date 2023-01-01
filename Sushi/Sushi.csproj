@@ -45,17 +45,16 @@
     <Compile Include="Attributes\ConvertToScriptAttribute.cs" />
     <Compile Include="Attributes\IgnoreForScript.cs" />
     <Compile Include="ConverterExtensions.cs" />
+    <Compile Include="Converters\EcmaScript6Converter.cs" />
     <Compile Include="Converters\TypeConverter.cs" />
     <Compile Include="Converters\TypeScriptConverter.cs" />
     <Compile Include="Descriptors\DescriptorTreeBuilder.cs" />
     <Compile Include="Descriptors\EnumDescriptor.cs" />
-    <Compile Include="Enum\TypeScriptVersion.cs" />
-    <Compile Include="Converters\JavaScriptConverter.cs" />
+    <Compile Include="Converters\EcmaScript5Converter.cs" />
     <Compile Include="Descriptors\FieldDescriptor.cs" />
     <Compile Include="Documentation\ReferenceType.cs" />
     <Compile Include="Documentation\XmlDocumentationReader.cs" />
     <Compile Include="Documentation\XmlSummaryDescriptor.cs" />
-    <Compile Include="Enum\JavaScriptVersion.cs" />
     <Compile Include="Enum\NativeType.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -71,12 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.nuspec" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="NuGet.CommandLine" Version="4.6.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
