@@ -57,6 +57,7 @@ namespace Sushi.Descriptors
 
 		public ClassDescriptor Parent { get; set; }
 		public HashSet<ClassDescriptor> Children { get; } = new();
+		public bool HasParent => Parent != (ClassDescriptor)null;
 
 		#region Equality members
 

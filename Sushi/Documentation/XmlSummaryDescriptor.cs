@@ -300,25 +300,10 @@ namespace Sushi.Documentation
 			builder.AppendLine($" * {summary} ");
 			builder.AppendLine($" * @typedef {{Object}} {descriptor.Name}");
 
-			if (descriptor.Parent != (ClassDescriptor)null)
-			{
+			if (descriptor.HasParent)
 				builder.AppendLine($" * @extends {descriptor.Parent.Name} ");
-			}
 			
-			builder.AppendLine(" */");
-
-			// foreach (var property in descriptor.Properties)
-			// {
-			// 	// Apply formatting for TypeScript its Array type.
-			// 	var type = property.ScriptTypeValue;
-			// 	var name = descriptor.Name;
-			//
-			// 	if (descriptor.Type.IsNullable())
-			// 		name += "?";
-			//
-			// 	var statement = $@" * {name}: {type};";
-			// 	builder.AppendLine(statement);
-			// }
+			builder.Append(" */");
 
 			return builder.ToString();
 		}
