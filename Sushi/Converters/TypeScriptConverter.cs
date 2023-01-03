@@ -14,7 +14,6 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Extensions;
 using Sushi.Interfaces;
 
 #endregion
@@ -28,13 +27,18 @@ namespace Sushi.Converters
 	{
 		/// <inheritdoc />
 		public TypeScriptConverter(SushiConverter converter)
-			: base(converter) { }
+			: base(converter)
+		{
+			ScriptTypeConverter = new TypeScriptTypeConverter(converter);
+		}
 
 		/// <inheritdoc />
 		public override TypeScriptConverter Convert()
 		{
 			foreach (var model in Converter.Models.Flatten())
+			{
 				model.Script = ToTypeScriptClass(model);
+			}
 
 			return this;
 		}
@@ -63,7 +67,7 @@ namespace Sushi.Converters
 			return this;
 		}
 
-		private string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
+		internal string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
@@ -71,13 +75,14 @@ namespace Sushi.Converters
 				if (!ExcludeComments)
 					builder.Append(Converter.JsDocPropertySummary(prop));
 
-				builder.AppendLine($"{indent}{prop.Name}: {prop.ScriptTypeValue};");
+				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
+				builder.AppendLine($"{indent}{prop.Name}: {scriptType};");
 			}
 
 			return builder.ToString();
 		}
 
-		private string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
+		internal string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			builder.AppendLine(indent + "constructor();");
@@ -101,16 +106,11 @@ namespace Sushi.Converters
 		private string ToTypeScriptClass(ClassDescriptor model)
 		{
 			var properties = model.GetProperties(true).ToList();
-			if (properties.All(x => x.ScriptTypeValue.IsEmpty()))
-			{
-				throw new InvalidOperationException(
-					"Script type declaration missing on model properties, invoke converter.AssignScriptTypes() first.");
-			}
 
 			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
-			var parentClass = !model.HasParent ? string.Empty : $" extends {model.Parent.Name}";
+			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
-			var constructorDeclaration = CreateConstructorDeclaration(properties, model.HasParent);
+			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);
 			var template =
 				@$"{summary}export class {model.Name}{parentClass} {{
 {propertyDeclaration}

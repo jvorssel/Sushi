@@ -24,7 +24,7 @@ public static class DescriptorExtensions
 				return d;
 
 			var child = FindDescriptor(d.Children, type);
-			if (child != (ClassDescriptor)null)
+			if (child != null)
 				return child;
 		}
 

@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeConverterTests.cs
 // Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 03-01-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -11,8 +11,9 @@
 
 #region
 
-using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Converters;
@@ -23,73 +24,121 @@ using Sushi.Tests.Models;
 
 namespace Sushi.Tests.ModelDescriptors
 {
-	public abstract class TypeConverterTests
+	public abstract class TypeScriptTypeConverterTests
 	{
-		private readonly List<Type> _dependencies = new()
-		{
-			typeof(TypeModel),
-			typeof(Gender),
-			typeof(StudentViewModel),
-			typeof(PersonViewModel),
-			typeof(ViewModel)
-		};
-
 		[TestClass]
-		public class AssignScriptTypesTests : TypeConverterTests
+		public class ResolveScriptTypeTests : TypeScriptTypeConverterTests
 		{
 			[TestMethod]
 			public void ComplexType_ClassProperty_ShouldFormatCorrectly()
 			{
 				// Arrange
-				var typeClass = _dependencies[0];
-				var converter = new SushiConverter(_dependencies);
+				var descriptor = new ClassDescriptor(typeof(TypeModel));
+				var propertyDescriptor = descriptor.Properties.Single(x => x.Name == nameof(TypeModel.Student));
+				var converter = new TypeScriptTypeConverter();
+				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
 
 				// Act
-				converter.AssignScriptTypes();
+				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
 
 				// Assert
-				var typeModelDescriptor = converter.Models.FindDescriptor(typeClass);
-				var studentPropertyDescriptor = typeModelDescriptor.Properties.Single(x => x.Name == "Student");
-
-				Assert.IsNotNull(studentPropertyDescriptor);
-				Assert.AreEqual("StudentViewModel | null", studentPropertyDescriptor.ScriptTypeValue);
+				Assert.AreEqual("StudentViewModel | null", scriptType);
 			}
 
 			[TestMethod]
-			public void ComplexType_ArrayProperty_ShouldFormatCorrectly()
+			public void ComplexType_ClassPropertyMissing_ShouldUseAny()
 			{
 				// Arrange
-				var typeClass = _dependencies[0];
-				var converter = new SushiConverter(_dependencies);
+				var descriptor = new ClassDescriptor(typeof(TypeModel));
+				var propertyDescriptor = descriptor.Properties.Single(x => x.Name == nameof(TypeModel.Student));
+				var converter = new TypeScriptTypeConverter();
 
 				// Act
-				converter.AssignScriptTypes();
+				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
 
 				// Assert
-				var typeModelDescriptor = converter.Models.FindDescriptor(typeClass);
-				var studentsPropertyDescriptor = typeModelDescriptor.Properties.Single(x => x.Name == "Students");
-
-				Assert.IsNotNull(studentsPropertyDescriptor);
-				Assert.AreEqual("Array<StudentViewModel | null>", studentsPropertyDescriptor.ScriptTypeValue);
+				Assert.AreEqual("any", scriptType);
 			}
 
 			[TestMethod]
-			public void ComplexType_MultilayerArrayProperty_ShouldFormatCorrectly()
+			public void ComplexType_EnumPropertyMissing_ShouldReturnNumber()
 			{
 				// Arrange
-				var typeClass = _dependencies[0];
-				var converter = new SushiConverter(_dependencies);
+				var descriptor = new ClassDescriptor(typeof(StudentViewModel));
+				var propertyDescriptor = descriptor.Properties.Single(x => x.Name == nameof(StudentViewModel.Gender));
+				var converter = new TypeScriptTypeConverter();
 
 				// Act
-				converter.AssignScriptTypes();
+				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
 
 				// Assert
-				var typeModelDescriptor = converter.Models.FindDescriptor(typeClass);
-				var studentsPropertyDescriptor =
-					typeModelDescriptor.Properties.Single(x => x.Name == "StudentPerClass");
+				Assert.AreEqual("number", scriptType);
+			}
 
-				Assert.IsNotNull(studentsPropertyDescriptor);
-				Assert.AreEqual("Array<Array<StudentViewModel | null>>", studentsPropertyDescriptor.ScriptTypeValue);
+			[TestMethod]
+			public void ComplexType_GenericArrayType_ShouldFormatCorrectly()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+
+				// Act
+				var results = new[]
+				{
+					converter.ResolveScriptType(typeof(HashSet<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(Collection<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(IList<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(ICollection<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(ImmutableHashSet<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(IReadOnlyList<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(ReadOnlyCollection<StudentViewModel>)),
+					converter.ResolveScriptType(typeof(List<StudentViewModel>))
+				};
+
+				// Assert
+				foreach (var scriptTypeValue in results)
+					Assert.AreEqual("Array<StudentViewModel | null>", scriptTypeValue);
+			}
+
+			[TestMethod]
+			public void ComplexType_DeepGenerics_ShouldFormatCorrectly()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+
+				// Act
+				var result= converter.ResolveScriptType(typeof(List<List<List<List<List<bool?>>>>>));
+
+				// Assert
+				Assert.AreEqual("Array<Array<Array<Array<Array<boolean | null>>>>>", result);
+			}
+			
+			[TestMethod]
+			public void ComplexType_DeepComplexGenerics_ShouldFormatCorrectly()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+
+				// Act
+				var result= converter.ResolveScriptType(typeof(Dictionary<string, List<StudentViewModel>>));
+
+				// Assert
+				Assert.AreEqual("Array<string, Array<StudentViewModel | null>>", result);
+			}
+			
+			[TestMethod]
+			public void ComplexType_NullableProperty_ShouldFormatCorrectly()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+
+				// Act
+				var result = converter.ResolveScriptType(typeof(bool?));
+
+				// Assert
+				Assert.AreEqual("boolean | null", result);
 			}
 		}
 	}

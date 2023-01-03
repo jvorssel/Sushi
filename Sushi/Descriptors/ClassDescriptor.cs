@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       ClassDescriptor.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 01-01-2023
+// Author:                   Jeroen Vorsselman 03-01-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -42,6 +42,12 @@ namespace Sushi.Descriptors
 		/// </summary>
 		public string Script { get; set; } = string.Empty;
 
+		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
+
+		public ClassDescriptor? Parent { get; set; }
+		
+		public HashSet<ClassDescriptor> Children { get; } = new();
+
 		public ClassDescriptor(Type type)
 		{
 			Type = type;
@@ -52,10 +58,8 @@ namespace Sushi.Descriptors
 			Properties = properties.Cast<IPropertyDescriptor>().Concat(fields).ToList();
 		}
 
-		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
-
 		/// <summary>
-		///		Get the <see cref="Properties"/> <see cref="List{T}"/> but allows filtering inherited properties.
+		///     Get the <see cref="Properties" /> <see cref="List{T}" /> but allows filtering inherited properties.
 		/// </summary>
 		public IEnumerable<IPropertyDescriptor> GetProperties(bool excludeInherited)
 		{
@@ -69,22 +73,12 @@ namespace Sushi.Descriptors
 			}
 		}
 
-		public ClassDescriptor Parent { get; set; }
-		public HashSet<ClassDescriptor> Children { get; } = new();
-		public bool HasParent => Parent != (ClassDescriptor)null;
-
 		#region Equality members
 
-		public static bool operator ==(ClassDescriptor m1, ClassDescriptor m2)
-			=> m1?.Type == m2?.Type;
+		public static bool operator ==(ClassDescriptor? m1, ClassDescriptor? m2)
+			=> m1 is null ? m2 is null : m2 is not null && m1.Type == m2.Type;
 
-		public static bool operator !=(ClassDescriptor m1, ClassDescriptor m2)
-			=> !(m1 == m2);
-
-		public static bool operator ==(ClassDescriptor m1, Type m2)
-			=> m1?.Type == m2;
-
-		public static bool operator !=(ClassDescriptor m1, Type m2)
+		public static bool operator !=(ClassDescriptor? m1, ClassDescriptor? m2)
 			=> !(m1 == m2);
 
 		/// <inheritdoc />

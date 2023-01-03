@@ -35,6 +35,40 @@ namespace Sushi.Tests.ModelDescriptors
 		private List<ClassDescriptor> Descriptors => _types.Select(x => new ClassDescriptor(x)).ToList();
 
 		[TestClass]
+		public class FilterTypesTest : DescriptorTreeBuilderTests
+		{
+			[TestMethod]
+			public void FilterTypes_WithoutAttribute_ShouldFilterTest()
+			{
+				// Arrange
+				var types = new [] { typeof(ViewModel), typeof(String)};
+				var treeBuilder = new DescriptorTreeBuilder(types);
+				
+				// Act
+				var result = treeBuilder.FilterTypes().ToList();
+				
+				// Assert
+				Assert.AreEqual(1, result.Count);
+				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
+			}
+			
+			[TestMethod]
+			public void FilterTypes_WithNonClassTypes_ShouldFilterTest()
+			{
+				// Arrange
+				var types = new [] { typeof(ViewModel), typeof(bool), typeof(Gender)};
+				var treeBuilder = new DescriptorTreeBuilder(types);
+				
+				// Act
+				var result = treeBuilder.FilterTypes().ToList();
+				
+				// Assert
+				Assert.AreEqual(1, result.Count);
+				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
+			}
+		}
+		
+		[TestClass]
 		public class FindDescriptorTest : DescriptorTreeBuilderTests
 		{
 			[TestMethod]
@@ -87,7 +121,18 @@ namespace Sushi.Tests.ModelDescriptors
 		public class BuildTreeTests : DescriptorTreeBuilderTests
 		{
 			[TestMethod]
-			public void DescriptorTreeBuilder_ShouldNestCorrectlyTest()
+			public void BuildTree_MissingBaseType_ShouldThrow()
+			{
+				// Arrange
+				var builder = new DescriptorTreeBuilder(new [] { typeof(TypeModel)});
+				var message = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
+				
+				// Act & Assert
+				Assert.ThrowsException<InvalidOperationException>(() => builder.BuildTree(), message);
+			}
+			
+			[TestMethod]
+			public void BuildTree_ShouldNestCorrectlyTest()
 			{
 				// Arrange
 				var builder = new DescriptorTreeBuilder(_types);

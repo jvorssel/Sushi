@@ -68,7 +68,7 @@ namespace Sushi.Helpers
 		public static bool IsPropertyInherited(this ClassDescriptor model, IPropertyDescriptor property)
 		{
 			var parent = model.Parent;
-			while (parent != (ClassDescriptor)null)
+			while (parent != null)
 			{
 				if (parent.Properties.Any(x => x.Name == property.Name && x.Type == property.Type))
 					return true;

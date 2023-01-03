@@ -47,7 +47,7 @@ namespace Sushi
 		}
 
 		/// <summary>
-		///		Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> to convert.
+		///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> to convert.
 		/// </summary>
 		public SushiConverter(ICollection<Type> types, string assemblyDocPath) : this(types)
 		{
@@ -63,18 +63,26 @@ namespace Sushi
 
 			Documentation = new XmlDocumentationReader(assemblyDocPath).Initialize();
 		}
-		
+
 		/// <summary>
-		///     Initialize a new <see cref="SushiConverter" /> and find the classes that 
+		///     Initialize a new <see cref="SushiConverter" /> for the given <paramref name="types" />.
+		/// </summary>
+		/// <param name="types"></param>
+		public SushiConverter(params Type[] types) : this(types.ToList()) { }
+
+		/// <summary>
+		///     Initialize a new <see cref="SushiConverter" /> and find the classes that
 		///     inherit <see cref="IScriptModel" /> in the given <paramref name="assembly" />.
 		/// </summary>
 		public SushiConverter(Assembly assembly) : this(assembly.ExportedTypes.ToList()) { }
-		
+
 		/// <summary>
-		///     Initialize a new <see cref="SushiConverter" /> and find the classes that 
+		///     Initialize a new <see cref="SushiConverter" /> and find the classes that
 		///     inherit <see cref="IScriptModel" /> in the given <paramref name="assembly" />.
-		///		The <paramref name="assemblyDocPath"/> directs to a file that contains XML documentation that is generated when building a project.
+		///     The <paramref name="assemblyDocPath" /> directs to a file that contains XML documentation that is generated when
+		///     building a project.
 		/// </summary>
-		public SushiConverter(Assembly assembly, string assemblyDocPath) : this(assembly.ExportedTypes.ToList(), assemblyDocPath) { }
+		public SushiConverter(Assembly assembly, string assemblyDocPath) : this(assembly.ExportedTypes.ToList(),
+			assemblyDocPath) { }
 	}
 }

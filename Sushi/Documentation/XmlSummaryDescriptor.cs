@@ -297,7 +297,7 @@ namespace Sushi.Documentation
 			builder.AppendLine($" * {summary} ");
 			builder.AppendLine($" * @typedef {{Object}} {descriptor.Name}");
 
-			if (descriptor.HasParent)
+			if (descriptor.Parent != null)
 				builder.AppendLine($" * @extends {descriptor.Parent.Name} ");
 			
 			builder.Append(" */");

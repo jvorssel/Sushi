@@ -9,8 +9,6 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-using Sushi.Enum;
-
 namespace Sushi.Interfaces
 {
 	public interface IPropertyDescriptor
@@ -19,11 +17,6 @@ namespace Sushi.Interfaces
 		///		The <see cref="Name"/> of the described property or field.
 		/// </summary>
 		string Name { get; }
-		
-		/// <summary>
-		///		If the described property or field is readonly. 
-		/// </summary>
-		bool IsReadonly { get; }
 		
 		/// <summary>
 		///		The actual type.
@@ -36,20 +29,9 @@ namespace Sushi.Interfaces
 		Type ClassType { get; }
 		
 		/// <summary>
-		///		If the <see cref="Type"/> is nullable.
-		/// </summary>
-		bool IsNullable { get; }
-		
-		/// <summary>
-		///		The simple <see cref="NativeType"/> enum.
-		/// </summary>
-		NativeType NativeType { get; }
-		
-		/// <summary>
 		///		The <see cref="DefaultValue"/> used by the class.
 		/// </summary>
 		object DefaultValue { get; }
 
-		string ScriptTypeValue { get; set; }
 	}
 }

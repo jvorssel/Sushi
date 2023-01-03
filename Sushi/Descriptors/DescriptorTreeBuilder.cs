@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       DescriptorTreeBuilder.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 03-01-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -34,10 +34,11 @@ namespace Sushi.Descriptors
 				var hasScriptAttr = type.GetCustomAttributes(typeof(ConvertToScriptAttribute)).Any();
 				var isScriptModel = type.IsTypeOrInheritsOf(typeof(IScriptModel));
 				var attrs = type.GetCustomAttributes(typeof(IgnoreForScript), true);
-				if (attrs.Any() || (!isScriptModel && !hasScriptAttr))
+				if (attrs.Any() ||!type.IsClass)
 					continue;
 
-				yield return new ClassDescriptor(type);
+				if (isScriptModel || hasScriptAttr)
+					yield return new ClassDescriptor(type);
 			}
 		}
 
@@ -48,7 +49,7 @@ namespace Sushi.Descriptors
 			var tree = new HashSet<ClassDescriptor>();
 			foreach (var cd in flat)
 			{
-				if (tree.FindDescriptor(cd.Type) != (ClassDescriptor)null)
+				if (tree.FindDescriptor(cd.Type) != null)
 					continue;
 
 				var current = cd;
@@ -57,9 +58,15 @@ namespace Sushi.Descriptors
 					tree.Add(current);
 					continue;
 				}
-				
+
 				var fromList = flat.SingleOrDefault(x => x.Type == current.Type.BaseType);
-				while (fromList != (ClassDescriptor)null)
+				if (fromList == null)
+				{
+					throw new InvalidOperationException(
+						$"Base type {current.Type.BaseType} for {current.Type} is missing.");
+				}
+
+				while (fromList != null)
 				{
 					current.Parent = fromList;
 					fromList.Children.Add(current);
@@ -71,7 +78,5 @@ namespace Sushi.Descriptors
 
 			return tree;
 		}
-
-		
 	}
 }

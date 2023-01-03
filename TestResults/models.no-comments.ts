@@ -6,7 +6,7 @@ export enum Gender {
 
 export class ViewModel {
 	Guid: string;
-	CreatedOn: Date;
+	CreatedOn: Date | string | null;
 
 	constructor();
 	constructor(value?: any) {
@@ -99,7 +99,7 @@ export class SchoolViewModel extends ViewModel {
 }
 
 export class TypeModel extends ViewModel {
-	NullableBool: boolean;
+	NullableBool: boolean | null;
 	NullableString: string;
 	Student: StudentViewModel | null;
 	Students: Array<StudentViewModel | null>;

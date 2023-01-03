@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Extensions;
+using Sushi.Interfaces;
 
 #endregion
 
@@ -27,6 +27,8 @@ namespace Sushi.Converters
 		protected readonly XmlDocumentationReader XmlDocument;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
+		protected IScriptTypeConverter ScriptTypeConverter = null;
+
 		protected bool ExcludeComments { get; set; }
 
 		/// <summary>
@@ -38,9 +40,8 @@ namespace Sushi.Converters
 			XmlDocument = Converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;
-
-			converter.AssignScriptTypes();
 		}
+
 
 		public TConverter NoComments()
 		{

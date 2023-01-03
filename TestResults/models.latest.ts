@@ -10,7 +10,7 @@ export enum Gender {
  */
 export class ViewModel {
 	Guid: string;
-	CreatedOn: Date;
+	CreatedOn: Date | string | null;
 
 	constructor();
 	constructor(value?: any) {
@@ -138,9 +138,9 @@ export class SchoolViewModel extends ViewModel {
  */
 export class TypeModel extends ViewModel {
 	/** A nullable boolean. */
-	NullableBool: boolean;
+	NullableBool: boolean | null;
 	/** A nullable boolean. */
-	NullableString?: string;
+	NullableString: string;
 	Student: StudentViewModel | null;
 	Students: Array<StudentViewModel | null>;
 	StudentPerClass: Array<Array<StudentViewModel | null>>;

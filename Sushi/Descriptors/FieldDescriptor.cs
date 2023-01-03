@@ -41,7 +41,7 @@ namespace Sushi.Descriptors
 		public bool IsNullable { get; }
 
 		/// <inheritdoc />
-		public NativeType NativeType => Type.ToNativeTypeEnum();
+		public NativeType NativeType => Type.ToNativeScriptType();
 
 		/// <inheritdoc />
 		public object DefaultValue { get; }

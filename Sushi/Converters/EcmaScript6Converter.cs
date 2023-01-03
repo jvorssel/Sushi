@@ -78,9 +78,9 @@ namespace Sushi.Converters
 		{
 			var properties = model.GetProperties(true).ToList();
 			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
-			var parentClass = !model.HasParent ? string.Empty : $" extends {model.Parent.Name}";
+			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
-			var constructorDeclaration = CreateConstructorDeclaration(properties, model.HasParent);
+			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);
 
 			var template =
 				@$"{summary}export class {model.Name}{parentClass} {{

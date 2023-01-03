@@ -14,7 +14,6 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
-using Sushi.Enum;
 using Sushi.Tests.Models;
 
 #endregion
@@ -37,10 +36,7 @@ namespace Sushi.Tests.ModelDescriptors
 
 				// Assert
 				Assert.AreEqual(nameof(ViewModel.Guid), descriptor.Name);
-				Assert.IsFalse(descriptor.IsReadonly);
 				Assert.AreEqual(typeof(Guid), descriptor.Type);
-				Assert.IsFalse(descriptor.IsNullable);
-				Assert.AreEqual(NativeType.String, descriptor.NativeType);
 			}
 
 			[TestMethod]
@@ -54,10 +50,7 @@ namespace Sushi.Tests.ModelDescriptors
 
 				// Assert
 				Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
-				Assert.IsFalse(descriptor.IsReadonly);
-				Assert.AreEqual(typeof(bool), descriptor.Type);
-				Assert.IsTrue(descriptor.IsNullable);
-				Assert.AreEqual(NativeType.Bool, descriptor.NativeType);
+				Assert.AreEqual(typeof(bool?), descriptor.Type);
 				Assert.IsNull(descriptor.DefaultValue);
 			}
 		}
