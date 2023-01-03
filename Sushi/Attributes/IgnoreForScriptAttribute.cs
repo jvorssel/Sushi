@@ -5,7 +5,7 @@
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class |
 		AttributeTargets.Struct)]
-	public sealed class IgnoreForScript : Attribute
+	public sealed class IgnoreForScriptAttribute : Attribute
 	{
 
 	}

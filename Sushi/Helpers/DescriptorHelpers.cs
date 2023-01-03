@@ -33,7 +33,7 @@ namespace Sushi.Helpers
 		public static ICollection<PropertyDescriptor> GetPropertyDescriptors(this Type @this)
 		{
 			var descriptors = @this.GetPropertiesWithStaticValue()
-				.Where(x => !x.Key.GetCustomAttributes(typeof(IgnoreForScript), true).Any())
+				.Where(x => !x.Key.GetCustomAttributes(typeof(IgnoreForScriptAttribute), true).Any())
 				.Select(x => new PropertyDescriptor(x.Key))
 				.ToList();
 

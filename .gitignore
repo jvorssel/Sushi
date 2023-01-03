@@ -1,9 +1,11 @@
 .vs/*
 packages/*
+.idea/*
 _ReSharper/*
 _ReSharper.Caches/*
 */bin/*
 */obj/*
+
 
 ModelConverter.Tests/bin/*
 ModelConverter.Tests/obj/*

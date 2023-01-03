@@ -13,12 +13,10 @@
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\jvors\AppData\Local\JetBrains\Rider2022.2\resharper-host\temp\Rider\vAny\CoverageData\_JVorssel.Sushi.-1763812081\Snapshot\snapshot.utdcvr</s:String>
 	
 	<s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndex/@EntryValue">2</s:Int64>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2bbb0c4e_002D98eb_002D4853_002D87ea_002D799095d011c6/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="True" ContinuousTestingMode="2" IsActive="True" Name="Session #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;And&gt;&#xD;
-    &lt;Project Location="C:\Users\jvors\Documents\GitHub\ModelConverter\Sushi.Tests" Presentation="&amp;lt;Sushi.Tests&amp;gt;" /&gt;&#xD;
-    &lt;Namespace&gt;Sushi.Tests&lt;/Namespace&gt;&#xD;
-  &lt;/And&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bd931ed1_002D77e9_002D4133_002Daaad_002Dfd4dc3519914/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Sushi.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\jvors\Documents\GitHub\ModelConverter\Sushi.Tests" Presentation="&amp;lt;Sushi.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	

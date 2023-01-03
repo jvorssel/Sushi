@@ -33,7 +33,7 @@ namespace Sushi.Descriptors
 			{
 				var hasScriptAttr = type.GetCustomAttributes(typeof(ConvertToScriptAttribute)).Any();
 				var isScriptModel = type.IsTypeOrInheritsOf(typeof(IScriptModel));
-				var attrs = type.GetCustomAttributes(typeof(IgnoreForScript), true);
+				var attrs = type.GetCustomAttributes(typeof(IgnoreForScriptAttribute), true);
 				if (attrs.Any() ||!type.IsClass)
 					continue;
 

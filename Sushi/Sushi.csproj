@@ -6,6 +6,32 @@
         <Nullable>enable</Nullable>
         <AssemblyName>Sushi</AssemblyName>
         <RootNamespace>Sushi</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>SushiScriptCore</PackageId>
+        <Title>Sushi Script Core</Title>
+        <Authors>Jeroen Vorsselman</Authors>
+        <Description>Library for converting .NET classes to script classes.</Description>
+        <Copyright>MIT</Copyright>
+        <PackageProjectUrl>https://github.com/jvorssel/Sushi</PackageProjectUrl>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/jvorssel/Sushi/master/LICENSE</PackageLicenseUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <RepositoryUrl>https://github.com/jvorssel/Sushi</RepositoryUrl>
+        <RepositoryType>Public</RepositoryType>
+        <PackageTags>C# JavaScript TypeScript Converter Compilation Compiler Generator Script Model .NET EcmaScript Ecma Java Node</PackageTags>
+        <PackageReleaseNotes>  - Simplified library interface &gt; "new SushiConverter().ECMAScript6().Convert().ToString()".
+      - Support for ECMAScript 5, ECMAScript 6 and TypeScript.
+      - Classes have a simple object mapper "mapFrom", using Object.assign and _.extend for ES5.
+      - Improved type dependency tree ordering.
+      - Support for TypeScript enums.
+      - Improved conversion for data types.</PackageReleaseNotes>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="logo.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
 
 </Project>
