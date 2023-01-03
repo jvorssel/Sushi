@@ -5,6 +5,8 @@ Author: Jeroen Vorsselman @ 2023
 
 **[GitHub](https://github.com/jvorssel)**
 
+**[NuGet](https://www.nuget.org/packages/SushiScriptCore/1.0.0)**
+
 ---
 ##  Main features
 - Generates **[ECMAScript 5](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es5.js)**, **[ECMAScript 6](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es6.js)** and **[TypeScript](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.latest.ts)** classes using .NET types.
