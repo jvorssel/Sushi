@@ -1,8 +1,10 @@
 # Sushi
 Library for converting .NET classes to script classes.
 
-**Developed by:** Jeroen Vorsselman @ 2023<br>
+Author: Jeroen Vorsselman @ 2023
+
 **[GitHub](https://github.com/jvorssel)**
+
 ---
 ##  Main features
 - Generates **[ECMAScript 5](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es5.js)**, **[ECMAScript 6](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es6.js)** and **[TypeScript](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.latest.ts)** classes using .NET types.
@@ -40,7 +42,8 @@ var script = converter.TypeScript()
     .ConvertEnums()
     .ToString();
 ``` 
-The following .NET class is used:<br>
+The following .NET class is used:
+
 ```
 /// <summary>
 ///     Simple model to verify complex types.
@@ -70,7 +73,8 @@ public sealed class TypeModel : ViewModel
 	public List<List<StudentViewModel>> StudentPerClass { get; set; }
 }
 ```
-To generate this TypeScript model:<br>
+To generate this TypeScript model:
+
 ```
 /**
  * Simple model to verify complex types. 
