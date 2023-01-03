@@ -11,9 +11,6 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
@@ -27,14 +24,14 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the TypeScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public class TypeScriptConverter : ModelConverter<TypeScriptConverter>
+	public sealed class TypeScriptConverter : ModelConverter<TypeScriptConverter>
 	{
 		/// <inheritdoc />
 		public TypeScriptConverter(SushiConverter converter)
 			: base(converter) { }
 
 		/// <inheritdoc />
-		public override TypeScriptConverter ConvertClasses()
+		public override TypeScriptConverter Convert()
 		{
 			foreach (var model in Converter.Models.Flatten())
 				model.Script = ToTypeScriptClass(model);
@@ -66,7 +63,7 @@ namespace Sushi.Converters
 			return this;
 		}
 
-		protected virtual string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
+		private string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
@@ -80,7 +77,7 @@ namespace Sushi.Converters
 			return builder.ToString();
 		}
 
-		protected virtual string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
+		private string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			builder.AppendLine(indent + "constructor();");
@@ -119,7 +116,7 @@ namespace Sushi.Converters
 {propertyDeclaration}
 {constructorDeclaration}
 
-	static from(obj: any): {model.Name} {{
+	static mapFrom(obj: any): {model.Name} {{
 		return Object.assign(new {model.Name}(), obj);
 	}}
 }}

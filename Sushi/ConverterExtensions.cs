@@ -11,11 +11,8 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
 using Sushi.Converters;
-using Sushi.Descriptors;
-using Sushi.Enum;
+// ReSharper disable InconsistentNaming
 
 #endregion
 
@@ -24,52 +21,21 @@ namespace Sushi
 	public static class ConverterExtensions
 	{
         /// <summary>
-        ///     Initialize a <see cref="ModelConverter" /> to work with ECMAScript with a specific <paramref name="version" />.
+        ///     Create the converter for ECMAScript 5.
         /// </summary>
-        public static EcmaScript5Converter EcmaScript5(this SushiConverter converter)
+        public static EcmaScript5Converter ECMAScript5(this SushiConverter converter)
 			=> new(converter);
         
         /// <summary>
-        ///     Initialize a <see cref="ModelConverter" /> to work with ECMAScript with a specific <paramref name="version" />.
+        ///     Create the converter for ECMAScript 6.
         /// </summary>
-        public static EcmaScript6Converter EcmaScript6(this SushiConverter converter)
+        public static EcmaScript6Converter ECMAScript6(this SushiConverter converter)
 			=> new(converter);
 
         /// <summary>
-        ///     Initialize a <see cref="ModelConverter" /> to work with TypeScript with a specific <paramref name="version" />.
+        ///		Create the converter for TypeScript.
         /// </summary>
         public static TypeScriptConverter TypeScript(this SushiConverter converter)
 			=> new(converter);
-
-        /// <summary>
-        ///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
-        /// </summary>
-		public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
-		{
-			foreach (var d in tree)
-			{
-				if (d.Type == type)
-					return d;
-
-				var child = FindDescriptor(d.Children, type);
-				if (child != (ClassDescriptor)null)
-					return child;
-			}
-
-			return null;
-		}
-
-        /// <summary>
-        ///		Flatten the <see cref="ClassDescriptor"/> tree to a flat list.
-        /// </summary>
-        public static IEnumerable<ClassDescriptor> Flatten(this ICollection<ClassDescriptor> tree)
-        {
-	        foreach (var cd in tree)
-	        {
-		        yield return cd;
-		        foreach (var cdc in cd.Children.Flatten())
-			        yield return cdc;
-	        }
-        }
 	}
 }

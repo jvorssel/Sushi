@@ -15,7 +15,7 @@ export class ViewModel {
 		this.CreatedOn = value.CreatedOn;
 	}
 
-	static from(obj) {
+	static mapFrom(obj) {
 		return Object.assign(new ViewModel(), obj);
 	}
 }
@@ -47,7 +47,7 @@ export class PersonViewModel extends ViewModel {
 		this.Gender = value.Gender;
 	}
 
-	static from(obj) {
+	static mapFrom(obj) {
 		return Object.assign(new PersonViewModel(), obj);
 	}
 }
@@ -73,7 +73,7 @@ export class StudentViewModel extends PersonViewModel {
 		this.School = value.School;
 	}
 
-	static from(obj) {
+	static mapFrom(obj) {
 		return Object.assign(new StudentViewModel(), obj);
 	}
 }
@@ -117,7 +117,7 @@ export class SchoolViewModel extends ViewModel {
 		this.Students = value.Students;
 	}
 
-	static from(obj) {
+	static mapFrom(obj) {
 		return Object.assign(new SchoolViewModel(), obj);
 	}
 }
@@ -130,6 +130,8 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
 	/** A nullable boolean. */
 	NullableBool;
+	/** A nullable boolean. */
+	NullableString;
 	Student;
 	Students;
 	StudentPerClass;
@@ -143,13 +145,14 @@ export class TypeModel extends ViewModel {
 			return;
 
 		this.NullableBool = value.NullableBool;
+		this.NullableString = value.NullableString;
 		this.Student = value.Student;
 		this.Students = value.Students;
 		this.StudentPerClass = value.StudentPerClass;
 		this.ReadonlyString = value.ReadonlyString;
 	}
 
-	static from(obj) {
+	static mapFrom(obj) {
 		return Object.assign(new TypeModel(), obj);
 	}
 }

@@ -11,17 +11,36 @@
 
 #region
 
+using System;
 using System.IO;
-using Sushi.Enum;
+using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sushi.Descriptors;
+using Sushi.Extensions;
 
 #endregion
 
 namespace Sushi.Tests
 {
-	public class TestBase
+	public abstract class TestBase
 	{
-		protected static readonly string FilePath =
-			Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"Compiled\");
-       
+		public TestContext TestContext { get; set; }
+		
+		/// <summary>
+		///     Write the generated script values to the file.
+		/// </summary>
+		/// <param name="path">The <paramref name="path" /> to the folder to store the file in.</param>
+		/// <param name="encoding">What <see cref="Encoding" /> method should be used to create the file.</param>
+		public void WriteToFile(string script, string path, Encoding encoding = null)
+		{
+			if (path.IsEmpty())
+				throw new ArgumentNullException(nameof(path));
+
+			var directory = Path.GetDirectoryName(path);
+			if (!Directory.Exists(directory))
+				Directory.CreateDirectory(directory);
+
+			File.WriteAllText(path, script, encoding ?? Encoding.Default);
+		}
 	}
 }

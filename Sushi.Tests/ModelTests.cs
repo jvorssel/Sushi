@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sushi.Descriptors;
 using Sushi.Tests.Models;
 
 namespace Sushi.Tests

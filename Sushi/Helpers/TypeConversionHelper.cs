@@ -1,5 +1,4 @@
-﻿using System;
-using Sushi.Enum;
+﻿using Sushi.Enum;
 
 namespace Sushi.Helpers
 {

@@ -9,7 +9,6 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-using System;
 using System.Diagnostics;
 using System.Reflection;
 using Sushi.Enum;

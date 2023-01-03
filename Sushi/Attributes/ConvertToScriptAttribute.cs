@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sushi.Attributes
+﻿namespace Sushi.Attributes
 {
     /// <summary>
     ///     Used to tell what classes should be converted to specified script language.

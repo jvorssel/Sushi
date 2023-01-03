@@ -13,6 +13,10 @@ function ViewModel(obj) {
 
 }
 
+ViewModel.prototype.mapFrom = function(obj) {
+	return _.extend(new ViewModel(), obj); 
+};
+
 /**
  * The PersonViewModel that represents a Person. 
  * @typedef {Object} PersonViewModel
@@ -31,6 +35,10 @@ function PersonViewModel(obj) {
 	this.CreatedOn = value.CreatedOn;
 
 }
+
+PersonViewModel.prototype.mapFrom = function(obj) {
+	return _.extend(new PersonViewModel(), obj); 
+};
 
 /**
  * Represents a Student in a school. 
@@ -52,6 +60,10 @@ function StudentViewModel(obj) {
 	this.CreatedOn = value.CreatedOn;
 
 }
+
+StudentViewModel.prototype.mapFrom = function(obj) {
+	return _.extend(new StudentViewModel(), obj); 
+};
 
 /**
  * Basic information about a School. 
@@ -76,6 +88,10 @@ function SchoolViewModel(obj) {
 
 }
 
+SchoolViewModel.prototype.mapFrom = function(obj) {
+	return _.extend(new SchoolViewModel(), obj); 
+};
+
 /**
  * Simple model to verify complex types. 
  * @typedef {Object} TypeModel
@@ -87,6 +103,7 @@ function TypeModel(obj) {
 		value = {};
 
 	this.NullableBool = value.NullableBool;
+	this.NullableString = value.NullableString;
 	this.Guid = value.Guid;
 	this.Student = value.Student;
 	this.Students = value.Students;
@@ -95,4 +112,8 @@ function TypeModel(obj) {
 	this.ReadonlyString = value.ReadonlyString;
 
 }
+
+TypeModel.prototype.mapFrom = function(obj) {
+	return _.extend(new TypeModel(), obj); 
+};
 

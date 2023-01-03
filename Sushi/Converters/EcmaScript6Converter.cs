@@ -11,13 +11,9 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Enum;
 using Sushi.Interfaces;
 
 #endregion
@@ -27,7 +23,7 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public class EcmaScript6Converter : ModelConverter<EcmaScript6Converter>
+	public sealed class EcmaScript6Converter : ModelConverter<EcmaScript6Converter>
 	{
 		/// <inheritdoc />
 		public EcmaScript6Converter(SushiConverter converter) : base(converter)
@@ -35,7 +31,7 @@ namespace Sushi.Converters
 		}
 
 		/// / <inheritdoc />
-		public override EcmaScript6Converter ConvertClasses()
+		public override EcmaScript6Converter Convert()
 		{
 			foreach (var model in Converter.Models.Flatten())
 				model.Script = Compile(model);
@@ -43,7 +39,7 @@ namespace Sushi.Converters
 			return this;
 		}
 
-		protected virtual string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
+		private string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
@@ -57,7 +53,7 @@ namespace Sushi.Converters
 			return builder.ToString();
 		}
 
-		protected virtual string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
+		private string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
 		{
 			var builder = new StringBuilder();
 			builder.AppendLine(indent + "constructor(value) {");
@@ -91,7 +87,7 @@ namespace Sushi.Converters
 {propertyDeclaration}
 {constructorDeclaration}
 
-	static from(obj) {{
+	static mapFrom(obj) {{
 		return Object.assign(new {model.Name}(), obj);
 	}}
 }}

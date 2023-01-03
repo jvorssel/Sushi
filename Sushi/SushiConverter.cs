@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       SushiConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 03-01-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -11,13 +11,10 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Extensions;
 using Sushi.Interfaces;
 
 #endregion
@@ -36,13 +33,13 @@ namespace Sushi
 		public XmlDocumentationReader Documentation { get; set; }
 
 		/// <summary>
-		///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> for <see cref="Models" />.
+		///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> to convert.
 		/// </summary>
 		public SushiConverter(ICollection<Type> types)
 		{
 			var treeBuilder = new DescriptorTreeBuilder(types);
 			Models = treeBuilder.BuildTree().ToHashSet();
-			
+
 			EnumModels = types
 				.Where(x => x.IsEnum)
 				.Select(x => new EnumDescriptor(x))
@@ -50,23 +47,34 @@ namespace Sushi
 		}
 
 		/// <summary>
-		///     Initialize a new <see cref="SushiConverter" /> with models that
+		///		Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> to convert.
+		/// </summary>
+		public SushiConverter(ICollection<Type> types, string assemblyDocPath) : this(types)
+		{
+			if (assemblyDocPath.IsEmpty())
+				throw new ArgumentNullException(nameof(assemblyDocPath));
+
+			var extension = Path.GetExtension(assemblyDocPath);
+			if (extension != ".xml")
+				throw new ArgumentException($"Expected the path '{assemblyDocPath}' to lead to a XML file.");
+
+			if (!File.Exists(assemblyDocPath))
+				throw new ArgumentException("XML documentation file not found.", nameof(assemblyDocPath));
+
+			Documentation = new XmlDocumentationReader(assemblyDocPath).Initialize();
+		}
+		
+		/// <summary>
+		///     Initialize a new <see cref="SushiConverter" /> and find the classes that 
 		///     inherit <see cref="IScriptModel" /> in the given <paramref name="assembly" />.
 		/// </summary>
 		public SushiConverter(Assembly assembly) : this(assembly.ExportedTypes.ToList()) { }
-
+		
 		/// <summary>
-		///     Use the xml documentation generated on build.
+		///     Initialize a new <see cref="SushiConverter" /> and find the classes that 
+		///     inherit <see cref="IScriptModel" /> in the given <paramref name="assembly" />.
+		///		The <paramref name="assemblyDocPath"/> directs to a file that contains XML documentation that is generated when building a project.
 		/// </summary>
-		public SushiConverter LoadXmlDocumentation(string path)
-		{
-			var extension = Path.GetExtension(path);
-			if (extension != ".xml")
-				throw new ArgumentException($"Expected the path '{path}' to lead to a XML file.");
-
-			Documentation = new XmlDocumentationReader(path).Initialize();
-
-			return this;
-		}
+		public SushiConverter(Assembly assembly, string assemblyDocPath) : this(assembly.ExportedTypes.ToList(), assemblyDocPath) { }
 	}
 }

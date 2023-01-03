@@ -11,11 +11,9 @@
 
 #region
 
-using System;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Enum;
 
 #endregion
 
@@ -24,20 +22,28 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public class EcmaScript5Converter : ModelConverter<EcmaScript5Converter>
+	public sealed class EcmaScript5Converter : ModelConverter<EcmaScript5Converter>
 	{
+		private bool _includeUnderscoreExtend = false;
+		
 		/// <inheritdoc />
 		public EcmaScript5Converter(SushiConverter converter) : base(converter)
 		{}
 
 		/// / <inheritdoc />
-		public override EcmaScript5Converter ConvertClasses()
+		public override EcmaScript5Converter Convert()
 		{
 			foreach (var model in Converter.Models.Flatten())
 			{
 				model.Script = Compile(model);
 			}
 
+			return this;
+		}
+
+		public EcmaScript5Converter IncludeUnderscoreMapper()
+		{
+			_includeUnderscoreExtend = true;
 			return this;
 		}
 
@@ -57,6 +63,16 @@ namespace Sushi.Converters
 {properties}
 }}
 ";
+			if (_includeUnderscoreExtend)
+			{
+				template += 
+					$@"
+{model.Name}.prototype.mapFrom = function(obj) {{
+	return _.extend(new {model.Name}(), obj); 
+}};
+";
+			}
+			
 			return template;
 		}
 	}
