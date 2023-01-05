@@ -1,6 +1,6 @@
 
 /**
- * Sushi.Tests.Models.ViewModel. 
+ * Sushi.Tests.Models.ViewModel
  * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
@@ -14,7 +14,7 @@ function ViewModel(obj) {
 }
 
 /**
- * The PersonViewModel that represents a Person. 
+ * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
@@ -33,7 +33,7 @@ function PersonViewModel(obj) {
 }
 
 /**
- * Represents a Student in a school. 
+ * Represents a Student in a school.
  * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
@@ -54,7 +54,7 @@ function StudentViewModel(obj) {
 }
 
 /**
- * Basic information about a School. 
+ * Basic information about a School.
  * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
@@ -77,7 +77,7 @@ function SchoolViewModel(obj) {
 }
 
 /**
- * Simple model to verify complex types. 
+ * Simple model to verify complex types.
  * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
@@ -94,6 +94,47 @@ function TypeModel(obj) {
 	this.StudentPerClass = value.StudentPerClass;
 	this.CreatedOn = value.CreatedOn;
 	this.ReadonlyString = value.ReadonlyString;
+
+}
+
+/**
+ * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
+ * @typedef {Object} AbstractBaseModel
+ */
+function AbstractBaseModel(obj) {
+	var value = obj;
+	if (!(value instanceof Object)) 
+		value = {};
+
+	this.Name = value.Name;
+
+}
+
+/**
+ * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
+ * @typedef {Object} AbstractParentModel
+ * @extends AbstractBaseModel 
+ */
+function AbstractParentModel(obj) {
+	var value = obj;
+	if (!(value instanceof Object)) 
+		value = {};
+
+	this.Surname = value.Surname;
+	this.Name = value.Name;
+
+}
+
+/**
+ * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
+ * @typedef {Object} NoXmlDocumentationModel
+ */
+function NoXmlDocumentationModel(obj) {
+	var value = obj;
+	if (!(value instanceof Object)) 
+		value = {};
+
+	this.Name = value.Name;
 
 }
 

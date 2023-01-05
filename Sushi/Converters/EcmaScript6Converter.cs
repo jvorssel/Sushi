@@ -14,6 +14,7 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Extensions;
 using Sushi.Interfaces;
 
 #endregion
@@ -33,7 +34,7 @@ namespace Sushi.Converters
 		/// / <inheritdoc />
 		public override EcmaScript6Converter Convert()
 		{
-			foreach (var model in Converter.Models.Flatten())
+			foreach (var model in Models.Flatten())
 				model.Script = Compile(model);
 
 			return this;
@@ -44,8 +45,12 @@ namespace Sushi.Converters
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
 			{
-				if (!ExcludeComments)
-					builder.Append(Converter.JsDocPropertySummary(prop));
+				if (!ExcludeComments && XmlDocument != null)
+				{
+					var summary = XmlDocument.JsDocPropertySummary(prop);
+					if (!summary.IsEmpty())
+						builder.AppendLine(indent + summary);
+				}
 
 				builder.AppendLine($"{indent}{prop.Name};");
 			}
@@ -77,7 +82,7 @@ namespace Sushi.Converters
 		private string Compile(ClassDescriptor model)
 		{
 			var properties = model.GetProperties(true).ToList();
-			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
+			var summary = ExcludeComments || XmlDocument == null? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
 			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
 			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);

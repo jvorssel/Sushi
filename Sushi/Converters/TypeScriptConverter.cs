@@ -14,6 +14,7 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Extensions;
 using Sushi.Interfaces;
 
 #endregion
@@ -35,17 +36,15 @@ namespace Sushi.Converters
 		/// <inheritdoc />
 		public override TypeScriptConverter Convert()
 		{
-			foreach (var model in Converter.Models.Flatten())
-			{
+			foreach (var model in Models.Flatten())
 				model.Script = ToTypeScriptClass(model);
-			}
 
 			return this;
 		}
 
 		public TypeScriptConverter ConvertEnums()
 		{
-			foreach (var model in Converter.EnumModels)
+			foreach (var model in EnumModels)
 			{
 				var builder = new StringBuilder();
 				builder.AppendLine($"export enum {model.Name} {{");
@@ -72,8 +71,12 @@ namespace Sushi.Converters
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
 			{
-				if (!ExcludeComments)
-					builder.Append(Converter.JsDocPropertySummary(prop));
+				if (!ExcludeComments && XmlDocument != null)
+				{
+					var summary = XmlDocument.JsDocPropertySummary(prop);
+					if (!summary.IsEmpty())
+						builder.AppendLine(indent + summary);
+				}
 
 				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
 				builder.AppendLine($"{indent}{prop.Name}: {scriptType};");
@@ -107,7 +110,7 @@ namespace Sushi.Converters
 		{
 			var properties = model.GetProperties(true).ToList();
 
-			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
+			var summary = ExcludeComments || XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
 			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
 			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);

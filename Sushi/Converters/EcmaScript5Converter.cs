@@ -33,10 +33,8 @@ namespace Sushi.Converters
 		/// / <inheritdoc />
 		public override EcmaScript5Converter Convert()
 		{
-			foreach (var model in Converter.Models.Flatten())
-			{
+			foreach (var model in Models.Flatten())
 				model.Script = Compile(model);
-			}
 
 			return this;
 		}
@@ -49,7 +47,7 @@ namespace Sushi.Converters
 
 		private string Compile(ClassDescriptor model)
 		{
-			var summary = ExcludeComments ? string.Empty : Converter.JsDocClassSummary(model) + "\n";
+			var summary = ExcludeComments || XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
 			var properties = new StringBuilder();
 			foreach (var prop in model.Properties)
 				properties.AppendLine($"\tthis.{prop.Name} = value.{prop.Name};");

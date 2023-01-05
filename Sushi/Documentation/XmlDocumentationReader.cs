@@ -124,7 +124,7 @@ namespace Sushi.Documentation
         /// <summary>
         ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the given <see cref="Type"/>.
         /// </summary>
-        public XmlSummaryDescriptor GetDocumentationForType(Type type)
+        public XmlSummaryDescriptor? GetDocumentationForType(Type type)
         {
             // No members, initialize.
             if (!Initialized)
@@ -152,7 +152,7 @@ namespace Sushi.Documentation
         /// <summary>
         ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the selected <paramref name="property"/>.
         /// </summary>
-        public XmlSummaryDescriptor GetDocumentationForProperty<T>(T instance, Expression<Func<T, object>> property)
+        public XmlSummaryDescriptor? GetDocumentationForProperty<T>(T instance, Expression<Func<T, object>> property)
         {
             // Get the PropertyInfo that the given expression selects.
             var info = instance.GetPropertyInfo(property);
@@ -164,7 +164,7 @@ namespace Sushi.Documentation
         /// <summary>
         ///     Try to resolve the <see cref="XmlSummaryDescriptor"/> for the given <see cref="PropertyInfo"/>.
         /// </summary>
-        public XmlSummaryDescriptor GetDocumentationForProperty(IPropertyDescriptor descriptor)
+        public XmlSummaryDescriptor? GetDocumentationForProperty(IPropertyDescriptor descriptor)
         {
             // No members, initialize.
             if (!Initialized)

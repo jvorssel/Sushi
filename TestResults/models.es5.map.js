@@ -1,6 +1,6 @@
 
 /**
- * Sushi.Tests.Models.ViewModel. 
+ * Sushi.Tests.Models.ViewModel
  * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
@@ -18,7 +18,7 @@ ViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * The PersonViewModel that represents a Person. 
+ * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
@@ -41,7 +41,7 @@ PersonViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Represents a Student in a school. 
+ * Represents a Student in a school.
  * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
@@ -66,7 +66,7 @@ StudentViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Basic information about a School. 
+ * Basic information about a School.
  * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
@@ -93,7 +93,7 @@ SchoolViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Simple model to verify complex types. 
+ * Simple model to verify complex types.
  * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
@@ -115,5 +115,58 @@ function TypeModel(obj) {
 
 TypeModel.prototype.mapFrom = function(obj) {
 	return _.extend(new TypeModel(), obj); 
+};
+
+/**
+ * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
+ * @typedef {Object} AbstractBaseModel
+ */
+function AbstractBaseModel(obj) {
+	var value = obj;
+	if (!(value instanceof Object)) 
+		value = {};
+
+	this.Name = value.Name;
+
+}
+
+AbstractBaseModel.prototype.mapFrom = function(obj) {
+	return _.extend(new AbstractBaseModel(), obj); 
+};
+
+/**
+ * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
+ * @typedef {Object} AbstractParentModel
+ * @extends AbstractBaseModel 
+ */
+function AbstractParentModel(obj) {
+	var value = obj;
+	if (!(value instanceof Object)) 
+		value = {};
+
+	this.Surname = value.Surname;
+	this.Name = value.Name;
+
+}
+
+AbstractParentModel.prototype.mapFrom = function(obj) {
+	return _.extend(new AbstractParentModel(), obj); 
+};
+
+/**
+ * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
+ * @typedef {Object} NoXmlDocumentationModel
+ */
+function NoXmlDocumentationModel(obj) {
+	var value = obj;
+	if (!(value instanceof Object)) 
+		value = {};
+
+	this.Name = value.Name;
+
+}
+
+NoXmlDocumentationModel.prototype.mapFrom = function(obj) {
+	return _.extend(new NoXmlDocumentationModel(), obj); 
 };
 

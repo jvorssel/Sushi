@@ -126,3 +126,53 @@ export class TypeModel extends ViewModel {
 	}
 }
 
+export class AbstractBaseModel {
+	Name: string;
+
+	constructor();
+	constructor(value?: any) {
+		if (!(value instanceof Object))
+			return;
+
+		this.Name = value.Name;
+	}
+
+	static mapFrom(obj: any): AbstractBaseModel {
+		return Object.assign(new AbstractBaseModel(), obj);
+	}
+}
+
+export class AbstractParentModel extends AbstractBaseModel {
+	Surname: string;
+
+	constructor();
+	constructor(value?: any) {
+		super();
+
+		if (!(value instanceof Object))
+			return;
+
+		this.Surname = value.Surname;
+	}
+
+	static mapFrom(obj: any): AbstractParentModel {
+		return Object.assign(new AbstractParentModel(), obj);
+	}
+}
+
+export class NoXmlDocumentationModel {
+	Name: string;
+
+	constructor();
+	constructor(value?: any) {
+		if (!(value instanceof Object))
+			return;
+
+		this.Name = value.Name;
+	}
+
+	static mapFrom(obj: any): NoXmlDocumentationModel {
+		return Object.assign(new NoXmlDocumentationModel(), obj);
+	}
+}
+

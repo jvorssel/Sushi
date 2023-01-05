@@ -23,11 +23,11 @@ namespace Sushi.Converters
 {
 	public abstract class ModelConverter<TConverter> where TConverter : ModelConverter<TConverter>
 	{
-		protected readonly SushiConverter Converter;
-		protected readonly XmlDocumentationReader XmlDocument;
+		protected readonly XmlDocumentationReader? XmlDocument = null;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
 		protected IScriptTypeConverter ScriptTypeConverter = null;
+		
 
 		protected bool ExcludeComments { get; set; }
 
@@ -36,8 +36,7 @@ namespace Sushi.Converters
 		/// </summary>
 		protected ModelConverter(SushiConverter converter)
 		{
-			Converter = converter;
-			XmlDocument = Converter.Documentation;
+			XmlDocument = converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;
 		}

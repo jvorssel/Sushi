@@ -5,7 +5,7 @@ export enum Gender {
 }
 
 /**
- * Sushi.Tests.Models.ViewModel. 
+ * Sushi.Tests.Models.ViewModel
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
@@ -27,7 +27,7 @@ export class ViewModel {
 }
 
 /**
- * The PersonViewModel that represents a Person. 
+ * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
@@ -60,7 +60,7 @@ export class PersonViewModel extends ViewModel {
 }
 
 /**
- * Represents a Student in a school. 
+ * Represents a Student in a school.
  * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
@@ -87,7 +87,7 @@ export class StudentViewModel extends PersonViewModel {
 }
 
 /**
- * Basic information about a School. 
+ * Basic information about a School.
  * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
@@ -132,7 +132,7 @@ export class SchoolViewModel extends ViewModel {
 }
 
 /**
- * Simple model to verify complex types. 
+ * Simple model to verify complex types.
  * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
@@ -164,6 +164,69 @@ export class TypeModel extends ViewModel {
 
 	static mapFrom(obj: any): TypeModel {
 		return Object.assign(new TypeModel(), obj);
+	}
+}
+
+/**
+ * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
+ * @typedef {Object} AbstractBaseModel
+ */
+export class AbstractBaseModel {
+	Name: string;
+
+	constructor();
+	constructor(value?: any) {
+		if (!(value instanceof Object))
+			return;
+
+		this.Name = value.Name;
+	}
+
+	static mapFrom(obj: any): AbstractBaseModel {
+		return Object.assign(new AbstractBaseModel(), obj);
+	}
+}
+
+/**
+ * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
+ * @typedef {Object} AbstractParentModel
+ * @extends AbstractBaseModel 
+ */
+export class AbstractParentModel extends AbstractBaseModel {
+	Surname: string;
+
+	constructor();
+	constructor(value?: any) {
+		super();
+
+		if (!(value instanceof Object))
+			return;
+
+		this.Surname = value.Surname;
+	}
+
+	static mapFrom(obj: any): AbstractParentModel {
+		return Object.assign(new AbstractParentModel(), obj);
+	}
+}
+
+/**
+ * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
+ * @typedef {Object} NoXmlDocumentationModel
+ */
+export class NoXmlDocumentationModel {
+	Name: string;
+
+	constructor();
+	constructor(value?: any) {
+		if (!(value instanceof Object))
+			return;
+
+		this.Name = value.Name;
+	}
+
+	static mapFrom(obj: any): NoXmlDocumentationModel {
+		return Object.assign(new NoXmlDocumentationModel(), obj);
 	}
 }
 
