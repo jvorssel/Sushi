@@ -51,7 +51,6 @@ namespace Sushi.Tests.ModelDescriptors
 				// Assert
 				Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
 				Assert.AreEqual(typeof(bool?), descriptor.Type);
-				Assert.IsNull(descriptor.DefaultValue);
 			}
 		}
 	}

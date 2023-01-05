@@ -36,7 +36,6 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(typeof(string), descriptor.Type);
 				Assert.IsFalse(descriptor.IsNullable);
 				Assert.AreEqual(NativeType.String, descriptor.NativeType);
-				Assert.AreEqual("readonly", descriptor.DefaultValue);
 			}
 		}	
 	}

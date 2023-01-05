@@ -43,12 +43,6 @@ namespace Sushi.Descriptors
 		/// <inheritdoc />
 		public NativeType NativeType => Type.ToNativeScriptType();
 
-		/// <inheritdoc />
-		public object DefaultValue { get; }
-
-		/// <inheritdoc />
-		public string ScriptTypeValue { get; set; }
-
 		#endregion
 
 		public FieldDescriptor(FieldInfo fieldInfo)
@@ -59,8 +53,6 @@ namespace Sushi.Descriptors
 
 			if (IsNullable)
 				Type = Nullable.GetUnderlyingType(Type);
-			
-			DefaultValue = ClassType.GetDefaultValue(_field);	
 		}
 	}
 }

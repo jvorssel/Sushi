@@ -27,11 +27,5 @@ namespace Sushi.Interfaces
 		///		The type of the class that the property or field belongs to. 
 		/// </summary>
 		Type ClassType { get; }
-		
-		/// <summary>
-		///		The <see cref="DefaultValue"/> used by the class.
-		/// </summary>
-		object DefaultValue { get; }
-
 	}
 }

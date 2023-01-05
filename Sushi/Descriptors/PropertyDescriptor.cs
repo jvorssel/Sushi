@@ -37,8 +37,6 @@ namespace Sushi.Descriptors
 		/// <inheritdoc />
 		public Type ClassType => _property.DeclaringType;
 
-		public object DefaultValue { get; }
-
 		public PropertyDescriptor(PropertyInfo property)
 		{
 			var type = property.PropertyType;
@@ -46,7 +44,6 @@ namespace Sushi.Descriptors
 			_property = property;
 			Name = property.Name;
 			Type = type;
-			DefaultValue = ClassType.GetDefaultValue(_property);
 		}
 
 		/// <inheritdoc />
