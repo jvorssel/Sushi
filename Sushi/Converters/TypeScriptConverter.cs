@@ -27,8 +27,8 @@ namespace Sushi.Converters
 	public sealed class TypeScriptConverter : ModelConverter<TypeScriptConverter>
 	{
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter)
-			: base(converter)
+		public TypeScriptConverter(SushiConverter converter, string indent = "    ")
+			: base(converter, indent)
 		{
 			ScriptTypeConverter = new TypeScriptTypeConverter(converter);
 		}
@@ -51,7 +51,7 @@ namespace Sushi.Converters
 				var lastKey = model.Values.Last().Key;
 				foreach (var kvp in model.Values)
 				{
-					var value = $"\t{kvp.Key} = {kvp.Value}";
+					var value = $"{Indent}{kvp.Key} = {kvp.Value}";
 					if (lastKey != kvp.Key)
 						value += ",";
 
@@ -66,7 +66,7 @@ namespace Sushi.Converters
 			return this;
 		}
 
-		internal string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties, string indent = "\t")
+		internal string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties)
 		{
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
@@ -75,34 +75,34 @@ namespace Sushi.Converters
 				{
 					var summary = XmlDocument.JsDocPropertySummary(prop);
 					if (!summary.IsEmpty())
-						builder.AppendLine(indent + summary);
+						builder.AppendLine(Indent + summary);
 				}
 
 				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
-				builder.AppendLine($"{indent}{prop.Name}: {scriptType};");
+				builder.AppendLine($"{Indent}{prop.Name}: {scriptType};");
 			}
 
 			return builder.ToString();
 		}
 
-		internal string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent, string indent = "\t")
+		internal string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent)
 		{
 			var builder = new StringBuilder();
-			builder.AppendLine(indent + "constructor();");
-			builder.AppendLine(indent + "constructor(value?: any) {");
+			builder.AppendLine(Indent + "constructor();");
+			builder.AppendLine(Indent + "constructor(value?: any) {");
 			if (hasParent)
 			{
-				builder.AppendLine(indent + indent + "super();");
+				builder.AppendLine(Indent + Indent + "super();");
 				builder.AppendLine();
 			}
 
-			builder.AppendLine(indent + indent + "if (!(value instanceof Object))");
-			builder.AppendLine(indent + indent + indent + "return;");
+			builder.AppendLine(Indent + Indent + "if (!(value instanceof Object))");
+			builder.AppendLine(Indent + Indent + Indent + "return;");
 			builder.AppendLine();
 
 			foreach (var prop in properties)
-				builder.AppendLine($"{indent + indent}this.{prop.Name} = value.{prop.Name};");
-			builder.Append(indent + "}");
+				builder.AppendLine($"{Indent + Indent}this.{prop.Name} = value.{prop.Name};");
+			builder.Append(Indent + "}");
 			return builder.ToString();
 		}
 
@@ -119,9 +119,9 @@ namespace Sushi.Converters
 {propertyDeclaration}
 {constructorDeclaration}
 
-	static mapFrom(obj: any): {model.Name} {{
-		return Object.assign(new {model.Name}(), obj);
-	}}
+{Indent}static mapFrom(obj: any): {model.Name} {{
+{Indent}{Indent}return Object.assign(new {model.Name}(), obj);
+{Indent}}}
 }}
 ";
 

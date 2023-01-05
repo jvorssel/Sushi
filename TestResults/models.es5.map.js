@@ -4,17 +4,17 @@
  * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
 ViewModel.prototype.mapFrom = function(obj) {
-	return _.extend(new ViewModel(), obj); 
+    return _.extend(new ViewModel(), obj); 
 };
 
 /**
@@ -23,21 +23,21 @@ ViewModel.prototype.mapFrom = function(obj) {
  * @extends ViewModel 
  */
 function PersonViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Identifier = value.Identifier;
-	this.Name = value.Name;
-	this.Surname = value.Surname;
-	this.Gender = value.Gender;
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Identifier = value.Identifier;
+    this.Name = value.Name;
+    this.Surname = value.Surname;
+    this.Gender = value.Gender;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
 PersonViewModel.prototype.mapFrom = function(obj) {
-	return _.extend(new PersonViewModel(), obj); 
+    return _.extend(new PersonViewModel(), obj); 
 };
 
 /**
@@ -46,23 +46,23 @@ PersonViewModel.prototype.mapFrom = function(obj) {
  * @extends PersonViewModel 
  */
 function StudentViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Grade = value.Grade;
-	this.School = value.School;
-	this.Identifier = value.Identifier;
-	this.Name = value.Name;
-	this.Surname = value.Surname;
-	this.Gender = value.Gender;
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Grade = value.Grade;
+    this.School = value.School;
+    this.Identifier = value.Identifier;
+    this.Name = value.Name;
+    this.Surname = value.Surname;
+    this.Gender = value.Gender;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
 StudentViewModel.prototype.mapFrom = function(obj) {
-	return _.extend(new StudentViewModel(), obj); 
+    return _.extend(new StudentViewModel(), obj); 
 };
 
 /**
@@ -71,25 +71,25 @@ StudentViewModel.prototype.mapFrom = function(obj) {
  * @extends ViewModel 
  */
 function SchoolViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Name = value.Name;
-	this.Owner = value.Owner;
-	this.AmountOfStudents = value.AmountOfStudents;
-	this.Address = value.Address;
-	this.ZipCode = value.ZipCode;
-	this.HouseNumber = value.HouseNumber;
-	this.HouseNumberAddition = value.HouseNumberAddition;
-	this.Students = value.Students;
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Name = value.Name;
+    this.Owner = value.Owner;
+    this.AmountOfStudents = value.AmountOfStudents;
+    this.Address = value.Address;
+    this.ZipCode = value.ZipCode;
+    this.HouseNumber = value.HouseNumber;
+    this.HouseNumberAddition = value.HouseNumberAddition;
+    this.Students = value.Students;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
 SchoolViewModel.prototype.mapFrom = function(obj) {
-	return _.extend(new SchoolViewModel(), obj); 
+    return _.extend(new SchoolViewModel(), obj); 
 };
 
 /**
@@ -98,23 +98,23 @@ SchoolViewModel.prototype.mapFrom = function(obj) {
  * @extends ViewModel 
  */
 function TypeModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.NullableBool = value.NullableBool;
-	this.NullableString = value.NullableString;
-	this.Guid = value.Guid;
-	this.Student = value.Student;
-	this.Students = value.Students;
-	this.StudentPerClass = value.StudentPerClass;
-	this.CreatedOn = value.CreatedOn;
-	this.ReadonlyString = value.ReadonlyString;
+    this.NullableBool = value.NullableBool;
+    this.NullableString = value.NullableString;
+    this.Guid = value.Guid;
+    this.Student = value.Student;
+    this.Students = value.Students;
+    this.StudentPerClass = value.StudentPerClass;
+    this.CreatedOn = value.CreatedOn;
+    this.ReadonlyString = value.ReadonlyString;
 
 }
 
 TypeModel.prototype.mapFrom = function(obj) {
-	return _.extend(new TypeModel(), obj); 
+    return _.extend(new TypeModel(), obj); 
 };
 
 /**
@@ -122,16 +122,16 @@ TypeModel.prototype.mapFrom = function(obj) {
  * @typedef {Object} AbstractBaseModel
  */
 function AbstractBaseModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Name = value.Name;
+    this.Name = value.Name;
 
 }
 
 AbstractBaseModel.prototype.mapFrom = function(obj) {
-	return _.extend(new AbstractBaseModel(), obj); 
+    return _.extend(new AbstractBaseModel(), obj); 
 };
 
 /**
@@ -140,17 +140,17 @@ AbstractBaseModel.prototype.mapFrom = function(obj) {
  * @extends AbstractBaseModel 
  */
 function AbstractParentModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Surname = value.Surname;
-	this.Name = value.Name;
+    this.Surname = value.Surname;
+    this.Name = value.Name;
 
 }
 
 AbstractParentModel.prototype.mapFrom = function(obj) {
-	return _.extend(new AbstractParentModel(), obj); 
+    return _.extend(new AbstractParentModel(), obj); 
 };
 
 /**
@@ -158,15 +158,15 @@ AbstractParentModel.prototype.mapFrom = function(obj) {
  * @typedef {Object} NoXmlDocumentationModel
  */
 function NoXmlDocumentationModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Name = value.Name;
+    this.Name = value.Name;
 
 }
 
 NoXmlDocumentationModel.prototype.mapFrom = function(obj) {
-	return _.extend(new NoXmlDocumentationModel(), obj); 
+    return _.extend(new NoXmlDocumentationModel(), obj); 
 };
 

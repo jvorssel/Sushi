@@ -23,6 +23,7 @@ namespace Sushi.Converters
 {
 	public abstract class ModelConverter<TConverter> where TConverter : ModelConverter<TConverter>
 	{
+		public string Indent { get; }
 		protected readonly XmlDocumentationReader? XmlDocument = null;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
@@ -34,8 +35,9 @@ namespace Sushi.Converters
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
 		/// </summary>
-		protected ModelConverter(SushiConverter converter)
+		protected ModelConverter(SushiConverter converter, string indent)
 		{
+			Indent = indent;
 			XmlDocument = converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;

@@ -4,20 +4,20 @@
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-	Guid;
-	CreatedOn;
+    Guid;
+    CreatedOn;
 
-	constructor(value) {
-		if (!(value instanceof Object))
-			return;
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
 
-		this.Guid = value.Guid;
-		this.CreatedOn = value.CreatedOn;
-	}
+        this.Guid = value.Guid;
+        this.CreatedOn = value.CreatedOn;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new ViewModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new ViewModel(), obj);
+    }
 }
 
 /**
@@ -26,30 +26,30 @@ export class ViewModel {
  * @extends ViewModel 
  */
 export class PersonViewModel extends ViewModel {
-	/** The Identifier that this Model refers to. */
-	Identifier;
-	/** The Name of the person. */
-	Name;
-	/** The Surname of the person. */
-	Surname;
-	/** The Gender of the person. */
-	Gender;
+    /** The Identifier that this Model refers to. */
+    Identifier;
+    /** The Name of the person. */
+    Name;
+    /** The Surname of the person. */
+    Surname;
+    /** The Gender of the person. */
+    Gender;
 
-	constructor(value) {
-		super(value);
+    constructor(value) {
+        super(value);
 
-		if (!(value instanceof Object))
-			return;
+        if (!(value instanceof Object))
+            return;
 
-		this.Identifier = value.Identifier;
-		this.Name = value.Name;
-		this.Surname = value.Surname;
-		this.Gender = value.Gender;
-	}
+        this.Identifier = value.Identifier;
+        this.Name = value.Name;
+        this.Surname = value.Surname;
+        this.Gender = value.Gender;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new PersonViewModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new PersonViewModel(), obj);
+    }
 }
 
 /**
@@ -58,24 +58,24 @@ export class PersonViewModel extends ViewModel {
  * @extends PersonViewModel 
  */
 export class StudentViewModel extends PersonViewModel {
-	/** What Grade the Student is in. */
-	Grade;
-	/** The name of the School. */
-	School;
+    /** What Grade the Student is in. */
+    Grade;
+    /** The name of the School. */
+    School;
 
-	constructor(value) {
-		super(value);
+    constructor(value) {
+        super(value);
 
-		if (!(value instanceof Object))
-			return;
+        if (!(value instanceof Object))
+            return;
 
-		this.Grade = value.Grade;
-		this.School = value.School;
-	}
+        this.Grade = value.Grade;
+        this.School = value.School;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new StudentViewModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new StudentViewModel(), obj);
+    }
 }
 
 /**
@@ -84,42 +84,42 @@ export class StudentViewModel extends PersonViewModel {
  * @extends ViewModel 
  */
 export class SchoolViewModel extends ViewModel {
-	/** The Name of this SchoolViewModel. */
-	Name;
-	/** The Owner of this SchoolViewModel. */
-	Owner;
-	/** The AmountOfStudents of this SchoolViewModel. */
-	AmountOfStudents;
-	/** The Address of this SchoolViewModel. */
-	Address;
-	/** The ZipCode of this SchoolViewModel. */
-	ZipCode;
-	/** The HouseNumber of this SchoolViewModel. */
-	HouseNumber;
-	/** The HouseNumberAddition of this SchoolViewModel. */
-	HouseNumberAddition;
-	/** The Students of this SchoolViewModel. */
-	Students;
+    /** The Name of this SchoolViewModel. */
+    Name;
+    /** The Owner of this SchoolViewModel. */
+    Owner;
+    /** The AmountOfStudents of this SchoolViewModel. */
+    AmountOfStudents;
+    /** The Address of this SchoolViewModel. */
+    Address;
+    /** The ZipCode of this SchoolViewModel. */
+    ZipCode;
+    /** The HouseNumber of this SchoolViewModel. */
+    HouseNumber;
+    /** The HouseNumberAddition of this SchoolViewModel. */
+    HouseNumberAddition;
+    /** The Students of this SchoolViewModel. */
+    Students;
 
-	constructor(value) {
-		super(value);
+    constructor(value) {
+        super(value);
 
-		if (!(value instanceof Object))
-			return;
+        if (!(value instanceof Object))
+            return;
 
-		this.Name = value.Name;
-		this.Owner = value.Owner;
-		this.AmountOfStudents = value.AmountOfStudents;
-		this.Address = value.Address;
-		this.ZipCode = value.ZipCode;
-		this.HouseNumber = value.HouseNumber;
-		this.HouseNumberAddition = value.HouseNumberAddition;
-		this.Students = value.Students;
-	}
+        this.Name = value.Name;
+        this.Owner = value.Owner;
+        this.AmountOfStudents = value.AmountOfStudents;
+        this.Address = value.Address;
+        this.ZipCode = value.ZipCode;
+        this.HouseNumber = value.HouseNumber;
+        this.HouseNumberAddition = value.HouseNumberAddition;
+        this.Students = value.Students;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new SchoolViewModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new SchoolViewModel(), obj);
+    }
 }
 
 /**
@@ -128,33 +128,33 @@ export class SchoolViewModel extends ViewModel {
  * @extends ViewModel 
  */
 export class TypeModel extends ViewModel {
-	/** A nullable boolean. */
-	NullableBool;
-	/** A nullable boolean. */
-	NullableString;
-	Student;
-	Students;
-	StudentPerClass;
-	/** A readonly string. */
-	ReadonlyString;
+    /** A nullable boolean. */
+    NullableBool;
+    /** A nullable boolean. */
+    NullableString;
+    Student;
+    Students;
+    StudentPerClass;
+    /** A readonly string. */
+    ReadonlyString;
 
-	constructor(value) {
-		super(value);
+    constructor(value) {
+        super(value);
 
-		if (!(value instanceof Object))
-			return;
+        if (!(value instanceof Object))
+            return;
 
-		this.NullableBool = value.NullableBool;
-		this.NullableString = value.NullableString;
-		this.Student = value.Student;
-		this.Students = value.Students;
-		this.StudentPerClass = value.StudentPerClass;
-		this.ReadonlyString = value.ReadonlyString;
-	}
+        this.NullableBool = value.NullableBool;
+        this.NullableString = value.NullableString;
+        this.Student = value.Student;
+        this.Students = value.Students;
+        this.StudentPerClass = value.StudentPerClass;
+        this.ReadonlyString = value.ReadonlyString;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new TypeModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new TypeModel(), obj);
+    }
 }
 
 /**
@@ -162,18 +162,18 @@ export class TypeModel extends ViewModel {
  * @typedef {Object} AbstractBaseModel
  */
 export class AbstractBaseModel {
-	Name;
+    Name;
 
-	constructor(value) {
-		if (!(value instanceof Object))
-			return;
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
 
-		this.Name = value.Name;
-	}
+        this.Name = value.Name;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new AbstractBaseModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new AbstractBaseModel(), obj);
+    }
 }
 
 /**
@@ -182,20 +182,20 @@ export class AbstractBaseModel {
  * @extends AbstractBaseModel 
  */
 export class AbstractParentModel extends AbstractBaseModel {
-	Surname;
+    Surname;
 
-	constructor(value) {
-		super(value);
+    constructor(value) {
+        super(value);
 
-		if (!(value instanceof Object))
-			return;
+        if (!(value instanceof Object))
+            return;
 
-		this.Surname = value.Surname;
-	}
+        this.Surname = value.Surname;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new AbstractParentModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new AbstractParentModel(), obj);
+    }
 }
 
 /**
@@ -203,17 +203,17 @@ export class AbstractParentModel extends AbstractBaseModel {
  * @typedef {Object} NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-	Name;
+    Name;
 
-	constructor(value) {
-		if (!(value instanceof Object))
-			return;
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
 
-		this.Name = value.Name;
-	}
+        this.Name = value.Name;
+    }
 
-	static mapFrom(obj) {
-		return Object.assign(new NoXmlDocumentationModel(), obj);
-	}
+    static mapFrom(obj) {
+        return Object.assign(new NoXmlDocumentationModel(), obj);
+    }
 }
 

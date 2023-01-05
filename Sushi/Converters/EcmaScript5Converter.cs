@@ -27,7 +27,7 @@ namespace Sushi.Converters
 		private bool _includeUnderscoreExtend = false;
 		
 		/// <inheritdoc />
-		public EcmaScript5Converter(SushiConverter converter) : base(converter)
+		public EcmaScript5Converter(SushiConverter converter, string indent = "    ") : base(converter, indent)
 		{}
 
 		/// / <inheritdoc />
@@ -50,13 +50,13 @@ namespace Sushi.Converters
 			var summary = ExcludeComments || XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
 			var properties = new StringBuilder();
 			foreach (var prop in model.Properties)
-				properties.AppendLine($"\tthis.{prop.Name} = value.{prop.Name};");
+				properties.AppendLine($"{Indent}this.{prop.Name} = value.{prop.Name};");
 
 			var template =
 				$@"{summary}function {model.Name}(obj) {{
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {{}};
+{Indent}var value = obj;
+{Indent}if (!(value instanceof Object)) 
+{Indent}{Indent}value = {{}};
 
 {properties}
 }}
@@ -66,7 +66,7 @@ namespace Sushi.Converters
 				template += 
 					$@"
 {model.Name}.prototype.mapFrom = function(obj) {{
-	return _.extend(new {model.Name}(), obj); 
+{Indent}return _.extend(new {model.Name}(), obj); 
 }};
 ";
 			}

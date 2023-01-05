@@ -4,12 +4,12 @@
  * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
@@ -19,16 +19,16 @@ function ViewModel(obj) {
  * @extends ViewModel 
  */
 function PersonViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Identifier = value.Identifier;
-	this.Name = value.Name;
-	this.Surname = value.Surname;
-	this.Gender = value.Gender;
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Identifier = value.Identifier;
+    this.Name = value.Name;
+    this.Surname = value.Surname;
+    this.Gender = value.Gender;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
@@ -38,18 +38,18 @@ function PersonViewModel(obj) {
  * @extends PersonViewModel 
  */
 function StudentViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Grade = value.Grade;
-	this.School = value.School;
-	this.Identifier = value.Identifier;
-	this.Name = value.Name;
-	this.Surname = value.Surname;
-	this.Gender = value.Gender;
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Grade = value.Grade;
+    this.School = value.School;
+    this.Identifier = value.Identifier;
+    this.Name = value.Name;
+    this.Surname = value.Surname;
+    this.Gender = value.Gender;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
@@ -59,20 +59,20 @@ function StudentViewModel(obj) {
  * @extends ViewModel 
  */
 function SchoolViewModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Name = value.Name;
-	this.Owner = value.Owner;
-	this.AmountOfStudents = value.AmountOfStudents;
-	this.Address = value.Address;
-	this.ZipCode = value.ZipCode;
-	this.HouseNumber = value.HouseNumber;
-	this.HouseNumberAddition = value.HouseNumberAddition;
-	this.Students = value.Students;
-	this.Guid = value.Guid;
-	this.CreatedOn = value.CreatedOn;
+    this.Name = value.Name;
+    this.Owner = value.Owner;
+    this.AmountOfStudents = value.AmountOfStudents;
+    this.Address = value.Address;
+    this.ZipCode = value.ZipCode;
+    this.HouseNumber = value.HouseNumber;
+    this.HouseNumberAddition = value.HouseNumberAddition;
+    this.Students = value.Students;
+    this.Guid = value.Guid;
+    this.CreatedOn = value.CreatedOn;
 
 }
 
@@ -82,18 +82,18 @@ function SchoolViewModel(obj) {
  * @extends ViewModel 
  */
 function TypeModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.NullableBool = value.NullableBool;
-	this.NullableString = value.NullableString;
-	this.Guid = value.Guid;
-	this.Student = value.Student;
-	this.Students = value.Students;
-	this.StudentPerClass = value.StudentPerClass;
-	this.CreatedOn = value.CreatedOn;
-	this.ReadonlyString = value.ReadonlyString;
+    this.NullableBool = value.NullableBool;
+    this.NullableString = value.NullableString;
+    this.Guid = value.Guid;
+    this.Student = value.Student;
+    this.Students = value.Students;
+    this.StudentPerClass = value.StudentPerClass;
+    this.CreatedOn = value.CreatedOn;
+    this.ReadonlyString = value.ReadonlyString;
 
 }
 
@@ -102,11 +102,11 @@ function TypeModel(obj) {
  * @typedef {Object} AbstractBaseModel
  */
 function AbstractBaseModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Name = value.Name;
+    this.Name = value.Name;
 
 }
 
@@ -116,12 +116,12 @@ function AbstractBaseModel(obj) {
  * @extends AbstractBaseModel 
  */
 function AbstractParentModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Surname = value.Surname;
-	this.Name = value.Name;
+    this.Surname = value.Surname;
+    this.Name = value.Name;
 
 }
 
@@ -130,11 +130,11 @@ function AbstractParentModel(obj) {
  * @typedef {Object} NoXmlDocumentationModel
  */
 function NoXmlDocumentationModel(obj) {
-	var value = obj;
-	if (!(value instanceof Object)) 
-		value = {};
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
 
-	this.Name = value.Name;
+    this.Name = value.Name;
 
 }
 
