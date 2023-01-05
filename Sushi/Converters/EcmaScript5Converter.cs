@@ -27,7 +27,7 @@ namespace Sushi.Converters
 		private bool _includeUnderscoreExtend = false;
 		
 		/// <inheritdoc />
-		public EcmaScript5Converter(SushiConverter converter, string indent = "    ") : base(converter, indent)
+		public EcmaScript5Converter(SushiConverter converter, string indent) : base(converter, indent)
 		{}
 
 		/// / <inheritdoc />

@@ -27,7 +27,7 @@ namespace Sushi.Converters
 	public sealed class EcmaScript6Converter : ModelConverter<EcmaScript6Converter>
 	{
 		/// <inheritdoc />
-		public EcmaScript6Converter(SushiConverter converter, string indent = "    ") : base(converter, indent)
+		public EcmaScript6Converter(SushiConverter converter, string indent) : base(converter, indent)
 		{
 		}
 

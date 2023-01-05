@@ -130,7 +130,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
     NullableBool;
-    /** A nullable boolean. */
+    /** A nullable string, defaults to null. */
     NullableString;
     Student;
     Students;

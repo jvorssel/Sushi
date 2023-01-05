@@ -27,7 +27,7 @@ namespace Sushi.Converters
 	public sealed class TypeScriptConverter : ModelConverter<TypeScriptConverter>
 	{
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, string indent = "    ")
+		public TypeScriptConverter(SushiConverter converter, string indent)
 			: base(converter, indent)
 		{
 			ScriptTypeConverter = new TypeScriptTypeConverter(converter);

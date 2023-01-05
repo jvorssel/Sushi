@@ -20,22 +20,24 @@ namespace Sushi
 {
 	public static class ConverterExtensions
 	{
+		private const string INDENT = @"    ";
+		
         /// <summary>
         ///     Create the converter for ECMAScript 5.
         /// </summary>
-        public static EcmaScript5Converter ECMAScript5(this SushiConverter converter)
-			=> new(converter);
+        public static EcmaScript5Converter ECMAScript5(this SushiConverter converter, string indent = INDENT)
+			=> new(converter, indent);
         
         /// <summary>
         ///     Create the converter for ECMAScript 6.
         /// </summary>
-        public static EcmaScript6Converter ECMAScript6(this SushiConverter converter)
-			=> new(converter);
+        public static EcmaScript6Converter ECMAScript6(this SushiConverter converter, string indent = INDENT)
+			=> new(converter, indent);
 
         /// <summary>
         ///		Create the converter for TypeScript.
         /// </summary>
-        public static TypeScriptConverter TypeScript(this SushiConverter converter)
-			=> new(converter);
+        public static TypeScriptConverter TypeScript(this SushiConverter converter, string indent = INDENT)
+			=> new(converter, indent);
 	}
 }

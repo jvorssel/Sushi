@@ -39,8 +39,9 @@ Author: Jeroen Vorsselman @ 2023
 ### Example
 ``` 
 var converter = new SushiConverter(assembly, xmlFilePath);
+var indent = "\t";
 var script = converter.TypeScript()
-    .Convert()
+    .Convert(indent)
     .ConvertEnums()
     .ToString();
 ``` 
@@ -58,7 +59,7 @@ public sealed class TypeModel : ViewModel
 	public bool? NullableBool { get; set; } = null;
 	
 	/// <summary>
-	///     A nullable boolean.
+	///     A nullable string, defaults to null.
 	/// </summary>
 	public string? NullableString { get; set; } = null;
 
@@ -86,7 +87,7 @@ To generate this TypeScript model:
 export class TypeModel extends ViewModel {
 	/** A nullable boolean. */
 	NullableBool: boolean | null;
-	/** A nullable boolean. */
+	/** A nullable string, defaults to null. */
 	NullableString: string;
 	Student: StudentViewModel | null;
 	Students: Array<StudentViewModel | null>;

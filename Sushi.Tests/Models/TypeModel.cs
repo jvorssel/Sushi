@@ -29,7 +29,7 @@ namespace Sushi.Tests.Models
 		public bool? NullableBool { get; set; } = null;
 		
 		/// <summary>
-		///     A nullable boolean.
+		///     A nullable string, defaults to null.
 		/// </summary>
 		public string? NullableString { get; set; } = null;
 

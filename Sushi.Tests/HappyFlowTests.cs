@@ -95,7 +95,7 @@ namespace Sushi.Tests
 			var converter = new SushiConverter(assembly, XmlDocPath);
 
 			// Act
-			var script = converter.TypeScript()
+			var script = converter.TypeScript("    ")
 				.Convert()
 				.ConvertEnums()
 				.ToString();
