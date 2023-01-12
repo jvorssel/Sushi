@@ -5,11 +5,10 @@ export enum Gender {
 }
 
 export class ViewModel {
-    Guid: string;
-    CreatedOn: Date | string | null;
+    Guid: string = "761c17b4-2d81-41e3-8410-f48d65b0b356";
+    CreatedOn: Date | string | null = null;
 
-    constructor();
-    constructor(value?: any) {
+    public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
@@ -23,14 +22,13 @@ export class ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    Identifier: string;
-    Name: string;
-    Surname: string;
-    Gender: Gender | number;
+    Identifier!: string;
+    Name!: string;
+    Surname!: string;
+    Gender!: Gender | number;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -47,12 +45,11 @@ export class PersonViewModel extends ViewModel {
 }
 
 export class StudentViewModel extends PersonViewModel {
-    Grade: number;
-    School: SchoolViewModel | null;
+    Grade: number = 9;
+    School!: SchoolViewModel | null;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -67,18 +64,19 @@ export class StudentViewModel extends PersonViewModel {
 }
 
 export class SchoolViewModel extends ViewModel {
-    Name: string;
-    Owner: PersonViewModel | null;
-    AmountOfStudents: number;
-    Address: string;
-    ZipCode: string;
-    HouseNumber: number;
-    HouseNumberAddition: string;
-    Students: Array<StudentViewModel | null>;
+    Name!: string;
+    Owner!: PersonViewModel | null;
+    AmountOfStudents: number = 0;
+    Address: string = "";
+    ZipCode!: string;
+    HouseNumber: number = 0;
+    HouseNumberAddition!: string;
+    AverageGrade: number = 2.6666666666666666666666666667;
+    Students: Array<StudentViewModel | null> = [];
+    Timmy: StudentViewModel | null = null;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -90,7 +88,9 @@ export class SchoolViewModel extends ViewModel {
         this.ZipCode = value.ZipCode;
         this.HouseNumber = value.HouseNumber;
         this.HouseNumberAddition = value.HouseNumberAddition;
+        this.AverageGrade = value.AverageGrade;
         this.Students = value.Students;
+        this.Timmy = value.Timmy;
     }
 
     static mapFrom(obj: any): SchoolViewModel {
@@ -99,16 +99,15 @@ export class SchoolViewModel extends ViewModel {
 }
 
 export class TypeModel extends ViewModel {
-    NullableBool: boolean | null;
-    NullableString: string;
-    Student: StudentViewModel | null;
-    Students: Array<StudentViewModel | null>;
-    StudentPerClass: Array<Array<StudentViewModel | null>>;
-    ReadonlyString: string;
+    NullableBool: boolean | null = null;
+    NullableString!: string;
+    Student: StudentViewModel | null = null;
+    Students: Array<StudentViewModel | null> = [];
+    StudentPerClass: Array<Array<StudentViewModel | null>> = [];
+    ReadonlyString!: string;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -127,10 +126,9 @@ export class TypeModel extends ViewModel {
 }
 
 export class AbstractBaseModel {
-    Name: string;
+    Name!: string;
 
-    constructor();
-    constructor(value?: any) {
+    public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
@@ -143,11 +141,10 @@ export class AbstractBaseModel {
 }
 
 export class AbstractParentModel extends AbstractBaseModel {
-    Surname: string;
+    Surname!: string;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -161,10 +158,9 @@ export class AbstractParentModel extends AbstractBaseModel {
 }
 
 export class NoXmlDocumentationModel {
-    Name: string;
+    Name!: string;
 
-    constructor();
-    constructor(value?: any) {
+    public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 

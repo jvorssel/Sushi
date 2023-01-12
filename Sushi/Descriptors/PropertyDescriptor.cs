@@ -27,6 +27,9 @@ namespace Sushi.Descriptors
 	public sealed class PropertyDescriptor : IPropertyDescriptor
 	{
 		private readonly PropertyInfo _property;
+		
+		/// <inheritdoc />
+		public object? DefaultValue { get; }
 
 		/// <inheritdoc />
 		public string Name { get; }
@@ -37,13 +40,20 @@ namespace Sushi.Descriptors
 		/// <inheritdoc />
 		public Type ClassType => _property.DeclaringType;
 
-		public PropertyDescriptor(PropertyInfo property)
+		public PropertyDescriptor(PropertyInfo property, object? defaultValue = null)
 		{
 			var type = property.PropertyType;
 
 			_property = property;
 			Name = property.Name;
 			Type = type;
+			DefaultValue = defaultValue;
+		}
+
+		public PropertyDescriptor(Type type, object? defaultValue = null)
+		{
+			Type = type;
+			DefaultValue = defaultValue;
 		}
 
 		/// <inheritdoc />

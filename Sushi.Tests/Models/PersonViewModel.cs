@@ -36,7 +36,13 @@ namespace Sushi.Tests.Models
 		/// <summary>
 		///		The <see cref="Gender"/> of the person.
 		/// </summary>
-		public Gender Gender { get; set; } = Gender.Undefined;
+		public Gender Gender { get; set; } = Gender.Male;
+
+		public PersonViewModel(string name, string surname)
+		{
+			Name = name;
+			Surname = surname;
+		}
 
 	}
 }

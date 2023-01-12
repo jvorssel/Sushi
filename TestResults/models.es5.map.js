@@ -82,7 +82,9 @@ function SchoolViewModel(obj) {
     this.ZipCode = value.ZipCode;
     this.HouseNumber = value.HouseNumber;
     this.HouseNumberAddition = value.HouseNumberAddition;
+    this.AverageGrade = value.AverageGrade;
     this.Students = value.Students;
+    this.Timmy = value.Timmy;
     this.Guid = value.Guid;
     this.CreatedOn = value.CreatedOn;
 

@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 01-01-2023
+// Author:                   Jeroen Vorsselman 12-01-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -14,6 +14,7 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Interfaces;
 
@@ -79,7 +80,16 @@ namespace Sushi.Converters
 				}
 
 				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
-				builder.AppendLine($"{Indent}{prop.Name}: {scriptType};");
+				var defaultValue = ScriptTypeConverter.ResolveDefaultValue(prop);
+
+				var nameSuffix = string.Empty;
+				var typeSuffix = string.Empty;
+				if (!defaultValue.IsEmpty())
+					typeSuffix = " = " + defaultValue;
+				else
+					nameSuffix = "!";
+
+				builder.AppendLine($"{Indent}{prop.Name}{nameSuffix}: {scriptType}{typeSuffix};");
 			}
 
 			return builder.ToString();
@@ -88,11 +98,10 @@ namespace Sushi.Converters
 		internal string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent)
 		{
 			var builder = new StringBuilder();
-			builder.AppendLine(Indent + "constructor();");
-			builder.AppendLine(Indent + "constructor(value?: any) {");
+			builder.AppendLine(Indent + "public constructor(value?: any) {");
 			if (hasParent)
 			{
-				builder.AppendLine(Indent + Indent + "super();");
+				builder.AppendLine(Indent + Indent + "super(value);");
 				builder.AppendLine();
 			}
 
@@ -110,7 +119,9 @@ namespace Sushi.Converters
 		{
 			var properties = model.GetProperties(true).ToList();
 
-			var summary = ExcludeComments || XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
+			var summary = ExcludeComments || XmlDocument == null
+				? string.Empty
+				: XmlDocument.JsDocClassSummary(model) + "\n";
 			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
 			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);

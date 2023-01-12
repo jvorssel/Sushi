@@ -9,11 +9,10 @@ export enum Gender {
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    Guid: string;
-    CreatedOn: Date | string | null;
+    Guid: string = "6346535d-a969-4eb6-94f9-7227b2e28777";
+    CreatedOn: Date | string | null = null;
 
-    constructor();
-    constructor(value?: any) {
+    public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
@@ -33,17 +32,16 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    Identifier: string;
+    Identifier!: string;
     /** The Name of the person. */
-    Name: string;
+    Name!: string;
     /** The Surname of the person. */
-    Surname: string;
+    Surname!: string;
     /** The Gender of the person. */
-    Gender: Gender | number;
+    Gender!: Gender | number;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -66,13 +64,12 @@ export class PersonViewModel extends ViewModel {
  */
 export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
-    Grade: number;
+    Grade: number = 9;
     /** The name of the School. */
-    School: SchoolViewModel | null;
+    School!: SchoolViewModel | null;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -93,25 +90,27 @@ export class StudentViewModel extends PersonViewModel {
  */
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
-    Name: string;
+    Name!: string;
     /** The Owner of this SchoolViewModel. */
-    Owner: PersonViewModel | null;
+    Owner!: PersonViewModel | null;
     /** The AmountOfStudents of this SchoolViewModel. */
-    AmountOfStudents: number;
+    AmountOfStudents: number = 0;
     /** The Address of this SchoolViewModel. */
-    Address: string;
+    Address: string = "";
     /** The ZipCode of this SchoolViewModel. */
-    ZipCode: string;
+    ZipCode!: string;
     /** The HouseNumber of this SchoolViewModel. */
-    HouseNumber: number;
+    HouseNumber: number = 0;
     /** The HouseNumberAddition of this SchoolViewModel. */
-    HouseNumberAddition: string;
+    HouseNumberAddition!: string;
+    /** The school student aren't doing too great ... */
+    AverageGrade: number = 2.6666666666666666666666666667;
     /** The Students of this SchoolViewModel. */
-    Students: Array<StudentViewModel | null>;
+    Students: Array<StudentViewModel | null> = [];
+    Timmy: StudentViewModel | null = null;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -123,7 +122,9 @@ export class SchoolViewModel extends ViewModel {
         this.ZipCode = value.ZipCode;
         this.HouseNumber = value.HouseNumber;
         this.HouseNumberAddition = value.HouseNumberAddition;
+        this.AverageGrade = value.AverageGrade;
         this.Students = value.Students;
+        this.Timmy = value.Timmy;
     }
 
     static mapFrom(obj: any): SchoolViewModel {
@@ -138,18 +139,17 @@ export class SchoolViewModel extends ViewModel {
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
-    NullableBool: boolean | null;
+    NullableBool: boolean | null = null;
     /** A nullable string, defaults to null. */
-    NullableString: string;
-    Student: StudentViewModel | null;
-    Students: Array<StudentViewModel | null>;
-    StudentPerClass: Array<Array<StudentViewModel | null>>;
+    NullableString!: string;
+    Student: StudentViewModel | null = null;
+    Students: Array<StudentViewModel | null> = [];
+    StudentPerClass: Array<Array<StudentViewModel | null>> = [];
     /** A readonly string. */
-    ReadonlyString: string;
+    ReadonlyString!: string;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -172,10 +172,9 @@ export class TypeModel extends ViewModel {
  * @typedef {Object} AbstractBaseModel
  */
 export class AbstractBaseModel {
-    Name: string;
+    Name!: string;
 
-    constructor();
-    constructor(value?: any) {
+    public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
@@ -193,11 +192,10 @@ export class AbstractBaseModel {
  * @extends AbstractBaseModel 
  */
 export class AbstractParentModel extends AbstractBaseModel {
-    Surname: string;
+    Surname!: string;
 
-    constructor();
-    constructor(value?: any) {
-        super();
+    public constructor(value?: any) {
+        super(value);
 
         if (!(value instanceof Object))
             return;
@@ -215,10 +213,9 @@ export class AbstractParentModel extends AbstractBaseModel {
  * @typedef {Object} NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-    Name: string;
+    Name!: string;
 
-    constructor();
-    constructor(value?: any) {
+    public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 

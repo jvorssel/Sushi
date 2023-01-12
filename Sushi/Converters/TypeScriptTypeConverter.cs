@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptTypeConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 03-01-2023
+// Author:                   Jeroen Vorsselman 12-01-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -11,7 +11,9 @@
 
 #region
 
+using System.Globalization;
 using Sushi.Descriptors;
+using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
@@ -33,9 +35,7 @@ namespace Sushi.Converters
 			Enums = converter.EnumModels;
 		}
 
-		/// <summary>
-		///     Resolve the TypeScript type that matches the given <paramref name="type" />.
-		/// </summary>
+		/// <inheritdoc />
 		public string ResolveScriptType(Type type)
 		{
 			var genericTypeArgs = type.IsGenericType ? GetGenericType(type) : string.Empty;
@@ -45,7 +45,7 @@ namespace Sushi.Converters
 				return $"Array<{genericTypeArgs}>";
 
 			var actualType = GetBaseType(type);
-			
+
 			// Check if any of the available models have the same name and should be used.
 			var classModel = Classes.SingleOrDefault(x => x.Name == actualType.Name);
 			if (classModel != null)
@@ -65,6 +65,47 @@ namespace Sushi.Converters
 
 			var scriptType = actualType.ToNativeScriptType().ToScriptType();
 			return type.IsNullable() ? $"{scriptType} | null" : scriptType;
+		}
+
+		/// <inheritdoc />
+		public string ResolveDefaultValue(IPropertyDescriptor prop)
+		{
+			if (prop.Type.IsNullable())
+				return "null";
+
+			if (prop.Type.IsArray())
+				return "[]";
+
+			if (prop.DefaultValue == null)
+				return string.Empty;
+
+			var nativeType = prop.Type.ToNativeScriptType();
+			switch (nativeType)
+			{
+				case NativeType.Bool:
+					return (bool)(prop.DefaultValue ?? false) ? "true" : "false";
+				case NativeType.Enum:
+				case NativeType.Byte:
+				case NativeType.Short:
+				case NativeType.Long:
+				case NativeType.Int:
+				case NativeType.Double:
+				case NativeType.Float:
+				case NativeType.Decimal:
+				{
+					var asDecimal = Convert.ToDecimal(prop.DefaultValue);
+					return asDecimal.ToString(CultureInfo.InvariantCulture);
+				}
+				case NativeType.Char:
+				case NativeType.String:
+					return $"\"{prop.DefaultValue}\"";
+				case NativeType.Null:
+				case NativeType.Object:
+					return "null";
+				case NativeType.Undefined:
+				default:
+					throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, null);
+			}
 		}
 
 		public Type GetBaseType(Type @this)

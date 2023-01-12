@@ -9,6 +9,8 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
+using Sushi.Descriptors;
+
 namespace Sushi.Interfaces;
 
 public interface IScriptTypeConverter
@@ -17,4 +19,9 @@ public interface IScriptTypeConverter
 	///		Resolve the TypeScript type that matches the given <paramref name="type"/>.
 	/// </summary>
 	string ResolveScriptType(Type type);
+
+	/// <summary>
+	///		Resolve the default value for the given <see cref="IPropertyDescriptor"/>.
+	/// </summary>
+	string ResolveDefaultValue(IPropertyDescriptor prop);
 }

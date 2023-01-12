@@ -27,5 +27,8 @@ namespace Sushi.Interfaces
 		///		The type of the class that the property or field belongs to. 
 		/// </summary>
 		Type ClassType { get; }
+
+		/// <inheritdoc />
+		object? DefaultValue { get; }
 	}
 }

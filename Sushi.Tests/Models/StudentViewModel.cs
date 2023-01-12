@@ -25,5 +25,16 @@ namespace Sushi.Tests.Models
 		///		The name of the <see cref="School"/>.
 		/// </summary>
 		public SchoolViewModel School { get; set; }
+
+		public StudentViewModel() : base("John", "Doe")
+		{
+			
+		}
+		
+		/// <inheritdoc />
+		public StudentViewModel(string name, string surname) : base(name, surname)
+		{
+			
+		}
 	}
 }

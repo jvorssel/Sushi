@@ -98,8 +98,11 @@ export class SchoolViewModel extends ViewModel {
     HouseNumber;
     /** The HouseNumberAddition of this SchoolViewModel. */
     HouseNumberAddition;
+    /** The school student aren't doing too great ... */
+    AverageGrade;
     /** The Students of this SchoolViewModel. */
     Students;
+    Timmy;
 
     constructor(value) {
         super(value);
@@ -114,7 +117,9 @@ export class SchoolViewModel extends ViewModel {
         this.ZipCode = value.ZipCode;
         this.HouseNumber = value.HouseNumber;
         this.HouseNumberAddition = value.HouseNumberAddition;
+        this.AverageGrade = value.AverageGrade;
         this.Students = value.Students;
+        this.Timmy = value.Timmy;
     }
 
     static mapFrom(obj) {

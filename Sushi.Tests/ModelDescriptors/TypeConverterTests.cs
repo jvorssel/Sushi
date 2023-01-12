@@ -14,6 +14,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Converters;
@@ -139,6 +140,136 @@ namespace Sushi.Tests.ModelDescriptors
 
 				// Assert
 				Assert.AreEqual("boolean | null", result);
+			}
+		}
+
+		[TestClass]
+		public class ResolveDefaultValueTests : TypeScriptTypeConverterTests
+		{
+			[TestMethod]
+			public void ResolveDefaultValue_NullableProperty_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(bool?));
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("null", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_ArrayProperty_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(List<int>));
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("[]", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_NullValue_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(int));
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual(string.Empty, value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_BooleanValue_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(bool), true);
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("true", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_BooleanValueFalse_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(bool), false);
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("false", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_EnumValue_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(Gender), Gender.Male);
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("1", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_DecimalValue_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(decimal), 2.666666666666666666666666666666666m);
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("2.6666666666666666666666666667", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_StringValue_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(string), "Hi!");
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("\"Hi!\"", value);
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_ClassValue_ReturnsCorrectValueTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				var prop = new PropertyDescriptor(typeof(StudentViewModel), new StudentViewModel());
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual("null", value, "No support for deep initialization."); 
 			}
 		}
 	}
