@@ -5,7 +5,7 @@ export enum Gender {
 }
 
 export class ViewModel {
-    Guid: string = "761c17b4-2d81-41e3-8410-f48d65b0b356";
+    Guid: string = "d7493bbb-f4b9-45f6-9a68-029e1645ac61";
     CreatedOn: Date | string | null = null;
 
     public constructor(value?: any) {

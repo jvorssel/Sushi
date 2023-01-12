@@ -20,7 +20,8 @@ Author: Jeroen Vorsselman @ 2023
 - Allows custom datatype conversion.
 - Improved type dependency tree ordering.
 - Adds documentation from the XML file generated on project build.
-- 84% Code coverage.
+- 85% Code coverage.
+- Assigns explicitly specified default values for "simple" types.
 <br>
 ---
 ## How to use
@@ -80,38 +81,37 @@ To generate this TypeScript model:
 
 ```
 /**
- * Simple model to verify complex types. 
+ * Simple model to verify complex types.
  * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
 export class TypeModel extends ViewModel {
-	/** A nullable boolean. */
-	NullableBool: boolean | null;
-	/** A nullable string, defaults to null. */
-	NullableString: string;
-	Student: StudentViewModel | null;
-	Students: Array<StudentViewModel | null>;
-	StudentPerClass: Array<Array<StudentViewModel | null>>;
-	/** A readonly string. */
-	ReadonlyString: string;
+    /** A nullable boolean. */
+    NullableBool: boolean | null = null;
+    /** A nullable string, defaults to null. */
+    NullableString!: string;
+    Student: StudentViewModel | null = null;
+    Students: Array<StudentViewModel | null> = [];
+    StudentPerClass: Array<Array<StudentViewModel | null>> = [];
+    /** A readonly string. */
+    ReadonlyString!: string;
 
-	constructor();
-	constructor(value?: any) {
-		super();
+    public constructor(value?: any) {
+        super(value);
 
-		if (!(value instanceof Object))
-			return;
+        if (!(value instanceof Object))
+            return;
 
-		this.NullableBool = value.NullableBool;
-		this.NullableString = value.NullableString;
-		this.Student = value.Student;
-		this.Students = value.Students;
-		this.StudentPerClass = value.StudentPerClass;
-		this.ReadonlyString = value.ReadonlyString;
-	}
+        this.NullableBool = value.NullableBool;
+        this.NullableString = value.NullableString;
+        this.Student = value.Student;
+        this.Students = value.Students;
+        this.StudentPerClass = value.StudentPerClass;
+        this.ReadonlyString = value.ReadonlyString;
+    }
 
-	static mapFrom(obj: any): TypeModel {
-		return Object.assign(new TypeModel(), obj);
-	}
+    static mapFrom(obj: any): TypeModel {
+        return Object.assign(new TypeModel(), obj);
+    }
 }
 ```

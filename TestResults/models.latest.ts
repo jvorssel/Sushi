@@ -9,7 +9,7 @@ export enum Gender {
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    Guid: string = "6346535d-a969-4eb6-94f9-7227b2e28777";
+    Guid: string = "7f7a2fe0-95a2-49ae-90dd-a6b1da21ec5a";
     CreatedOn: Date | string | null = null;
 
     public constructor(value?: any) {
