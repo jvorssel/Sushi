@@ -9,7 +9,7 @@ export enum Gender {
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    Guid: string = "7f7a2fe0-95a2-49ae-90dd-a6b1da21ec5a";
+    Guid: string = "0ae7aefe-cfc2-463a-b7fc-c6beed23db10";
     CreatedOn: Date | string | null = null;
 
     public constructor(value?: any) {
@@ -52,7 +52,7 @@ export class PersonViewModel extends ViewModel {
         this.Gender = value.Gender;
     }
 
-    static mapFrom(obj: any): PersonViewModel {
+    static override mapFrom(obj: any): PersonViewModel {
         return Object.assign(new PersonViewModel(), obj);
     }
 }
@@ -78,7 +78,7 @@ export class StudentViewModel extends PersonViewModel {
         this.School = value.School;
     }
 
-    static mapFrom(obj: any): StudentViewModel {
+    static override mapFrom(obj: any): StudentViewModel {
         return Object.assign(new StudentViewModel(), obj);
     }
 }
@@ -127,7 +127,7 @@ export class SchoolViewModel extends ViewModel {
         this.Timmy = value.Timmy;
     }
 
-    static mapFrom(obj: any): SchoolViewModel {
+    static override mapFrom(obj: any): SchoolViewModel {
         return Object.assign(new SchoolViewModel(), obj);
     }
 }
@@ -162,7 +162,7 @@ export class TypeModel extends ViewModel {
         this.ReadonlyString = value.ReadonlyString;
     }
 
-    static mapFrom(obj: any): TypeModel {
+    public static override mapFrom(obj: any): TypeModel {
         return Object.assign(new TypeModel(), obj);
     }
 }
@@ -203,7 +203,7 @@ export class AbstractParentModel extends AbstractBaseModel {
         this.Surname = value.Surname;
     }
 
-    static mapFrom(obj: any): AbstractParentModel {
+    static override mapFrom(obj: any): AbstractParentModel {
         return Object.assign(new AbstractParentModel(), obj);
     }
 }

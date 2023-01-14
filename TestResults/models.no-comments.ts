@@ -5,7 +5,7 @@ export enum Gender {
 }
 
 export class ViewModel {
-    Guid: string = "d7493bbb-f4b9-45f6-9a68-029e1645ac61";
+    Guid: string = "90481ecd-4a8a-4ad8-b163-4270dc9e2451";
     CreatedOn: Date | string | null = null;
 
     public constructor(value?: any) {
@@ -39,7 +39,7 @@ export class PersonViewModel extends ViewModel {
         this.Gender = value.Gender;
     }
 
-    static mapFrom(obj: any): PersonViewModel {
+    static override mapFrom(obj: any): PersonViewModel {
         return Object.assign(new PersonViewModel(), obj);
     }
 }
@@ -58,7 +58,7 @@ export class StudentViewModel extends PersonViewModel {
         this.School = value.School;
     }
 
-    static mapFrom(obj: any): StudentViewModel {
+    static override mapFrom(obj: any): StudentViewModel {
         return Object.assign(new StudentViewModel(), obj);
     }
 }
@@ -93,7 +93,7 @@ export class SchoolViewModel extends ViewModel {
         this.Timmy = value.Timmy;
     }
 
-    static mapFrom(obj: any): SchoolViewModel {
+    static override mapFrom(obj: any): SchoolViewModel {
         return Object.assign(new SchoolViewModel(), obj);
     }
 }
@@ -120,7 +120,7 @@ export class TypeModel extends ViewModel {
         this.ReadonlyString = value.ReadonlyString;
     }
 
-    static mapFrom(obj: any): TypeModel {
+    static override mapFrom(obj: any): TypeModel {
         return Object.assign(new TypeModel(), obj);
     }
 }
@@ -152,7 +152,7 @@ export class AbstractParentModel extends AbstractBaseModel {
         this.Surname = value.Surname;
     }
 
-    static mapFrom(obj: any): AbstractParentModel {
+    static override mapFrom(obj: any): AbstractParentModel {
         return Object.assign(new AbstractParentModel(), obj);
     }
 }

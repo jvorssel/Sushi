@@ -123,6 +123,7 @@ namespace Sushi.Converters
 				? string.Empty
 				: XmlDocument.JsDocClassSummary(model) + "\n";
 			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
+			var @override = model.Parent != null ? "override " : string.Empty;
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
 			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);
 			var template =
@@ -130,7 +131,7 @@ namespace Sushi.Converters
 {propertyDeclaration}
 {constructorDeclaration}
 
-{Indent}static mapFrom(obj: any): {model.Name} {{
+{Indent}public static {@override}mapFrom(obj: any): {model.Name} {{
 {Indent}{Indent}return Object.assign(new {model.Name}(), obj);
 {Indent}}}
 }}
