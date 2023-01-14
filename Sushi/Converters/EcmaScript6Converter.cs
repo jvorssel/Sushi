@@ -14,6 +14,7 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Interfaces;
 
@@ -27,7 +28,7 @@ namespace Sushi.Converters
 	public sealed class EcmaScript6Converter : ModelConverter<EcmaScript6Converter>
 	{
 		/// <inheritdoc />
-		public EcmaScript6Converter(SushiConverter converter, string indent) : base(converter, indent)
+		public EcmaScript6Converter(SushiConverter converter, string indent, PropertyNameCasing casing) : base(converter, indent, casing)
 		{
 		}
 
@@ -73,7 +74,7 @@ namespace Sushi.Converters
 			builder.AppendLine();
 
 			foreach (var prop in properties)
-				builder.AppendLine(Indent + Indent + $"this.{prop.Name} = value.{prop.Name};");
+				builder.AppendLine(Indent + Indent + $"this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
 
 			builder.Append(Indent + "}");
 			return builder.ToString();

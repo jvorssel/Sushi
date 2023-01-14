@@ -28,8 +28,8 @@ namespace Sushi.Converters
 	public sealed class TypeScriptConverter : ModelConverter<TypeScriptConverter>
 	{
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, string indent)
-			: base(converter, indent)
+		public TypeScriptConverter(SushiConverter converter, string indent, PropertyNameCasing casing)
+			: base(converter, indent, casing)
 		{
 			ScriptTypeConverter = new TypeScriptTypeConverter(converter);
 		}
@@ -89,7 +89,7 @@ namespace Sushi.Converters
 				else
 					nameSuffix = "!";
 
-				builder.AppendLine($"{Indent}{prop.Name}{nameSuffix}: {scriptType}{typeSuffix};");
+				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{nameSuffix}: {scriptType}{typeSuffix};");
 			}
 
 			return builder.ToString();
@@ -110,7 +110,7 @@ namespace Sushi.Converters
 			builder.AppendLine();
 
 			foreach (var prop in properties)
-				builder.AppendLine($"{Indent + Indent}this.{prop.Name} = value.{prop.Name};");
+				builder.AppendLine($"{Indent + Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
 			builder.Append(Indent + "}");
 			return builder.ToString();
 		}

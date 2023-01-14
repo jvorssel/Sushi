@@ -11,8 +11,8 @@ export class ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Guid = value.Guid;
-        this.CreatedOn = value.CreatedOn;
+        this.guid = value.guid;
+        this.createdOn = value.createdOn;
     }
 
     static mapFrom(obj) {
@@ -41,10 +41,10 @@ export class PersonViewModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Identifier = value.Identifier;
-        this.Name = value.Name;
-        this.Surname = value.Surname;
-        this.Gender = value.Gender;
+        this.identifier = value.identifier;
+        this.name = value.name;
+        this.surname = value.surname;
+        this.gender = value.gender;
     }
 
     static mapFrom(obj) {
@@ -69,8 +69,8 @@ export class StudentViewModel extends PersonViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Grade = value.Grade;
-        this.School = value.School;
+        this.grade = value.grade;
+        this.school = value.school;
     }
 
     static mapFrom(obj) {
@@ -110,16 +110,16 @@ export class SchoolViewModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Name = value.Name;
-        this.Owner = value.Owner;
-        this.AmountOfStudents = value.AmountOfStudents;
-        this.Address = value.Address;
-        this.ZipCode = value.ZipCode;
-        this.HouseNumber = value.HouseNumber;
-        this.HouseNumberAddition = value.HouseNumberAddition;
-        this.AverageGrade = value.AverageGrade;
-        this.Students = value.Students;
-        this.Timmy = value.Timmy;
+        this.name = value.name;
+        this.owner = value.owner;
+        this.amountOfStudents = value.amountOfStudents;
+        this.address = value.address;
+        this.zipCode = value.zipCode;
+        this.houseNumber = value.houseNumber;
+        this.houseNumberAddition = value.houseNumberAddition;
+        this.averageGrade = value.averageGrade;
+        this.students = value.students;
+        this.timmy = value.timmy;
     }
 
     static mapFrom(obj) {
@@ -149,12 +149,12 @@ export class TypeModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.NullableBool = value.NullableBool;
-        this.NullableString = value.NullableString;
-        this.Student = value.Student;
-        this.Students = value.Students;
-        this.StudentPerClass = value.StudentPerClass;
-        this.ReadonlyString = value.ReadonlyString;
+        this.nullableBool = value.nullableBool;
+        this.nullableString = value.nullableString;
+        this.student = value.student;
+        this.students = value.students;
+        this.studentPerClass = value.studentPerClass;
+        this.readonlyString = value.readonlyString;
     }
 
     static mapFrom(obj) {
@@ -173,7 +173,7 @@ export class AbstractBaseModel {
         if (!(value instanceof Object))
             return;
 
-        this.Name = value.Name;
+        this.name = value.name;
     }
 
     static mapFrom(obj) {
@@ -195,7 +195,7 @@ export class AbstractParentModel extends AbstractBaseModel {
         if (!(value instanceof Object))
             return;
 
-        this.Surname = value.Surname;
+        this.surname = value.surname;
     }
 
     static mapFrom(obj) {
@@ -214,7 +214,7 @@ export class NoXmlDocumentationModel {
         if (!(value instanceof Object))
             return;
 
-        this.Name = value.Name;
+        this.name = value.name;
     }
 
     static mapFrom(obj) {

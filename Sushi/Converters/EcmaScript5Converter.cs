@@ -14,6 +14,7 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Enum;
 
 #endregion
 
@@ -27,7 +28,7 @@ namespace Sushi.Converters
 		private bool _includeUnderscoreExtend = false;
 		
 		/// <inheritdoc />
-		public EcmaScript5Converter(SushiConverter converter, string indent) : base(converter, indent)
+		public EcmaScript5Converter(SushiConverter converter, string indent, PropertyNameCasing casing) : base(converter, indent, casing)
 		{}
 
 		/// / <inheritdoc />
@@ -50,7 +51,7 @@ namespace Sushi.Converters
 			var summary = ExcludeComments || XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
 			var properties = new StringBuilder();
 			foreach (var prop in model.Properties)
-				properties.AppendLine($"{Indent}this.{prop.Name} = value.{prop.Name};");
+				properties.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
 
 			var template =
 				$@"{summary}function {model.Name}(obj) {{

@@ -12,6 +12,8 @@
 #region
 
 using Sushi.Converters;
+using Sushi.Enum;
+
 // ReSharper disable InconsistentNaming
 
 #endregion
@@ -21,23 +23,24 @@ namespace Sushi
 	public static class ConverterExtensions
 	{
 		private const string INDENT = @"    ";
+		private const PropertyNameCasing CASING = PropertyNameCasing.CamelCase;
 		
         /// <summary>
         ///     Create the converter for ECMAScript 5.
         /// </summary>
-        public static EcmaScript5Converter ECMAScript5(this SushiConverter converter, string indent = INDENT)
-			=> new(converter, indent);
+        public static EcmaScript5Converter ECMAScript5(this SushiConverter converter, string indent = INDENT, PropertyNameCasing casing = CASING)
+			=> new(converter, indent, casing);
         
         /// <summary>
         ///     Create the converter for ECMAScript 6.
         /// </summary>
-        public static EcmaScript6Converter ECMAScript6(this SushiConverter converter, string indent = INDENT)
-			=> new(converter, indent);
+        public static EcmaScript6Converter ECMAScript6(this SushiConverter converter, string indent = INDENT, PropertyNameCasing casing = CASING)
+	        => new(converter, indent, casing);
 
         /// <summary>
         ///		Create the converter for TypeScript.
         /// </summary>
-        public static TypeScriptConverter TypeScript(this SushiConverter converter, string indent = INDENT)
-			=> new(converter, indent);
+        public static TypeScriptConverter TypeScript(this SushiConverter converter, string indent = INDENT, PropertyNameCasing casing = CASING)
+	        => new(converter, indent, casing);
 	}
 }

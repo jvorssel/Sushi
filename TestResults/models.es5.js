@@ -8,8 +8,8 @@ function ViewModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Guid = value.Guid;
-    this.CreatedOn = value.CreatedOn;
+    this.guid = value.guid;
+    this.createdOn = value.createdOn;
 
 }
 
@@ -23,12 +23,12 @@ function PersonViewModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Identifier = value.Identifier;
-    this.Name = value.Name;
-    this.Surname = value.Surname;
-    this.Gender = value.Gender;
-    this.Guid = value.Guid;
-    this.CreatedOn = value.CreatedOn;
+    this.identifier = value.identifier;
+    this.name = value.name;
+    this.surname = value.surname;
+    this.gender = value.gender;
+    this.guid = value.guid;
+    this.createdOn = value.createdOn;
 
 }
 
@@ -42,14 +42,14 @@ function StudentViewModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Grade = value.Grade;
-    this.School = value.School;
-    this.Identifier = value.Identifier;
-    this.Name = value.Name;
-    this.Surname = value.Surname;
-    this.Gender = value.Gender;
-    this.Guid = value.Guid;
-    this.CreatedOn = value.CreatedOn;
+    this.grade = value.grade;
+    this.school = value.school;
+    this.identifier = value.identifier;
+    this.name = value.name;
+    this.surname = value.surname;
+    this.gender = value.gender;
+    this.guid = value.guid;
+    this.createdOn = value.createdOn;
 
 }
 
@@ -63,18 +63,18 @@ function SchoolViewModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Name = value.Name;
-    this.Owner = value.Owner;
-    this.AmountOfStudents = value.AmountOfStudents;
-    this.Address = value.Address;
-    this.ZipCode = value.ZipCode;
-    this.HouseNumber = value.HouseNumber;
-    this.HouseNumberAddition = value.HouseNumberAddition;
-    this.AverageGrade = value.AverageGrade;
-    this.Students = value.Students;
-    this.Timmy = value.Timmy;
-    this.Guid = value.Guid;
-    this.CreatedOn = value.CreatedOn;
+    this.name = value.name;
+    this.owner = value.owner;
+    this.amountOfStudents = value.amountOfStudents;
+    this.address = value.address;
+    this.zipCode = value.zipCode;
+    this.houseNumber = value.houseNumber;
+    this.houseNumberAddition = value.houseNumberAddition;
+    this.averageGrade = value.averageGrade;
+    this.students = value.students;
+    this.timmy = value.timmy;
+    this.guid = value.guid;
+    this.createdOn = value.createdOn;
 
 }
 
@@ -88,14 +88,14 @@ function TypeModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.NullableBool = value.NullableBool;
-    this.NullableString = value.NullableString;
-    this.Guid = value.Guid;
-    this.Student = value.Student;
-    this.Students = value.Students;
-    this.StudentPerClass = value.StudentPerClass;
-    this.CreatedOn = value.CreatedOn;
-    this.ReadonlyString = value.ReadonlyString;
+    this.nullableBool = value.nullableBool;
+    this.nullableString = value.nullableString;
+    this.guid = value.guid;
+    this.student = value.student;
+    this.students = value.students;
+    this.studentPerClass = value.studentPerClass;
+    this.createdOn = value.createdOn;
+    this.readonlyString = value.readonlyString;
 
 }
 
@@ -108,7 +108,7 @@ function AbstractBaseModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Name = value.Name;
+    this.name = value.name;
 
 }
 
@@ -122,8 +122,8 @@ function AbstractParentModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Surname = value.Surname;
-    this.Name = value.Name;
+    this.surname = value.surname;
+    this.name = value.name;
 
 }
 
@@ -136,7 +136,7 @@ function NoXmlDocumentationModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.Name = value.Name;
+    this.name = value.name;
 
 }
 

@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Enum;
 using Sushi.Interfaces;
 
 #endregion
@@ -24,6 +25,8 @@ namespace Sushi.Converters
 	public abstract class ModelConverter<TConverter> where TConverter : ModelConverter<TConverter>
 	{
 		public string Indent { get; }
+		public PropertyNameCasing Casing { get; }
+		
 		protected readonly XmlDocumentationReader? XmlDocument = null;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
@@ -35,9 +38,10 @@ namespace Sushi.Converters
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
 		/// </summary>
-		protected ModelConverter(SushiConverter converter, string indent)
+		protected ModelConverter(SushiConverter converter, string indent, PropertyNameCasing casing)
 		{
 			Indent = indent;
+			Casing = casing;
 			XmlDocument = converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;
@@ -71,5 +75,21 @@ namespace Sushi.Converters
 		///     Compile the models in the converter.
 		/// </summary>
 		public abstract TConverter Convert();
+
+		/// <summary>
+		///		Apply the chosen <see cref="Casing"/> to the given <paramref name="value"/>.
+		/// </summary>
+		public string ApplyCasingStyle(string value)
+		{
+			switch (Casing)
+			{
+				case PropertyNameCasing.Default:
+					return value;
+				case PropertyNameCasing.CamelCase:
+					return Char.ToLowerInvariant(value[0]) + value.Substring(1);
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		}
 	}
 }

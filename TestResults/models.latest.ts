@@ -9,18 +9,18 @@ export enum Gender {
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    Guid: string = "0ae7aefe-cfc2-463a-b7fc-c6beed23db10";
-    CreatedOn: Date | string | null = null;
+    guid: string = "f32cc365-a633-470f-80f0-2f53657df1d0";
+    createdOn: Date | string | null = null;
 
     public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
-        this.Guid = value.Guid;
-        this.CreatedOn = value.CreatedOn;
+        this.guid = value.guid;
+        this.createdOn = value.createdOn;
     }
 
-    static mapFrom(obj: any): ViewModel {
+    public static mapFrom(obj: any): ViewModel {
         return Object.assign(new ViewModel(), obj);
     }
 }
@@ -32,13 +32,13 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    Identifier!: string;
+    identifier!: string;
     /** The Name of the person. */
-    Name!: string;
+    name!: string;
     /** The Surname of the person. */
-    Surname!: string;
+    surname!: string;
     /** The Gender of the person. */
-    Gender!: Gender | number;
+    gender!: Gender | number;
 
     public constructor(value?: any) {
         super(value);
@@ -46,13 +46,13 @@ export class PersonViewModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Identifier = value.Identifier;
-        this.Name = value.Name;
-        this.Surname = value.Surname;
-        this.Gender = value.Gender;
+        this.identifier = value.identifier;
+        this.name = value.name;
+        this.surname = value.surname;
+        this.gender = value.gender;
     }
 
-    static override mapFrom(obj: any): PersonViewModel {
+    public static override mapFrom(obj: any): PersonViewModel {
         return Object.assign(new PersonViewModel(), obj);
     }
 }
@@ -64,9 +64,9 @@ export class PersonViewModel extends ViewModel {
  */
 export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
-    Grade: number = 9;
+    grade: number = 9;
     /** The name of the School. */
-    School!: SchoolViewModel | null;
+    school!: SchoolViewModel | null;
 
     public constructor(value?: any) {
         super(value);
@@ -74,11 +74,11 @@ export class StudentViewModel extends PersonViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Grade = value.Grade;
-        this.School = value.School;
+        this.grade = value.grade;
+        this.school = value.school;
     }
 
-    static override mapFrom(obj: any): StudentViewModel {
+    public static override mapFrom(obj: any): StudentViewModel {
         return Object.assign(new StudentViewModel(), obj);
     }
 }
@@ -90,24 +90,24 @@ export class StudentViewModel extends PersonViewModel {
  */
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
-    Name!: string;
+    name!: string;
     /** The Owner of this SchoolViewModel. */
-    Owner!: PersonViewModel | null;
+    owner!: PersonViewModel | null;
     /** The AmountOfStudents of this SchoolViewModel. */
-    AmountOfStudents: number = 0;
+    amountOfStudents: number = 0;
     /** The Address of this SchoolViewModel. */
-    Address: string = "";
+    address: string = "";
     /** The ZipCode of this SchoolViewModel. */
-    ZipCode!: string;
+    zipCode!: string;
     /** The HouseNumber of this SchoolViewModel. */
-    HouseNumber: number = 0;
+    houseNumber: number = 0;
     /** The HouseNumberAddition of this SchoolViewModel. */
-    HouseNumberAddition!: string;
+    houseNumberAddition!: string;
     /** The school student aren't doing too great ... */
-    AverageGrade: number = 2.6666666666666666666666666667;
+    averageGrade: number = 2.6666666666666666666666666667;
     /** The Students of this SchoolViewModel. */
-    Students: Array<StudentViewModel | null> = [];
-    Timmy: StudentViewModel | null = null;
+    students: Array<StudentViewModel | null> = [];
+    timmy: StudentViewModel | null = null;
 
     public constructor(value?: any) {
         super(value);
@@ -115,19 +115,19 @@ export class SchoolViewModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.Name = value.Name;
-        this.Owner = value.Owner;
-        this.AmountOfStudents = value.AmountOfStudents;
-        this.Address = value.Address;
-        this.ZipCode = value.ZipCode;
-        this.HouseNumber = value.HouseNumber;
-        this.HouseNumberAddition = value.HouseNumberAddition;
-        this.AverageGrade = value.AverageGrade;
-        this.Students = value.Students;
-        this.Timmy = value.Timmy;
+        this.name = value.name;
+        this.owner = value.owner;
+        this.amountOfStudents = value.amountOfStudents;
+        this.address = value.address;
+        this.zipCode = value.zipCode;
+        this.houseNumber = value.houseNumber;
+        this.houseNumberAddition = value.houseNumberAddition;
+        this.averageGrade = value.averageGrade;
+        this.students = value.students;
+        this.timmy = value.timmy;
     }
 
-    static override mapFrom(obj: any): SchoolViewModel {
+    public static override mapFrom(obj: any): SchoolViewModel {
         return Object.assign(new SchoolViewModel(), obj);
     }
 }
@@ -139,14 +139,14 @@ export class SchoolViewModel extends ViewModel {
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
-    NullableBool: boolean | null = null;
+    nullableBool: boolean | null = null;
     /** A nullable string, defaults to null. */
-    NullableString!: string;
-    Student: StudentViewModel | null = null;
-    Students: Array<StudentViewModel | null> = [];
-    StudentPerClass: Array<Array<StudentViewModel | null>> = [];
+    nullableString!: string;
+    student: StudentViewModel | null = null;
+    students: Array<StudentViewModel | null> = [];
+    studentPerClass: Array<Array<StudentViewModel | null>> = [];
     /** A readonly string. */
-    ReadonlyString!: string;
+    readonlyString!: string;
 
     public constructor(value?: any) {
         super(value);
@@ -154,12 +154,12 @@ export class TypeModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.NullableBool = value.NullableBool;
-        this.NullableString = value.NullableString;
-        this.Student = value.Student;
-        this.Students = value.Students;
-        this.StudentPerClass = value.StudentPerClass;
-        this.ReadonlyString = value.ReadonlyString;
+        this.nullableBool = value.nullableBool;
+        this.nullableString = value.nullableString;
+        this.student = value.student;
+        this.students = value.students;
+        this.studentPerClass = value.studentPerClass;
+        this.readonlyString = value.readonlyString;
     }
 
     public static override mapFrom(obj: any): TypeModel {
@@ -172,16 +172,16 @@ export class TypeModel extends ViewModel {
  * @typedef {Object} AbstractBaseModel
  */
 export class AbstractBaseModel {
-    Name!: string;
+    name!: string;
 
     public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
-        this.Name = value.Name;
+        this.name = value.name;
     }
 
-    static mapFrom(obj: any): AbstractBaseModel {
+    public static mapFrom(obj: any): AbstractBaseModel {
         return Object.assign(new AbstractBaseModel(), obj);
     }
 }
@@ -192,7 +192,7 @@ export class AbstractBaseModel {
  * @extends AbstractBaseModel 
  */
 export class AbstractParentModel extends AbstractBaseModel {
-    Surname!: string;
+    surname!: string;
 
     public constructor(value?: any) {
         super(value);
@@ -200,10 +200,10 @@ export class AbstractParentModel extends AbstractBaseModel {
         if (!(value instanceof Object))
             return;
 
-        this.Surname = value.Surname;
+        this.surname = value.surname;
     }
 
-    static override mapFrom(obj: any): AbstractParentModel {
+    public static override mapFrom(obj: any): AbstractParentModel {
         return Object.assign(new AbstractParentModel(), obj);
     }
 }
@@ -213,16 +213,16 @@ export class AbstractParentModel extends AbstractBaseModel {
  * @typedef {Object} NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-    Name!: string;
+    name!: string;
 
     public constructor(value?: any) {
         if (!(value instanceof Object))
             return;
 
-        this.Name = value.Name;
+        this.name = value.name;
     }
 
-    static mapFrom(obj: any): NoXmlDocumentationModel {
+    public static mapFrom(obj: any): NoXmlDocumentationModel {
         return Object.assign(new NoXmlDocumentationModel(), obj);
     }
 }
