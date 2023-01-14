@@ -40,9 +40,9 @@ Author: Jeroen Vorsselman @ 2023
 ### Example
 ``` 
 var converter = new SushiConverter(assembly, xmlFilePath);
-var indent = "\t";
-var script = converter.TypeScript()
-    .Convert(indent)
+
+var script = converter.TypeScript(indent: "    ", casing: PropertyNameCasing.Default)
+    .Convert()
     .ConvertEnums()
     .ToString();
 ``` 
@@ -110,7 +110,7 @@ export class TypeModel extends ViewModel {
         this.ReadonlyString = value.ReadonlyString;
     }
 
-    static mapFrom(obj: any): TypeModel {
+    public static override mapFrom(obj: any): TypeModel {
         return Object.assign(new TypeModel(), obj);
     }
 }
