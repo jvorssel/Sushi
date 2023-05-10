@@ -40,6 +40,11 @@ namespace Sushi.Tests.Models
 
 		/// <inheritdoc cref="Guid" />
 		public new Guid Guid { get; set; } = Guid.NewGuid();
+		
+		/// <summary>
+		///     A DateTime instance.
+		/// </summary>
+		public DateTime Date{get;set;} = DateTime.Now;
 
 		public StudentViewModel Student { get; set; } = new StudentViewModel();
 

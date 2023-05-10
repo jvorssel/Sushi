@@ -5,10 +5,10 @@ export enum Gender {
 }
 
 export class ViewModel {
-    guid = "a872c2e8-a016-44ee-9b71-acb4cadff9e0";
-    createdOn = null;
+    guid: string = "9ef0a319-b790-47bd-9df0-169446cfe452";
+    createdOn: Date | string | null = null;
 
-    constructor(value?: Partial<ViewModel>) {
+    constructor(value?: any) {
         if (value) {
             this.guid = value.guid;
             this.createdOn = value.createdOn;
@@ -22,7 +22,7 @@ export class PersonViewModel extends ViewModel {
     surname!: string;
     gender!: Gender | number;
 
-    constructor(value?: Partial<PersonViewModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -37,10 +37,10 @@ export class PersonViewModel extends ViewModel {
 }
 
 export class StudentViewModel extends PersonViewModel {
-    grade = 9;
+    grade: number = 9;
     school!: SchoolViewModel;
 
-    constructor(value?: Partial<StudentViewModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -59,16 +59,16 @@ export class StudentViewModel extends PersonViewModel {
 export class SchoolViewModel extends ViewModel {
     name!: string;
     owner!: PersonViewModel;
-    amountOfStudents = 0;
-    address = "";
+    amountOfStudents: number = 0;
+    address: string = "";
     zipCode!: string;
-    houseNumber = 0;
+    houseNumber: number = 0;
     houseNumberAddition!: string;
-    averageGrade = 2.6666666666666;
-    students = [];
-    timmy = {} as StudentViewModel;
+    averageGrade: number = 2.6666666666666;
+    students: Array<StudentViewModel> = [];
+    timmy: StudentViewModel = {} as StudentViewModel;
 
-    constructor(value?: Partial<SchoolViewModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -91,18 +91,20 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool!: boolean | null;
     nullableString!: string;
-    student = {} as StudentViewModel;
-    students = [];
-    studentPerClass = [];
+    date: Date | string | null = null;
+    student: StudentViewModel = {} as StudentViewModel;
+    students: Array<StudentViewModel> = [];
+    studentPerClass: Array<Array<StudentViewModel>> = [];
     readonlyString!: string;
 
-    constructor(value?: Partial<TypeModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
             this.nullableBool = value.nullableBool;
             this.nullableString = value.nullableString;
             this.guid = value.guid;
+            this.date = value.date;
             this.student = value.student;
             this.students = value.students;
             this.studentPerClass = value.studentPerClass;
@@ -115,7 +117,7 @@ export class TypeModel extends ViewModel {
 export class AbstractBaseModel {
     name!: string;
 
-    constructor(value?: Partial<AbstractBaseModel>) {
+    constructor(value?: any) {
         if (value) {
             this.name = value.name;
         }
@@ -125,7 +127,7 @@ export class AbstractBaseModel {
 export class AbstractParentModel extends AbstractBaseModel {
     surname!: string;
 
-    constructor(value?: Partial<AbstractParentModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -138,7 +140,7 @@ export class AbstractParentModel extends AbstractBaseModel {
 export class NoXmlDocumentationModel {
     name!: string;
 
-    constructor(value?: Partial<NoXmlDocumentationModel>) {
+    constructor(value?: any) {
         if (value) {
             this.name = value.name;
         }

@@ -9,10 +9,10 @@ export enum Gender {
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    guid = "47dc7d0b-7f8e-4422-90bf-964f7ce8cb01";
-    createdOn = null;
+    guid: string = "f3f86fd6-0b41-4e1b-80b2-391557835a56";
+    createdOn: Date | string | null = null;
 
-    constructor(value?: Partial<ViewModel>) {
+    constructor(value?: any) {
         if (value) {
             this.guid = value.guid;
             this.createdOn = value.createdOn;
@@ -35,7 +35,7 @@ export class PersonViewModel extends ViewModel {
     /** The Gender of the person. */
     gender!: Gender | number;
 
-    constructor(value?: Partial<PersonViewModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -56,11 +56,11 @@ export class PersonViewModel extends ViewModel {
  */
 export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
-    grade = 9;
+    grade: number = 9;
     /** The name of the School. */
     school!: SchoolViewModel;
 
-    constructor(value?: Partial<StudentViewModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -87,22 +87,22 @@ export class SchoolViewModel extends ViewModel {
     /** The Owner of this SchoolViewModel. */
     owner!: PersonViewModel;
     /** The AmountOfStudents of this SchoolViewModel. */
-    amountOfStudents = 0;
+    amountOfStudents: number = 0;
     /** The Address of this SchoolViewModel. */
-    address = "";
+    address: string = "";
     /** The ZipCode of this SchoolViewModel. */
     zipCode!: string;
     /** The HouseNumber of this SchoolViewModel. */
-    houseNumber = 0;
+    houseNumber: number = 0;
     /** The HouseNumberAddition of this SchoolViewModel. */
     houseNumberAddition!: string;
     /** The school student aren't doing too great ... */
-    averageGrade = 2.6666666666666;
+    averageGrade: number = 2.6666666666666;
     /** The Students of this SchoolViewModel. */
-    students = [];
-    timmy = {} as StudentViewModel;
+    students: Array<StudentViewModel> = [];
+    timmy: StudentViewModel = {} as StudentViewModel;
 
-    constructor(value?: Partial<SchoolViewModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -132,19 +132,22 @@ export class TypeModel extends ViewModel {
     nullableBool!: boolean | null;
     /** A nullable string, defaults to null. */
     nullableString!: string;
-    student = {} as StudentViewModel;
-    students = [];
-    studentPerClass = [];
+    /** A DateTime instance. */
+    date: Date | string | null = null;
+    student: StudentViewModel = {} as StudentViewModel;
+    students: Array<StudentViewModel> = [];
+    studentPerClass: Array<Array<StudentViewModel>> = [];
     /** A readonly string. */
     readonlyString!: string;
 
-    constructor(value?: Partial<TypeModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
             this.nullableBool = value.nullableBool;
             this.nullableString = value.nullableString;
             this.guid = value.guid;
+            this.date = value.date;
             this.student = value.student;
             this.students = value.students;
             this.studentPerClass = value.studentPerClass;
@@ -161,7 +164,7 @@ export class TypeModel extends ViewModel {
 export class AbstractBaseModel {
     name!: string;
 
-    constructor(value?: Partial<AbstractBaseModel>) {
+    constructor(value?: any) {
         if (value) {
             this.name = value.name;
         }
@@ -176,7 +179,7 @@ export class AbstractBaseModel {
 export class AbstractParentModel extends AbstractBaseModel {
     surname!: string;
 
-    constructor(value?: Partial<AbstractParentModel>) {
+    constructor(value?: any) {
         super(value);
 
         if (value) {
@@ -193,7 +196,7 @@ export class AbstractParentModel extends AbstractBaseModel {
 export class NoXmlDocumentationModel {
     name!: string;
 
-    constructor(value?: Partial<NoXmlDocumentationModel>) {
+    constructor(value?: any) {
         if (value) {
             this.name = value.name;
         }

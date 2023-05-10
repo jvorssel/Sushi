@@ -80,17 +80,14 @@ namespace Sushi.Converters
 				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
 				var defaultValue = ScriptTypeConverter.ResolveDefaultValue(prop);
 
-				string suffix;
+				var suffix = string.Empty;
 				var nameSuffix = string.Empty;
 				if (!defaultValue.IsEmpty())
 					suffix = " = " + defaultValue;
 				else
-				{
-					suffix = $": {scriptType}";
 					nameSuffix = "!";
-				}
 
-				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{nameSuffix}{suffix};");
+				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{nameSuffix}: {scriptType}{suffix};");
 			}
 
 			return builder.ToString();
@@ -99,7 +96,7 @@ namespace Sushi.Converters
 		internal string CreateConstructorDeclaration(ClassDescriptor model)
 		{
 			var builder = new StringBuilder();
-			builder.AppendLine($"{Indent}constructor(value?: Partial<{model.Name}>) {{");
+			builder.AppendLine($"{Indent}constructor(value?: any) {{");
 			if (model.Parent != null)
 			{
 				builder.AppendLine(Indent + Indent + "super(value);");

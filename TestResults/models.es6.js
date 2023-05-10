@@ -137,6 +137,8 @@ export class TypeModel extends ViewModel {
     NullableBool;
     /** A nullable string, defaults to null. */
     NullableString;
+    /** A DateTime instance. */
+    Date;
     Student;
     Students;
     StudentPerClass;
@@ -151,6 +153,7 @@ export class TypeModel extends ViewModel {
 
         this.nullableBool = value.nullableBool;
         this.nullableString = value.nullableString;
+        this.date = value.date;
         this.student = value.student;
         this.students = value.students;
         this.studentPerClass = value.studentPerClass;

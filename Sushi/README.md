@@ -14,15 +14,12 @@ Author: Jeroen Vorsselman @ 2023
 - Support for .NET Core. 
 - Vastly improved compared to its predecessor.
 - Creates extended classes and their constructors.
-- Simple object mapping:
-  - ES5 classes use (optional) `_.extend` from **[UnderscoreJS](https://underscorejs.org/)**.
-  - ES6 and TypeScript use `Object.assign()`.
+- Simple object mapping.
 - Allows custom datatype conversion.
 - Improved type dependency tree ordering.
 - Adds documentation from the XML file generated on project build.
 - 85% Code coverage.
 - Assigns explicitly specified default values for "simple" types.
-<br>
 ---
 ## How to use
 1. Specify what types to use in an `assembly` by adding:

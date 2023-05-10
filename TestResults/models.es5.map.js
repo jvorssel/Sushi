@@ -107,6 +107,7 @@ function TypeModel(obj) {
     this.nullableBool = value.nullableBool;
     this.nullableString = value.nullableString;
     this.guid = value.guid;
+    this.date = value.date;
     this.student = value.student;
     this.students = value.students;
     this.studentPerClass = value.studentPerClass;
