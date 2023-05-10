@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SushiScript</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <authors>Jeroen Vorsselman</authors>
     <owners>Jeroen Vorsselman</owners>
     <licenseUrl>https://raw.githubusercontent.com/jvorssel/Sushi/master/LICENSE</licenseUrl>

@@ -81,12 +81,16 @@ namespace Sushi.Converters
 				var defaultValue = ScriptTypeConverter.ResolveDefaultValue(prop);
 
 				string suffix;
+				var nameSuffix = string.Empty;
 				if (!defaultValue.IsEmpty())
 					suffix = " = " + defaultValue;
 				else
+				{
 					suffix = $": {scriptType}";
+					nameSuffix = "!";
+				}
 
-				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{suffix};");
+				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{nameSuffix}{suffix};");
 			}
 
 			return builder.ToString();

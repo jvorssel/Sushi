@@ -9,7 +9,7 @@ export enum Gender {
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    guid = "d8836e41-a481-4b01-8529-4672cf715764";
+    guid = "47dc7d0b-7f8e-4422-90bf-964f7ce8cb01";
     createdOn = null;
 
     constructor(value?: Partial<ViewModel>) {
@@ -27,13 +27,13 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string;
+    identifier!: string;
     /** The Name of the person. */
-    name: string;
+    name!: string;
     /** The Surname of the person. */
-    surname: string;
+    surname!: string;
     /** The Gender of the person. */
-    gender: Gender | number;
+    gender!: Gender | number;
 
     constructor(value?: Partial<PersonViewModel>) {
         super(value);
@@ -58,7 +58,7 @@ export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
     grade = 9;
     /** The name of the School. */
-    school: SchoolViewModel;
+    school!: SchoolViewModel;
 
     constructor(value?: Partial<StudentViewModel>) {
         super(value);
@@ -83,19 +83,19 @@ export class StudentViewModel extends PersonViewModel {
  */
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
-    name: string;
+    name!: string;
     /** The Owner of this SchoolViewModel. */
-    owner: PersonViewModel;
+    owner!: PersonViewModel;
     /** The AmountOfStudents of this SchoolViewModel. */
     amountOfStudents = 0;
     /** The Address of this SchoolViewModel. */
     address = "";
     /** The ZipCode of this SchoolViewModel. */
-    zipCode: string;
+    zipCode!: string;
     /** The HouseNumber of this SchoolViewModel. */
     houseNumber = 0;
     /** The HouseNumberAddition of this SchoolViewModel. */
-    houseNumberAddition: string;
+    houseNumberAddition!: string;
     /** The school student aren't doing too great ... */
     averageGrade = 2.6666666666666;
     /** The Students of this SchoolViewModel. */
@@ -129,14 +129,14 @@ export class SchoolViewModel extends ViewModel {
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
-    nullableBool: boolean | null;
+    nullableBool!: boolean | null;
     /** A nullable string, defaults to null. */
-    nullableString: string;
+    nullableString!: string;
     student = {} as StudentViewModel;
     students = [];
     studentPerClass = [];
     /** A readonly string. */
-    readonlyString: string;
+    readonlyString!: string;
 
     constructor(value?: Partial<TypeModel>) {
         super(value);
@@ -159,7 +159,7 @@ export class TypeModel extends ViewModel {
  * @typedef {Object} AbstractBaseModel
  */
 export class AbstractBaseModel {
-    name: string;
+    name!: string;
 
     constructor(value?: Partial<AbstractBaseModel>) {
         if (value) {
@@ -174,7 +174,7 @@ export class AbstractBaseModel {
  * @extends AbstractBaseModel 
  */
 export class AbstractParentModel extends AbstractBaseModel {
-    surname: string;
+    surname!: string;
 
     constructor(value?: Partial<AbstractParentModel>) {
         super(value);
@@ -191,7 +191,7 @@ export class AbstractParentModel extends AbstractBaseModel {
  * @typedef {Object} NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-    name: string;
+    name!: string;
 
     constructor(value?: Partial<NoXmlDocumentationModel>) {
         if (value) {

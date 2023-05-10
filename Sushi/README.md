@@ -87,31 +87,28 @@ To generate this TypeScript model:
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
-    NullableBool: boolean | null = null;
+    nullableBool: boolean | null;
     /** A nullable string, defaults to null. */
-    NullableString!: string;
-    Student: StudentViewModel | null = null;
-    Students: Array<StudentViewModel | null> = [];
-    StudentPerClass: Array<Array<StudentViewModel | null>> = [];
+    nullableString: string;
+    student = {} as StudentViewModel;
+    students = [];
+    studentPerClass = [];
     /** A readonly string. */
-    ReadonlyString!: string;
+    readonlyString: string;
 
-    public constructor(value?: any) {
+    constructor(value?: Partial<TypeModel>) {
         super(value);
 
-        if (!(value instanceof Object))
-            return;
-
-        this.NullableBool = value.NullableBool;
-        this.NullableString = value.NullableString;
-        this.Student = value.Student;
-        this.Students = value.Students;
-        this.StudentPerClass = value.StudentPerClass;
-        this.ReadonlyString = value.ReadonlyString;
-    }
-
-    public static override mapFrom(obj: any): TypeModel {
-        return Object.assign(new TypeModel(), obj);
+        if (value) {
+            this.nullableBool = value.nullableBool;
+            this.nullableString = value.nullableString;
+            this.guid = value.guid;
+            this.student = value.student;
+            this.students = value.students;
+            this.studentPerClass = value.studentPerClass;
+            this.createdOn = value.createdOn;
+            this.readonlyString = value.readonlyString;
+        }
     }
 }
 ```

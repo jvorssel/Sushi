@@ -5,7 +5,7 @@ export enum Gender {
 }
 
 export class ViewModel {
-    guid = "0216a42a-ef93-464d-ae9e-6721b4e9ed5a";
+    guid = "a872c2e8-a016-44ee-9b71-acb4cadff9e0";
     createdOn = null;
 
     constructor(value?: Partial<ViewModel>) {
@@ -17,10 +17,10 @@ export class ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string;
-    name: string;
-    surname: string;
-    gender: Gender | number;
+    identifier!: string;
+    name!: string;
+    surname!: string;
+    gender!: Gender | number;
 
     constructor(value?: Partial<PersonViewModel>) {
         super(value);
@@ -38,7 +38,7 @@ export class PersonViewModel extends ViewModel {
 
 export class StudentViewModel extends PersonViewModel {
     grade = 9;
-    school: SchoolViewModel;
+    school!: SchoolViewModel;
 
     constructor(value?: Partial<StudentViewModel>) {
         super(value);
@@ -57,13 +57,13 @@ export class StudentViewModel extends PersonViewModel {
 }
 
 export class SchoolViewModel extends ViewModel {
-    name: string;
-    owner: PersonViewModel;
+    name!: string;
+    owner!: PersonViewModel;
     amountOfStudents = 0;
     address = "";
-    zipCode: string;
+    zipCode!: string;
     houseNumber = 0;
-    houseNumberAddition: string;
+    houseNumberAddition!: string;
     averageGrade = 2.6666666666666;
     students = [];
     timmy = {} as StudentViewModel;
@@ -89,12 +89,12 @@ export class SchoolViewModel extends ViewModel {
 }
 
 export class TypeModel extends ViewModel {
-    nullableBool: boolean | null;
-    nullableString: string;
+    nullableBool!: boolean | null;
+    nullableString!: string;
     student = {} as StudentViewModel;
     students = [];
     studentPerClass = [];
-    readonlyString: string;
+    readonlyString!: string;
 
     constructor(value?: Partial<TypeModel>) {
         super(value);
@@ -113,7 +113,7 @@ export class TypeModel extends ViewModel {
 }
 
 export class AbstractBaseModel {
-    name: string;
+    name!: string;
 
     constructor(value?: Partial<AbstractBaseModel>) {
         if (value) {
@@ -123,7 +123,7 @@ export class AbstractBaseModel {
 }
 
 export class AbstractParentModel extends AbstractBaseModel {
-    surname: string;
+    surname!: string;
 
     constructor(value?: Partial<AbstractParentModel>) {
         super(value);
@@ -136,7 +136,7 @@ export class AbstractParentModel extends AbstractBaseModel {
 }
 
 export class NoXmlDocumentationModel {
-    name: string;
+    name!: string;
 
     constructor(value?: Partial<NoXmlDocumentationModel>) {
         if (value) {
