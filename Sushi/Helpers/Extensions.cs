@@ -95,18 +95,23 @@ public static class Extensions
 		}
 	}
 	
-	public static string Glue(this IEnumerable<string> values, string delimiter)
+	/// <summary>
+	///     Glue the contents of the given <see cref="string" /> <see cref="IEnumerable{T}" /> together using the separator.
+	/// </summary>
+	/// <param name="parts">The <see cref="IEnumerable{T}" /> of string values.</param>
+	/// <param name="separator">The optional separator value.</param>
+	/// <returns>The resulting string.</returns>
+	public static string Glue(this IEnumerable<string> parts, string separator)
 	{
-		var sb = new StringBuilder();
-		var enumerable = values as string[] ?? values.ToArray();
-		var l = enumerable[^1];
-		foreach (var value in enumerable)
+		var list = parts.ToList();
+		var builder = new StringBuilder();
+		foreach (var value in list)
 		{
-			sb.Append(value);
-			if (value != l)
-				sb.Append(delimiter);
+			builder.Append(value);
+			if (value != list.Last())
+				builder.Append(separator);
 		}
 
-		return sb.ToString();
+		return builder.ToString();
 	}
 }

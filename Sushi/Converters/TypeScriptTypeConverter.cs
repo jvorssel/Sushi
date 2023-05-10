@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptTypeConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 12-01-2023
+// Author:                   Jeroen Vorsselman 10-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -49,11 +49,7 @@ namespace Sushi.Converters
 			// Check if any of the available models have the same name and should be used.
 			var classModel = Classes.SingleOrDefault(x => x.Name == actualType.Name);
 			if (classModel != null)
-			{
-				return type.IsGenericType
-					? $"{classModel.Name}<{genericTypeArgs}> | null"
-					: $"{classModel.Name} | null";
-			}
+				return type.IsGenericType ? $"{classModel.Name}<{genericTypeArgs}>" : classModel.Name;
 
 			var enumModel = Enums.SingleOrDefault(x => x.Name == actualType.Name);
 			if (type.IsEnum && enumModel != null)
@@ -70,13 +66,21 @@ namespace Sushi.Converters
 		/// <inheritdoc />
 		public string ResolveDefaultValue(IPropertyDescriptor prop)
 		{
-			if (prop.Type.IsNullable())
-				return "null";
-
 			if (prop.Type.IsArray())
 				return "[]";
 
 			if (prop.DefaultValue == null)
+				return string.Empty;
+
+			if (prop.Type.IsNullable())
+				return "null";
+
+			var defaultValueType = prop.DefaultValue.GetType();
+			var descriptor = Classes.SingleOrDefault(x => x.Type == defaultValueType);
+			if (descriptor != null )
+				return $"{{}} as {descriptor.Name}";
+			
+			if (defaultValueType.IsClass && defaultValueType != typeof(string))
 				return string.Empty;
 
 			var nativeType = prop.Type.ToNativeScriptType();
@@ -93,8 +97,8 @@ namespace Sushi.Converters
 				case NativeType.Float:
 				case NativeType.Decimal:
 				{
-					var asDecimal = Convert.ToDecimal(prop.DefaultValue);
-					return asDecimal.ToString(CultureInfo.InvariantCulture);
+					var asDecimal = Convert.ToDecimal(prop.DefaultValue).ToString(CultureInfo.InvariantCulture);
+					return asDecimal.Substring(0, Math.Min(asDecimal.Length, 15));
 				}
 				case NativeType.Char:
 				case NativeType.String:

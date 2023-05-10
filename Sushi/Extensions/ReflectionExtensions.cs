@@ -118,7 +118,7 @@ namespace Sushi.Extensions
 		///     Simple check if the given <see cref="Type" /> is <see cref="Nullable" />.
 		/// </summary>
 		public static bool IsNullable(this Type @this)
-			=> Nullable.GetUnderlyingType(@this) != null;
+			=> !@this.IsClass && Nullable.GetUnderlyingType(@this) != null;
 
 		/// <summary>
 		///     If the given type is an array.

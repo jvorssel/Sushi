@@ -43,7 +43,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
 
 				// Assert
-				Assert.AreEqual("StudentViewModel | null", scriptType);
+				Assert.AreEqual("StudentViewModel", scriptType);
 			}
 
 			[TestMethod]
@@ -98,7 +98,7 @@ namespace Sushi.Tests.ModelDescriptors
 
 				// Assert
 				foreach (var scriptTypeValue in results)
-					Assert.AreEqual("Array<StudentViewModel | null>", scriptTypeValue);
+					Assert.AreEqual("Array<StudentViewModel>", scriptTypeValue);
 			}
 
 			[TestMethod]
@@ -126,7 +126,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var result= converter.ResolveScriptType(typeof(Dictionary<string, List<StudentViewModel>>));
 
 				// Assert
-				Assert.AreEqual("Array<string, Array<StudentViewModel | null>>", result);
+				Assert.AreEqual("Array<string, Array<StudentViewModel>>", result);
 			}
 			
 			[TestMethod]
@@ -157,7 +157,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var value = converter.ResolveDefaultValue(prop);
 				
 				// Assert
-				Assert.AreEqual("null", value);
+				Assert.AreEqual("", value);
 			}
 			
 			[TestMethod]
@@ -241,7 +241,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var value = converter.ResolveDefaultValue(prop);
 				
 				// Assert
-				Assert.AreEqual("2.6666666666666666666666666667", value);
+				Assert.AreEqual("2.6666666666666666666666666667".Substring(0, 15), value);
 			}
 			
 			[TestMethod]
@@ -259,7 +259,22 @@ namespace Sushi.Tests.ModelDescriptors
 			}
 			
 			[TestMethod]
-			public void ResolveDefaultValue_ClassValue_ReturnsCorrectValueTest()
+			public void ResolveDefaultValue_ClassValue_ReturnsEmptyStringTest()
+			{
+				// Arrange
+				var converter = new TypeScriptTypeConverter();
+				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+				var prop = new PropertyDescriptor(typeof(StudentViewModel), new StudentViewModel());
+				
+				// Act
+				var value = converter.ResolveDefaultValue(prop);
+				
+				// Assert
+				Assert.AreEqual($"{{}} as {nameof(StudentViewModel)}", value, "No support for deep initialization."); 
+			}
+			
+			[TestMethod]
+			public void ResolveDefaultValue_NoScriptTypeClassValue_ReturnsEmptyStringTest()
 			{
 				// Arrange
 				var converter = new TypeScriptTypeConverter();
@@ -269,7 +284,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var value = converter.ResolveDefaultValue(prop);
 				
 				// Assert
-				Assert.AreEqual("null", value, "No support for deep initialization."); 
+				Assert.AreEqual("", value, "No support for deep initialization."); 
 			}
 		}
 	}

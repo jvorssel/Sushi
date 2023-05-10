@@ -55,8 +55,7 @@ namespace Sushi.Converters
 		}
 
 		/// <summary>
-		///     Join one or more given <paramref name="models" /> and maybe <paramref name="minify" />
-		///     them to create one <see cref="string" />.
+		///		Write the resulting script values from the enum and class models to a string.
 		/// </summary>
 		public override string ToString()
 		{

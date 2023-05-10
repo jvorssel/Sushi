@@ -13,3 +13,5 @@ ModelConverter.Tests/Converted/*
 
 Common.Utility/bin/*
 Common.Utility/obj/*
+
+TestResults/node_modules/*

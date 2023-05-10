@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 12-01-2023
+// Author:                   Jeroen Vorsselman 11-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -30,9 +30,7 @@ namespace Sushi.Converters
 		/// <inheritdoc />
 		public TypeScriptConverter(SushiConverter converter, string indent, PropertyNameCasing casing)
 			: base(converter, indent, casing)
-		{
-			ScriptTypeConverter = new TypeScriptTypeConverter(converter);
-		}
+			=> ScriptTypeConverter = new TypeScriptTypeConverter(converter);
 
 		/// <inheritdoc />
 		public override TypeScriptConverter Convert()
@@ -82,35 +80,34 @@ namespace Sushi.Converters
 				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
 				var defaultValue = ScriptTypeConverter.ResolveDefaultValue(prop);
 
-				var nameSuffix = string.Empty;
-				var typeSuffix = string.Empty;
+				string suffix;
 				if (!defaultValue.IsEmpty())
-					typeSuffix = " = " + defaultValue;
+					suffix = " = " + defaultValue;
 				else
-					nameSuffix = "!";
+					suffix = $": {scriptType}";
 
-				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{nameSuffix}: {scriptType}{typeSuffix};");
+				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{suffix};");
 			}
 
 			return builder.ToString();
 		}
 
-		internal string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent)
+		internal string CreateConstructorDeclaration(ClassDescriptor model)
 		{
 			var builder = new StringBuilder();
-			builder.AppendLine(Indent + "public constructor(value?: any) {");
-			if (hasParent)
+			builder.AppendLine($"{Indent}constructor(value?: Partial<{model.Name}>) {{");
+			if (model.Parent != null)
 			{
 				builder.AppendLine(Indent + Indent + "super(value);");
 				builder.AppendLine();
 			}
 
-			builder.AppendLine(Indent + Indent + "if (!(value instanceof Object))");
-			builder.AppendLine(Indent + Indent + Indent + "return;");
-			builder.AppendLine();
+			builder.AppendLine(Indent + Indent + "if (value) {");
 
-			foreach (var prop in properties)
-				builder.AppendLine($"{Indent + Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+			foreach (var prop in model.Properties)
+				builder.AppendLine(
+					$"{Indent + Indent + Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+			builder.AppendLine(Indent + Indent + "}");
 			builder.Append(Indent + "}");
 			return builder.ToString();
 		}
@@ -123,17 +120,13 @@ namespace Sushi.Converters
 				? string.Empty
 				: XmlDocument.JsDocClassSummary(model) + "\n";
 			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
-			var @override = model.Parent != null ? "override " : string.Empty;
+			var @override = model.Parent   != null ? "override " : string.Empty;
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
-			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);
+			var constructorDeclaration = CreateConstructorDeclaration(model);
 			var template =
 				@$"{summary}export class {model.Name}{parentClass} {{
 {propertyDeclaration}
 {constructorDeclaration}
-
-{Indent}public static {@override}mapFrom(obj: any): {model.Name} {{
-{Indent}{Indent}return Object.assign(new {model.Name}(), obj);
-{Indent}}}
 }}
 ";
 

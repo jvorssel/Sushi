@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       HappyFlowTests.cs
 // Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 03-01-2023
+// Author:                   Jeroen Vorsselman 10-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -24,7 +24,11 @@ namespace Sushi.Tests
 	[TestClass]
 	public class HappyFlowTests : TestBase
 	{
-		public string FilePath => Path.GetDirectoryName(TestContext.TestDir);
+		public string GetFilePath( string fileName)
+		{
+			var testResultsPath = Path.GetDirectoryName(TestContext.TestDir);
+			return testResultsPath + $"/{fileName}";
+		}
 
 		public const string XML_FILE_NAME = "Sushi.tests.xml";
 		private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
@@ -54,7 +58,7 @@ namespace Sushi.Tests
 			// Act
 			var script = converter.ECMAScript5().Convert().ToString();
 
-			WriteToFile(script, FilePath + "/models.es5.js");
+			WriteToFile(script, GetFilePath("models.es5.js"));
 		}
 
 		[TestMethod]
@@ -70,7 +74,7 @@ namespace Sushi.Tests
 				.Convert()
 				.ToString();
 
-			WriteToFile(script, FilePath + "/models.es5.map.js");
+			WriteToFile(script, GetFilePath("models.es5.map.js"));
 		}
 
 		[TestMethod]
@@ -84,7 +88,7 @@ namespace Sushi.Tests
 			var script = converter.ECMAScript6()
 				.Convert()
 				.ToString();
-			WriteToFile(script, FilePath + "/models.es6.js");
+			WriteToFile(script, GetFilePath("models.es6.js"));
 		}
 
 		[TestMethod]
@@ -100,13 +104,14 @@ namespace Sushi.Tests
 				.ConvertEnums()
 				.ToString();
 
-			WriteToFile(script, FilePath + "/models.latest.ts");
+			WriteToFile(script, GetFilePath("models.latest.ts"));
 		}
 
 		[TestMethod]
 		public void Typescript_WithoutComments_CompileTest()
 		{
 			// Arrange
+			var huh = AppDomain.CurrentDomain.BaseDirectory;
 			var assembly = typeof(PersonViewModel).Assembly;
 			var converter = new SushiConverter(assembly, XmlDocPath);
 
@@ -118,7 +123,7 @@ namespace Sushi.Tests
 				.Convert()
 				.ToString();
 
-			WriteToFile(script, FilePath + "/models.no-comments.ts");
+			WriteToFile(script, GetFilePath("models.no-comments.ts"));
 		}
 	}
 }
