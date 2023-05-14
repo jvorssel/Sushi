@@ -11,6 +11,7 @@
 
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
@@ -19,6 +20,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Converters;
 using Sushi.Descriptors;
+using Sushi.Extensions;
 using Sushi.Tests.Models;
 
 #endregion
@@ -287,5 +289,62 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual("", value, "No support for deep initialization."); 
 			}
 		}
+
+		[TestClass]
+		public class GetGenericTypeArgumentMethod : TypeScriptTypeConverterTests
+		{
+			[TestMethod]
+			public void GGetGenericTypeArgument_SimpleType_ShouldReturnGivenTypeTest()
+			{
+				// Arrange
+				var type = typeof(ViewModel);
+				
+				// Act
+				var result = TypeScriptTypeConverter.GetGenericType(type);
+				
+				// Assert
+				Assert.AreEqual(type, result);
+			}
+			
+			[TestMethod]
+			public void GetGenericTypeArgument_GenericType_ShouldGetGenericTypeTest()
+			{
+				// Arrange
+				var type = typeof(List<ViewModel>);
+				
+				// Act
+				var result = TypeScriptTypeConverter.GetGenericType(type);
+				
+				// Assert
+				Assert.AreEqual(typeof(ViewModel), result);
+			}	
+			
+			[TestMethod]
+			public void GetGenericTypeArgument_NestedGenericType_ShouldGetGenericTypeTest()
+			{
+				// Arrange
+				var type = typeof(List<List<ViewModel>>);
+				
+				// Act
+				var result = TypeScriptTypeConverter.GetGenericType(type);
+				
+				// Assert
+				Assert.AreEqual(typeof(ViewModel), result);
+			}	
+			
+			[TestMethod]
+			public void GetGenericTypeArgument_NullableType_ShouldGetGenericTypeTest()
+			{
+				// Arrange
+				var type = typeof(bool?);
+				
+				// Act
+				var result = TypeScriptTypeConverter.GetGenericType(type);
+				
+				// Assert
+				Assert.AreEqual(typeof(bool), result);
+			}	
+		}
+		
 	}
 }

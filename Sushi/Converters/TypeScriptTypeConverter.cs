@@ -38,13 +38,13 @@ namespace Sushi.Converters
 		/// <inheritdoc />
 		public string ResolveScriptType(Type type)
 		{
-			var genericTypeArgs = type.IsGenericType ? GetGenericType(type) : string.Empty;
+			var genericTypeArgs = type.IsGenericType ? this.GetGenericTypeArguments(type) : string.Empty;
 
 			// Array
 			if (type.IsArray())
 				return $"Array<{genericTypeArgs}>";
 
-			var actualType = GetBaseType(type);
+			var actualType = TypeScriptTypeConverter.GetGenericType(type);
 
 			// Check if any of the available models have the same name and should be used.
 			var classModel = Classes.SingleOrDefault(x => x.Name == actualType.Name);
@@ -112,14 +112,14 @@ namespace Sushi.Converters
 			}
 		}
 
-		public Type GetBaseType(Type @this)
+		public static Type GetGenericType(Type @this)
 		{
 			var type = Nullable.GetUnderlyingType(@this) ?? @this;
 
 			while (type.IsGenericType)
 			{
 				// Move to the single generic argument or its base type.
-				var genericType = type.GenericTypeArguments.SingleOrDefault() ?? type.BaseType;
+				var genericType = type.GenericTypeArguments.SingleOrDefault();
 				if (genericType == null)
 					return type;
 
@@ -129,7 +129,7 @@ namespace Sushi.Converters
 			return type;
 		}
 
-		public string GetGenericType(Type type)
+		public string GetGenericTypeArguments(Type type)
 		{
 			if (!type.IsGenericType)
 				throw new ArgumentException("Expected given type to be generic.");

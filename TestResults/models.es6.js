@@ -1,10 +1,12 @@
 
 /**
- * Sushi.Tests.Models.ViewModel
+ * The view model base class.
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
+    /** The view model identifier. */
     Guid;
+    /** When this view model was created. */
     CreatedOn;
 
     constructor(value) {
@@ -86,10 +88,10 @@ export class StudentViewModel extends PersonViewModel {
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
     Name;
-    /** The Owner of this SchoolViewModel. */
-    Owner;
     /** The AmountOfStudents of this SchoolViewModel. */
     AmountOfStudents;
+    /** The Owner of this SchoolViewModel. */
+    Owner;
     /** The Address of this SchoolViewModel. */
     Address;
     /** The ZipCode of this SchoolViewModel. */
@@ -111,8 +113,8 @@ export class SchoolViewModel extends ViewModel {
             return;
 
         this.name = value.name;
-        this.owner = value.owner;
         this.amountOfStudents = value.amountOfStudents;
+        this.owner = value.owner;
         this.address = value.address;
         this.zipCode = value.zipCode;
         this.houseNumber = value.houseNumber;

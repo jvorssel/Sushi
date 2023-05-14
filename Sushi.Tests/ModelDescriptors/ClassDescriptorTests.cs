@@ -87,6 +87,22 @@ namespace Sushi.Tests.ModelDescriptors
 				// Assert
 				Assert.IsFalse(result);
 			}
+			
+			[TestMethod]
+			public void Equal_WithNullValues_ShouldNotBeEqual()
+			{
+				// Arrange
+				var m1 = new ClassDescriptor(typeof(ViewModel));
+				var m2 = (ClassDescriptor)null;
+
+				// Act & Assert
+				Assert.IsFalse(m1 == m2);
+				Assert.IsTrue(m2 != m1);
+				Assert.IsFalse(m1.Equals(m2));
+				Assert.IsFalse(m1.Equals((object)null));
+				Assert.IsTrue(m1.Equals((object)m1));
+				Assert.IsTrue(m1.GetHashCode() == m1.GetHashCode());
+			}
 		}
 
 		[TestClass]
@@ -102,8 +118,8 @@ namespace Sushi.Tests.ModelDescriptors
 				var descriptor = new ClassDescriptor(type);
 
 				// Assert
-				Assert.AreEqual(8, descriptor.Properties.Count);
-				Assert.AreEqual(7, descriptor.Properties.Count(x => x is PropertyDescriptor));
+				Assert.AreEqual(9, descriptor.Properties.Count);
+				Assert.AreEqual(8, descriptor.Properties.Count(x => x is PropertyDescriptor));
 				Assert.AreEqual(1, descriptor.Properties.Count(x => x is FieldDescriptor));
 			}
 		}

@@ -26,4 +26,8 @@
       <ProjectReference Include="..\Sushi\Sushi.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Extensions\" />
+    </ItemGroup>
+
 </Project>

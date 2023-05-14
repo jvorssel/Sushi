@@ -17,25 +17,19 @@ using System.Collections.Generic;
 
 namespace Sushi.Tests.Models
 {
-	/// <summary>
-	///     Basic information about a School.
-	/// </summary>
-	public sealed class SchoolViewModel : ViewModel
+	/// <inheritdoc cref="ISchoolViewModel" />
+	public sealed class SchoolViewModel : ViewModel, ISchoolViewModel
 	{
-		/// <summary>
-		///     The <see cref="Name" /> of this <see cref="SchoolViewModel" />.
-		/// </summary>
+		/// <inheritdoc />
 		public string Name { get; set; }
 
+		/// <inheritdoc />
+		public long AmountOfStudents { get; set; }
+		
 		/// <summary>
 		///     The <see cref="Owner" /> of this <see cref="SchoolViewModel" />.
 		/// </summary>
 		public PersonViewModel Owner { get; set; }
-
-		/// <summary>
-		///     The <see cref="AmountOfStudents" /> of this <see cref="SchoolViewModel" />.
-		/// </summary>
-		public long AmountOfStudents { get; set; }
 
 		/// <summary>
 		///     The <see cref="Address" /> of this <see cref="SchoolViewModel" />.

@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       ReflectionExtensions.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 14-05-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -11,6 +11,7 @@
 
 #region
 
+using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -93,25 +94,15 @@ namespace Sushi.Extensions
 		/// <summary>
 		///     A T extension method that query if '@this' is type or inherits of.
 		/// </summary>
-		/// <param name="objectType">The Type.</param>
-		/// <param name="type">The type.</param>
-		/// <returns>true if type or inherits of, false if not.</returns>
-		public static bool IsTypeOrInheritsOf(this Type objectType, Type type)
+		public static bool InheritsInterface<T>(this Type objectType)
 		{
 			// Checking basetype for interfaces doesn't really work.
 			var interfaces = objectType.GetInterfaces();
-			if (type.IsInterface)
-				return interfaces.Any(x => x.Name == type.Name);
+			var type = typeof(T);
+			if (!type.IsInterface)
+				throw new ArgumentException($"Expected {type.Name} to be an interface.");
 
-			while (objectType.BaseType != null)
-			{
-				if (objectType == type)
-					return true;
-
-				objectType = objectType.BaseType;
-			}
-
-			return false;
+			return interfaces.Any(x => x.Name == type.Name);
 		}
 
 		/// <summary>
@@ -125,7 +116,7 @@ namespace Sushi.Extensions
 		/// </summary>
 		public static bool IsArray(this Type type)
 		{
-			var isInterfaceArray = type.IsTypeOrInheritsOf(typeof(IEnumerable<>)) || type.IsArray;
+			var isInterfaceArray = type.InheritsInterface<IEnumerable>() || type.IsArray;
 			var isString = type == typeof(string);
 			return isInterfaceArray && !isString;
 		}

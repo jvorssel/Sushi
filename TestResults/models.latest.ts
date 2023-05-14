@@ -5,12 +5,14 @@ export enum Gender {
 }
 
 /**
- * Sushi.Tests.Models.ViewModel
+ * The view model base class.
  * @typedef {Object} ViewModel
  */
 export class ViewModel {
-    guid: string = "f3f86fd6-0b41-4e1b-80b2-391557835a56";
-    createdOn: Date | string | null = null;
+    /** The view model identifier. */
+    guid!: string;
+    /** When this view model was created. */
+    createdOn!: Date | string | null;
 
     constructor(value?: any) {
         if (value) {
@@ -84,10 +86,10 @@ export class StudentViewModel extends PersonViewModel {
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
     name!: string;
-    /** The Owner of this SchoolViewModel. */
-    owner!: PersonViewModel;
     /** The AmountOfStudents of this SchoolViewModel. */
     amountOfStudents: number = 0;
+    /** The Owner of this SchoolViewModel. */
+    owner!: PersonViewModel;
     /** The Address of this SchoolViewModel. */
     address: string = "";
     /** The ZipCode of this SchoolViewModel. */
@@ -107,8 +109,8 @@ export class SchoolViewModel extends ViewModel {
 
         if (value) {
             this.name = value.name;
-            this.owner = value.owner;
             this.amountOfStudents = value.amountOfStudents;
+            this.owner = value.owner;
             this.address = value.address;
             this.zipCode = value.zipCode;
             this.houseNumber = value.houseNumber;

@@ -5,8 +5,8 @@ export enum Gender {
 }
 
 export class ViewModel {
-    guid: string = "9ef0a319-b790-47bd-9df0-169446cfe452";
-    createdOn: Date | string | null = null;
+    guid!: string;
+    createdOn!: Date | string | null;
 
     constructor(value?: any) {
         if (value) {
@@ -58,8 +58,8 @@ export class StudentViewModel extends PersonViewModel {
 
 export class SchoolViewModel extends ViewModel {
     name!: string;
-    owner!: PersonViewModel;
     amountOfStudents: number = 0;
+    owner!: PersonViewModel;
     address: string = "";
     zipCode!: string;
     houseNumber: number = 0;
@@ -73,8 +73,8 @@ export class SchoolViewModel extends ViewModel {
 
         if (value) {
             this.name = value.name;
-            this.owner = value.owner;
             this.amountOfStudents = value.amountOfStudents;
+            this.owner = value.owner;
             this.address = value.address;
             this.zipCode = value.zipCode;
             this.houseNumber = value.houseNumber;

@@ -82,32 +82,16 @@ namespace Sushi.Descriptors
 			=> !(m1 == m2);
 
 		/// <inheritdoc />
-		public bool Equals(ClassDescriptor other)
+		public bool Equals(ClassDescriptor? other)
 		{
 			if (ReferenceEquals(null, other))
 				return false;
-
-			if (ReferenceEquals(this, other))
-				return true;
 
 			return Type == other.Type;
 		}
 
 		/// <inheritdoc />
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj))
-				return false;
-
-			if (ReferenceEquals(this, obj))
-				return true;
-
-			return obj is ClassDescriptor model && Equals(model);
-		}
-
-		/// <inheritdoc />
-		public override int GetHashCode()
-			=> Type != null ? Type.GetHashCode() : 0;
+		public override int GetHashCode() => Type.GetHashCode();
 
 		#endregion
 	}

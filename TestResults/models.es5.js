@@ -1,6 +1,6 @@
 
 /**
- * Sushi.Tests.Models.ViewModel
+ * The view model base class.
  * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
@@ -64,8 +64,8 @@ function SchoolViewModel(obj) {
         value = {};
 
     this.name = value.name;
-    this.owner = value.owner;
     this.amountOfStudents = value.amountOfStudents;
+    this.owner = value.owner;
     this.address = value.address;
     this.zipCode = value.zipCode;
     this.houseNumber = value.houseNumber;

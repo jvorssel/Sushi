@@ -44,7 +44,6 @@ namespace Sushi.Tests
 
 			// Assert
 			Assert.IsNotNull(converter.Documentation);
-			Assert.IsTrue(converter.Documentation.Initialized);
 			Assert.IsTrue(converter.Documentation.Members.Any());
 		}
 

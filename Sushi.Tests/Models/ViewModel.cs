@@ -18,10 +18,19 @@ using Sushi.Interfaces;
 
 namespace Sushi.Tests.Models
 {
-	public class ViewModel : IScriptModel
+	/// <summary>
+	///		The view model base class.
+	/// </summary>
+	public abstract class ViewModel : IScriptModel
 	{
+		/// <summary>
+		///		The view model identifier.
+		/// </summary>
 		public Guid Guid { get; set; } = Guid.NewGuid();
 
-		public DateTime CreatedOn { get; set; }
+		/// <summary>
+		///		When this view model was created.
+		/// </summary>
+		public DateTime CreatedOn { get; set; } = DateTime.Now;
 	}
 }

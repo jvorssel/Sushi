@@ -18,24 +18,5 @@ namespace Sushi.Extensions
                     .Replace("\n", string.Empty)
                     .Replace("\t", string.Empty)
                     .Replace("\0", string.Empty);
-
-        /// <summary>
-        ///     Join the given <see cref="string"/> <see cref="IEnumerable{T}"/> to one string.
-        /// </summary>
-        public static string JoinString(this List<string> @this, char separator, int amount = 0)
-        {
-            var sb = new StringBuilder();
-            if (amount == 0)
-                amount = @this.Count;
-
-            for (int i = 0; i < amount; i++)
-            {
-
-
-                sb.Append(@this[i] + separator);
-            }
-
-            return sb.ToString().TrimEnd('.');
-        }
     }
 }

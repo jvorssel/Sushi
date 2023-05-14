@@ -61,7 +61,7 @@ namespace Sushi
 			if (!File.Exists(assemblyDocPath))
 				throw new ArgumentException("XML documentation file not found.", nameof(assemblyDocPath));
 
-			Documentation = new XmlDocumentationReader(assemblyDocPath).Initialize();
+			Documentation = new XmlDocumentationReader(assemblyDocPath);
 		}
 
 		/// <summary>
