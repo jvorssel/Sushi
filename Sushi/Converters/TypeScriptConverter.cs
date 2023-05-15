@@ -87,13 +87,12 @@ namespace Sushi.Converters
 			if (type.IsArray())
 				return $"Array<{genericTypeArgs}>";
 
-			var actualType = GetGenericType(type);
-
 			// Check if any of the available models have the same name and should be used.
-			var classModel = Models.SingleOrDefault(x => x.Name == actualType.Name);
+			var classModel = Models.SingleOrDefault(x => x.Type == (type.IsGenericType ? type.GetGenericTypeDefinition() : type));
 			if (classModel != null)
 				return type.IsGenericType ? $"{classModel.Name}<{genericTypeArgs}>" : classModel.Name;
 
+			var actualType =  type.IsGenericType ? type.GenericTypeArguments[0] : type;
 			var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
 			if (type.IsEnum && enumModel != null)
 				return $"{enumModel.Name} | number";
@@ -118,8 +117,8 @@ namespace Sushi.Converters
 				return "null";
 
 			var defaultValueType = prop.DefaultValue.GetType();
-			var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType);
-			if (descriptor != null && descriptor.HasParameterlessCtor)
+			var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType && x.HasParameterlessCtor);
+			if (descriptor != null)
 				return $"new {descriptor.Name}()";
 
 			if (defaultValueType.IsClass && defaultValueType != typeof(string))
@@ -154,28 +153,11 @@ namespace Sushi.Converters
 			}
 		}
 
-		public static Type GetGenericType(Type @this)
-		{
-			var type = Nullable.GetUnderlyingType(@this) ?? @this;
-
-			while (type.IsGenericType)
-			{
-				// Move to the single generic argument or its base type.
-				var genericType = type.GenericTypeArguments.SingleOrDefault();
-				if (genericType == null)
-					return type;
-
-				type = genericType;
-			}
-
-			return type;
-		}
-
 		public string GetGenericTypeArguments(Type type)
 		{
 			if (!type.IsGenericType)
 				throw new ArgumentException("Expected given type to be generic.");
-
+			
 			var genericTypeArgs = type.GenericTypeArguments.Select(x => x.IsGenericTypeParameter ? x.Name : ResolveScriptType(x)).Glue(", ");
 			return genericTypeArgs;
 		}

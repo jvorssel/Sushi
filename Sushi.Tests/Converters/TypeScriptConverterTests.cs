@@ -289,61 +289,6 @@ namespace Sushi.Tests.ModelDescriptors
 			}
 		}
 
-		[TestClass]
-		public class GetGenericTypeArgumentMethod : TypeScriptConverterTests
-		{
-			[TestMethod]
-			public void GetGenericTypeArgument_SimpleType_ShouldReturnGivenTypeTest()
-			{
-				// Arrange
-				var type = typeof(ViewModel);
-
-				// Act
-				var result = TypeScriptConverter.GetGenericType(type);
-
-				// Assert
-				Assert.AreEqual(type, result);
-			}
-
-			[TestMethod]
-			public void GetGenericTypeArgument_GenericType_ShouldGetGenericTypeTest()
-			{
-				// Arrange
-				var type = typeof(List<ViewModel>);
-
-				// Act
-				var result = TypeScriptConverter.GetGenericType(type);
-
-				// Assert
-				Assert.AreEqual(typeof(ViewModel), result);
-			}
-
-			[TestMethod]
-			public void GetGenericTypeArgument_NestedGenericType_ShouldGetGenericTypeTest()
-			{
-				// Arrange
-				var type = typeof(List<List<ViewModel>>);
-
-				// Act
-				var result = TypeScriptConverter.GetGenericType(type);
-
-				// Assert
-				Assert.AreEqual(typeof(ViewModel), result);
-			}
-
-			[TestMethod]
-			public void GetGenericTypeArgument_NullableType_ShouldGetGenericTypeTest()
-			{
-				// Arrange
-				var type = typeof(bool?);
-
-				// Act
-				var result = TypeScriptConverter.GetGenericType(type);
-
-				// Assert
-				Assert.AreEqual(typeof(bool), result);
-			}
-		}
 
 		[TestClass]
 		public class GenericClassSupport : TypeScriptConverterTests
@@ -403,7 +348,20 @@ namespace Sushi.Tests.ModelDescriptors
 				
 				var secondAsScript = converter.ResolveScriptType(secondProperty.Type);
 				Assert.AreEqual("Array<TSecond>", secondAsScript);
+			}
+			
+			[TestMethod]
+			public void ComplexGenericClassDefinition_ShouldResolveScriptTypeTest()
+			{
+				// Arrange
+				var type = typeof(GenericComplexStandalone<List<string>, GenericStandalone<int>>);
 				
+				// Act
+				var converter = new SushiConverter(type, type.GetGenericTypeDefinition(), typeof(GenericStandalone<>)).TypeScript();
+				var script = converter.ResolveScriptType(type);
+				
+				// Assert
+				Assert.AreEqual("GenericComplexStandalone<Array<string>, GenericStandalone<number>>", script);
 			}
 		}
 	}
