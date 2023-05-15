@@ -14,7 +14,6 @@
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
@@ -26,23 +25,23 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the TypeScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public sealed class TypeScriptConverter : ModelConverter<TypeScriptConverter>
+	public sealed class TypeScriptConverter : ModelConverter
 	{
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, string indent, PropertyNameCasing casing)
-			: base(converter, indent, casing)
+		public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options)
 			=> ScriptTypeConverter = new TypeScriptTypeConverter(converter);
 
 		/// <inheritdoc />
-		public override TypeScriptConverter Convert()
+		public override IEnumerable<string> ConvertToScript()
 		{
+			foreach (var enumScript in ConvertEnums())
+				yield return enumScript;
+			
 			foreach (var model in Models.Flatten())
-				model.Script = ToTypeScriptClass(model);
-
-			return this;
+				yield return ToTypeScriptClass(model);
 		}
 
-		public TypeScriptConverter ConvertEnums()
+		public IEnumerable<string> ConvertEnums()
 		{
 			foreach (var model in EnumModels)
 			{
@@ -60,10 +59,8 @@ namespace Sushi.Converters
 
 				builder.AppendLine("}");
 
-				model.Script = builder.ToString();
+				yield return builder.ToString();
 			}
-
-			return this;
 		}
 
 		internal string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties)

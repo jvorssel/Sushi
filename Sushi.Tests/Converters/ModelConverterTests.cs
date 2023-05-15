@@ -11,6 +11,7 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using Sushi.Enum;
 
 namespace Sushi.Tests.Converters;
@@ -24,7 +25,8 @@ public abstract class ModelConverterTests : TestBase
 		public void ApplyCasingStyle_Default_KeepValueTests()
 		{
 			// Arrange
-			var converter = new SushiConverter().TypeScript(casing: PropertyNameCasing.Default);
+			var options = new ConverterOptions(casing: PropertyNameCasing.Default);
+			var converter = new SushiConverter().TypeScript(options);
 			var value = "CasingTest";
 			
 			// Act
@@ -38,7 +40,8 @@ public abstract class ModelConverterTests : TestBase
 		public void ApplyCasingStyle_CamelCasing_ShouldTransformValueTests()
 		{
 			// Arrange
-			var converter = new SushiConverter().TypeScript(casing: PropertyNameCasing.CamelCase);
+			var options = new ConverterOptions(casing: PropertyNameCasing.CamelCase);
+			var converter = new SushiConverter().TypeScript(options);
 			var value = "CasingTest";
 			
 			// Act
@@ -52,7 +55,8 @@ public abstract class ModelConverterTests : TestBase
 		public void ApplyCasingStyle_UnsupportedValue_ShouldThrow()
 		{
 			// Arrange
-			var converter = new SushiConverter().TypeScript(casing: (PropertyNameCasing)500);
+			var options = new ConverterOptions(casing: (PropertyNameCasing)500);
+			var converter = new SushiConverter().TypeScript(options);
 			var value = "CasingTest";
 			
 			// Act & Assert

@@ -25,20 +25,18 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public sealed class EcmaScript6Converter : ModelConverter<EcmaScript6Converter>
+	public sealed class EcmaScript6Converter : ModelConverter
 	{
 		/// <inheritdoc />
-		public EcmaScript6Converter(SushiConverter converter, string indent, PropertyNameCasing casing) : base(converter, indent, casing)
+		public EcmaScript6Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
 		{
 		}
 
 		/// / <inheritdoc />
-		public override EcmaScript6Converter Convert()
+		public override IEnumerable<string> ConvertToScript()
 		{
 			foreach (var model in Models.Flatten())
-				model.Script = Compile(model);
-
-			return this;
+				yield return Compile(model);
 		}
 
 		private string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties)

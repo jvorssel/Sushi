@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       ModelConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 03-01-2023
+// Author:                   Jeroen Vorsselman 15-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -22,49 +22,40 @@ using Sushi.Interfaces;
 
 namespace Sushi.Converters
 {
-	public abstract class ModelConverter<TConverter> where TConverter : ModelConverter<TConverter>
+	public abstract class ModelConverter
 	{
-		public string Indent { get; }
-		public PropertyNameCasing Casing { get; }
-		
-		protected readonly XmlDocumentationReader? XmlDocument = null;
+		protected string Indent { get; }
+		protected PropertyNameCasing CasingStyle { get; }
+
+		protected readonly XmlDocumentationReader? XmlDocument;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
-		protected IScriptTypeConverter ScriptTypeConverter = null;
-		
+
+		protected IScriptTypeConverter ScriptTypeConverter;
 
 		protected bool ExcludeComments { get; set; }
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
 		/// </summary>
-		protected ModelConverter(SushiConverter converter, string indent, PropertyNameCasing casing)
+		protected ModelConverter(SushiConverter converter, IConverterOptions options)
 		{
-			Indent = indent;
-			Casing = casing;
+			Indent = options.Indent;
+			CasingStyle = options.CasingStyle;
 			XmlDocument = converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;
-		}
-
-
-		public TConverter NoComments()
-		{
-			ExcludeComments = true;
-			return (TConverter)this;
+			ExcludeComments = options.ExcludeComments;
 		}
 
 		/// <summary>
-		///		Write the resulting script values from the enum and class models to a string.
+		///     Write the resulting script values from the enum and class models to a string.
 		/// </summary>
 		public override string ToString()
 		{
 			var builder = new StringBuilder();
-			foreach (var enumModel in EnumModels)
-				builder.AppendLine(enumModel.Script);
-
-			foreach (var model in Models.Flatten())
-				builder.AppendLine(model.Script);
+			foreach (var script in ConvertToScript())
+				builder.AppendLine(script);
 
 			var result = builder.ToString();
 			return result;
@@ -73,22 +64,19 @@ namespace Sushi.Converters
 		/// <summary>
 		///     Compile the models in the converter.
 		/// </summary>
-		public abstract TConverter Convert();
+		public abstract IEnumerable<string> ConvertToScript();
 
 		/// <summary>
-		///		Apply the chosen <see cref="Casing"/> to the given <paramref name="value"/>.
+		///     Apply the chosen <see cref="CasingStyle" /> to the given <paramref name="value" />.
 		/// </summary>
 		public string ApplyCasingStyle(string value)
 		{
-			switch (Casing)
+			return CasingStyle switch
 			{
-				case PropertyNameCasing.Default:
-					return value;
-				case PropertyNameCasing.CamelCase:
-					return Char.ToLowerInvariant(value[0]) + value.Substring(1);
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
+				PropertyNameCasing.Default => value,
+				PropertyNameCasing.CamelCase => char.ToLowerInvariant(value[0]) + value.Substring(1),
+				_ => throw new ArgumentOutOfRangeException()
+			};
 		}
 	}
 }

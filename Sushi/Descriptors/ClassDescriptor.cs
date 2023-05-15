@@ -38,11 +38,6 @@ namespace Sushi.Descriptors
 		/// </summary>
 		public string? FullName => Type.FullName;
 
-		/// <summary>
-		///     The generated <see cref="Script" /> for this <see cref="ClassDescriptor" />.
-		/// </summary>
-		public string Script { get; set; } = string.Empty;
-
 		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
 
 		public IReadOnlyList<Type> GenericParameters { get; }

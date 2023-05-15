@@ -15,6 +15,7 @@ using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
+using Sushi.Interfaces;
 
 #endregion
 
@@ -23,21 +24,19 @@ namespace Sushi.Converters
 	/// <summary>
 	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
 	/// </summary>
-	public sealed class EcmaScript5Converter : ModelConverter<EcmaScript5Converter>
+	public sealed class EcmaScript5Converter : ModelConverter
 	{
 		private bool _includeUnderscoreExtend = false;
 		
 		/// <inheritdoc />
-		public EcmaScript5Converter(SushiConverter converter, string indent, PropertyNameCasing casing) : base(converter, indent, casing)
+		public EcmaScript5Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
 		{}
 
 		/// / <inheritdoc />
-		public override EcmaScript5Converter Convert()
+		public override IEnumerable<string> ConvertToScript()
 		{
 			foreach (var model in Models.Flatten())
-				model.Script = Compile(model);
-
-			return this;
+				yield return Compile(model);
 		}
 
 		public EcmaScript5Converter IncludeUnderscoreMapper()

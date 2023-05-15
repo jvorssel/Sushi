@@ -47,7 +47,7 @@ namespace Sushi.Tests
 			var sushi = new SushiConverter(typeof(GenericStandalone<>));
 			
 			// Act
-			var typescript = sushi.TypeScript().Convert();
+			var typescript = sushi.TypeScript();
 			
 			// Assert
 			var descriptor = sushi.Models.Single();

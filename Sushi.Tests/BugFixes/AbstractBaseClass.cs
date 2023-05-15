@@ -55,7 +55,7 @@ public class AbstractBaseClass : TestBase
         var sushi = new SushiConverter(typeof(AbstractParentModel), typeof(AbstractBaseModel));
         
         // Act
-        var script = sushi.TypeScript().Convert().ToString();
+        var script = sushi.TypeScript().ToString();
 
         // Assert
         Assert.IsFalse(script.IsEmpty());

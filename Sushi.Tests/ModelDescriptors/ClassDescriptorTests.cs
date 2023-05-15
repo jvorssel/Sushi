@@ -37,7 +37,6 @@ namespace Sushi.Tests.ModelDescriptors
 				// Assert
 				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
 				Assert.AreEqual(type.FullName, descriptor.FullName);
-				Assert.AreEqual(string.Empty, descriptor.Script);
 
 				Assert.AreEqual(2, descriptor.Properties.Count);
 			}

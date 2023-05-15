@@ -1,4 +1,3 @@
-
 /**
  * Sushi.Tests.Models.GenericStandalone`1
  * @typedef {Object} GenericStandalone

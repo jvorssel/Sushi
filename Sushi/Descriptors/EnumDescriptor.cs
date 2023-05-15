@@ -19,7 +19,6 @@ namespace Sushi.Descriptors
 	{
 		public Type Type { get; }
 		public string Name => Type.Name;
-		public string Script { get; set; }
 
 		public Dictionary<string, int> Values = new();
 

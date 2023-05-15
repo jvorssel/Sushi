@@ -15,6 +15,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using Sushi.Tests.Models;
 
 #endregion
@@ -55,7 +56,7 @@ namespace Sushi.Tests
 			var converter = new SushiConverter(assembly, XmlDocPath);
 
 			// Act
-			var script = converter.ECMAScript5().Convert().ToString();
+			var script = converter.ECMAScript5().ToString();
 
 			WriteToFile(script, GetFilePath("models.es5.js"));
 		}
@@ -70,7 +71,6 @@ namespace Sushi.Tests
 			// Act
 			var script = converter.ECMAScript5()
 				.IncludeUnderscoreMapper()
-				.Convert()
 				.ToString();
 
 			WriteToFile(script, GetFilePath("models.es5.map.js"));
@@ -84,9 +84,7 @@ namespace Sushi.Tests
 			var converter = new SushiConverter(assembly, XmlDocPath);
 
 			// Act
-			var script = converter.ECMAScript6()
-				.Convert()
-				.ToString();
+			var script = converter.ECMAScript6().ToString();
 			WriteToFile(script, GetFilePath("models.es6.js"));
 		}
 
@@ -98,9 +96,7 @@ namespace Sushi.Tests
 			var converter = new SushiConverter(assembly, XmlDocPath);
 
 			// Act
-			var script = converter.TypeScript()
-				.Convert()
-				.ConvertEnums()
+			var script = converter.TypeScript(new ConverterOptions())
 				.ToString();
 
 			WriteToFile(script, GetFilePath("models.latest.ts"));
@@ -116,11 +112,8 @@ namespace Sushi.Tests
 
 			// Act
 			// Convert the available models and look if the result is as expected.
-			var script = converter.TypeScript()
-				.NoComments()
-				.ConvertEnums()
-				.Convert()
-				.ToString();
+			var options = new ConverterOptions(excludeComments: true);
+			var script = converter.TypeScript(options).ToString();
 
 			WriteToFile(script, GetFilePath("models.no-comments.ts"));
 		}
