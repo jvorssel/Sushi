@@ -344,5 +344,67 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(typeof(bool), result);
 			}
 		}
+
+		[TestClass]
+		public class GenericClassSupport : TypeScriptConverterTests
+		{
+			[TestMethod]
+			public void GenericClassDefinition_ShouldConvertTest()
+			{
+				// Arrange
+				var type = typeof(GenericStandalone<>);
+				
+				// Act
+				var converter = new SushiConverter(type)
+					.TypeScript();
+				
+				// Assert
+				Assert.AreEqual(1, converter.Models.Count);
+				var descriptor = converter.Models.Single(x=>x.Name == "GenericStandalone");
+				
+				Assert.AreEqual(2, descriptor.Properties.Count);
+				
+				var valuesProperty = descriptor.Properties.Single(x=>x.Name == "Values");
+				Assert.IsTrue(valuesProperty.Type.IsGenericType);
+				
+				var genericTypeArgument = converter.GetGenericTypeArguments(valuesProperty.Type);
+				var valuesAsScript = converter.ResolveScriptType(valuesProperty.Type);
+				Assert.AreEqual("Array<TEntry>", valuesAsScript);
+				
+				var totalAmountProperty = descriptor.Properties.Single(x=>x.Name == "TotalAmount");
+				var totalAmountAsScript = converter.ResolveScriptType(totalAmountProperty.Type);
+				Assert.AreEqual("number", totalAmountAsScript);
+			}
+			
+			[TestMethod]
+			public void ComplexGenericClassDefinition_ShouldConvertTest()
+			{
+				// Arrange
+				var type = typeof(GenericComplexStandalone<,>);
+				
+				// Act
+				var converter = new SushiConverter(type)
+					.TypeScript();
+				
+				// Assert
+				Assert.AreEqual(1, converter.Models.Count);
+				var descriptor = converter.Models.Single(x=>x.Name == "GenericComplexStandalone");
+				
+				Assert.AreEqual(3, descriptor.Properties.Count);
+				
+				var firstProperty = descriptor.Properties.Single(x=>x.Name == "First");
+				Assert.IsTrue(firstProperty.Type.IsGenericType);
+				
+				var firstAsScript = converter.ResolveScriptType(firstProperty.Type);
+				Assert.AreEqual("Array<TFirst>", firstAsScript);
+				
+				var secondProperty = descriptor.Properties.Single(x=>x.Name == "Second");
+				Assert.IsTrue(secondProperty.Type.IsGenericType);
+				
+				var secondAsScript = converter.ResolveScriptType(secondProperty.Type);
+				Assert.AreEqual("Array<TSecond>", secondAsScript);
+				
+			}
+		}
 	}
 }

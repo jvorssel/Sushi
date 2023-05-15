@@ -27,9 +27,9 @@ namespace Sushi.Converters
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
-		protected readonly XmlDocumentationReader? XmlDocument = null;
-		protected readonly HashSet<ClassDescriptor> Models;
-		protected readonly HashSet<EnumDescriptor> EnumModels;
+		protected readonly XmlDocumentationReader? XmlDocument;
+		public readonly HashSet<ClassDescriptor> Models;
+		public readonly HashSet<EnumDescriptor> EnumModels;
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.

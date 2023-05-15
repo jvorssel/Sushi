@@ -1,9 +1,24 @@
-﻿using System.Linq;
+﻿// /***************************************************************************\
+// Module Name:       ModelTests.cs
+// Project:                   Sushi.Tests
+// Author:                   Jeroen Vorsselman 15-05-2023
+// Copyright:              Goblin workshop @ 2023
+// 
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+// \***************************************************************************/
+
+#region
+
+using System.Linq;
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Extensions;
 using Sushi.Tests.Models;
+
+#endregion
 
 namespace Sushi.Tests
 {
@@ -45,16 +60,16 @@ namespace Sushi.Tests
 		{
 			// Arrange
 			var sushi = new SushiConverter(typeof(GenericStandalone<>));
-			
+
 			// Act
 			var typescript = sushi.TypeScript();
-			
+
 			// Assert
 			var descriptor = sushi.Models.Single();
 			Assert.AreEqual("GenericStandalone", descriptor.Name);
 			Assert.AreEqual(1, descriptor.GenericParameterNames.Count);
-			Assert.AreEqual(1, descriptor.GenericParameters.Count);
-			
+			Assert.AreEqual("TEntry", descriptor.GenericParameterNames.Single());
+
 			Assert.IsFalse(typescript.ToString().IsEmpty());
 		}
 	}

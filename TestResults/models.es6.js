@@ -1,4 +1,27 @@
 /**
+ * Sushi.Tests.Models.GenericComplexStandalone`2
+ * @typedef {Object} GenericComplexStandalone
+ */
+export class GenericComplexStandalone {
+    First;
+    Second;
+    TotalAmount;
+
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
+
+        this.first = value.first;
+        this.second = value.second;
+        this.totalAmount = value.totalAmount;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new GenericComplexStandalone(), obj);
+    }
+}
+
+/**
  * Sushi.Tests.Models.GenericStandalone`1
  * @typedef {Object} GenericStandalone
  */

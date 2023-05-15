@@ -5,11 +5,29 @@ export enum Gender {
 }
 
 /**
+ * Sushi.Tests.Models.GenericComplexStandalone`2
+ * @typedef {Object} GenericComplexStandalone
+ */
+export class GenericComplexStandalone<TFirst, TSecond> {
+    first: Array<TFirst> = [];
+    second: Array<TSecond> = [];
+    totalAmount!: number;
+
+    constructor(value?: any) {
+        if (value) {
+            this.first = value.first;
+            this.second = value.second;
+            this.totalAmount = value.totalAmount;
+        }
+    }
+}
+
+/**
  * Sushi.Tests.Models.GenericStandalone`1
  * @typedef {Object} GenericStandalone
  */
-export class GenericStandalone<T1> {
-    values: Array<any> = [];
+export class GenericStandalone<TEntry> {
+    values: Array<TEntry> = [];
     totalAmount!: number;
 
     constructor(value?: any) {
@@ -45,7 +63,7 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "dd899f03-3a9c-4d63-abbc-28aa31eb0c69";
+    identifier: string = "da0f46b4-5209-4e11-a135-5445aaae4a0a";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */

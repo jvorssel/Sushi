@@ -30,7 +30,7 @@ namespace Sushi.Converters
 	public sealed class TypeScriptConverter : ModelConverter
 	{
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options){}
+		public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options) { }
 
 		/// <inheritdoc />
 		protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
@@ -63,7 +63,7 @@ namespace Sushi.Converters
 				yield return builder.ToString();
 			}
 		}
-		
+
 		public string ConvertProperty(IPropertyDescriptor property)
 		{
 			var scriptType = ResolveScriptType(property.Type);
@@ -78,10 +78,10 @@ namespace Sushi.Converters
 
 			return $"{Indent}{ApplyCasingStyle(property.Name)}{nameSuffix}: {scriptType}{suffix};";
 		}
-		
+
 		public string ResolveScriptType(Type type)
 		{
-			var genericTypeArgs = type.IsGenericType ? this.GetGenericTypeArguments(type) : string.Empty;
+			var genericTypeArgs = type.IsGenericType ? GetGenericTypeArguments(type) : string.Empty;
 
 			// Array
 			if (type.IsArray())
@@ -121,7 +121,7 @@ namespace Sushi.Converters
 			var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType);
 			if (descriptor != null && descriptor.HasParameterlessCtor)
 				return $"new {descriptor.Name}()";
-			
+
 			if (defaultValueType.IsClass && defaultValueType != typeof(string))
 				return string.Empty;
 
@@ -176,7 +176,7 @@ namespace Sushi.Converters
 			if (!type.IsGenericType)
 				throw new ArgumentException("Expected given type to be generic.");
 
-			var genericTypeArgs = type.GenericTypeArguments.Select(ResolveScriptType).Glue(", ");
+			var genericTypeArgs = type.GenericTypeArguments.Select(x => x.IsGenericTypeParameter ? x.Name : ResolveScriptType(x)).Glue(", ");
 			return genericTypeArgs;
 		}
 
@@ -191,7 +191,7 @@ namespace Sushi.Converters
 					if (!summary.IsEmpty())
 						builder.AppendLine(Indent + summary);
 				}
-				
+
 				var property = ConvertProperty(prop);
 				builder.AppendLine(property);
 			}

@@ -1,4 +1,19 @@
 /**
+ * Sushi.Tests.Models.GenericComplexStandalone`2
+ * @typedef {Object} GenericComplexStandalone
+ */
+function GenericComplexStandalone(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.first = value.first;
+    this.second = value.second;
+    this.totalAmount = value.totalAmount;
+
+}
+
+/**
  * Sushi.Tests.Models.GenericStandalone`1
  * @typedef {Object} GenericStandalone
  */

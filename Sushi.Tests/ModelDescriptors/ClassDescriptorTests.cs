@@ -59,25 +59,33 @@ namespace Sushi.Tests.ModelDescriptors
 			}
 			
 			[TestMethod]
-			public void Initialize_WithGenericClass_ShouldMapCorrectly()
+			public void Initialize_GenericClassWithoutType_ShouldMapCorrectly()
 			{
 				// Arrange
-				var withGenericType = typeof(GenericStandalone<string>);
 				var withoutGenericType = typeof(GenericStandalone<>);
 
 				// Act
-				var with = new ClassDescriptor(withGenericType);
-				var without = new ClassDescriptor(withoutGenericType);
+				var result = new ClassDescriptor(withoutGenericType);
 
 				// Assert
-				Assert.AreEqual(2, with.Properties.Count);
-				Assert.AreEqual(2, without.Properties.Count);
-				
-				Assert.AreEqual("T1", with.GenericParameterNames.Single());
-				Assert.AreEqual("T1", without.GenericParameterNames.Single());
-				
-				Assert.IsTrue(with.HasParameterlessCtor);
-				Assert.IsTrue(without.HasParameterlessCtor);
+				Assert.AreEqual(2, result.Properties.Count);
+				Assert.AreEqual("TEntry", result.GenericParameterNames.Single());
+				Assert.IsTrue(result.HasParameterlessCtor);
+			}
+			
+			[TestMethod]
+			public void Initialize_GenericClassWithType_ShouldMapCorrectly()
+			{
+				// Arrange
+				var withGenericType = typeof(GenericStandalone<string>);
+
+				// Act
+				var result = new ClassDescriptor(withGenericType);
+
+				// Assert
+				Assert.AreEqual(2, result.Properties.Count);
+				Assert.IsFalse(result.GenericParameterNames.Any());
+				Assert.IsTrue(result.HasParameterlessCtor);
 			}
 		}
 

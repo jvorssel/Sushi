@@ -12,7 +12,6 @@
 #region
 
 using System.Diagnostics;
-using System.Reflection;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
@@ -31,7 +30,7 @@ namespace Sushi.Descriptors
 		/// <summary>
 		///     The actual <see cref="Name" /> of the model that the given <see cref="System.Type" /> refers to.
 		/// </summary>
-		public string Name {get;}
+		public string Name { get; }
 
 		/// <summary>
 		///     The <see cref="FullName" /> of the model that the given <see cref="System.Type" /> refers to.
@@ -39,11 +38,10 @@ namespace Sushi.Descriptors
 		public string? FullName => Type.FullName;
 
 		public bool HasParameterlessCtor => Type.GetConstructor(Type.EmptyTypes) != null;
-		
+
 		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
 
-		public IReadOnlyList<Type> GenericParameters { get; }
-		public IReadOnlyList<string> GenericParameterNames { get; }
+		public IReadOnlyList<string> GenericParameterNames { get; } = new List<string>();
 
 		public ClassDescriptor? Parent { get; set; }
 
@@ -57,13 +55,16 @@ namespace Sushi.Descriptors
 			var properties = Type.GetPropertyDescriptors();
 			var fields = Type.GetFieldDescriptors();
 			Properties = properties.Cast<IPropertyDescriptor>().Concat(fields).ToList();
-			
+
 			Name = Type.Name.Split('`')[0];
-			GenericParameters = Type.GetGenericArguments();
-			GenericParameterNames =
-				Enumerable.Range(0, GenericParameters.Count)
-					.Select(x => $"T{x+1}")
-					.ToArray();
+			if (!Type.IsGenericTypeDefinition)
+				return;
+
+			GenericParameterNames = Properties
+				.SelectMany(x => x.Type.GenericTypeArguments)
+				.Select(x => x.Name)
+				.Distinct()
+				.ToList();
 		}
 
 		/// <summary>
