@@ -1,13 +1,15 @@
 # Sushi
-Library for converting .NET classes to script language classes.<br><br>
+Library for converting .NET classes to script language classes.
+
 **Currently supports**
+
 - **[TypeScript](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.latest.ts)**
 - **[ECMAScript 5](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es5.js)** 
 - **[ECMAScript 6](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es6.js)**
 
 
 **Author**
-<br>
+
 Jeroen Vorsselman @ 2023
 
 **[GitHub](https://github.com/jvorssel)**
