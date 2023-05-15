@@ -116,11 +116,11 @@ namespace Sushi.Tests
 			// Arrange
 			// 1) Get the assembly with the exported types.
 			var assembly = typeof(PersonViewModel).Assembly;
-			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
+			var converter = new SushiConverter(assembly);
 
 			// Act
 			// 2) Specify conversion options.
-			var options = new ConverterOptions(excludeComments: true);
+			var options = new ConverterOptions();
 			
 			// 3) Specify the target language and invoke ToString().
 			var script = converter.TypeScript(options).ToString();

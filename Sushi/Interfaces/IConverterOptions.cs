@@ -21,5 +21,4 @@ public interface IConverterOptions
 {
 	string Indent { get; set; }
 	PropertyNameCasing CasingStyle { get; set; }
-	bool ExcludeComments { get; set; }
 }

@@ -185,7 +185,7 @@ namespace Sushi.Converters
 			var builder = new StringBuilder();
 			foreach (var prop in properties)
 			{
-				if (!ExcludeComments && XmlDocument != null)
+				if (XmlDocument != null)
 				{
 					var summary = XmlDocument.JsDocPropertySummary(prop);
 					if (!summary.IsEmpty())
@@ -236,7 +236,7 @@ namespace Sushi.Converters
 			var className = FormatClassName(model);
 			var properties = model.GetProperties(true).ToList();
 
-			var summary = ExcludeComments || XmlDocument == null
+			var summary = XmlDocument == null
 				? string.Empty
 				: XmlDocument.JsDocClassSummary(model) + "\n";
 			var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";

@@ -27,11 +27,9 @@ namespace Sushi.Converters
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
-		protected readonly XmlDocumentationReader? XmlDocument;
+		protected readonly XmlDocumentationReader? XmlDocument = null;
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
-
-		protected bool ExcludeComments { get; set; }
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
@@ -43,7 +41,6 @@ namespace Sushi.Converters
 			XmlDocument = converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;
-			ExcludeComments = options.ExcludeComments;
 		}
 
 		/// <summary>

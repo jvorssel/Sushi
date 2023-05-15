@@ -47,7 +47,7 @@ namespace Sushi.Converters
 
 		private string Compile(ClassDescriptor model)
 		{
-			var summary = ExcludeComments || XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
+			var summary = XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
 			var properties = new StringBuilder();
 			foreach (var prop in model.Properties)
 				properties.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");

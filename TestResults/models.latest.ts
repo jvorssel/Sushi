@@ -45,7 +45,7 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "d679780f-8846-41c2-8702-d78a78e76f7a";
+    identifier: string = "dd899f03-3a9c-4d63-abbc-28aa31eb0c69";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */

@@ -22,15 +22,10 @@ public sealed class ConverterOptions : IConverterOptions
 	/// <inheritdoc />
 	public PropertyNameCasing CasingStyle { get; set; }
 
-	/// <inheritdoc />
-	public bool ExcludeComments { get; set; }
-
 	public ConverterOptions(string indent = "    ",
-		PropertyNameCasing casing = PropertyNameCasing.CamelCase,
-		bool excludeComments = false)
+		PropertyNameCasing casing = PropertyNameCasing.CamelCase)
 	{
 		Indent = indent;
 		CasingStyle = casing;
-		ExcludeComments = excludeComments;
 	}
 }
