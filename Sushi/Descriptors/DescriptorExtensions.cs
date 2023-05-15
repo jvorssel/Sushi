@@ -34,7 +34,7 @@ public static class DescriptorExtensions
 	/// <summary>
 	///		Flatten the <see cref="ClassDescriptor"/> tree to a flat list.
 	/// </summary>
-	public static IEnumerable<ClassDescriptor> Flatten(this ICollection<ClassDescriptor> tree)
+	public static IEnumerable<ClassDescriptor> Flatten(this IEnumerable<ClassDescriptor> tree)
 	{
 		foreach (var cd in tree)
 		{

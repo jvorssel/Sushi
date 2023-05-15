@@ -11,11 +11,13 @@
 
 #region
 
+using System.Globalization;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
 using Sushi.Extensions;
+using Sushi.Helpers;
 using Sushi.Interfaces;
 
 #endregion
@@ -31,11 +33,11 @@ namespace Sushi.Converters
 		public EcmaScript6Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
 		{
 		}
-
+		
 		/// / <inheritdoc />
-		public override IEnumerable<string> ConvertToScript()
+		protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
 		{
-			foreach (var model in Models.Flatten())
+			foreach (var model in descriptors)
 				yield return Compile(model);
 		}
 

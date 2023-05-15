@@ -31,8 +31,6 @@ namespace Sushi.Converters
 		protected readonly HashSet<ClassDescriptor> Models;
 		protected readonly HashSet<EnumDescriptor> EnumModels;
 
-		protected IScriptTypeConverter ScriptTypeConverter;
-
 		protected bool ExcludeComments { get; set; }
 
 		/// <summary>
@@ -54,7 +52,12 @@ namespace Sushi.Converters
 		public override string ToString()
 		{
 			var builder = new StringBuilder();
-			foreach (var script in ConvertToScript())
+			var descriptors = new DescriptorTreeBuilder(Models)
+				.BuildTree()
+				.Flatten()
+				.ToList();
+			
+			foreach (var script in ConvertToScript(descriptors))
 				builder.AppendLine(script);
 
 			var result = builder.ToString();
@@ -64,7 +67,7 @@ namespace Sushi.Converters
 		/// <summary>
 		///     Compile the models in the converter.
 		/// </summary>
-		public abstract IEnumerable<string> ConvertToScript();
+		protected abstract IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors);
 
 		/// <summary>
 		///     Apply the chosen <see cref="CasingStyle" /> to the given <paramref name="value" />.

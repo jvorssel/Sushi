@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeConverterTests.cs
 // Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 03-01-2023
+// Author:                   Jeroen Vorsselman 15-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -15,22 +15,22 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Converters;
 using Sushi.Descriptors;
-using Sushi.Extensions;
 using Sushi.Tests.Models;
 
 #endregion
 
 namespace Sushi.Tests.ModelDescriptors
 {
-	public abstract class TypeScriptTypeConverterTests
+	public abstract class TypeScriptConverterTests
 	{
+		protected Type[] TestTypes => new []{ typeof(TypeModel), typeof(StudentViewModel), typeof(PersonViewModel), typeof(ViewModel)};
+		
 		[TestClass]
-		public class ResolveScriptTypeTests : TypeScriptTypeConverterTests
+		public class ResolveScriptTypeTests : TypeScriptConverterTests
 		{
 			[TestMethod]
 			public void ComplexType_ClassProperty_ShouldFormatCorrectly()
@@ -38,8 +38,8 @@ namespace Sushi.Tests.ModelDescriptors
 				// Arrange
 				var descriptor = new ClassDescriptor(typeof(TypeModel));
 				var propertyDescriptor = descriptor.Properties.Single(x => x.Name == nameof(TypeModel.Student));
-				var converter = new TypeScriptTypeConverter();
-				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+				var converter = new SushiConverter(TestTypes)
+					.TypeScript();
 
 				// Act
 				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
@@ -54,7 +54,8 @@ namespace Sushi.Tests.ModelDescriptors
 				// Arrange
 				var descriptor = new ClassDescriptor(typeof(TypeModel));
 				var propertyDescriptor = descriptor.Properties.Single(x => x.Name == nameof(TypeModel.Student));
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter(typeof(TypeModel), typeof(ViewModel))
+					.TypeScript();
 
 				// Act
 				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
@@ -69,7 +70,8 @@ namespace Sushi.Tests.ModelDescriptors
 				// Arrange
 				var descriptor = new ClassDescriptor(typeof(StudentViewModel));
 				var propertyDescriptor = descriptor.Properties.Single(x => x.Name == nameof(StudentViewModel.Gender));
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter(TestTypes)
+					.TypeScript();
 
 				// Act
 				var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
@@ -82,8 +84,7 @@ namespace Sushi.Tests.ModelDescriptors
 			public void ComplexType_GenericArrayType_ShouldFormatCorrectly()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
-				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+				var converter = new SushiConverter(TestTypes).TypeScript();
 
 				// Act
 				var results = new[]
@@ -107,35 +108,33 @@ namespace Sushi.Tests.ModelDescriptors
 			public void ComplexType_DeepGenerics_ShouldFormatCorrectly()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
-				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+				var converter = new SushiConverter(TestTypes).TypeScript();
 
 				// Act
-				var result= converter.ResolveScriptType(typeof(List<List<List<List<List<bool?>>>>>));
+				var result = converter.ResolveScriptType(typeof(List<List<List<List<List<bool?>>>>>));
 
 				// Assert
 				Assert.AreEqual("Array<Array<Array<Array<Array<boolean | null>>>>>", result);
 			}
-			
+
 			[TestMethod]
 			public void ComplexType_DeepComplexGenerics_ShouldFormatCorrectly()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
-				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+				var converter = new SushiConverter(TestTypes).TypeScript();
 
 				// Act
-				var result= converter.ResolveScriptType(typeof(Dictionary<string, List<StudentViewModel>>));
+				var result = converter.ResolveScriptType(typeof(Dictionary<string, List<StudentViewModel>>));
 
 				// Assert
 				Assert.AreEqual("Array<string, Array<StudentViewModel>>", result);
 			}
-			
+
 			[TestMethod]
 			public void ComplexType_NullableProperty_ShouldFormatCorrectly()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 
 				// Act
 				var result = converter.ResolveScriptType(typeof(bool?));
@@ -146,204 +145,204 @@ namespace Sushi.Tests.ModelDescriptors
 		}
 
 		[TestClass]
-		public class ResolveDefaultValueTests : TypeScriptTypeConverterTests
+		public class ResolveDefaultValueTests : TypeScriptConverterTests
 		{
 			[TestMethod]
 			public void ResolveDefaultValue_NullableProperty_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(bool?));
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("", value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_ArrayProperty_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(List<int>));
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("[]", value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_NullValue_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(int));
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual(string.Empty, value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_BooleanValue_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(bool), true);
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("true", value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_BooleanValueFalse_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(bool), false);
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("false", value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_EnumValue_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(Gender), Gender.Male);
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("1", value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_DecimalValue_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(decimal), 2.666666666666666666666666666666666m);
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("2.6666666666666666666666666667".Substring(0, 15), value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_StringValue_ReturnsCorrectValueTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(string), "Hi!");
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
 				Assert.AreEqual("\"Hi!\"", value);
 			}
-			
+
 			[TestMethod]
-			public void ResolveDefaultValue_ClassValue_ReturnsEmptyStringTest()
+			public void ResolveDefaultValue_ClassValue_ReturnsNewClassTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
-				converter.Classes.Add(new ClassDescriptor(typeof(StudentViewModel)));
+				var converter = new SushiConverter(typeof(ViewModel), typeof(PersonViewModel), typeof(StudentViewModel))
+					.TypeScript();
 				var prop = new PropertyDescriptor(typeof(StudentViewModel), new StudentViewModel());
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
-				Assert.AreEqual($"{{}} as {nameof(StudentViewModel)}", value, "No support for deep initialization."); 
+				Assert.AreEqual("new StudentViewModel()", value);
 			}
-			
+
 			[TestMethod]
 			public void ResolveDefaultValue_NoScriptTypeClassValue_ReturnsEmptyStringTest()
 			{
 				// Arrange
-				var converter = new TypeScriptTypeConverter();
+				var converter = new SushiConverter().TypeScript();
 				var prop = new PropertyDescriptor(typeof(StudentViewModel), new StudentViewModel());
-				
+
 				// Act
 				var value = converter.ResolveDefaultValue(prop);
-				
+
 				// Assert
-				Assert.AreEqual("", value, "No support for deep initialization."); 
+				Assert.AreEqual("", value, "Class constructor not found.");
 			}
 		}
 
 		[TestClass]
-		public class GetGenericTypeArgumentMethod : TypeScriptTypeConverterTests
+		public class GetGenericTypeArgumentMethod : TypeScriptConverterTests
 		{
 			[TestMethod]
 			public void GetGenericTypeArgument_SimpleType_ShouldReturnGivenTypeTest()
 			{
 				// Arrange
 				var type = typeof(ViewModel);
-				
+
 				// Act
-				var result = TypeScriptTypeConverter.GetGenericType(type);
-				
+				var result = TypeScriptConverter.GetGenericType(type);
+
 				// Assert
 				Assert.AreEqual(type, result);
 			}
-			
+
 			[TestMethod]
 			public void GetGenericTypeArgument_GenericType_ShouldGetGenericTypeTest()
 			{
 				// Arrange
 				var type = typeof(List<ViewModel>);
-				
+
 				// Act
-				var result = TypeScriptTypeConverter.GetGenericType(type);
-				
+				var result = TypeScriptConverter.GetGenericType(type);
+
 				// Assert
 				Assert.AreEqual(typeof(ViewModel), result);
-			}	
-			
+			}
+
 			[TestMethod]
 			public void GetGenericTypeArgument_NestedGenericType_ShouldGetGenericTypeTest()
 			{
 				// Arrange
 				var type = typeof(List<List<ViewModel>>);
-				
+
 				// Act
-				var result = TypeScriptTypeConverter.GetGenericType(type);
-				
+				var result = TypeScriptConverter.GetGenericType(type);
+
 				// Assert
 				Assert.AreEqual(typeof(ViewModel), result);
-			}	
-			
+			}
+
 			[TestMethod]
 			public void GetGenericTypeArgument_NullableType_ShouldGetGenericTypeTest()
 			{
 				// Arrange
 				var type = typeof(bool?);
-				
+
 				// Act
-				var result = TypeScriptTypeConverter.GetGenericType(type);
-				
+				var result = TypeScriptConverter.GetGenericType(type);
+
 				// Assert
 				Assert.AreEqual(typeof(bool), result);
-			}	
+			}
 		}
 	}
 }

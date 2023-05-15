@@ -1,8 +1,8 @@
 ﻿// /***************************************************************************\
 // Module Name:       DescriptorTreeBuilderTests.cs
 // Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 04-11-2022
-// Copyright:              Royaldesk @ 2022
+// Author:                   Jeroen Vorsselman 15-05-2023
+// Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
 // EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
@@ -24,7 +24,7 @@ namespace Sushi.Tests.ModelDescriptors
 {
 	public abstract class DescriptorTreeBuilderTests
 	{
-		private readonly List<Type> _types = new List<Type>
+		private readonly List<Type> Types = new List<Type>
 		{
 			typeof(PersonViewModel),
 			typeof(SchoolViewModel),
@@ -32,42 +32,9 @@ namespace Sushi.Tests.ModelDescriptors
 			typeof(ViewModel)
 		};
 
-		private List<ClassDescriptor> Descriptors => _types.Select(x => new ClassDescriptor(x)).ToList();
+		private List<ClassDescriptor> AsDescriptors(params Type[] types)
+			=> types.Select(x => new ClassDescriptor(x)).ToList();
 
-		[TestClass]
-		public class FilterTypesTest : DescriptorTreeBuilderTests
-		{
-			[TestMethod]
-			public void FilterTypes_WithoutAttribute_ShouldFilterTest()
-			{
-				// Arrange
-				var types = new [] { typeof(ViewModel), typeof(String)};
-				var treeBuilder = new DescriptorTreeBuilder(types);
-				
-				// Act
-				var result = treeBuilder.FilterTypes().ToList();
-				
-				// Assert
-				Assert.AreEqual(1, result.Count);
-				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
-			}
-			
-			[TestMethod]
-			public void FilterTypes_WithNonClassTypes_ShouldFilterTest()
-			{
-				// Arrange
-				var types = new [] { typeof(ViewModel), typeof(bool), typeof(Gender)};
-				var treeBuilder = new DescriptorTreeBuilder(types);
-				
-				// Act
-				var result = treeBuilder.FilterTypes().ToList();
-				
-				// Assert
-				Assert.AreEqual(1, result.Count);
-				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
-			}
-		}
-		
 		[TestClass]
 		public class FindDescriptorTest : DescriptorTreeBuilderTests
 		{
@@ -78,7 +45,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var type = typeof(ViewModel);
 
 				// Act
-				var descriptor = Descriptors.FindDescriptor(type);
+				var descriptor = AsDescriptors(type).FindDescriptor(type);
 
 				// Assert
 				Assert.IsNotNull(descriptor);
@@ -99,7 +66,7 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.IsNotNull(descriptor);
 				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
 			}
-			
+
 			[TestMethod]
 			public void EqualTypeInChildren_ShouldFindDeep()
 			{
@@ -124,18 +91,19 @@ namespace Sushi.Tests.ModelDescriptors
 			public void BuildTree_MissingBaseType_ShouldThrow()
 			{
 				// Arrange
-				var builder = new DescriptorTreeBuilder(new [] { typeof(TypeModel)});
+				var descriptors = new ClassDescriptor(typeof(TypeModel));
+				var builder = new DescriptorTreeBuilder(new[] { descriptors });
 				var message = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
-				
+
 				// Act & Assert
 				Assert.ThrowsException<InvalidOperationException>(() => builder.BuildTree(), message);
 			}
-			
+
 			[TestMethod]
 			public void BuildTree_ShouldNestCorrectlyTest()
 			{
 				// Arrange
-				var builder = new DescriptorTreeBuilder(_types);
+				var builder = new DescriptorTreeBuilder(AsDescriptors(Types.ToArray()));
 
 				// Act
 				var result = builder.BuildTree().ToList();
@@ -157,7 +125,8 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(1, personDescriptor.Children.Count);
 
 				// The student class inherits the person class
-				var studentDescriptor = personDescriptor.Children.SingleOrDefault(x => x.Name == nameof(StudentViewModel));
+				var studentDescriptor =
+					personDescriptor.Children.SingleOrDefault(x => x.Name == nameof(StudentViewModel));
 				Assert.IsNotNull(studentDescriptor);
 				Assert.AreEqual(nameof(PersonViewModel), studentDescriptor.Parent.Name);
 

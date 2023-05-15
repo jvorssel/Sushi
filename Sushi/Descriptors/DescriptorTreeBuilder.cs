@@ -22,29 +22,14 @@ namespace Sushi.Descriptors
 {
 	public class DescriptorTreeBuilder
 	{
-		private readonly IEnumerable<Type> _types;
+		private readonly IEnumerable<ClassDescriptor> _types;
 
-		public DescriptorTreeBuilder(IEnumerable<Type> types)
+		public DescriptorTreeBuilder(IEnumerable<ClassDescriptor> types)
 			=> _types = types;
-
-		public IEnumerable<ClassDescriptor> FilterTypes()
-		{
-			foreach (var type in _types)
-			{
-				var hasScriptAttr = type.GetCustomAttributes(typeof(ConvertToScriptAttribute)).Any();
-				var isScriptModel = type.InheritsInterface<IScriptModel>();
-				var attrs = type.GetCustomAttributes(typeof(IgnoreForScriptAttribute), true);
-				if (attrs.Any() ||!type.IsClass)
-					continue;
-
-				if (isScriptModel || hasScriptAttr)
-					yield return new ClassDescriptor(type);
-			}
-		}
 
 		public IEnumerable<ClassDescriptor> BuildTree()
 		{
-			var flat = FilterTypes().ToList();
+			var flat = _types.ToList();
 
 			var tree = new HashSet<ClassDescriptor>();
 			foreach (var cd in flat)

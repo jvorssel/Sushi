@@ -38,6 +38,8 @@ namespace Sushi.Descriptors
 		/// </summary>
 		public string? FullName => Type.FullName;
 
+		public bool HasParameterlessCtor => Type.GetConstructor(Type.EmptyTypes) != null;
+		
 		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
 
 		public IReadOnlyList<Type> GenericParameters { get; }

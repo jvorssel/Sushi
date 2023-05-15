@@ -33,9 +33,9 @@ namespace Sushi.Converters
 		{}
 
 		/// / <inheritdoc />
-		public override IEnumerable<string> ConvertToScript()
+		protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
 		{
-			foreach (var model in Models.Flatten())
+			foreach (var model in descriptors)
 				yield return Compile(model);
 		}
 

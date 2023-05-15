@@ -12,6 +12,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -35,13 +36,20 @@ namespace Sushi.Tests
 		private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
 
 		[TestMethod]
+		public void NoTypes_ShouldThrowTest()
+		{
+			// Act & Assert
+			Assert.ThrowsException<ArgumentNullException>(() => new SushiConverter((ICollection<Type>)null));
+		}
+		
+		[TestMethod]
 		public void LoadCorrectlyTest()
 		{
 			// Arrange
-			var assembly = typeof(SushiConverter).Assembly;
+			var assembly = typeof(PersonViewModel).Assembly;
 
 			// Act
-			var converter = new SushiConverter(assembly, XmlDocPath);
+			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Assert
 			Assert.IsNotNull(converter.Documentation);
@@ -53,7 +61,7 @@ namespace Sushi.Tests
 		{
 			// Arrange
 			var assembly = typeof(PersonViewModel).Assembly;
-			var converter = new SushiConverter(assembly, XmlDocPath);
+			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Act
 			var script = converter.ECMAScript5().ToString();
@@ -66,7 +74,7 @@ namespace Sushi.Tests
 		{
 			// Arrange
 			var assembly = typeof(PersonViewModel).Assembly;
-			var converter = new SushiConverter(assembly, XmlDocPath);
+			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Act
 			var script = converter.ECMAScript5()
@@ -81,7 +89,7 @@ namespace Sushi.Tests
 		{
 			// Arrange
 			var assembly = typeof(PersonViewModel).Assembly;
-			var converter = new SushiConverter(assembly, XmlDocPath);
+			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Act
 			var script = converter.ECMAScript6().ToString();
@@ -93,7 +101,7 @@ namespace Sushi.Tests
 		{
 			// Arrange
 			var assembly = typeof(PersonViewModel).Assembly;
-			var converter = new SushiConverter(assembly, XmlDocPath);
+			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Act
 			var script = converter.TypeScript(new ConverterOptions())
@@ -106,15 +114,18 @@ namespace Sushi.Tests
 		public void Typescript_WithoutComments_CompileTest()
 		{
 			// Arrange
-			var huh = AppDomain.CurrentDomain.BaseDirectory;
+			// 1) Get the assembly with the exported types.
 			var assembly = typeof(PersonViewModel).Assembly;
-			var converter = new SushiConverter(assembly, XmlDocPath);
+			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Act
-			// Convert the available models and look if the result is as expected.
+			// 2) Specify conversion options.
 			var options = new ConverterOptions(excludeComments: true);
+			
+			// 3) Specify the target language and invoke ToString().
 			var script = converter.TypeScript(options).ToString();
 
+			// 4) The resulting script can be written to a file(stream).
 			WriteToFile(script, GetFilePath("models.no-comments.ts"));
 		}
 	}

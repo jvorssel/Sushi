@@ -14,6 +14,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
+using Sushi.Helpers;
 using Sushi.Tests.Models;
 
 #endregion
@@ -39,6 +40,7 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(type.FullName, descriptor.FullName);
 
 				Assert.AreEqual(2, descriptor.Properties.Count);
+				Assert.IsFalse(descriptor.HasParameterlessCtor);
 			}
 
 			[TestMethod]
@@ -53,6 +55,7 @@ namespace Sushi.Tests.ModelDescriptors
 				// Assert
 				Assert.AreEqual(6, descriptor.Properties.Count);
 				Assert.AreEqual(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
+				Assert.IsFalse(descriptor.HasParameterlessCtor);
 			}
 			
 			[TestMethod]
@@ -72,6 +75,9 @@ namespace Sushi.Tests.ModelDescriptors
 				
 				Assert.AreEqual("T1", with.GenericParameterNames.Single());
 				Assert.AreEqual("T1", without.GenericParameterNames.Single());
+				
+				Assert.IsTrue(with.HasParameterlessCtor);
+				Assert.IsTrue(without.HasParameterlessCtor);
 			}
 		}
 
@@ -181,6 +187,38 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.IsTrue(properties.Any(x => x.Name  == "Addition"));
 				Assert.IsFalse(properties.Any(x => x.Name == "Value"));
 				Assert.IsFalse(properties.Any(x => x.Name == "Base"));
+			}
+		}
+		
+		[TestClass]
+		public class FilterTypesTest : ClassDescriptorTests
+		{
+			[TestMethod]
+			public void FilterTypes_WithoutAttribute_ShouldFilterTest()
+			{
+				// Arrange
+				var descriptors = new[] { typeof(ViewModel), typeof(string) }.Select(x=> new ClassDescriptor(x));
+
+				// Act
+				var result = descriptors.FilterClassDescriptors().ToList();
+
+				// Assert
+				Assert.AreEqual(1, result.Count);
+				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
+			}
+
+			[TestMethod]
+			public void FilterTypes_WithNonClassTypes_ShouldFilterTest()
+			{
+				// Arrange
+				var descriptors = new[] { typeof(ViewModel), typeof(bool), typeof(Gender) }.Select(x=> new ClassDescriptor(x));
+
+				// Act
+				var result = descriptors.FilterClassDescriptors().ToList();
+
+				// Assert
+				Assert.AreEqual(1, result.Count);
+				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
 			}
 		}
 	}

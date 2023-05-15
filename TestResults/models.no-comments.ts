@@ -29,7 +29,7 @@ export class ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "a60fa566-cd87-4a97-9fb0-d4e8e23642b1";
+    identifier: string = "5d976d98-9728-4087-8dfe-1643f1dc55e2";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -78,7 +78,7 @@ export class SchoolViewModel extends ViewModel {
     houseNumberAddition!: string;
     averageGrade: number = 2.6666666666666;
     students: Array<StudentViewModel> = [];
-    timmy: StudentViewModel = {} as StudentViewModel;
+    timmy: StudentViewModel = new StudentViewModel();
 
     constructor(value?: any) {
         super(value);
@@ -104,7 +104,7 @@ export class TypeModel extends ViewModel {
     nullableBool!: boolean | null;
     nullableString!: string;
     date: Date | string | null = null;
-    student: StudentViewModel = {} as StudentViewModel;
+    student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: Array<Array<StudentViewModel>> = [];
     readonlyString!: string;

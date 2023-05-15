@@ -11,9 +11,11 @@
 
 #region
 
+using System.Globalization;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
+using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
@@ -28,16 +30,15 @@ namespace Sushi.Converters
 	public sealed class TypeScriptConverter : ModelConverter
 	{
 		/// <inheritdoc />
-		public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options)
-			=> ScriptTypeConverter = new TypeScriptTypeConverter(converter);
+		public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options){}
 
 		/// <inheritdoc />
-		public override IEnumerable<string> ConvertToScript()
+		protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
 		{
 			foreach (var enumScript in ConvertEnums())
 				yield return enumScript;
-			
-			foreach (var model in Models.Flatten())
+
+			foreach (var model in descriptors)
 				yield return ToTypeScriptClass(model);
 		}
 
@@ -62,6 +63,122 @@ namespace Sushi.Converters
 				yield return builder.ToString();
 			}
 		}
+		
+		public string ConvertProperty(IPropertyDescriptor property)
+		{
+			var scriptType = ResolveScriptType(property.Type);
+			var defaultValue = ResolveDefaultValue(property);
+
+			var suffix = string.Empty;
+			var nameSuffix = string.Empty;
+			if (!defaultValue.IsEmpty())
+				suffix = " = " + defaultValue;
+			else
+				nameSuffix = "!";
+
+			return $"{Indent}{ApplyCasingStyle(property.Name)}{nameSuffix}: {scriptType}{suffix};";
+		}
+		
+		public string ResolveScriptType(Type type)
+		{
+			var genericTypeArgs = type.IsGenericType ? this.GetGenericTypeArguments(type) : string.Empty;
+
+			// Array
+			if (type.IsArray())
+				return $"Array<{genericTypeArgs}>";
+
+			var actualType = GetGenericType(type);
+
+			// Check if any of the available models have the same name and should be used.
+			var classModel = Models.SingleOrDefault(x => x.Name == actualType.Name);
+			if (classModel != null)
+				return type.IsGenericType ? $"{classModel.Name}<{genericTypeArgs}>" : classModel.Name;
+
+			var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
+			if (type.IsEnum && enumModel != null)
+				return $"{enumModel.Name} | number";
+
+			// Date
+			if (actualType == typeof(DateTime))
+				return @"Date | string | null";
+
+			var scriptType = actualType.ToNativeScriptType().ToScriptType();
+			return type.IsNullable() ? $"{scriptType} | null" : scriptType;
+		}
+
+		public string ResolveDefaultValue(IPropertyDescriptor prop)
+		{
+			if (prop.Type.IsArray())
+				return "[]";
+
+			if (prop.DefaultValue == null)
+				return string.Empty;
+
+			if (prop.Type.IsNullable())
+				return "null";
+
+			var defaultValueType = prop.DefaultValue.GetType();
+			var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType);
+			if (descriptor != null && descriptor.HasParameterlessCtor)
+				return $"new {descriptor.Name}()";
+			
+			if (defaultValueType.IsClass && defaultValueType != typeof(string))
+				return string.Empty;
+
+			var nativeType = prop.Type.ToNativeScriptType();
+			switch (nativeType)
+			{
+				case NativeType.Bool:
+					return (bool)(prop.DefaultValue ?? false) ? "true" : "false";
+				case NativeType.Enum:
+				case NativeType.Byte:
+				case NativeType.Short:
+				case NativeType.Long:
+				case NativeType.Int:
+				case NativeType.Double:
+				case NativeType.Float:
+				case NativeType.Decimal:
+				{
+					var asDecimal = Convert.ToDecimal(prop.DefaultValue).ToString(CultureInfo.InvariantCulture);
+					return asDecimal.Substring(0, Math.Min(asDecimal.Length, 15));
+				}
+				case NativeType.Char:
+				case NativeType.String:
+					return $"\"{prop.DefaultValue}\"";
+				case NativeType.Null:
+				case NativeType.Object:
+					return "null";
+				case NativeType.Undefined:
+				default:
+					throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, null);
+			}
+		}
+
+		public static Type GetGenericType(Type @this)
+		{
+			var type = Nullable.GetUnderlyingType(@this) ?? @this;
+
+			while (type.IsGenericType)
+			{
+				// Move to the single generic argument or its base type.
+				var genericType = type.GenericTypeArguments.SingleOrDefault();
+				if (genericType == null)
+					return type;
+
+				type = genericType;
+			}
+
+			return type;
+		}
+
+		public string GetGenericTypeArguments(Type type)
+		{
+			if (!type.IsGenericType)
+				throw new ArgumentException("Expected given type to be generic.");
+
+			var genericTypeArgs = type.GenericTypeArguments.Select(ResolveScriptType).Glue(", ");
+			return genericTypeArgs;
+		}
 
 		internal string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties)
 		{
@@ -74,18 +191,9 @@ namespace Sushi.Converters
 					if (!summary.IsEmpty())
 						builder.AppendLine(Indent + summary);
 				}
-
-				var scriptType = ScriptTypeConverter.ResolveScriptType(prop.Type);
-				var defaultValue = ScriptTypeConverter.ResolveDefaultValue(prop);
-
-				var suffix = string.Empty;
-				var nameSuffix = string.Empty;
-				if (!defaultValue.IsEmpty())
-					suffix = " = " + defaultValue;
-				else
-					nameSuffix = "!";
-
-				builder.AppendLine($"{Indent}{ApplyCasingStyle(prop.Name)}{nameSuffix}: {scriptType}{suffix};");
+				
+				var property = ConvertProperty(prop);
+				builder.AppendLine(property);
 			}
 
 			return builder.ToString();
