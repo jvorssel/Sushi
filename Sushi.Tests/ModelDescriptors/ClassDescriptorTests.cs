@@ -55,6 +55,25 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(6, descriptor.Properties.Count);
 				Assert.AreEqual(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
 			}
+			
+			[TestMethod]
+			public void Initialize_WithGenericClass_ShouldMapCorrectly()
+			{
+				// Arrange
+				var withGenericType = typeof(GenericStandalone<string>);
+				var withoutGenericType = typeof(GenericStandalone<>);
+
+				// Act
+				var with = new ClassDescriptor(withGenericType);
+				var without = new ClassDescriptor(withoutGenericType);
+
+				// Assert
+				Assert.AreEqual(2, with.Properties.Count);
+				Assert.AreEqual(2, without.Properties.Count);
+				
+				Assert.AreEqual("T1", with.GenericParameterNames.Single());
+				Assert.AreEqual("T1", without.GenericParameterNames.Single());
+			}
 		}
 
 		[TestClass]

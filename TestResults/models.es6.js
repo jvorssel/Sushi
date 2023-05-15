@@ -1,5 +1,26 @@
 
 /**
+ * Sushi.Tests.Models.GenericStandalone`1
+ * @typedef {Object} GenericStandalone
+ */
+export class GenericStandalone {
+    Values;
+    TotalAmount;
+
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
+
+        this.values = value.values;
+        this.totalAmount = value.totalAmount;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new GenericStandalone(), obj);
+    }
+}
+
+/**
  * The view model base class.
  * @typedef {Object} ViewModel
  */

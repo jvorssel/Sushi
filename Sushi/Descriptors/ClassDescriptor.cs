@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       ClassDescriptor.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 03-01-2023
+// Author:                   Jeroen Vorsselman 15-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -12,6 +12,7 @@
 #region
 
 using System.Diagnostics;
+using System.Reflection;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
@@ -23,19 +24,19 @@ namespace Sushi.Descriptors
 	///     Describes a <see cref="System.Type" />.
 	/// </summary>
 	[DebuggerDisplay("Name = {Name}")]
-	public sealed class ClassDescriptor : IEquatable<ClassDescriptor>
+	public sealed class ClassDescriptor
 	{
 		public readonly Type Type;
 
 		/// <summary>
 		///     The actual <see cref="Name" /> of the model that the given <see cref="System.Type" /> refers to.
 		/// </summary>
-		public string Name => Type.Name;
+		public string Name {get;}
 
 		/// <summary>
 		///     The <see cref="FullName" /> of the model that the given <see cref="System.Type" /> refers to.
 		/// </summary>
-		public string FullName => Type.FullName;
+		public string? FullName => Type.FullName;
 
 		/// <summary>
 		///     The generated <see cref="Script" /> for this <see cref="ClassDescriptor" />.
@@ -44,8 +45,11 @@ namespace Sushi.Descriptors
 
 		public IReadOnlyList<IPropertyDescriptor> Properties { get; }
 
+		public IReadOnlyList<Type> GenericParameters { get; }
+		public IReadOnlyList<string> GenericParameterNames { get; }
+
 		public ClassDescriptor? Parent { get; set; }
-		
+
 		public HashSet<ClassDescriptor> Children { get; } = new();
 
 		public ClassDescriptor(Type type)
@@ -56,6 +60,13 @@ namespace Sushi.Descriptors
 			var properties = Type.GetPropertyDescriptors();
 			var fields = Type.GetFieldDescriptors();
 			Properties = properties.Cast<IPropertyDescriptor>().Concat(fields).ToList();
+			
+			Name = Type.Name.Split('`')[0];
+			GenericParameters = Type.GetGenericArguments();
+			GenericParameterNames =
+				Enumerable.Range(0, GenericParameters.Count)
+					.Select(x => $"T{x+1}")
+					.ToArray();
 		}
 
 		/// <summary>
@@ -80,18 +91,6 @@ namespace Sushi.Descriptors
 
 		public static bool operator !=(ClassDescriptor? m1, ClassDescriptor? m2)
 			=> !(m1 == m2);
-
-		/// <inheritdoc />
-		public bool Equals(ClassDescriptor? other)
-		{
-			if (ReferenceEquals(null, other))
-				return false;
-
-			return Type == other.Type;
-		}
-
-		/// <inheritdoc />
-		public override int GetHashCode() => Type.GetHashCode();
 
 		#endregion
 	}

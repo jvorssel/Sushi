@@ -2,6 +2,7 @@
 using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
+using Sushi.Extensions;
 using Sushi.Tests.Models;
 
 namespace Sushi.Tests
@@ -37,6 +38,24 @@ namespace Sushi.Tests
 			// The surname property
 			var surname = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonViewModel.Surname));
 			Assert.IsNotNull(surname);
+		}
+
+		[TestMethod]
+		public void GenericModelTest()
+		{
+			// Arrange
+			var sushi = new SushiConverter(typeof(GenericStandalone<>));
+			
+			// Act
+			var typescript = sushi.TypeScript().Convert();
+			
+			// Assert
+			var descriptor = sushi.Models.Single();
+			Assert.AreEqual("GenericStandalone", descriptor.Name);
+			Assert.AreEqual(1, descriptor.GenericParameterNames.Count);
+			Assert.AreEqual(1, descriptor.GenericParameters.Count);
+			
+			Assert.IsFalse(typescript.ToString().IsEmpty());
 		}
 	}
 }

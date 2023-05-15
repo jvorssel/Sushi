@@ -4,6 +4,18 @@ export enum Gender {
     Female = 2
 }
 
+export class GenericStandalone<T1> {
+    values: Array<any> = [];
+    totalAmount!: number;
+
+    constructor(value?: any) {
+        if (value) {
+            this.values = value.values;
+            this.totalAmount = value.totalAmount;
+        }
+    }
+}
+
 export class ViewModel {
     guid!: string;
     createdOn!: Date | string | null;
@@ -17,10 +29,10 @@ export class ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier!: string;
+    identifier: string = "63dcb18f-e059-4614-8436-8eb41ec0a8e1";
     name!: string;
     surname!: string;
-    gender!: Gender | number;
+    gender: Gender | number = 1;
 
     constructor(value?: any) {
         super(value);

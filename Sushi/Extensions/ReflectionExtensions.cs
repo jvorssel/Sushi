@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       ReflectionExtensions.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 14-05-2023
+// Author:                   Jeroen Vorsselman 15-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -27,6 +27,81 @@ namespace Sushi.Extensions
 		#region Get Property or Field
 
 		/// <summary>
+		///		Attempts to create an instance of the given type.
+		///		Does not support generic type defs, interfaces or abstract classes
+		///		and it uses the default value for constructors with parameters.
+		/// </summary>
+		public static object? CreateInstance(this Type type)
+		{
+			if (type.IsInterface || type.IsAbstract || type.IsGenericTypeDefinition)
+				return null;
+
+			try
+			{
+				var emptyCtor = type.GetConstructor(Type.EmptyTypes);
+				if (emptyCtor != null)
+					return Activator.CreateInstance(type);
+
+				var constructors = type.GetConstructors();
+				foreach (var ctor in constructors)
+				{
+					var parameters = ctor.GetParameters();
+					var arguments = parameters.Select(x => GetDefault(x.ParameterType)).ToArray();
+					return ctor.Invoke(arguments);
+				}
+			}
+			catch (Exception e)
+			{
+#if DEBUG
+				throw e;
+#endif
+				return null;
+			}
+
+			return null;
+		}
+
+		private static object? GetDefault(Type? type)
+		{
+			// Source: https://stackoverflow.com/questions/407337/net-get-default-value-for-a-reflected-propertyinfo
+			// If no Type was supplied, if the Type was a reference type, or if the Type was a System.Void, return null
+			if (type is not { IsValueType: true } || type == typeof(void))
+				return null;
+
+			// If the supplied Type has generic parameters, its default value cannot be determined
+			if (type.ContainsGenericParameters)
+			{
+				throw new ArgumentException(
+					"{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" + type +
+					"> contains generic parameters, so the default value cannot be retrieved");
+			}
+
+			// If the Type is a primitive type, or if it is another publicly-visible value type (i.e. struct), return a 
+			//  default instance of the value type
+			if (type.IsPrimitive || !type.IsNotPublic)
+			{
+				try
+				{
+					return Activator.CreateInstance(type);
+				}
+				catch (Exception e)
+				{
+					throw new ArgumentException(
+						"{"                                                          + MethodBase.GetCurrentMethod() +
+						"} Error:\n\nThe Activator.CreateInstance method could not " +
+						"create a default instance of the supplied value type <"     + type      +
+						"> (Inner Exception message: \""                             + e.Message + "\")",
+						e);
+				}
+			}
+
+			// Fail with exception
+			throw new ArgumentException("{"  + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" +
+			                            type +
+			                            "> is not a publicly-visible type, so the default value cannot be retrieved");
+		}
+
+		/// <summary>
 		///     Get the <see cref="Type" /> and default <see cref="object" /> value
 		///     for the available Properties in the given <typeparamref name="T" /> <paramref name="this" />.
 		/// </summary>
@@ -38,8 +113,7 @@ namespace Sushi.Extensions
 			var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
 			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-			var ctor = type.GetConstructor(Type.EmptyTypes);
-			var instance = !type.IsAbstract && ctor != null ? Activator.CreateInstance(type) : null;
+			var instance = type.CreateInstance();
 			foreach (var prp in properties)
 			{
 				var isReadonly = prp.CanWrite;

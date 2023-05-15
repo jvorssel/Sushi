@@ -294,7 +294,7 @@ namespace Sushi.Tests.ModelDescriptors
 		public class GetGenericTypeArgumentMethod : TypeScriptTypeConverterTests
 		{
 			[TestMethod]
-			public void GGetGenericTypeArgument_SimpleType_ShouldReturnGivenTypeTest()
+			public void GetGenericTypeArgument_SimpleType_ShouldReturnGivenTypeTest()
 			{
 				// Arrange
 				var type = typeof(ViewModel);
@@ -345,6 +345,5 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(typeof(bool), result);
 			}	
 		}
-		
 	}
 }

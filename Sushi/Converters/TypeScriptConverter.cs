@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       TypeScriptConverter.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 11-05-2023
+// Author:                   Jeroen Vorsselman 15-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -16,6 +16,7 @@ using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
 using Sushi.Extensions;
+using Sushi.Helpers;
 using Sushi.Interfaces;
 
 #endregion
@@ -106,15 +107,28 @@ namespace Sushi.Converters
 			builder.AppendLine(Indent + Indent + "if (value) {");
 
 			foreach (var prop in model.Properties)
+			{
 				builder.AppendLine(
 					$"{Indent + Indent + Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+			}
+
 			builder.AppendLine(Indent + Indent + "}");
-			builder.Append(Indent + "}");
+			builder.Append(Indent     + "}");
 			return builder.ToString();
+		}
+
+		private static string FormatClassName(ClassDescriptor descriptor)
+		{
+			if (!descriptor.GenericParameterNames.Any())
+				return descriptor.Name;
+
+			var genericTypeArgs = $"<{descriptor.GenericParameterNames.Glue(", ")}>";
+			return $"{descriptor.Name}{genericTypeArgs}";
 		}
 
 		private string ToTypeScriptClass(ClassDescriptor model)
 		{
+			var className = FormatClassName(model);
 			var properties = model.GetProperties(true).ToList();
 
 			var summary = ExcludeComments || XmlDocument == null
@@ -125,7 +139,7 @@ namespace Sushi.Converters
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
 			var constructorDeclaration = CreateConstructorDeclaration(model);
 			var template =
-				@$"{summary}export class {model.Name}{parentClass} {{
+				@$"{summary}export class {className}{parentClass} {{
 {propertyDeclaration}
 {constructorDeclaration}
 }}

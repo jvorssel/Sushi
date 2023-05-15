@@ -5,6 +5,22 @@ export enum Gender {
 }
 
 /**
+ * Sushi.Tests.Models.GenericStandalone`1
+ * @typedef {Object} GenericStandalone
+ */
+export class GenericStandalone<T1> {
+    values: Array<any> = [];
+    totalAmount!: number;
+
+    constructor(value?: any) {
+        if (value) {
+            this.values = value.values;
+            this.totalAmount = value.totalAmount;
+        }
+    }
+}
+
+/**
  * The view model base class.
  * @typedef {Object} ViewModel
  */
@@ -29,13 +45,13 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier!: string;
+    identifier: string = "086f4141-ff09-4362-9e40-fdfef439c50b";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */
     surname!: string;
     /** The Gender of the person. */
-    gender!: Gender | number;
+    gender: Gender | number = 1;
 
     constructor(value?: any) {
         super(value);
