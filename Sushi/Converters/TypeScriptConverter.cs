@@ -158,7 +158,7 @@ namespace Sushi.Converters
 			if (!type.IsGenericType)
 				throw new ArgumentException("Expected given type to be generic.");
 			
-			var genericTypeArgs = type.GenericTypeArguments.Select(x => x.IsGenericTypeParameter ? x.Name : ResolveScriptType(x)).Glue(", ");
+			var genericTypeArgs = type.GenericTypeArguments.Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x)).Glue(", ");
 			return genericTypeArgs;
 		}
 
@@ -226,7 +226,7 @@ namespace Sushi.Converters
 			var propertyDeclaration = CreatePropertyDeclaration(properties);
 			var constructorDeclaration = CreateConstructorDeclaration(model);
 			var template =
-				@$"{summary}export class {className}{parentClass} {{
+				$@"{summary}export class {className}{parentClass} {{
 {propertyDeclaration}
 {constructorDeclaration}
 }}

@@ -12,20 +12,21 @@
 using Sushi.Enum;
 using Sushi.Interfaces;
 
-namespace Sushi;
-
-public sealed class ConverterOptions : IConverterOptions
+namespace Sushi
 {
-	/// <inheritdoc />
-	public string Indent { get; set; }
-
-	/// <inheritdoc />
-	public PropertyNameCasing CasingStyle { get; set; }
-
-	public ConverterOptions(string indent = "    ",
-		PropertyNameCasing casing = PropertyNameCasing.CamelCase)
+	public sealed class ConverterOptions : IConverterOptions
 	{
-		Indent = indent;
-		CasingStyle = casing;
+		/// <inheritdoc />
+		public string Indent { get; set; }
+
+		/// <inheritdoc />
+		public PropertyNameCasing CasingStyle { get; set; }
+
+		public ConverterOptions(string indent = "    ",
+			PropertyNameCasing casing = PropertyNameCasing.CamelCase)
+		{
+			Indent = indent;
+			CasingStyle = casing;
+		}
 	}
 }

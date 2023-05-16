@@ -35,7 +35,7 @@ namespace Sushi.Descriptors
 		/// <summary>
 		///     The <see cref="FullName" /> of the model that the given <see cref="System.Type" /> refers to.
 		/// </summary>
-		public string? FullName => Type.FullName;
+		public string FullName => Type.FullName;
 
 		public bool HasParameterlessCtor => Type.GetConstructor(Type.EmptyTypes) != null;
 
@@ -43,9 +43,9 @@ namespace Sushi.Descriptors
 
 		public IReadOnlyList<string> GenericParameterNames { get; } = new List<string>();
 
-		public ClassDescriptor? Parent { get; set; }
+		public ClassDescriptor Parent { get; set; }
 
-		public HashSet<ClassDescriptor> Children { get; } = new();
+		public HashSet<ClassDescriptor> Children { get; } = new HashSet<ClassDescriptor>();
 
 		public ClassDescriptor(Type type)
 		{
@@ -84,10 +84,15 @@ namespace Sushi.Descriptors
 
 		#region Equality members
 
-		public static bool operator ==(ClassDescriptor? m1, ClassDescriptor? m2)
-			=> m1 is null ? m2 is null : m2 is not null && m1.Type == m2.Type;
+		public static bool operator ==(ClassDescriptor m1, ClassDescriptor m2)
+		{
+			if(m1 is null || m2 is null)
+				return m1 is null == m2 is null;
+			
+			return m1.Type == m2.Type;
+		}
 
-		public static bool operator !=(ClassDescriptor? m1, ClassDescriptor? m2)
+		public static bool operator !=(ClassDescriptor m1, ClassDescriptor m2)
 			=> !(m1 == m2);
 
 		#endregion

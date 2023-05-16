@@ -3,9 +3,9 @@ Library for converting .NET classes to script language classes.
 
 **Currently supports**
 
-- **[TypeScript](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.latest.ts)**
-- **[ECMAScript 5](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es5.js)** 
-- **[ECMAScript 6](https://github.com/jvorssel/Sushi/blob/master/TestResults/models.es6.js)**
+- **[TypeScript](https://github.com/jvorssel/Sushi/tree/master/TestResults)**
+- **[ECMAScript 5](https://github.com/jvorssel/Sushi/tree/master/TestResults)** 
+- **[ECMAScript 6](https://github.com/jvorssel/Sushi/tree/master/TestResults)**
 
 
 **Author**
@@ -21,7 +21,8 @@ Jeroen Vorsselman @ 2023
 Main features
 - 
 - Support for nested generic types.
-- Support for .NET Core. 
+- Compliled using **[.NET Standard 2.0](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0)**. 
+- Support for .NET Core, .NET Framework etc.
 - Vastly improved compared to its predecessor.
 - Creates extended classes and their constructors.
 - Simple object mapping.

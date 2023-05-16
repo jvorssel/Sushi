@@ -20,7 +20,7 @@ namespace Sushi.Descriptors
 		public Type Type { get; }
 		public string Name => Type.Name;
 
-		public Dictionary<string, int> Values = new();
+		public Dictionary<string, int> Values = new Dictionary<string, int>();
 
 		public EnumDescriptor(Type type)
 		{

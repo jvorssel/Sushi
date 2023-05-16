@@ -43,7 +43,7 @@ export class ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "71bd35cb-7c70-47ba-bcdd-2412b8316cfc";
+    identifier: string = "edb5fa48-eed6-4174-9a33-30a53248e877";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;

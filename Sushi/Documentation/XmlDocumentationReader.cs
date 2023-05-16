@@ -36,7 +36,7 @@ namespace Sushi.Documentation
 
 		private string Path { get; }
 
-		public List<XmlSummaryDescriptor> Members { get; private set; } = new();
+		public List<XmlSummaryDescriptor> Members { get; private set; } = new List<XmlSummaryDescriptor>();
 
 		public static readonly Regex RemoveMethodArgs = new Regex(@"^([a-zA-Z.]*)");
 
@@ -116,7 +116,7 @@ namespace Sushi.Documentation
 		/// <summary>
 		///     Try to resolve the <see cref="XmlSummaryDescriptor" /> for the given <see cref="Type" />.
 		/// </summary>
-		public XmlSummaryDescriptor? GetDocumentationForType(Type type)
+		public XmlSummaryDescriptor GetDocumentationForType(Type type)
 		{
 			var typeMembers = Members.Where(x => x.FieldType == ReferenceType.Type);
 			var doc = typeMembers.SingleOrDefault(x => x.IsSameType(type));
@@ -142,7 +142,7 @@ namespace Sushi.Documentation
 		/// <summary>
 		///     Try to resolve the <see cref="XmlSummaryDescriptor" /> for the selected <paramref name="property" />.
 		/// </summary>
-		public XmlSummaryDescriptor? GetDocumentationForProperty<T>(T instance, Expression<Func<T, object>> property)
+		public XmlSummaryDescriptor GetDocumentationForProperty<T>(T instance, Expression<Func<T, object>> property)
 		{
 			// Get the PropertyInfo that the given expression selects.
 			var info = instance.GetPropertyInfo(property);
@@ -154,7 +154,7 @@ namespace Sushi.Documentation
 		/// <summary>
 		///     Try to resolve the <see cref="XmlSummaryDescriptor" /> for the given <see cref="PropertyInfo" />.
 		/// </summary>
-		public XmlSummaryDescriptor? GetDocumentationForProperty(IPropertyDescriptor? descriptor)
+		public XmlSummaryDescriptor GetDocumentationForProperty(IPropertyDescriptor descriptor)
 		{
 			if (descriptor?.ClassType == null)
 				throw new ArgumentNullException(nameof(descriptor));

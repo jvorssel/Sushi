@@ -27,7 +27,7 @@ namespace Sushi.Converters
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
-		protected readonly XmlDocumentationReader? XmlDocument;
+		protected readonly XmlDocumentationReader XmlDocument;
 		public readonly HashSet<ClassDescriptor> Models;
 		public readonly HashSet<EnumDescriptor> EnumModels;
 
@@ -71,12 +71,15 @@ namespace Sushi.Converters
 		/// </summary>
 		public string ApplyCasingStyle(string value)
 		{
-			return CasingStyle switch
+			switch (CasingStyle)
 			{
-				PropertyNameCasing.Default => value,
-				PropertyNameCasing.CamelCase => char.ToLowerInvariant(value[0]) + value.Substring(1),
-				_ => throw new ArgumentOutOfRangeException()
-			};
+				case PropertyNameCasing.Default:
+					return value;
+				case PropertyNameCasing.CamelCase:
+					return char.ToLowerInvariant(value[0]) + value.Substring(1);
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 	}
 }

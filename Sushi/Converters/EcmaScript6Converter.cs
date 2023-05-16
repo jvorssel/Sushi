@@ -89,7 +89,7 @@ namespace Sushi.Converters
 			var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);
 
 			var template =
-				@$"{summary}export class {model.Name}{parentClass} {{
+				$@"{summary}export class {model.Name}{parentClass} {{
 {propertyDeclaration}
 {constructorDeclaration}
 

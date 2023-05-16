@@ -9,38 +9,39 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-namespace Sushi.Descriptors;
-
-public static class DescriptorExtensions
+namespace Sushi.Descriptors
 {
-	/// <summary>
-	///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
-	/// </summary>
-	public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
+	public static class DescriptorExtensions
 	{
-		foreach (var d in tree)
+		/// <summary>
+		///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
+		/// </summary>
+		public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
 		{
-			if (d.Type == type)
-				return d;
+			foreach (var d in tree)
+			{
+				if (d.Type == type)
+					return d;
 
-			var child = FindDescriptor(d.Children, type);
-			if (child != null)
-				return child;
+				var child = FindDescriptor(d.Children, type);
+				if (child != null)
+					return child;
+			}
+
+			return null;
 		}
 
-		return null;
-	}
-
-	/// <summary>
-	///		Flatten the <see cref="ClassDescriptor"/> tree to a flat list.
-	/// </summary>
-	public static IEnumerable<ClassDescriptor> Flatten(this IEnumerable<ClassDescriptor> tree)
-	{
-		foreach (var cd in tree)
+		/// <summary>
+		///		Flatten the <see cref="ClassDescriptor"/> tree to a flat list.
+		/// </summary>
+		public static IEnumerable<ClassDescriptor> Flatten(this IEnumerable<ClassDescriptor> tree)
 		{
-			yield return cd;
-			foreach (var cdc in cd.Children.Flatten())
-				yield return cdc;
+			foreach (var cd in tree)
+			{
+				yield return cd;
+				foreach (var cdc in cd.Children.Flatten())
+					yield return cdc;
+			}
 		}
 	}
 }

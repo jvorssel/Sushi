@@ -1,7 +1,7 @@
 ﻿// /***************************************************************************\
 // Module Name:       ReflectionExtensions.cs
 // Project:                   Sushi
-// Author:                   Jeroen Vorsselman 15-05-2023
+// Author:                   Jeroen Vorsselman 16-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -27,11 +27,11 @@ namespace Sushi.Extensions
 		#region Get Property or Field
 
 		/// <summary>
-		///		Attempts to create an instance of the given type.
-		///		Does not support generic type defs, interfaces or abstract classes
-		///		and it uses the default value for constructors with parameters.
+		///     Attempts to create an instance of the given type.
+		///     Does not support generic type defs, interfaces or abstract classes
+		///     and it uses the default value for constructors with parameters.
 		/// </summary>
-		public static object? CreateInstance(this Type type)
+		public static object CreateInstance(this Type type)
 		{
 			if (type.IsInterface || type.IsAbstract || type.IsGenericTypeDefinition)
 				return null;
@@ -61,11 +61,11 @@ namespace Sushi.Extensions
 			return null;
 		}
 
-		private static object? GetDefault(Type? type)
+		private static object GetDefault(Type type)
 		{
 			// Source: https://stackoverflow.com/questions/407337/net-get-default-value-for-a-reflected-propertyinfo
 			// If no Type was supplied, if the Type was a reference type, or if the Type was a System.Void, return null
-			if (type is not { IsValueType: true } || type == typeof(void))
+			if (!type.IsValueType || type == typeof(void))
 				return null;
 
 			// If the supplied Type has generic parameters, its default value cannot be determined

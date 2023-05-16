@@ -55,7 +55,7 @@ namespace Sushi.Documentation
 
 		// FIELDS
 		public bool IsInherited { get; }
-		public Type? InheritedFrom { get; private set; }
+		public Type InheritedFrom { get; private set; }
 		public string Summary { get; private set; }
 
 		public XmlSummaryDescriptor(string name, ReferenceType field, Dictionary<string, string> values)
@@ -84,7 +84,7 @@ namespace Sushi.Documentation
 				case ReferenceType.Property:
 				case ReferenceType.Field:
 					Name = split.Last();
-					DeclaringTypeName = split[^2];
+					DeclaringTypeName = split[split.Count - 2];
 					Namespace = split.Take(split.Count - 2).Glue(".");
 					break;
 				case ReferenceType.Namespace:
@@ -101,7 +101,7 @@ namespace Sushi.Documentation
 		private static string Trim(string value)
 			=> value.Trim().TrimStart('\n').TrimEnd('\n');
 
-		public XmlSummaryDescriptor UseInheritedSummary(string summary, Type? type)
+		public XmlSummaryDescriptor UseInheritedSummary(string summary, Type type)
 		{
 			Summary = summary;
 			InheritedFrom = type;
@@ -110,7 +110,7 @@ namespace Sushi.Documentation
 
 		#region Equality members
 
-		public static bool operator ==(XmlSummaryDescriptor? fd, Type? type)
+		public static bool operator ==(XmlSummaryDescriptor fd, Type type)
 		{
 			if (type is null || fd is null)
 				return type is null == fd is null;
@@ -118,7 +118,7 @@ namespace Sushi.Documentation
 			return fd.IsSameType(type);
 		}
 
-		public static bool operator !=(XmlSummaryDescriptor? ms, Type? type)
+		public static bool operator !=(XmlSummaryDescriptor ms, Type type)
 			=> !(ms == type);
 
 		public bool IsEqualTo(XmlSummaryDescriptor other)

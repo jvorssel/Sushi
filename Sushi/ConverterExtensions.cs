@@ -25,19 +25,19 @@ namespace Sushi
 		/// <summary>
 		///     Create the converter for ECMAScript 5.
 		/// </summary>
-		public static EcmaScript5Converter ECMAScript5(this SushiConverter converter, IConverterOptions? options = null)
-			=> new(converter, options ?? new ConverterOptions());
+		public static EcmaScript5Converter ECMAScript5(this SushiConverter converter, IConverterOptions options = null)
+			=> new EcmaScript5Converter(converter, options ?? new ConverterOptions());
 
 		/// <summary>
 		///     Create the converter for ECMAScript 6.
 		/// </summary>
-		public static EcmaScript6Converter ECMAScript6(this SushiConverter converter, IConverterOptions? options = null)
-			=> new(converter, options ?? new ConverterOptions());
+		public static EcmaScript6Converter ECMAScript6(this SushiConverter converter, IConverterOptions options = null)
+			=> new EcmaScript6Converter(converter, options ?? new ConverterOptions());
 
 		/// <summary>
 		///     Create the converter for TypeScript.
 		/// </summary>
-		public static TypeScriptConverter TypeScript(this SushiConverter converter, IConverterOptions? options = null)
-			=> new(converter, options ?? new ConverterOptions());
+		public static TypeScriptConverter TypeScript(this SushiConverter converter, IConverterOptions options = null)
+			=> new TypeScriptConverter(converter, options ?? new ConverterOptions());
 	}
 }

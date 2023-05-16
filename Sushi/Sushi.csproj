@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <AssemblyName>Sushi</AssemblyName>
         <RootNamespace>Sushi</RootNamespace>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -16,17 +16,13 @@
         <PackageLicenseUrl>https://raw.githubusercontent.com/jvorssel/Sushi/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/jvorssel/Sushi</RepositoryUrl>
         <RepositoryType>Public</RepositoryType>
-        <PackageTags>.net core framework typescript javascript script java C# ecmascript ecma compiler converter transformer mapper reflection class struct interface generics abstraction support awesome sushi tasty object property key value quick synchronous</PackageTags>
-        <PackageReleaseNotes>  - Simplified library interface &gt; "new SushiConverter().ECMAScript6().Convert().ToString()".
-      - Support for ECMAScript 5, ECMAScript 6 and TypeScript.
-      - Classes have a simple object mapper "mapFrom", using Object.assign and _.extend for ES5.
-      - Improved type dependency tree ordering.
-      - Support for TypeScript enums.
-      - Improved conversion for data types.</PackageReleaseNotes>
+        <PackageTags>.net core framework standard typescript javascript script java C# ecmascript ecma compiler converter transformer mapper reflection class struct interface generics abstraction support awesome sushi tasty object property key value quick synchronous </PackageTags>
+        <PackageReleaseNotes></PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Version>1.0.2</Version>
-        <PackageVersion>1.1.2</PackageVersion>
+        <PackageVersion>1.1.3</PackageVersion>
         <PackageIcon>logo.png</PackageIcon>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

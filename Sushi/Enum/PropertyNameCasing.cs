@@ -9,18 +9,20 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-namespace Sushi.Enum;
 
-public enum PropertyNameCasing
+namespace Sushi.Enum
 {
-	/// <summary>
-	///     Keeps the property naming intact.
-	/// </summary>
-	Default,
+	public enum PropertyNameCasing
+	{
+		/// <summary>
+		///     Keeps the property naming intact.
+		/// </summary>
+		Default,
         
-	/// <summary>
-	///     Transforms the property names to camelCase.
-	/// </summary>
-	CamelCase
+		/// <summary>
+		///     Transforms the property names to camelCase.
+		/// </summary>
+		CamelCase
         
+	}
 }

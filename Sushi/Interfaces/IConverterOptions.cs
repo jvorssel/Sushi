@@ -15,10 +15,12 @@ using Sushi.Enum;
 
 #endregion
 
-namespace Sushi.Interfaces;
 
-public interface IConverterOptions
+namespace Sushi.Interfaces
 {
-	string Indent { get; set; }
-	PropertyNameCasing CasingStyle { get; set; }
+	public interface IConverterOptions
+	{
+		string Indent { get; set; }
+		PropertyNameCasing CasingStyle { get; set; }
+	}
 }

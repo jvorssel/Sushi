@@ -38,7 +38,7 @@ namespace Sushi.Descriptors
 		public Type ClassType => _field.DeclaringType;
 
 		/// <inheritdoc />
-		public object? DefaultValue { get; }
+		public object DefaultValue { get; } = null;
 
 		/// <inheritdoc />
 		public bool IsNullable { get; }
