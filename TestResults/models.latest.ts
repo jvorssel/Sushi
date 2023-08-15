@@ -63,7 +63,7 @@ export class ViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "395562df-0312-46f3-b88d-8bbee71bcaa9";
+    identifier: string = "b3770b85-a40b-4dfb-bb66-c37695baab81";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */
@@ -165,7 +165,7 @@ export class SchoolViewModel extends ViewModel {
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
-    nullableBool!: boolean | null;
+    nullableBool: boolean | null = null;
     /** A nullable string, defaults to null. */
     nullableString!: string;
     /** A DateTime instance. */

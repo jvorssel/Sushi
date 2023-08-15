@@ -43,7 +43,7 @@ export class ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "edb5fa48-eed6-4174-9a33-30a53248e877";
+    identifier: string = "b89a0c1e-3b5f-4474-ba58-f92422bab1e0";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -115,7 +115,7 @@ export class SchoolViewModel extends ViewModel {
 }
 
 export class TypeModel extends ViewModel {
-    nullableBool!: boolean | null;
+    nullableBool: boolean | null = null;
     nullableString!: string;
     date: Date | string | null = null;
     student: StudentViewModel = new StudentViewModel();

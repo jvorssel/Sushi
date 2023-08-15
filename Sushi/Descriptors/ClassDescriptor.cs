@@ -84,7 +84,7 @@ namespace Sushi.Descriptors
 
 		#region Equality members
 
-		public static bool operator ==(ClassDescriptor m1, ClassDescriptor m2)
+		public static bool operator ==(ClassDescriptor? m1, ClassDescriptor? m2)
 		{
 			if(m1 is null || m2 is null)
 				return m1 is null == m2 is null;
@@ -92,7 +92,7 @@ namespace Sushi.Descriptors
 			return m1.Type == m2.Type;
 		}
 
-		public static bool operator !=(ClassDescriptor m1, ClassDescriptor m2)
+		public static bool operator !=(ClassDescriptor? m1, ClassDescriptor? m2)
 			=> !(m1 == m2);
 
 		#endregion

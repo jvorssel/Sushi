@@ -81,18 +81,21 @@ namespace Sushi.Converters
 
 		public string ResolveScriptType(Type type)
 		{
+			var actualType = type.GetBaseType();
 			var genericTypeArgs = type.IsGenericType ? GetGenericTypeArguments(type) : string.Empty;
-
-			// Array
-			if (type.IsArray())
-				return $"Array<{genericTypeArgs}>";
 
 			// Check if any of the available models have the same name and should be used.
 			var classModel = Models.SingleOrDefault(x => x.Type == (type.IsGenericType ? type.GetGenericTypeDefinition() : type));
 			if (classModel != null)
 				return type.IsGenericType ? $"{classModel.Name}<{genericTypeArgs}>" : classModel.Name;
-
-			var actualType =  type.IsGenericType ? type.GenericTypeArguments[0] : type;
+			
+			// Array
+			if (type.IsArrayType())
+			{
+				var typeName = type.IsGenericType ? genericTypeArgs : classModel?.Name ?? ResolveScriptType(actualType);
+				return $"Array<{typeName}>";
+			}
+			
 			var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
 			if (type.IsEnum && enumModel != null)
 				return $"{enumModel.Name} | number";
@@ -107,14 +110,14 @@ namespace Sushi.Converters
 
 		public string ResolveDefaultValue(IPropertyDescriptor prop)
 		{
-			if (prop.Type.IsArray())
+			if (prop.Type.IsArrayType())
 				return "[]";
-
-			if (prop.DefaultValue == null)
-				return string.Empty;
 
 			if (prop.Type.IsNullable())
 				return "null";
+			
+			if (prop.DefaultValue == null)
+				return string.Empty;
 
 			var defaultValueType = prop.DefaultValue.GetType();
 			var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType && x.HasParameterlessCtor);
@@ -128,7 +131,7 @@ namespace Sushi.Converters
 			switch (nativeType)
 			{
 				case NativeType.Bool:
-					return (bool)(prop.DefaultValue ?? false) ? "true" : "false";
+					return (bool)prop.DefaultValue ? "true" : "false";
 				case NativeType.Enum:
 				case NativeType.Byte:
 				case NativeType.Short:
@@ -149,7 +152,7 @@ namespace Sushi.Converters
 					return "null";
 				case NativeType.Undefined:
 				default:
-					throw new ArgumentOutOfRangeException(nameof(nativeType), nativeType, null);
+					return string.Empty;
 			}
 		}
 

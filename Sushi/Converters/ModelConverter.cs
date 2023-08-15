@@ -22,14 +22,14 @@ using Sushi.Interfaces;
 
 namespace Sushi.Converters
 {
-	public abstract class ModelConverter
+	public abstract class ModelConverter : IConvertModels
 	{
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
 		protected readonly XmlDocumentationReader XmlDocument;
-		public readonly HashSet<ClassDescriptor> Models;
-		public readonly HashSet<EnumDescriptor> EnumModels;
+		public HashSet<ClassDescriptor> Models { get; }
+		public HashSet<EnumDescriptor> EnumModels { get; }
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.

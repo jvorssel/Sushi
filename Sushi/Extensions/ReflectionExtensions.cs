@@ -17,182 +17,201 @@ using System.Reflection;
 
 #endregion
 
-namespace Sushi.Extensions
+namespace Sushi.Extensions;
+
+/// <summary>
+///     SOURCED FROM: Royaldesk.Common.Utility.Extensions
+/// </summary>
+public static class ReflectionExtensions
 {
-	/// <summary>
-	///     SOURCED FROM: Royaldesk.Common.Utility.Extensions
-	/// </summary>
-	public static class ReflectionExtensions
-	{
-		#region Get Property or Field
+    #region Get Property or Field
 
-		/// <summary>
-		///     Attempts to create an instance of the given type.
-		///     Does not support generic type defs, interfaces or abstract classes
-		///     and it uses the default value for constructors with parameters.
-		/// </summary>
-		public static object CreateInstance(this Type type)
-		{
-			if (type.IsInterface || type.IsAbstract || type.IsGenericTypeDefinition)
-				return null;
+    /// <summary>
+    ///     Attempts to create an instance of the given type.
+    ///     Does not support generic type defs, interfaces or abstract classes
+    ///     and it uses the default value for constructors with parameters.
+    /// </summary>
+    internal static object? CreateInstance(this Type type)
+    {
+        if (type.IsInterface || type.IsAbstract || type.IsGenericTypeDefinition)
+            return null;
 
-			try
-			{
-				var emptyCtor = type.GetConstructor(Type.EmptyTypes);
-				if (emptyCtor != null)
-					return Activator.CreateInstance(type);
+        try
+        {
+            var emptyCtor = type.GetConstructor(Type.EmptyTypes);
+            if (emptyCtor != null)
+                return Activator.CreateInstance(type);
 
-				var constructors = type.GetConstructors();
-				foreach (var ctor in constructors)
-				{
-					var parameters = ctor.GetParameters();
-					var arguments = parameters.Select(x => GetDefault(x.ParameterType)).ToArray();
-					return ctor.Invoke(arguments);
-				}
-			}
-			catch (Exception e)
-			{
+            var constructors = type.GetConstructors();
+            foreach (var ctor in constructors)
+            {
+                var parameters = ctor.GetParameters();
+                var arguments = parameters.Select(x => GetDefault(x.ParameterType)).ToArray();
+                return ctor.Invoke(arguments);
+            }
+        }
+        catch (Exception e)
+        {
 #if DEBUG
 				throw e;
 #endif
-				return null;
-			}
+            return null;
+        }
 
-			return null;
-		}
+        return null;
+    }
 
-		private static object GetDefault(Type type)
-		{
-			// Source: https://stackoverflow.com/questions/407337/net-get-default-value-for-a-reflected-propertyinfo
-			// If no Type was supplied, if the Type was a reference type, or if the Type was a System.Void, return null
-			if (!type.IsValueType || type == typeof(void))
-				return null;
+    private static object? GetDefault(Type type)
+    {
+        // Source: https://stackoverflow.com/questions/407337/net-get-default-value-for-a-reflected-propertyinfo
+        // If no Type was supplied, if the Type was a reference type, or if the Type was a System.Void, return null
+        if (!type.IsValueType || type == typeof(void))
+            return null;
 
-			// If the supplied Type has generic parameters, its default value cannot be determined
-			if (type.ContainsGenericParameters)
-			{
-				throw new ArgumentException(
-					"{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" + type +
-					"> contains generic parameters, so the default value cannot be retrieved");
-			}
+        // If the supplied Type has generic parameters, its default value cannot be determined
+        if (type.ContainsGenericParameters)
+            throw new ArgumentException(
+                "{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" + type +
+                "> contains generic parameters, so the default value cannot be retrieved");
 
-			// If the Type is a primitive type, or if it is another publicly-visible value type (i.e. struct), return a 
-			//  default instance of the value type
-			if (type.IsPrimitive || !type.IsNotPublic)
-			{
-				try
-				{
-					return Activator.CreateInstance(type);
-				}
-				catch (Exception e)
-				{
-					throw new ArgumentException(
-						"{"                                                          + MethodBase.GetCurrentMethod() +
-						"} Error:\n\nThe Activator.CreateInstance method could not " +
-						"create a default instance of the supplied value type <"     + type      +
-						"> (Inner Exception message: \""                             + e.Message + "\")",
-						e);
-				}
-			}
+        // If the Type is a primitive type, or if it is another publicly-visible value type (i.e. struct), return a 
+        //  default instance of the value type
+        if (type.IsPrimitive || !type.IsNotPublic)
+            try
+            {
+                return Activator.CreateInstance(type);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(
+                    "{" + MethodBase.GetCurrentMethod() +
+                    "} Error:\n\nThe Activator.CreateInstance method could not " +
+                    "create a default instance of the supplied value type <" + type +
+                    "> (Inner Exception message: \"" + e.Message + "\")",
+                    e);
+            }
 
-			// Fail with exception
-			throw new ArgumentException("{"  + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" +
-			                            type +
-			                            "> is not a publicly-visible type, so the default value cannot be retrieved");
-		}
+        // Fail with exception
+        throw new ArgumentException("{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" +
+                                    type +
+                                    "> is not a publicly-visible type, so the default value cannot be retrieved");
+    }
 
-		/// <summary>
-		///     Get the <see cref="Type" /> and default <see cref="object" /> value
-		///     for the available Properties in the given <typeparamref name="T" /> <paramref name="this" />.
-		/// </summary>
-		public static IEnumerable<KeyValuePair<PropertyInfo, object>> GetPropertiesWithStaticValue<T>(this T @this)
-		{
-			if (@this == null)
-				yield break;
+    /// <summary>
+    ///     Get the <see cref="Type" /> and default <see cref="object" /> value
+    ///     for the available Properties in the given <typeparamref name="T" /> <paramref name="this" />.
+    /// </summary>
+    internal static IEnumerable<KeyValuePair<PropertyInfo, object>> GetPropertiesWithStaticValue<T>(this T @this)
+    {
+        if (@this == null)
+            yield break;
 
-			var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
-			var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-			var instance = type.CreateInstance();
-			foreach (var prp in properties)
-			{
-				var isReadonly = prp.CanWrite;
+        var instance = type.CreateInstance();
+        foreach (var prp in properties)
+        {
+            var defaultValue = instance != null && prp.CanWrite ? prp.GetValue(instance) : null;
+            yield return new KeyValuePair<PropertyInfo, object>(prp, defaultValue);
+        }
+    }
 
-				var defaultValue = instance != null && prp.CanWrite ? prp.GetValue(instance) : null;
+    #endregion
 
-				yield return new KeyValuePair<PropertyInfo, object>(prp, defaultValue);
-			}
-		}
+    /// <summary>
+    ///     Get the <see cref="PropertyInfo" /> of the property <paramref name="propertyLambda" /> in
+    ///     <typeparamref name="TSource" />.
+    /// </summary>
+    internal static PropertyInfo GetPropertyInfo<TSource, TProperty>(this TSource @this,
+        Expression<Func<TSource, TProperty>> propertyLambda,
+        bool checkReflectedType = false)
+    {
+        var type = typeof(TSource);
+        if (typeof(TSource) == typeof(Type))
+            type = @this as Type;
 
-		#endregion
+        var unary = propertyLambda.Body as UnaryExpression;
+        var member = unary?.Operand as MemberExpression ?? propertyLambda.Body as MemberExpression;
+        if (member == null)
+            throw new ArgumentException($@"Expression '{propertyLambda}' refers to a method, not a property.",
+                nameof(propertyLambda));
 
-		/// <summary>
-		///     Get the <see cref="PropertyInfo" /> of the property <paramref name="propertyLambda" /> in
-		///     <typeparamref name="TSource" />.
-		/// </summary>
-		public static PropertyInfo GetPropertyInfo<TSource, TProperty>(this TSource @this,
-			Expression<Func<TSource, TProperty>> propertyLambda,
-			bool checkReflectedType = false)
-		{
-			var type = typeof(TSource);
-			if (typeof(TSource) == typeof(Type))
-				type = @this as Type;
+        var propInfo = member.Member as PropertyInfo;
+        if (propInfo == null)
+            throw new ArgumentException($@"Expression '{propertyLambda}' refers to a field, not a property.",
+                nameof(propertyLambda));
 
-			var unary = propertyLambda.Body as UnaryExpression;
-			var member = unary?.Operand as MemberExpression ?? propertyLambda.Body as MemberExpression;
-			if (member == null)
-			{
-				throw new ArgumentException($@"Expression '{propertyLambda}' refers to a method, not a property.",
-					nameof(propertyLambda));
-			}
+        if (type != propInfo.ReflectedType &&
+            !type.IsSubclassOf(propInfo.ReflectedType) &&
+            checkReflectedType)
+            throw new ArgumentException(
+                $@"Expression '{propertyLambda}' refers to a property that is not from type {type}.",
+                nameof(propertyLambda));
 
-			var propInfo = member.Member as PropertyInfo;
-			if (propInfo == null)
-			{
-				throw new ArgumentException($@"Expression '{propertyLambda}' refers to a field, not a property.",
-					nameof(propertyLambda));
-			}
+        return propInfo;
+    }
 
-			if (type != propInfo.ReflectedType             &&
-			    !type.IsSubclassOf(propInfo.ReflectedType) &&
-			    checkReflectedType)
-			{
-				throw new ArgumentException(
-					$@"Expresion '{propertyLambda}' refers to a property that is not from type {type}.",
-					nameof(propertyLambda));
-			}
+    /// <summary>
+    ///     A T extension method that query if '@this' is type or inherits of.
+    /// </summary>
+    internal static bool InheritsInterface<T>(this Type objectType)
+    {
+        // Checking base type for interfaces doesn't really work.
+        var interfaces = objectType.GetInterfaces();
+        var type = typeof(T);
+        if (!type.IsInterface)
+            throw new ArgumentException($"Expected {type.Name} to be an interface.");
 
-			return propInfo;
-		}
+        return interfaces.Any(x => x.Name == type.Name);
+    }
 
-		/// <summary>
-		///     A T extension method that query if '@this' is type or inherits of.
-		/// </summary>
-		public static bool InheritsInterface<T>(this Type objectType)
-		{
-			// Checking basetype for interfaces doesn't really work.
-			var interfaces = objectType.GetInterfaces();
-			var type = typeof(T);
-			if (!type.IsInterface)
-				throw new ArgumentException($"Expected {type.Name} to be an interface.");
+    /// <summary>
+    ///     Simple check if the given <see cref="Type" /> is <see cref="Nullable" />.
+    /// </summary>
+    internal static bool IsNullable(this Type @this)
+    {
+        return !@this.IsClass && Nullable.GetUnderlyingType(@this) != null;
+    }
 
-			return interfaces.Any(x => x.Name == type.Name);
-		}
+    /// <summary>
+    ///     If the given type is an array.
+    /// </summary>
+    internal static bool IsArrayType(this Type type)
+    {
+        var isInterfaceArray = type.InheritsInterface<IEnumerable>() || type.IsArray;
+        var isString = type == typeof(string);
+        return isInterfaceArray && !isString;
+    }
 
-		/// <summary>
-		///     Simple check if the given <see cref="Type" /> is <see cref="Nullable" />.
-		/// </summary>
-		public static bool IsNullable(this Type @this)
-			=> !@this.IsClass && Nullable.GetUnderlyingType(@this) != null;
+    /// <summary>
+    ///		Get the first base type if generic or array.
+    /// </summary>
+    internal static Type GetBaseType(this Type type)
+    {
+        if (type.IsArray)
+            return type.GetElementType();
 
-		/// <summary>
-		///     If the given type is an array.
-		/// </summary>
-		public static bool IsArray(this Type type)
-		{
-			var isInterfaceArray = type.InheritsInterface<IEnumerable>() || type.IsArray;
-			var isString = type == typeof(string);
-			return isInterfaceArray && !isString;
-		}
-	}
+        if (type.IsTaskType(out var innerType) && innerType != null)
+            return innerType.GetBaseType();
+
+        if (type.IsGenericType)
+            return type.GetGenericArguments()[0];
+
+        return type;
+    }
+
+    /// <summary>
+    ///		If the given <see cref="Type"/> is a Task. 
+    /// </summary>
+    internal static bool IsTaskType(this Type type, out Type? innerType)
+    {
+        innerType = null;
+
+        if (!type.IsGenericType) return false;
+        var genericDefinition = type.GetGenericTypeDefinition();
+        if (genericDefinition != typeof(Task<>)) return false;
+        innerType = type.GetGenericArguments()[0];
+        return true;
+    }
 }

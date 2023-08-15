@@ -17,6 +17,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using Sushi.Extensions;
+using Sushi.Helpers;
 using Sushi.Tests.Models;
 
 #endregion
