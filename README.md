@@ -1,4 +1,4 @@
-# Sushi
+-# Sushi
 Library for converting .NET classes to script language classes.
 
 **Currently supports**
@@ -18,40 +18,34 @@ Jeroen Vorsselman @ 2023
 
 ---
 
-Main features
-- 
-- Support for nested generic types.
-- Compliled using **[.NET Standard 2.0](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0)**. 
-- Support for .NET Core, .NET Framework etc.
-- Vastly improved compared to its predecessor.
-- Creates extended classes and their constructors.
-- Simple object mapping.
-- Improved type dependency tree ordering.
-- Adds documentation from the XML file generated using MS build.
-- 95% Code coverage.
+## Features
+- Converts .NET classes to script languages (typescript / ECMAScript)
+- Compiled using **[.NET Standard 2.0](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0)**
+- Supports native types, type inheritance, generics and enum types
+- Adds documentation using the generated MS build XML file
+- 95% Code coverage
 ---
-## How to use
-Script models are discovered in the `Assembly.ExportedTypes`. These classes must be decorated with the `ConvertToScriptAttribute` or by inherit from the `IScriptModel` interface and can be ignored using the `IgnoreForScriptAttribute`. 
-<br>
-Create an instance of the `SushiConverter` using the given types or assembly and invoke the target script language method to create a converter.
-
-### Example
+## About
 ``` 
-// 1) Get the assembly with the exported types.
-var assembly = typeof(PersonViewModel).Assembly;
-var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
+string xmlDocPath =  Path.Combine(Environment.CurrentDirectory, "Sushi.tests.xml");
 
-// 2) Specify conversion options.
-var options = new ConverterOptions(excludeComments: true);
+// Specify the types to convert using a Type[] or Assembly.ExportedTypes.
+Assembly assembly = typeof(PersonViewModel).Assembly;
+SushiConverter converter = new SushiConverter(assembly).UseDocumentation(xmlDocPath);
 
-// 3) Specify the target language and invoke ToString().
-var script = converter.TypeScript(options).ToString();
+// Specify the script language and convert by invoking ToString().
+ConverterOptions options = new ConverterOptions(excludeComments: true);
+string result = converter.TypeScript(options).ToString();
+```
 
-// 4) The resulting script can be written to a file(stream).
-WriteToFile(script, GetFilePath("models.no-comments.ts"));
-``` 
+Create a new `SushiConverter` instance with the given `Assembly` or `Type[]` that contain the types you want to convert.  <br />
+These classes must be decorated with the `ConvertToScriptAttribute` or by inherit from the `IScriptModel` interface and can be excluded using the `IgnoreForScriptAttribute`.
+A collection of type- and enum-descriptors are created to generate the script models.
 
-### Typescript result
+## Helpers
+You can check if a type exists using: `IsSushiType(IConvertModels converter, Type type, out Type resolvedType) : boolean`
+
+## Typescript result
 
 ```
 /**
