@@ -160,6 +160,26 @@ public abstract class TypeScriptConverterTests
             // Assert
             Assert.AreEqual("boolean | null", result);
         }
+        
+        [TestMethod]
+        public void ResolveScriptType_WithPrefix_ShouldFormatCorrectly()
+        {
+            // Arrange
+            var converter = new SushiConverter(typeof(StudentViewModel), typeof(GenericStandalone<>)).TypeScript();
+            const string prefix = "vm.";
+
+            // Act
+            var classType = converter.ResolveScriptType(typeof(StudentViewModel), prefix);
+            var arrayType = converter.ResolveScriptType(typeof(StudentViewModel[]), prefix);
+            var genericType = converter.ResolveScriptType(typeof(GenericStandalone<StudentViewModel>[]), prefix);
+            var nativeType = converter.ResolveScriptType(typeof(bool), prefix);
+
+            // Assert
+            Assert.AreEqual("vm.StudentViewModel", classType);
+            Assert.AreEqual("Array<vm.StudentViewModel>", arrayType);
+            Assert.AreEqual("Array<vm.GenericStandalone<vm.StudentViewModel>>", genericType);
+            Assert.AreEqual("boolean", nativeType);
+        }
     }
 
     [TestClass]
@@ -333,7 +353,7 @@ public abstract class TypeScriptConverterTests
             var valuesProperty = descriptor.Properties.Single(x => x.Name == "Values");
             Assert.IsTrue(valuesProperty.Type.IsGenericType);
 
-            var genericTypeArgument = converter.GetGenericTypeArguments(valuesProperty.Type);
+            var genericTypeArgument = converter.GetGenericTypeArguments(valuesProperty.Type, string.Empty);
             var valuesAsScript = converter.ResolveScriptType(valuesProperty.Type);
             Assert.AreEqual("Array<TEntry>", valuesAsScript);
 

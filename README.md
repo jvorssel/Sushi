@@ -39,12 +39,14 @@ string result = converter.TypeScript(options).ToString();
 ```
 
 Create a new `SushiConverter` instance with the given `Assembly` or `Type[]` that contain the types you want to convert.  <br />
-These classes must be decorated with the `ConvertToScriptAttribute` or by inherit from the `IScriptModel` interface and can be excluded using the `IgnoreForScriptAttribute`.
-A collection of type- and enum-descriptors are created to generate the script models.
+These classes must be decorated with the `ConvertToScriptAttribute` or inherit the `IScriptModel` interface. Classes can be excluded using the `IgnoreForScriptAttribute`.
+The converter contains a collection of type- and enum-descriptors. These are used to generate script models.  <br />
+
 
 ## Helpers
-You can check if a type exists using: `IsSushiType(IConvertModels converter, Type type, out Type resolvedType) : boolean`
-
+You can check if a type exists using: `IsSushiType(IConvertModels converter, Type type, out Type resolvedType) : boolean`  <br />
+You can convert types using: `TypeScriptConverter.ResolveScriptType(Type type, string prefix = "") : string`  <br />
+You can get the script default value using: `TypeScriptConverter.ResolveDefaultValue(IPropertyDescriptor prop) : string`  <br />
 ## Typescript result
 
 ```
