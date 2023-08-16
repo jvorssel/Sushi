@@ -20,7 +20,7 @@
         <PackageReleaseNotes></PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Version>1.0.2</Version>
-        <PackageVersion>1.1.4</PackageVersion>
+        <PackageVersion>1.1.5</PackageVersion>
         <PackageIcon>logo.png</PackageIcon>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
