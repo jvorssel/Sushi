@@ -27,7 +27,7 @@ namespace Sushi.Tests.Models
 		public string Addition { get; set; } = "added";
 	}
 
-	public class BaseViewModel
+	public class BaseViewModel : ViewModel
 	{
 		public virtual string Value { get; set; } = "base";
 

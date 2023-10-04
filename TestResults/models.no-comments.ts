@@ -42,8 +42,42 @@ export class ViewModel {
     }
 }
 
+export class BaseViewModel extends ViewModel {
+    value: string = "base";
+    base: boolean = true;
+
+    constructor(value?: any) {
+        super(value);
+
+        if (value) {
+            this.value = value.value;
+            this.guid = value.guid;
+            this.base = value.base;
+            this.createdOn = value.createdOn;
+        }
+    }
+}
+
+export class InheritedViewModel extends BaseViewModel {
+    guid: string = "new guid";
+    addition: string = "added";
+
+    constructor(value?: any) {
+        super(value);
+
+        if (value) {
+            this.value = value.value;
+            this.guid = value.guid;
+            this.addition = value.addition;
+            this.guid = value.guid;
+            this.base = value.base;
+            this.createdOn = value.createdOn;
+        }
+    }
+}
+
 export class PersonViewModel extends ViewModel {
-    identifier: string = "17a9a137-d0aa-462f-b6c5-33325e6a4028";
+    identifier: string = "880eac23-8275-4e84-ba3b-652fad3b7417";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -158,6 +192,16 @@ export class AbstractParentModel extends AbstractBaseModel {
 
         if (value) {
             this.surname = value.surname;
+            this.name = value.name;
+        }
+    }
+}
+
+export class CtorFixModel {
+    name!: string;
+
+    constructor(value?: any) {
+        if (value) {
             this.name = value.name;
         }
     }

@@ -17,10 +17,10 @@
         <RepositoryUrl>https://github.com/jvorssel/Sushi</RepositoryUrl>
         <RepositoryType>Public</RepositoryType>
         <PackageTags>.net core framework standard typescript javascript script java c# ecmascript ecma compiler converter transformer mapper reflection class struct interface generics abstraction support awesome sushi tasty object property key value quick synchronous  generation compilation generator model intellisense visual studio customizable custom unit-test</PackageTags>
-        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageReleaseNotes>bugfixes</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Version>1.0.2</Version>
-        <PackageVersion>1.1.5</PackageVersion>
+        <PackageVersion>1.1.6</PackageVersion>
         <PackageIcon>logo.png</PackageIcon>
         <LangVersion>10</LangVersion>
     </PropertyGroup>

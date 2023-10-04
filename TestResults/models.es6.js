@@ -66,6 +66,54 @@ export class ViewModel {
 }
 
 /**
+ * Sushi.Tests.Models.BaseViewModel
+ * @typedef {Object} BaseViewModel
+ * @extends ViewModel 
+ */
+export class BaseViewModel extends ViewModel {
+    Value;
+    Base;
+
+    constructor(value) {
+        super(value);
+
+        if (!(value instanceof Object))
+            return;
+
+        this.value = value.value;
+        this.base = value.base;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new BaseViewModel(), obj);
+    }
+}
+
+/**
+ * Sushi.Tests.Models.InheritedViewModel
+ * @typedef {Object} InheritedViewModel
+ * @extends BaseViewModel 
+ */
+export class InheritedViewModel extends BaseViewModel {
+    Guid;
+    Addition;
+
+    constructor(value) {
+        super(value);
+
+        if (!(value instanceof Object))
+            return;
+
+        this.guid = value.guid;
+        this.addition = value.addition;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new InheritedViewModel(), obj);
+    }
+}
+
+/**
  * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
@@ -248,6 +296,25 @@ export class AbstractParentModel extends AbstractBaseModel {
 
     static mapFrom(obj) {
         return Object.assign(new AbstractParentModel(), obj);
+    }
+}
+
+/**
+ * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
+ * @typedef {Object} CtorFixModel
+ */
+export class CtorFixModel {
+    Name;
+
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
+
+        this.name = value.name;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new CtorFixModel(), obj);
     }
 }
 

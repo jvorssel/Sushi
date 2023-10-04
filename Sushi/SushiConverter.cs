@@ -43,7 +43,7 @@ namespace Sushi
 
             Models = types
                 .Select(x => new ClassDescriptor(x))
-                .FilterClassDescriptors()
+                .Where(x=> x.IsApplicable)
                 .ToHashSet();
 
             EnumModels = types

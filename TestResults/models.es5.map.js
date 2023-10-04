@@ -54,6 +54,50 @@ ViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
+ * Sushi.Tests.Models.BaseViewModel
+ * @typedef {Object} BaseViewModel
+ * @extends ViewModel 
+ */
+function BaseViewModel(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.value = value.value;
+    this.guid = value.guid;
+    this.base = value.base;
+    this.createdOn = value.createdOn;
+
+}
+
+BaseViewModel.prototype.mapFrom = function(obj) {
+    return _.extend(new BaseViewModel(), obj); 
+};
+
+/**
+ * Sushi.Tests.Models.InheritedViewModel
+ * @typedef {Object} InheritedViewModel
+ * @extends BaseViewModel 
+ */
+function InheritedViewModel(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.value = value.value;
+    this.guid = value.guid;
+    this.addition = value.addition;
+    this.guid = value.guid;
+    this.base = value.base;
+    this.createdOn = value.createdOn;
+
+}
+
+InheritedViewModel.prototype.mapFrom = function(obj) {
+    return _.extend(new InheritedViewModel(), obj); 
+};
+
+/**
  * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
@@ -190,6 +234,23 @@ function AbstractParentModel(obj) {
 
 AbstractParentModel.prototype.mapFrom = function(obj) {
     return _.extend(new AbstractParentModel(), obj); 
+};
+
+/**
+ * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
+ * @typedef {Object} CtorFixModel
+ */
+function CtorFixModel(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.name = value.name;
+
+}
+
+CtorFixModel.prototype.mapFrom = function(obj) {
+    return _.extend(new CtorFixModel(), obj); 
 };
 
 /**

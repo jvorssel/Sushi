@@ -87,6 +87,19 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.IsFalse(result.GenericParameterNames.Any());
 				Assert.IsTrue(result.HasParameterlessCtor);
 			}
+			
+			[TestMethod]
+			public void Initialize_WithExcludedClass_ShouldThrowCorrectly()
+			{
+				// Arrange
+				var type = typeof(NotAScriptModel);
+
+				// Act
+				var result = new ClassDescriptor(type);
+
+				// Assert
+				Assert.IsFalse(result.IsApplicable);
+			}
 		}
 
 		[TestClass]
@@ -208,7 +221,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var descriptors = new[] { typeof(ViewModel), typeof(string) }.Select(x=> new ClassDescriptor(x));
 
 				// Act
-				var result = descriptors.FilterClassDescriptors().ToList();
+				var result = descriptors.Where(x=>x.IsApplicable).ToList();
 
 				// Assert
 				Assert.AreEqual(1, result.Count);
@@ -222,7 +235,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var descriptors = new[] { typeof(ViewModel), typeof(bool), typeof(Gender) }.Select(x=> new ClassDescriptor(x));
 
 				// Act
-				var result = descriptors.FilterClassDescriptors().ToList();
+				var result = descriptors.Where(x=>x.IsApplicable).ToList();
 
 				// Assert
 				Assert.AreEqual(1, result.Count);

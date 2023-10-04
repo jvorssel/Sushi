@@ -57,13 +57,57 @@ export class ViewModel {
 }
 
 /**
+ * Sushi.Tests.Models.BaseViewModel
+ * @typedef {Object} BaseViewModel
+ * @extends ViewModel 
+ */
+export class BaseViewModel extends ViewModel {
+    value: string = "base";
+    base: boolean = true;
+
+    constructor(value?: any) {
+        super(value);
+
+        if (value) {
+            this.value = value.value;
+            this.guid = value.guid;
+            this.base = value.base;
+            this.createdOn = value.createdOn;
+        }
+    }
+}
+
+/**
+ * Sushi.Tests.Models.InheritedViewModel
+ * @typedef {Object} InheritedViewModel
+ * @extends BaseViewModel 
+ */
+export class InheritedViewModel extends BaseViewModel {
+    guid: string = "new guid";
+    addition: string = "added";
+
+    constructor(value?: any) {
+        super(value);
+
+        if (value) {
+            this.value = value.value;
+            this.guid = value.guid;
+            this.addition = value.addition;
+            this.guid = value.guid;
+            this.base = value.base;
+            this.createdOn = value.createdOn;
+        }
+    }
+}
+
+/**
  * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "5238d573-6d87-439c-a26c-d2f1d1a0ceac";
+    identifier: string = "086d8628-3490-4af8-ad58-79c7c80c2ca0";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */
@@ -220,6 +264,20 @@ export class AbstractParentModel extends AbstractBaseModel {
 
         if (value) {
             this.surname = value.surname;
+            this.name = value.name;
+        }
+    }
+}
+
+/**
+ * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
+ * @typedef {Object} CtorFixModel
+ */
+export class CtorFixModel {
+    name!: string;
+
+    constructor(value?: any) {
+        if (value) {
             this.name = value.name;
         }
     }

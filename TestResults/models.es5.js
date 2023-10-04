@@ -42,6 +42,42 @@ function ViewModel(obj) {
 }
 
 /**
+ * Sushi.Tests.Models.BaseViewModel
+ * @typedef {Object} BaseViewModel
+ * @extends ViewModel 
+ */
+function BaseViewModel(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.value = value.value;
+    this.guid = value.guid;
+    this.base = value.base;
+    this.createdOn = value.createdOn;
+
+}
+
+/**
+ * Sushi.Tests.Models.InheritedViewModel
+ * @typedef {Object} InheritedViewModel
+ * @extends BaseViewModel 
+ */
+function InheritedViewModel(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.value = value.value;
+    this.guid = value.guid;
+    this.addition = value.addition;
+    this.guid = value.guid;
+    this.base = value.base;
+    this.createdOn = value.createdOn;
+
+}
+
+/**
  * The PersonViewModel that represents a Person.
  * @typedef {Object} PersonViewModel
  * @extends ViewModel 
@@ -152,6 +188,19 @@ function AbstractParentModel(obj) {
         value = {};
 
     this.surname = value.surname;
+    this.name = value.name;
+
+}
+
+/**
+ * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
+ * @typedef {Object} CtorFixModel
+ */
+function CtorFixModel(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
     this.name = value.name;
 
 }

@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sushi.Attributes;
 using Sushi.Descriptors;
+using Sushi.Tests.Models;
 
 namespace Sushi.Tests.BugFixes;
 
@@ -10,7 +12,8 @@ namespace Sushi.Tests.BugFixes;
 [TestClass]
 public class NoParameterlessCtorTests : TestBase
 {
-    public class CtorFixModel
+    [ConvertToScript]
+    public class CtorFixModel 
     {
         public string Name { get; set; }
 
