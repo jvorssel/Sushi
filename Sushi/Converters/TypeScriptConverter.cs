@@ -121,7 +121,7 @@ public sealed class TypeScriptConverter : ModelConverter
             return $"new {descriptor.Name}()";
 
         if (defaultValueType.IsClass && defaultValueType != typeof(string))
-            return string.Empty;
+            return defaultValueType.IsDictionary() ? "{}" : string.Empty;
 
         var nativeType = prop.Type.ToNativeScriptType();
         switch (nativeType)

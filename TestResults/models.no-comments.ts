@@ -101,7 +101,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "ddd5ddb8-f68a-41dc-a83b-2ab05a32f11d";
+    identifier: string = "5f522298-2f0a-4635-a6a7-13cb0acd711d";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -224,7 +224,7 @@ export class TypeModel extends ViewModel {
     date: Date | string | null = null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
-    studentPerClass: Array<Array<StudentViewModel>> = [];
+    studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     readonlyString!: string;
 
     constructor(value: object | null = null) {

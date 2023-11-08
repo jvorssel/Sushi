@@ -18,6 +18,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
+using Sushi.Enum;
+using Sushi.Helpers;
 using Sushi.Tests.Models;
 
 #endregion
@@ -214,8 +216,8 @@ public abstract class TypeScriptConverterTests
             var nullableResult = converter.ResolveDefaultValue(nullableClassType);
 
             // Assert
-            Assert.AreEqual("null", boolResult);
-            Assert.AreEqual("null", nullableResult);
+            Assert.AreEqual(NativeType.Null.ToScriptType(), boolResult);
+            Assert.AreEqual(NativeType.Null.ToScriptType(), nullableResult);
         }
 
         [TestMethod]
@@ -357,6 +359,20 @@ public abstract class TypeScriptConverterTests
 
             // Assert
             Assert.AreEqual(string.Empty, result);
+        }
+
+        [TestMethod]
+        public void ResolveDefaultValue_Dictionary_ExpectObjectTest()
+        {
+            // Arrange
+            var converter = new SushiConverter().TypeScript();
+            var prop = new PropertyDescriptor(typeof(Dictionary<string, StudentViewModel>), new Dictionary<string,StudentViewModel>());
+
+            // Act
+            var result = converter.ResolveDefaultValue(prop);
+
+            // Assert
+            Assert.AreEqual("{}", result);
         }
     }
 

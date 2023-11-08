@@ -49,6 +49,7 @@ namespace Sushi.Tests.Models
 		public StudentViewModel Student { get; set; } = new StudentViewModel();
 
 		public List<StudentViewModel> Students { get; set; }
-		public List<List<StudentViewModel>> StudentPerClass { get; set; }
+
+		public Dictionary<string, StudentViewModel[]> StudentPerClass { get; set; } = new ();
 	}
 }
