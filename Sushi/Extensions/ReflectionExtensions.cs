@@ -53,7 +53,7 @@ public static class ReflectionExtensions
         catch (Exception e)
         {
 #if DEBUG
-				throw e;
+            throw e;
 #endif
             return null;
         }
@@ -155,15 +155,14 @@ public static class ReflectionExtensions
     /// <summary>
     ///     A T extension method that query if '@this' is type or inherits of.
     /// </summary>
-    internal static bool InheritsInterface<T>(this Type objectType)
+    internal static bool IsOrInheritsInterface<T>(this Type objectType)
     {
-        // Checking base type for interfaces doesn't really work.
-        var interfaces = objectType.GetInterfaces();
         var type = typeof(T);
         if (!type.IsInterface)
             throw new ArgumentException($"Expected {type.Name} to be an interface.");
 
-        return interfaces.Any(x => x.Name == type.Name);
+        var interfaces = objectType.GetInterfaces();
+        return objectType == type || interfaces.Any(x => x.Name == type.Name);
     }
 
     /// <summary>
@@ -175,13 +174,27 @@ public static class ReflectionExtensions
     }
 
     /// <summary>
+    ///     If the given type is a dictionary.
+    /// </summary>
+    internal static bool IsDictionary(this Type type)
+    {
+        if (!type.IsGenericType)
+            return false;
+
+        var genericType = type.GetGenericTypeDefinition();
+        return genericType == typeof(Dictionary<,>) || genericType == typeof(IDictionary<,>);
+    }
+
+    /// <summary>
     ///     If the given type is an array.
     /// </summary>
     internal static bool IsArrayType(this Type type)
     {
-        var isInterfaceArray = type.InheritsInterface<IEnumerable>() || type.IsArray;
+        var isInterfaceArray = type.IsOrInheritsInterface<IEnumerable>() || type.IsArray;
         var isString = type == typeof(string);
-        return isInterfaceArray && !isString;
+        var isDict = type.IsDictionary();
+
+        return isInterfaceArray && !isString && !isDict;
     }
 
     /// <summary>

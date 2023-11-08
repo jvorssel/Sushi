@@ -32,7 +32,6 @@ public sealed class TypeScriptConverter : ModelConverter
     /// <inheritdoc />
     public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options)
     {
-        
     }
 
     /// <inheritdoc />
@@ -40,7 +39,7 @@ public sealed class TypeScriptConverter : ModelConverter
     {
         foreach (var line in HeaderLines)
             yield return line;
-        
+
         foreach (var model in EnumModels)
             yield return ToTypeScriptEnum(model);
 
@@ -65,21 +64,32 @@ public sealed class TypeScriptConverter : ModelConverter
 
     public string ResolveScriptType(Type type, string prefix = "")
     {
-        var actualType = type.GetBaseType();
-        var genericTypeArgs = type.IsGenericType ? GetGenericTypeArguments(type, prefix) : string.Empty;
-
         // Check if any of the available models have the same name and should be used.
         var classModel =
             Models.SingleOrDefault(x => x.Type == (type.IsGenericType ? type.GetGenericTypeDefinition() : type));
 
+        var genericTypeArgs = type.IsGenericType ? GetGenericTypeArguments(type, prefix).ToList() : new List<string>();
         if (classModel != null)
-            return type.IsGenericType ? $"{prefix}{classModel.Name}<{genericTypeArgs}>" : prefix + classModel.Name;
+            return type.IsGenericType
+                ? $"{prefix}{classModel.Name}<{genericTypeArgs.Glue(", ")}>"
+                : prefix + classModel.Name;
 
         // Array
-        if (type.IsArrayType())
+        var actualType = type.GetBaseType();
+        var isDictionary = type.IsDictionary();
+        if (type.IsArrayType() && !isDictionary)
         {
-            var typeName = type.IsGenericType ? genericTypeArgs : ResolveScriptType(actualType, prefix);
+            var typeName = type.IsGenericType ? genericTypeArgs.Glue(", ") : ResolveScriptType(actualType, prefix);
             return $"Array<{typeName}>";
+        }
+
+        if (isDictionary && genericTypeArgs.Count == 2)
+        {
+            var keyType = genericTypeArgs[0];
+            if (keyType != NativeType.String.ToScriptType() && keyType != NativeType.Int.ToScriptType())
+                return "any"; // Unsupported, default to any.
+
+            return $"{{ [key: string]: {genericTypeArgs[1]} }}";
         }
 
         var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
@@ -142,13 +152,13 @@ public sealed class TypeScriptConverter : ModelConverter
         }
     }
 
-    internal string GetGenericTypeArguments(Type type, string prefix)
+    internal IEnumerable<string> GetGenericTypeArguments(Type type, string prefix)
     {
         if (!type.IsGenericType)
             throw new ArgumentException("Expected given type to be generic.");
 
         var genericTypeArgs = type.GenericTypeArguments
-            .Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x, prefix)).Glue(", ");
+            .Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x, prefix));
         return genericTypeArgs;
     }
 

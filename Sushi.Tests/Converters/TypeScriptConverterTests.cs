@@ -104,6 +104,22 @@ public abstract class TypeScriptConverterTests
                 Assert.AreEqual("Array<StudentViewModel>", scriptTypeValue);
         }
 
+        [TestMethod]
+        public void ResolveScriptType_Dictionary_ShouldFormatCorrectly()
+        {
+            // Arrange
+            var converter = new SushiConverter(TestTypes).TypeScript();
+
+            // Act
+            var withNumber = converter.ResolveScriptType(typeof(Dictionary<string, int>));
+            var withGender = converter.ResolveScriptType(typeof(IDictionary<string, Gender>));
+            var withStudent = converter.ResolveScriptType(typeof(IDictionary<string, StudentViewModel>));
+
+            // Assert
+            Assert.AreEqual("{ [key: string]: number }", withNumber);
+            Assert.AreEqual("{ [key: string]: Gender | number }", withGender);
+            Assert.AreEqual("{ [key: string]: StudentViewModel }", withStudent);
+        }
 
         [TestMethod]
         public void ResolveScriptType_NormalArrayType_ShouldFormatCorrectly()
@@ -145,7 +161,7 @@ public abstract class TypeScriptConverterTests
             var result = converter.ResolveScriptType(typeof(Dictionary<string, List<StudentViewModel>>));
 
             // Assert
-            Assert.AreEqual("Array<string, Array<StudentViewModel>>", result);
+            Assert.AreEqual("{ [key: string]: Array<StudentViewModel> }", result);
         }
 
         [TestMethod]
@@ -160,7 +176,7 @@ public abstract class TypeScriptConverterTests
             // Assert
             Assert.AreEqual("boolean | null", result);
         }
-        
+
         [TestMethod]
         public void ResolveScriptType_WithPrefix_ShouldFormatCorrectly()
         {

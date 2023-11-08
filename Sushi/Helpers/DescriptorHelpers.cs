@@ -71,7 +71,7 @@ public static class DescriptorHelpers
     {
         var type = descriptor.Type;
         var hasScriptAttr = type.GetCustomAttributes(typeof(ConvertToScriptAttribute)).Any();
-        var isScriptModel = type.InheritsInterface<IScriptModel>();
+        var isScriptModel = type.IsOrInheritsInterface<IScriptModel>();
         var attrs = type.GetCustomAttributes(typeof(IgnoreForScriptAttribute), true);
         if (attrs.Any() || !type.IsClass)
             return false;

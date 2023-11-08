@@ -10,146 +10,197 @@
 // \***************************************************************************/
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Extensions;
-using Sushi.Helpers;
 using Sushi.Tests.Models;
 
 namespace Sushi.Tests.Extensions;
 
 public abstract class ReflectionExtensionsTests
 {
-	[TestClass]
-	public class CreateInstance : ReflectionExtensionsTests
-	{
-		[TestMethod]
-		public void CreateInstance_SimpleViewModel_ShouldInitializeTest()
-		{
-			// Arrange
-			var type = typeof(PersonViewModel);
-			
-			// Act
-			var instance = type.CreateInstance();
-			
-			// Assert
-			Assert.IsNotNull(instance);
-			Assert.IsNotNull(instance as PersonViewModel);
-		}
-		
-		[TestMethod]
-		public void CreateInstance_ComplexViewModel_ShouldInitializeTest()
-		{
-			// Arrange
-			var type = typeof(SchoolViewModel);
-			var property = type.GetProperty("AverageGrade");
-			
-			// Act
-			var instance = type.CreateInstance();
-			
-			// Assert
-			Assert.IsNotNull(instance);
-			Assert.IsNotNull(instance as SchoolViewModel);
-		}
-		
-		[TestMethod]
-		public void CreateInstance_GenericType_ShouldInitializeTest()
-		{
-			// Arrange
-			var type = typeof(GenericStandalone<string>);
-			
-			// Act
-			var instance = type.CreateInstance();
-			
-			// Assert
-			Assert.IsNotNull(instance);
-			Assert.IsNotNull(instance as GenericStandalone<string>);
-		}
-		
-		[TestMethod]
-		public void CreateInstance_GenericTypeDefinition_ShouldReturnNullTest()
-		{
-			// Arrange
-			var type = typeof(GenericStandalone<>);
-			
-			// Act
-			var instance = type.CreateInstance();
-			
-			// Assert
-			Assert.IsNull(instance);
-		}
-		
-		[TestMethod]
-		public void CreateInstance_Interface_ShouldReturnNullTest()
-		{
-			// Arrange
-			var type = typeof(ISchoolViewModel);
-			
-			// Act
-			var result = type.CreateInstance();
-			
-			// Assert
-			Assert.IsNull(result);
-		}
-		
-		[TestMethod]
-		public void CreateInstance_AbstractType_ShouldReturnNullTest()
-		{
-			// Arrange
-			var type = typeof(ViewModel);
-			
-			// Act
-			var result = type.CreateInstance();
-			
-			// Assert
-			Assert.IsNull(result);
-		}
-	}
-}
+    [TestClass]
+    public class CreateInstance : ReflectionExtensionsTests
+    {
+        [TestMethod]
+        public void CreateInstance_SimpleViewModel_ShouldInitializeTest()
+        {
+            // Arrange
+            var type = typeof(PersonViewModel);
 
+            // Act
+            var instance = type.CreateInstance();
 
-public abstract class ExtensionsTests
-{
-	[TestClass]
-	public class GlueMethod : ExtensionsTests
-	{
-		[TestMethod]
-		public void Glue_Empty_ShouldGlueCorrectly()
-		{
-			// Arrange
-			var values = Array.Empty<string>();
-			
-			// Act
-			var result = values.Glue(".");
-			
-			// Assert
-			Assert.AreEqual(string.Empty, result);
-		}
-		
-		[TestMethod]
-		public void Glue_Sentence_ShouldGlueCorrectly()
-		{
-			// Arrange
-			var values = new [] { "this","is", "awesome"};
-			
-			// Act
-			var result = values.Glue(" ");
-			
-			// Assert
-			Assert.AreEqual("this is awesome", result);
-		}
-		
-		[TestMethod]
-		public void Glue_Mirrorable_ShouldGlueCorrectly()
-		{
-			// Arrange
-			var values = new[] { "1", "0", "1" };
-			
-			// Act
-			var result = values.Glue(".");
-			
-			// Assert
-			Assert.AreEqual("1.0.1", result);
-		}
-	}
-    
+            // Assert
+            Assert.IsNotNull(instance);
+            Assert.IsNotNull(instance as PersonViewModel);
+        }
+
+        [TestMethod]
+        public void CreateInstance_ComplexViewModel_ShouldInitializeTest()
+        {
+            // Arrange
+            var type = typeof(SchoolViewModel);
+            var property = type.GetProperty("AverageGrade");
+
+            // Act
+            var instance = type.CreateInstance();
+
+            // Assert
+            Assert.IsNotNull(instance);
+            Assert.IsNotNull(instance as SchoolViewModel);
+        }
+
+        [TestMethod]
+        public void CreateInstance_GenericType_ShouldInitializeTest()
+        {
+            // Arrange
+            var type = typeof(GenericStandalone<string>);
+
+            // Act
+            var instance = type.CreateInstance();
+
+            // Assert
+            Assert.IsNotNull(instance);
+            Assert.IsNotNull(instance as GenericStandalone<string>);
+        }
+
+        [TestMethod]
+        public void CreateInstance_GenericTypeDefinition_ShouldReturnNullTest()
+        {
+            // Arrange
+            var type = typeof(GenericStandalone<>);
+
+            // Act
+            var instance = type.CreateInstance();
+
+            // Assert
+            Assert.IsNull(instance);
+        }
+
+        [TestMethod]
+        public void CreateInstance_Interface_ShouldReturnNullTest()
+        {
+            // Arrange
+            var type = typeof(ISchoolViewModel);
+
+            // Act
+            var result = type.CreateInstance();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void CreateInstance_AbstractType_ShouldReturnNullTest()
+        {
+            // Arrange
+            var type = typeof(ViewModel);
+
+            // Act
+            var result = type.CreateInstance();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+    }
+
+    [TestClass]
+    public class InheritsInterface : ReflectionExtensionsTests
+    {
+        [TestMethod]
+        public void IsOrInheritsInterface_Equal_ReturnTrueTest()
+        {
+            // Arrange
+            var type = typeof(IEnumerable<int>);
+
+            // Act
+            var result = type.IsOrInheritsInterface<IEnumerable<int>>();
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsOrInheritsInterface_InheritedArgument_ReturnTrueTest()
+        {
+            // Arrange
+            var type = typeof(IEnumerable<int>);
+
+            // Act
+            var result = type.IsOrInheritsInterface<IEnumerable>();
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsOrInheritsInterface_NotAnInterface_ShouldThrow()
+        {
+            // Arrange
+            var type = typeof(IEnumerable<int>);
+            var exception = new ArgumentException($"Expected {nameof(StudentViewModel)} to be an interface.");
+
+            // Act & Assert
+            var result =
+                Assert.ThrowsException<ArgumentException>(() => type.IsOrInheritsInterface<StudentViewModel>());
+            Assert.AreEqual(exception.Message, result.Message);
+        }
+    }
+
+    [TestClass]
+    public class IsArrayType : ReflectionExtensionsTests
+    {
+        [TestMethod]
+        public void IsArrayType_IEnumerable_ReturnTrueTest()
+        {
+            // Arrange
+            var type = typeof(IEnumerable<int>);
+
+            // Act
+            var result = type.IsArrayType();
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsArrayType_Array_ReturnTrueTest()
+        {
+            // Arrange
+            var type = typeof(int[]);
+
+            // Act
+            var result = type.IsArrayType();
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsArrayType_String_ReturnFalseTest()
+        {
+            // Arrange
+            var type = typeof(string);
+
+            // Act
+            var result = type.IsArrayType();
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void IsArrayType_Dictionary_ReturnFalseTest()
+        {
+            // Act
+            var valueType = typeof(Dictionary<string, int>).IsArrayType();
+            var interfaceType = typeof(IDictionary<string, int>).IsArrayType();
+            
+            // Act & Assert
+            Assert.IsFalse(valueType);
+            Assert.IsFalse(interfaceType);
+        }
+    }
 }
