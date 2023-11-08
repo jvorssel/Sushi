@@ -326,7 +326,21 @@ public abstract class TypeScriptConverterTests
             var value = converter.ResolveDefaultValue(prop);
 
             // Assert
-            Assert.AreEqual("", value, "Class constructor not found.");
+            Assert.AreEqual(string.Empty, value, "Class constructor not found.");
+        }
+
+        [TestMethod]
+        public void ResolveDefaultValue_NullValue_ExpectEmptyTest()
+        {
+            // Arrange
+            var converter = new SushiConverter().TypeScript();
+            var prop = new PropertyDescriptor(null as Type, true);
+
+            // Act
+            var result = converter.ResolveDefaultValue(prop);
+
+            // Assert
+            Assert.AreEqual(string.Empty, result);
         }
     }
 

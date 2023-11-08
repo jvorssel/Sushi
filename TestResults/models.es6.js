@@ -1,6 +1,5 @@
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
- * @typedef {Object} GenericComplexStandalone
  */
 export class GenericComplexStandalone {
     First;
@@ -23,7 +22,6 @@ export class GenericComplexStandalone {
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
- * @typedef {Object} GenericStandalone
  */
 export class GenericStandalone {
     Values;
@@ -44,7 +42,6 @@ export class GenericStandalone {
 
 /**
  * The view model base class.
- * @typedef {Object} ViewModel
  */
 export class ViewModel {
     /** The view model identifier. */
@@ -67,7 +64,6 @@ export class ViewModel {
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @typedef {Object} BaseViewModel
  * @extends ViewModel 
  */
 export class BaseViewModel extends ViewModel {
@@ -91,7 +87,6 @@ export class BaseViewModel extends ViewModel {
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @typedef {Object} InheritedViewModel
  * @extends BaseViewModel 
  */
 export class InheritedViewModel extends BaseViewModel {
@@ -115,7 +110,6 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
- * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
 export class PersonViewModel extends ViewModel {
@@ -147,7 +141,6 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
- * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
 export class StudentViewModel extends PersonViewModel {
@@ -173,7 +166,6 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
- * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
 export class SchoolViewModel extends ViewModel {
@@ -222,7 +214,6 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
- * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
 export class TypeModel extends ViewModel {
@@ -260,7 +251,6 @@ export class TypeModel extends ViewModel {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- * @typedef {Object} AbstractBaseModel
  */
 export class AbstractBaseModel {
     Name;
@@ -279,7 +269,6 @@ export class AbstractBaseModel {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @typedef {Object} AbstractParentModel
  * @extends AbstractBaseModel 
  */
 export class AbstractParentModel extends AbstractBaseModel {
@@ -301,7 +290,6 @@ export class AbstractParentModel extends AbstractBaseModel {
 
 /**
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- * @typedef {Object} CtorFixModel
  */
 export class CtorFixModel {
     Name;
@@ -320,7 +308,6 @@ export class CtorFixModel {
 
 /**
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- * @typedef {Object} NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
     Name;

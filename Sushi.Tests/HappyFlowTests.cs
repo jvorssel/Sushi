@@ -106,8 +106,7 @@ namespace Sushi.Tests
 			var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
 			// Act
-			var script = converter.TypeScript(new ConverterOptions())
-				.ToString();
+			var script = converter.TypeScript().ToString();
 
 			WriteToFile(script, GetFilePath("models.latest.ts"));
 		}

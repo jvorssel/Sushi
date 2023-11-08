@@ -32,11 +32,15 @@ public sealed class TypeScriptConverter : ModelConverter
     /// <inheritdoc />
     public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options)
     {
+        
     }
 
     /// <inheritdoc />
     protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
     {
+        foreach (var line in HeaderLines)
+            yield return line;
+        
         foreach (var model in EnumModels)
             yield return ToTypeScriptEnum(model);
 
@@ -92,10 +96,10 @@ public sealed class TypeScriptConverter : ModelConverter
 
     public string ResolveDefaultValue(IPropertyDescriptor prop)
     {
-        if (prop.Type.IsArrayType())
+        if (prop.Type?.IsArrayType() ?? false)
             return "[]";
 
-        if (prop.Type.IsNullable())
+        if (prop.Type?.IsNullable() ?? false)
             return "null";
 
         if (prop.DefaultValue == null)
@@ -143,7 +147,8 @@ public sealed class TypeScriptConverter : ModelConverter
         if (!type.IsGenericType)
             throw new ArgumentException("Expected given type to be generic.");
 
-        var genericTypeArgs = type.GenericTypeArguments.Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x, prefix)).Glue(", ");
+        var genericTypeArgs = type.GenericTypeArguments
+            .Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x, prefix)).Glue(", ");
         return genericTypeArgs;
     }
 
@@ -166,23 +171,24 @@ public sealed class TypeScriptConverter : ModelConverter
         return builder.ToString();
     }
 
-    private string CreateConstructorDeclaration(ClassDescriptor model)
+    public string CreateConstructorDeclaration(ClassDescriptor model)
     {
         var builder = new StringBuilder();
-        builder.AppendLine($"{Indent}constructor(value?: any) {{");
+        builder.AppendLine($"{Indent}constructor(value: object | null = null) {{");
         if (model.Parent != null)
         {
             builder.AppendLine(Indent + Indent + "super(value);");
             builder.AppendLine();
         }
 
-        builder.AppendLine(Indent + Indent + "if (value) {");
-
         foreach (var prop in model.Properties)
-            builder.AppendLine(
-                $"{Indent + Indent + Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+        {
+            var name = ApplyCasingStyle(prop.Name);
+            builder.AppendLine($"{Indent + Indent}if (value?.hasOwnProperty('{name}'))");
+            builder.AppendLine($"{Indent + Indent + Indent}this.{name} = value['{name}'];");
+            builder.AppendLine();
+        }
 
-        builder.AppendLine(Indent + Indent + "}");
         builder.Append(Indent + "}");
         return builder.ToString();
     }

@@ -38,6 +38,6 @@ namespace Sushi
 		///     Create the converter for TypeScript.
 		/// </summary>
 		public static TypeScriptConverter TypeScript(this SushiConverter converter, IConverterOptions options = null)
-			=> new TypeScriptConverter(converter, options ?? new ConverterOptions());
+			=> new TypeScriptConverter(converter, options ?? new TypescriptConverterOptions());
 	}
 }

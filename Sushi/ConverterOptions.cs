@@ -14,14 +14,17 @@ using Sushi.Interfaces;
 
 namespace Sushi
 {
-	public sealed class ConverterOptions : IConverterOptions
+	public class ConverterOptions : IConverterOptions
 	{
 		/// <inheritdoc />
 		public string Indent { get; set; }
 
 		/// <inheritdoc />
 		public PropertyNameCasing CasingStyle { get; set; }
-
+		
+		/// <inheritdoc />
+		public List<string> Headers { get; set; } = new();
+		
 		public ConverterOptions(string indent = "    ",
 			PropertyNameCasing casing = PropertyNameCasing.CamelCase)
 		{

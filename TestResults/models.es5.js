@@ -1,6 +1,5 @@
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
- * @typedef {Object} GenericComplexStandalone
  */
 function GenericComplexStandalone(obj) {
     var value = obj;
@@ -15,7 +14,6 @@ function GenericComplexStandalone(obj) {
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
- * @typedef {Object} GenericStandalone
  */
 function GenericStandalone(obj) {
     var value = obj;
@@ -29,7 +27,6 @@ function GenericStandalone(obj) {
 
 /**
  * The view model base class.
- * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
     var value = obj;
@@ -43,7 +40,6 @@ function ViewModel(obj) {
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @typedef {Object} BaseViewModel
  * @extends ViewModel 
  */
 function BaseViewModel(obj) {
@@ -60,7 +56,6 @@ function BaseViewModel(obj) {
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @typedef {Object} InheritedViewModel
  * @extends BaseViewModel 
  */
 function InheritedViewModel(obj) {
@@ -79,7 +74,6 @@ function InheritedViewModel(obj) {
 
 /**
  * The PersonViewModel that represents a Person.
- * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
 function PersonViewModel(obj) {
@@ -98,7 +92,6 @@ function PersonViewModel(obj) {
 
 /**
  * Represents a Student in a school.
- * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
 function StudentViewModel(obj) {
@@ -119,7 +112,6 @@ function StudentViewModel(obj) {
 
 /**
  * Basic information about a School.
- * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
 function SchoolViewModel(obj) {
@@ -144,7 +136,6 @@ function SchoolViewModel(obj) {
 
 /**
  * Simple model to verify complex types.
- * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
 function TypeModel(obj) {
@@ -166,7 +157,6 @@ function TypeModel(obj) {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- * @typedef {Object} AbstractBaseModel
  */
 function AbstractBaseModel(obj) {
     var value = obj;
@@ -179,7 +169,6 @@ function AbstractBaseModel(obj) {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @typedef {Object} AbstractParentModel
  * @extends AbstractBaseModel 
  */
 function AbstractParentModel(obj) {
@@ -194,7 +183,6 @@ function AbstractParentModel(obj) {
 
 /**
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- * @typedef {Object} CtorFixModel
  */
 function CtorFixModel(obj) {
     var value = obj;
@@ -207,7 +195,6 @@ function CtorFixModel(obj) {
 
 /**
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- * @typedef {Object} NoXmlDocumentationModel
  */
 function NoXmlDocumentationModel(obj) {
     var value = obj;

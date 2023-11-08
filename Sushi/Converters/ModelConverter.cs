@@ -24,6 +24,7 @@ namespace Sushi.Converters
 {
 	public abstract class ModelConverter : IConvertModels
 	{
+		protected List<string> HeaderLines { get; set; }
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
@@ -38,6 +39,7 @@ namespace Sushi.Converters
 		{
 			Indent = options.Indent;
 			CasingStyle = options.CasingStyle;
+			HeaderLines = options.Headers;
 			XmlDocument = converter.Documentation;
 			Models = converter.Models;
 			EnumModels = converter.EnumModels;

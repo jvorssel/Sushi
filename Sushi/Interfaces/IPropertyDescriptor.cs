@@ -21,7 +21,7 @@ namespace Sushi.Interfaces
 		/// <summary>
 		///     The actual type.
 		/// </summary>
-		Type Type { get; }
+		Type? Type { get; }
 
 		/// <summary>
 		///     The type of the class that the property or field belongs to.
@@ -31,6 +31,6 @@ namespace Sushi.Interfaces
 		/// <summary>
 		///		The default value assigned to the property.
 		/// </summary>
-		object DefaultValue { get; }
+		object? DefaultValue { get; }
 	}
 }

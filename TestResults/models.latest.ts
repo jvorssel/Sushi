@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 export enum Gender {
     Undefined = 0,
     Male = 1,
@@ -6,41 +7,44 @@ export enum Gender {
 
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
- * @typedef {Object} GenericComplexStandalone
  */
 export class GenericComplexStandalone<TFirst, TSecond> {
     first: Array<TFirst> = [];
     second: Array<TSecond> = [];
     totalAmount!: number;
 
-    constructor(value?: any) {
-        if (value) {
-            this.first = value.first;
-            this.second = value.second;
-            this.totalAmount = value.totalAmount;
-        }
+    constructor(value: object | null = null) {
+        if (value?.hasOwnProperty('first'))
+            this.first = value['first'];
+
+        if (value?.hasOwnProperty('second'))
+            this.second = value['second'];
+
+        if (value?.hasOwnProperty('totalAmount'))
+            this.totalAmount = value['totalAmount'];
+
     }
 }
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
- * @typedef {Object} GenericStandalone
  */
 export class GenericStandalone<TEntry> {
     values: Array<TEntry> = [];
     totalAmount!: number;
 
-    constructor(value?: any) {
-        if (value) {
-            this.values = value.values;
-            this.totalAmount = value.totalAmount;
-        }
+    constructor(value: object | null = null) {
+        if (value?.hasOwnProperty('values'))
+            this.values = value['values'];
+
+        if (value?.hasOwnProperty('totalAmount'))
+            this.totalAmount = value['totalAmount'];
+
     }
 }
 
 /**
  * The view model base class.
- * @typedef {Object} ViewModel
  */
 export class ViewModel {
     /** The view model identifier. */
@@ -48,66 +52,81 @@ export class ViewModel {
     /** When this view model was created. */
     createdOn!: Date | string | null;
 
-    constructor(value?: any) {
-        if (value) {
-            this.guid = value.guid;
-            this.createdOn = value.createdOn;
-        }
+    constructor(value: object | null = null) {
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
     }
 }
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @typedef {Object} BaseViewModel
  * @extends ViewModel 
  */
 export class BaseViewModel extends ViewModel {
     value: string = "base";
     base: boolean = true;
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.value = value.value;
-            this.guid = value.guid;
-            this.base = value.base;
-            this.createdOn = value.createdOn;
-        }
+        if (value?.hasOwnProperty('value'))
+            this.value = value['value'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('base'))
+            this.base = value['base'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
     }
 }
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @typedef {Object} InheritedViewModel
  * @extends BaseViewModel 
  */
 export class InheritedViewModel extends BaseViewModel {
     guid: string = "new guid";
     addition: string = "added";
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.value = value.value;
-            this.guid = value.guid;
-            this.addition = value.addition;
-            this.guid = value.guid;
-            this.base = value.base;
-            this.createdOn = value.createdOn;
-        }
+        if (value?.hasOwnProperty('value'))
+            this.value = value['value'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('addition'))
+            this.addition = value['addition'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('base'))
+            this.base = value['base'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
     }
 }
 
 /**
  * The PersonViewModel that represents a Person.
- * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "086d8628-3490-4af8-ad58-79c7c80c2ca0";
+    identifier: string = "7e7aa26a-27b6-4d49-9a1f-c4713b65f903";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */
@@ -115,23 +134,32 @@ export class PersonViewModel extends ViewModel {
     /** The Gender of the person. */
     gender: Gender | number = 1;
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.identifier = value.identifier;
-            this.name = value.name;
-            this.surname = value.surname;
-            this.gender = value.gender;
-            this.guid = value.guid;
-            this.createdOn = value.createdOn;
-        }
+        if (value?.hasOwnProperty('identifier'))
+            this.identifier = value['identifier'];
+
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
+        if (value?.hasOwnProperty('surname'))
+            this.surname = value['surname'];
+
+        if (value?.hasOwnProperty('gender'))
+            this.gender = value['gender'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
     }
 }
 
 /**
  * Represents a Student in a school.
- * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
 export class StudentViewModel extends PersonViewModel {
@@ -140,25 +168,38 @@ export class StudentViewModel extends PersonViewModel {
     /** The name of the School. */
     school!: SchoolViewModel;
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.grade = value.grade;
-            this.school = value.school;
-            this.identifier = value.identifier;
-            this.name = value.name;
-            this.surname = value.surname;
-            this.gender = value.gender;
-            this.guid = value.guid;
-            this.createdOn = value.createdOn;
-        }
+        if (value?.hasOwnProperty('grade'))
+            this.grade = value['grade'];
+
+        if (value?.hasOwnProperty('school'))
+            this.school = value['school'];
+
+        if (value?.hasOwnProperty('identifier'))
+            this.identifier = value['identifier'];
+
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
+        if (value?.hasOwnProperty('surname'))
+            this.surname = value['surname'];
+
+        if (value?.hasOwnProperty('gender'))
+            this.gender = value['gender'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
     }
 }
 
 /**
  * Basic information about a School.
- * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
 export class SchoolViewModel extends ViewModel {
@@ -182,29 +223,50 @@ export class SchoolViewModel extends ViewModel {
     students: Array<StudentViewModel> = [];
     timmy: StudentViewModel = new StudentViewModel();
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.name = value.name;
-            this.amountOfStudents = value.amountOfStudents;
-            this.owner = value.owner;
-            this.address = value.address;
-            this.zipCode = value.zipCode;
-            this.houseNumber = value.houseNumber;
-            this.houseNumberAddition = value.houseNumberAddition;
-            this.averageGrade = value.averageGrade;
-            this.students = value.students;
-            this.timmy = value.timmy;
-            this.guid = value.guid;
-            this.createdOn = value.createdOn;
-        }
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
+        if (value?.hasOwnProperty('amountOfStudents'))
+            this.amountOfStudents = value['amountOfStudents'];
+
+        if (value?.hasOwnProperty('owner'))
+            this.owner = value['owner'];
+
+        if (value?.hasOwnProperty('address'))
+            this.address = value['address'];
+
+        if (value?.hasOwnProperty('zipCode'))
+            this.zipCode = value['zipCode'];
+
+        if (value?.hasOwnProperty('houseNumber'))
+            this.houseNumber = value['houseNumber'];
+
+        if (value?.hasOwnProperty('houseNumberAddition'))
+            this.houseNumberAddition = value['houseNumberAddition'];
+
+        if (value?.hasOwnProperty('averageGrade'))
+            this.averageGrade = value['averageGrade'];
+
+        if (value?.hasOwnProperty('students'))
+            this.students = value['students'];
+
+        if (value?.hasOwnProperty('timmy'))
+            this.timmy = value['timmy'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
     }
 }
 
 /**
  * Simple model to verify complex types.
- * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
 export class TypeModel extends ViewModel {
@@ -220,80 +282,94 @@ export class TypeModel extends ViewModel {
     /** A readonly string. */
     readonlyString!: string;
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.nullableBool = value.nullableBool;
-            this.nullableString = value.nullableString;
-            this.guid = value.guid;
-            this.date = value.date;
-            this.student = value.student;
-            this.students = value.students;
-            this.studentPerClass = value.studentPerClass;
-            this.createdOn = value.createdOn;
-            this.readonlyString = value.readonlyString;
-        }
+        if (value?.hasOwnProperty('nullableBool'))
+            this.nullableBool = value['nullableBool'];
+
+        if (value?.hasOwnProperty('nullableString'))
+            this.nullableString = value['nullableString'];
+
+        if (value?.hasOwnProperty('guid'))
+            this.guid = value['guid'];
+
+        if (value?.hasOwnProperty('date'))
+            this.date = value['date'];
+
+        if (value?.hasOwnProperty('student'))
+            this.student = value['student'];
+
+        if (value?.hasOwnProperty('students'))
+            this.students = value['students'];
+
+        if (value?.hasOwnProperty('studentPerClass'))
+            this.studentPerClass = value['studentPerClass'];
+
+        if (value?.hasOwnProperty('createdOn'))
+            this.createdOn = value['createdOn'];
+
+        if (value?.hasOwnProperty('readonlyString'))
+            this.readonlyString = value['readonlyString'];
+
     }
 }
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- * @typedef {Object} AbstractBaseModel
  */
 export class AbstractBaseModel {
     name!: string;
 
-    constructor(value?: any) {
-        if (value) {
-            this.name = value.name;
-        }
+    constructor(value: object | null = null) {
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
     }
 }
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @typedef {Object} AbstractParentModel
  * @extends AbstractBaseModel 
  */
 export class AbstractParentModel extends AbstractBaseModel {
     surname!: string;
 
-    constructor(value?: any) {
+    constructor(value: object | null = null) {
         super(value);
 
-        if (value) {
-            this.surname = value.surname;
-            this.name = value.name;
-        }
+        if (value?.hasOwnProperty('surname'))
+            this.surname = value['surname'];
+
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
     }
 }
 
 /**
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- * @typedef {Object} CtorFixModel
  */
 export class CtorFixModel {
     name!: string;
 
-    constructor(value?: any) {
-        if (value) {
-            this.name = value.name;
-        }
+    constructor(value: object | null = null) {
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
     }
 }
 
 /**
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- * @typedef {Object} NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
     name!: string;
 
-    constructor(value?: any) {
-        if (value) {
-            this.name = value.name;
-        }
+    constructor(value: object | null = null) {
+        if (value?.hasOwnProperty('name'))
+            this.name = value['name'];
+
     }
 }
 

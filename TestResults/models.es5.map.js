@@ -1,6 +1,5 @@
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
- * @typedef {Object} GenericComplexStandalone
  */
 function GenericComplexStandalone(obj) {
     var value = obj;
@@ -19,7 +18,6 @@ GenericComplexStandalone.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
- * @typedef {Object} GenericStandalone
  */
 function GenericStandalone(obj) {
     var value = obj;
@@ -37,7 +35,6 @@ GenericStandalone.prototype.mapFrom = function(obj) {
 
 /**
  * The view model base class.
- * @typedef {Object} ViewModel
  */
 function ViewModel(obj) {
     var value = obj;
@@ -55,7 +52,6 @@ ViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @typedef {Object} BaseViewModel
  * @extends ViewModel 
  */
 function BaseViewModel(obj) {
@@ -76,7 +72,6 @@ BaseViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @typedef {Object} InheritedViewModel
  * @extends BaseViewModel 
  */
 function InheritedViewModel(obj) {
@@ -99,7 +94,6 @@ InheritedViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * The PersonViewModel that represents a Person.
- * @typedef {Object} PersonViewModel
  * @extends ViewModel 
  */
 function PersonViewModel(obj) {
@@ -122,7 +116,6 @@ PersonViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Represents a Student in a school.
- * @typedef {Object} StudentViewModel
  * @extends PersonViewModel 
  */
 function StudentViewModel(obj) {
@@ -147,7 +140,6 @@ StudentViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Basic information about a School.
- * @typedef {Object} SchoolViewModel
  * @extends ViewModel 
  */
 function SchoolViewModel(obj) {
@@ -176,7 +168,6 @@ SchoolViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Simple model to verify complex types.
- * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
 function TypeModel(obj) {
@@ -202,7 +193,6 @@ TypeModel.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- * @typedef {Object} AbstractBaseModel
  */
 function AbstractBaseModel(obj) {
     var value = obj;
@@ -219,7 +209,6 @@ AbstractBaseModel.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @typedef {Object} AbstractParentModel
  * @extends AbstractBaseModel 
  */
 function AbstractParentModel(obj) {
@@ -238,7 +227,6 @@ AbstractParentModel.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- * @typedef {Object} CtorFixModel
  */
 function CtorFixModel(obj) {
     var value = obj;
@@ -255,7 +243,6 @@ CtorFixModel.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- * @typedef {Object} NoXmlDocumentationModel
  */
 function NoXmlDocumentationModel(obj) {
     var value = obj;

@@ -23,7 +23,7 @@ public static class Extensions
     /// <summary>
     ///     Convert the given <paramref name="type" /> to its corresponding <see cref="NativeType" />.
     /// </summary>
-    public static NativeType ToNativeScriptType(this Type type)
+    public static NativeType ToNativeScriptType(this Type? type)
     {
         if (type == null)
             return NativeType.Undefined;
