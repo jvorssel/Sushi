@@ -1,4 +1,29 @@
 /**
+ * A class with const values.
+ */
+export class ConstValues {
+    /** A Static value. */
+    Static;
+    /** The First value. */
+    First;
+    /** The Last value. */
+    Last;
+
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
+
+        this.static = value.static;
+        this.first = value.first;
+        this.last = value.last;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new ConstValues(), obj);
+    }
+}
+
+/**
  * Sushi.Tests.Models.GenericComplexStandalone`2
  */
 export class GenericComplexStandalone {

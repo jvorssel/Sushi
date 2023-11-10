@@ -4,6 +4,16 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2213939a_002D02e5_002D402c_002Db319_002D951e2e21b131/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Sushi.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\jvors\Documents\GitHub\ModelConverter\Sushi.Tests" Presentation="&amp;lt;Sushi.Tests&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a7200460_002D6ddf_002D4efe_002D9b17_002Daf819520b6ab/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ConstValuesSupport_ShouldConvertTest #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::B02E945F-125A-41BD-8387-FBE60E511DDC::net6.0::Sushi.Tests.Converters.TypeScriptConverterTests+ConstValuesSupport.ConstValuesSupport_ShouldConvertTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ec426fad_002D893c_002D4b4f_002D8a5e_002D9f07bd5f0d41/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ConstValuesSupport_ShouldConvertTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::B02E945F-125A-41BD-8387-FBE60E511DDC::net6.0::Sushi.Tests.Converters.TypeScriptConverterTests+ConstValuesSupport.ConstValuesSupport_ShouldConvertTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	
 	
 	

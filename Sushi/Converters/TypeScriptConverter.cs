@@ -59,7 +59,9 @@ public sealed class TypeScriptConverter : ModelConverter
         else
             nameSuffix = "!";
 
-        return $"{Indent}{ApplyCasingStyle(property.Name)}{nameSuffix}: {scriptType}{suffix};";
+        var name = ApplyCasingStyle(property.Name);
+        var readonlyPrefix = property.Readonly ? "readonly " : string.Empty;
+        return $"{Indent}{readonlyPrefix}{name}{nameSuffix}: {scriptType}{suffix};";
     }
 
     public string ResolveScriptType(Type type, string prefix = "")
@@ -183,19 +185,23 @@ public sealed class TypeScriptConverter : ModelConverter
 
     public string CreateConstructorDeclaration(ClassDescriptor model)
     {
+        if (model.Properties.All(x => x.Readonly))
+            return string.Empty;
+
         var builder = new StringBuilder();
-        builder.AppendLine($"{Indent}constructor(value: object | null = null) {{");
+        builder.AppendLine($"{Indent}constructor(value: any = null) {{");
         if (model.Parent != null)
         {
             builder.AppendLine(Indent + Indent + "super(value);");
             builder.AppendLine();
         }
 
-        foreach (var prop in model.Properties)
+        // Skip properties without a setter.
+        foreach (var prop in model.Properties.Where(x => !x.Readonly))
         {
             var name = ApplyCasingStyle(prop.Name);
             builder.AppendLine($"{Indent + Indent}if (value?.hasOwnProperty('{name}'))");
-            builder.AppendLine($"{Indent + Indent + Indent}this.{name} = value['{name}'];");
+            builder.AppendLine($"{Indent + Indent + Indent}this.{name} = value.{name};");
             builder.AppendLine();
         }
 

@@ -29,8 +29,8 @@ namespace Sushi.Descriptors
 		public string Name => _field.Name;
 
 		/// <inheritdoc />
-		public bool IsReadonly => true;
-
+		public bool Readonly { get; }
+		
 		/// <inheritdoc />
 		public Type Type { get; }
 
@@ -38,7 +38,7 @@ namespace Sushi.Descriptors
 		public Type ClassType => _field.DeclaringType;
 
 		/// <inheritdoc />
-		public object DefaultValue { get; } = null;
+		public object? DefaultValue { get; }
 
 		/// <inheritdoc />
 		public bool IsNullable { get; }
@@ -53,6 +53,16 @@ namespace Sushi.Descriptors
 			_field = fieldInfo;
 			Type = _field.FieldType;
 			IsNullable = Type.IsNullable();
+			Readonly = true;
+			
+			try
+			{
+				DefaultValue = fieldInfo.GetValue(null);
+			}
+			catch (Exception e)
+			{
+				DefaultValue = null;
+			}
 
 			if (IsNullable)
 				Type = Nullable.GetUnderlyingType(Type);

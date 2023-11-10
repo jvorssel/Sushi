@@ -1,4 +1,18 @@
 /**
+ * A class with const values.
+ */
+function ConstValues(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.static = value.static;
+    this.first = value.first;
+    this.last = value.last;
+
+}
+
+/**
  * Sushi.Tests.Models.GenericComplexStandalone`2
  */
 function GenericComplexStandalone(obj) {

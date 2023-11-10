@@ -52,36 +52,51 @@ You can get the script default value using: `TypeScriptConverter.ResolveDefaultV
 ```
 /**
  * Simple model to verify complex types.
- * @typedef {Object} TypeModel
  * @extends ViewModel 
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
-    nullableBool!: boolean | null;
+    nullableBool: boolean | null = null;
     /** A nullable string, defaults to null. */
     nullableString!: string;
     /** A DateTime instance. */
     date: Date | string | null = null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
-    studentPerClass: Array<Array<StudentViewModel>> = [];
+    studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     /** A readonly string. */
     readonlyString!: string;
 
-    constructor(value?: any) {
+    constructor(value: any = null) {
         super(value);
 
-        if (value) {
-            this.nullableBool = value.nullableBool;
+        if (value?.hasOwnProperty('nullableBool'))
+            this.nullableBool = value.nullableBool.;
+
+        if (value?.hasOwnProperty('nullableString'))
             this.nullableString = value.nullableString;
+
+        if (value?.hasOwnProperty('guid'))
             this.guid = value.guid;
+
+        if (value?.hasOwnProperty('date'))
             this.date = value.date;
+
+        if (value?.hasOwnProperty('student'))
             this.student = value.student;
+
+        if (value?.hasOwnProperty('students'))
             this.students = value.students;
+
+        if (value?.hasOwnProperty('studentPerClass'))
             this.studentPerClass = value.studentPerClass;
+
+        if (value?.hasOwnProperty('createdOn'))
             this.createdOn = value.createdOn;
+
+        if (value?.hasOwnProperty('readonlyString'))
             this.readonlyString = value.readonlyString;
-        }
+
     }
 }
 ```

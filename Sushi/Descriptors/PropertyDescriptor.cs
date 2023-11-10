@@ -18,45 +18,50 @@ using Sushi.Interfaces;
 
 #endregion
 
-namespace Sushi.Descriptors
+namespace Sushi.Descriptors;
+
+/// <summary>
+///     Describes a property in a class.
+/// </summary>
+public sealed class PropertyDescriptor : IPropertyDescriptor
 {
-	/// <summary>
-	///     Describes a property in a class.
-	/// </summary>
-	public sealed class PropertyDescriptor : IPropertyDescriptor
-	{
-		private readonly PropertyInfo _property;
+    private readonly PropertyInfo _property;
 
-		/// <inheritdoc />
-		public object? DefaultValue { get; }
+    /// <inheritdoc />
+    public object? DefaultValue { get; }
 
-		/// <inheritdoc />
-		public string Name { get; }
+    /// <inheritdoc />
+    public bool Readonly { get; }
 
-		/// <inheritdoc />
-		public Type? Type { get; }
+    /// <inheritdoc />
+    public string Name { get; }
 
-		/// <inheritdoc />
-		public Type ClassType => _property.DeclaringType;
+    /// <inheritdoc />
+    public Type? Type { get; }
 
-		public PropertyDescriptor(PropertyInfo property, object defaultValue = null)
-		{
-			var type = property.PropertyType;
+    /// <inheritdoc />
+    public Type ClassType => _property.DeclaringType;
 
-			_property = property;
-			Name = property.Name;
-			Type = type;
-			DefaultValue = defaultValue;
-		}
+    public PropertyDescriptor(PropertyInfo property, object defaultValue = null)
+    {
+        var type = property.PropertyType;
 
-		public PropertyDescriptor(Type type, object defaultValue = null)
-		{
-			Type = type;
-			DefaultValue = defaultValue;
-		}
+        _property = property;
+        Name = property.Name;
+        Type = type;
+        DefaultValue = defaultValue;
+        Readonly = !property.CanWrite;
+    }
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"{ClassType.Namespace}.{ClassType.Name}.{_property.Name}";
-	}
+    public PropertyDescriptor(Type type, object defaultValue = null)
+    {
+        Type = type;
+        DefaultValue = defaultValue;
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return $"{ClassType.Namespace}.{ClassType.Name}.{_property.Name}";
+    }
 }

@@ -32,7 +32,7 @@ namespace Sushi.Tests.ModelDescriptors
 				
 				// Assert
 				Assert.AreEqual(nameof(TypeModel.ReadonlyString), descriptor.Name);
-				Assert.IsTrue(descriptor.IsReadonly);
+				Assert.IsTrue(descriptor.Readonly);
 				Assert.AreEqual(typeof(string), descriptor.Type);
 				Assert.IsFalse(descriptor.IsNullable);
 				Assert.AreEqual(NativeType.String, descriptor.NativeType);

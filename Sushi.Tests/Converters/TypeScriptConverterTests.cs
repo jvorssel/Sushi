@@ -366,7 +366,8 @@ public abstract class TypeScriptConverterTests
         {
             // Arrange
             var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(Dictionary<string, StudentViewModel>), new Dictionary<string,StudentViewModel>());
+            var prop = new PropertyDescriptor(typeof(Dictionary<string, StudentViewModel>),
+                new Dictionary<string, StudentViewModel>());
 
             // Act
             var result = converter.ResolveDefaultValue(prop);
@@ -422,6 +423,9 @@ public abstract class TypeScriptConverterTests
             Assert.AreEqual(1, converter.Models.Count);
             var descriptor = converter.Models.Single(x => x.Name == "GenericComplexStandalone");
 
+            // Should not contain readonly properties.
+            Assert.IsFalse(descriptor.Properties.Any(x=>x.Readonly));
+            
             Assert.AreEqual(3, descriptor.Properties.Count);
 
             var firstProperty = descriptor.Properties.Single(x => x.Name == "First");
@@ -435,6 +439,7 @@ public abstract class TypeScriptConverterTests
 
             var secondAsScript = converter.ResolveScriptType(secondProperty.Type);
             Assert.AreEqual("Array<TSecond>", secondAsScript);
+            
         }
 
         [TestMethod]
@@ -450,6 +455,30 @@ public abstract class TypeScriptConverterTests
 
             // Assert
             Assert.AreEqual("GenericComplexStandalone<Array<string>, GenericStandalone<number>>", script);
+        }
+    }
+
+    [TestClass]
+    public class ConstValuesSupport : TypeScriptConverterTests
+    {
+        [TestMethod]
+        public void ConstValuesSupport_ShouldConvertTest()
+        {
+            // Arrange
+            var type = typeof(ConstValues);
+
+            // Act
+            var converter = new SushiConverter(type)
+                .TypeScript();
+
+            // Assert
+            Assert.AreEqual(1, converter.Models.Count);
+            var descriptor = converter.Models.Single(x => x.Name == nameof(ConstValues));
+    
+            Assert.AreEqual(3, descriptor.Properties.Count);
+            Assert.IsTrue(descriptor.Properties.Any(x => x.DefaultValue.ToString() == ConstValues.First));
+            Assert.IsTrue(descriptor.Properties.Any(x => x.DefaultValue.ToString() == ConstValues.Last));
+            Assert.IsTrue(descriptor.Properties.Any(x => x.DefaultValue.ToString() == ConstValues.Static));
         }
     }
 }
