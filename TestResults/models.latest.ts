@@ -140,7 +140,7 @@ export class InheritedViewModel extends BaseViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "dabf8a61-b3d2-4675-b3eb-264227d2149b";
+    identifier: string = "d01eb85d-371e-4ee8-89ea-41c830123fc6";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */

@@ -65,7 +65,7 @@ export class TypeModel extends ViewModel {
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     /** A readonly string. */
-    readonly readonlyString!: string;
+    static readonly readonlyString!: string;
 
     constructor(value: any = null) {
         super(value);

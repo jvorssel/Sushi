@@ -109,7 +109,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "60dd3761-3365-4909-a11e-0afc8b04ed05";
+    identifier: string = "833682ac-15e0-4797-aaa9-06588b97d83e";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;

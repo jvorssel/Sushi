@@ -52,17 +52,21 @@ public sealed class TypeScriptConverter : ModelConverter
         var scriptType = ResolveScriptType(property.Type, string.Empty);
         var defaultValue = ResolveDefaultValue(property);
 
-        var suffix = string.Empty;
-        var nameSuffix = string.Empty;
-        if (!defaultValue.IsEmpty())
-            suffix = " = " + defaultValue;
-        else
-            nameSuffix = "!";
-
         var name = ApplyCasingStyle(property.Name);
+        var nameSuffix = defaultValue.IsEmpty() ? "!" : string.Empty;
+
+        var modifiers = GetPropertyModifiers(property);
+        var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
+
+        return $"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};";
+    }
+
+    private string GetPropertyModifiers(IPropertyDescriptor property)
+    {
         var readonlyPrefix = property.Readonly ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
-        return $"{Indent}{staticPrefix}{readonlyPrefix}{name}{nameSuffix}: {scriptType}{suffix};";
+
+        return $"{staticPrefix}{readonlyPrefix}";
     }
 
     public string ResolveScriptType(Type type, string prefix = "")
