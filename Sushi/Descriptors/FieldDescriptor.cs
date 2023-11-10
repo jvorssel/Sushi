@@ -16,56 +16,61 @@ using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
-namespace Sushi.Descriptors
+namespace Sushi.Descriptors;
+
+[DebuggerDisplay("Name = {ClassType.Name}.{Name}, Default = {DefaultValue}, Type = {Type.Name}")]
+public sealed class FieldDescriptor : IPropertyDescriptor
 {
-	[DebuggerDisplay("Name = {ClassType.Name}.{Name}, Default = {DefaultValue}, Type = {Type.Name}")]
-	public sealed class FieldDescriptor : IPropertyDescriptor
-	{
-		private readonly FieldInfo _field;
+    private readonly FieldInfo _field;
 
-		#region Implementation of IPropertyDescriptor
+    #region Implementation of IPropertyDescriptor
 
-		/// <inheritdoc />
-		public string Name => _field.Name;
+    /// <inheritdoc />
+    public string Name => _field.Name;
 
-		/// <inheritdoc />
-		public bool Readonly { get; }
-		
-		/// <inheritdoc />
-		public Type Type { get; }
+    /// <inheritdoc />
+    public bool Readonly { get; } = true;
 
-		/// <inheritdoc />
-		public Type ClassType => _field.DeclaringType;
+    /// <inheritdoc />
+    public bool IsStatic { get; } = true;
 
-		/// <inheritdoc />
-		public object? DefaultValue { get; }
+    /// <inheritdoc />
+    public Type Type { get; }
 
-		/// <inheritdoc />
-		public bool IsNullable { get; }
+    /// <inheritdoc />
+    public Type ClassType => _field.DeclaringType;
 
-		/// <inheritdoc />
-		public NativeType NativeType => Type.ToNativeScriptType();
+    /// <inheritdoc />
+    public object? DefaultValue { get; }
 
-		#endregion
+    /// <summary>
+    ///     If the field is nullable.
+    /// </summary>
+    public bool IsNullable { get; }
 
-		public FieldDescriptor(FieldInfo fieldInfo)
-		{
-			_field = fieldInfo;
-			Type = _field.FieldType;
-			IsNullable = Type.IsNullable();
-			Readonly = true;
-			
-			try
-			{
-				DefaultValue = fieldInfo.GetValue(null);
-			}
-			catch (Exception e)
-			{
-				DefaultValue = null;
-			}
+    /// <summary>
+    ///     The <see cref="NativeType"/> that matches this field.
+    /// </summary>
+    public NativeType NativeType => Type.ToNativeScriptType();
 
-			if (IsNullable)
-				Type = Nullable.GetUnderlyingType(Type);
-		}
-	}
+    #endregion
+
+    public FieldDescriptor(FieldInfo fieldInfo)
+    {
+        _field = fieldInfo;
+        Type = _field.FieldType;
+        IsNullable = Type.IsNullable();
+
+        try
+        {
+            DefaultValue = fieldInfo.GetValue(null);
+        }
+        catch (Exception e)
+        {
+            DefaultValue = null;
+        }
+
+        if (IsNullable)
+            Type = Nullable.GetUnderlyingType(Type);
+    }
 }

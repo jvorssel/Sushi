@@ -5,9 +5,9 @@ export enum Gender {
 }
 
 export class ConstValues {
-    readonly static: string = "Static";
-    readonly first: string = "First";
-    readonly last: string = "Last";
+    static readonly static: string = "Static";
+    static readonly first: string = "First";
+    static readonly last: string = "Last";
 
 
 }
@@ -109,7 +109,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "3cf71140-03cb-408d-b77d-6c9296df4d6b";
+    identifier: string = "60dd3761-3365-4909-a11e-0afc8b04ed05";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -233,7 +233,7 @@ export class TypeModel extends ViewModel {
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
-    readonly readonlyString!: string;
+    static readonly readonlyString!: string;
 
     constructor(value: any = null) {
         super(value);

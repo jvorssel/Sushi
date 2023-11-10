@@ -31,7 +31,10 @@ public sealed class PropertyDescriptor : IPropertyDescriptor
     public object? DefaultValue { get; }
 
     /// <inheritdoc />
-    public bool Readonly { get; }
+    public bool Readonly => !_property.CanWrite;
+    
+    /// <inheritdoc />
+    public bool IsStatic => _property.GetGetMethod().IsStatic;
 
     /// <inheritdoc />
     public string Name { get; }
@@ -50,7 +53,6 @@ public sealed class PropertyDescriptor : IPropertyDescriptor
         Name = property.Name;
         Type = type;
         DefaultValue = defaultValue;
-        Readonly = !property.CanWrite;
     }
 
     public PropertyDescriptor(Type type, object defaultValue = null)

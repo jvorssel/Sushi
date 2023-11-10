@@ -37,4 +37,9 @@ public interface IPropertyDescriptor
     ///     If the property can is readonly.
     /// </summary>
     bool Readonly { get; }
+    
+    /// <summary>
+    ///     If the property is static.
+    /// </summary>
+    bool IsStatic { get; }
 }

@@ -61,7 +61,8 @@ public sealed class TypeScriptConverter : ModelConverter
 
         var name = ApplyCasingStyle(property.Name);
         var readonlyPrefix = property.Readonly ? "readonly " : string.Empty;
-        return $"{Indent}{readonlyPrefix}{name}{nameSuffix}: {scriptType}{suffix};";
+        var staticPrefix = property.IsStatic ? "static " : string.Empty;
+        return $"{Indent}{staticPrefix}{readonlyPrefix}{name}{nameSuffix}: {scriptType}{suffix};";
     }
 
     public string ResolveScriptType(Type type, string prefix = "")
@@ -185,12 +186,12 @@ public sealed class TypeScriptConverter : ModelConverter
 
     public string CreateConstructorDeclaration(ClassDescriptor model)
     {
-        if (model.Properties.All(x => x.Readonly))
+        if (!model.GenerateConstructor)
             return string.Empty;
 
         var builder = new StringBuilder();
         builder.AppendLine($"{Indent}constructor(value: any = null) {{");
-        if (model.Parent != null)
+        if (model.Parent?.GenerateConstructor == true)
         {
             builder.AppendLine(Indent + Indent + "super(value);");
             builder.AppendLine();
