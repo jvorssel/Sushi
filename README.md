@@ -65,7 +65,7 @@ export class TypeModel extends ViewModel {
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     /** A readonly string. */
-    readonlyString!: string;
+    readonly readonlyString!: string;
 
     constructor(value: any = null) {
         super(value);
@@ -93,9 +93,6 @@ export class TypeModel extends ViewModel {
 
         if (value?.hasOwnProperty('createdOn'))
             this.createdOn = value.createdOn;
-
-        if (value?.hasOwnProperty('readonlyString'))
-            this.readonlyString = value.readonlyString;
 
     }
 }
