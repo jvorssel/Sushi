@@ -67,11 +67,7 @@ public sealed class ClassDescriptor
         if (!Type.IsGenericTypeDefinition)
             return;
 
-        GenericParameterNames = Properties
-            .SelectMany(x => x.Type.GenericTypeArguments)
-            .Select(x => x.Name)
-            .Distinct()
-            .ToList();
+        GenericParameterNames = type.GetGenericArguments().Select(x => x.Name).ToList();
     }
 
     /// <summary>

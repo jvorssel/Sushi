@@ -1,4 +1,24 @@
 /**
+ * Sushi.Tests.Models.ConstrainedGeneric`1
+ */
+export class ConstrainedGeneric {
+    Data;
+    Name;
+
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
+
+        this.data = value.data;
+        this.name = value.name;
+    }
+
+    static mapFrom(obj) {
+        return Object.assign(new ConstrainedGeneric(), obj);
+    }
+}
+
+/**
  * A class with const values.
  */
 export class ConstValues {

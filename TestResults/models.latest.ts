@@ -6,6 +6,23 @@ export enum Gender {
 }
 
 /**
+ * Sushi.Tests.Models.ConstrainedGeneric`1
+ */
+export class ConstrainedGeneric<T> {
+    data!: T;
+    name!: string;
+
+    constructor(value: any = null) {
+        if (value?.hasOwnProperty('data'))
+            this.data = value.data;
+
+        if (value?.hasOwnProperty('name'))
+            this.name = value.name;
+
+    }
+}
+
+/**
  * A class with const values.
  */
 export class ConstValues {
@@ -140,7 +157,7 @@ export class InheritedViewModel extends BaseViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "aa5da8a1-533b-40d5-96aa-187457425ce5";
+    identifier: string = "49d6cbd8-9d5a-4b59-8cd1-b1bba2704a28";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */

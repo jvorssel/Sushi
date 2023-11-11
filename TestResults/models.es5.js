@@ -1,4 +1,17 @@
 /**
+ * Sushi.Tests.Models.ConstrainedGeneric`1
+ */
+function ConstrainedGeneric(obj) {
+    var value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.data = value.data;
+    this.name = value.name;
+
+}
+
+/**
  * A class with const values.
  */
 function ConstValues(obj) {

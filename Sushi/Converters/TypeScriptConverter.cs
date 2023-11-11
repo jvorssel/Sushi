@@ -47,9 +47,12 @@ public sealed class TypeScriptConverter : ModelConverter
             yield return ToTypeScriptClass(model);
     }
 
-    private string ConvertProperty(IPropertyDescriptor property)
+    internal string ConvertProperty(ClassDescriptor classDescriptor, IPropertyDescriptor property)
     {
         var scriptType = ResolveScriptType(property.Type, string.Empty);
+        if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
+            throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");
+        
         var defaultValue = ResolveDefaultValue(property);
 
         var name = ApplyCasingStyle(property.Name);
@@ -61,7 +64,7 @@ public sealed class TypeScriptConverter : ModelConverter
         return $"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};";
     }
 
-    private string GetPropertyModifiers(IPropertyDescriptor property)
+    internal string GetPropertyModifiers(IPropertyDescriptor property)
     {
         var readonlyPrefix = property.Readonly ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
@@ -81,12 +84,17 @@ public sealed class TypeScriptConverter : ModelConverter
                 ? $"{prefix}{classModel.Name}<{genericTypeArgs.Glue(", ")}>"
                 : prefix + classModel.Name;
 
+        if (type.IsGenericParameter)
+            return type.Name;
+
         // Array
         var actualType = type.GetBaseType();
         var isDictionary = type.IsDictionary();
         if (type.IsArrayType() && !isDictionary)
         {
-            var typeName = type.IsGenericType ? genericTypeArgs.Glue(", ") : ResolveScriptType(actualType, prefix);
+            var typeName = type.IsGenericType
+                ? genericTypeArgs.Glue(", ")
+                : ResolveScriptType(actualType, prefix);
             return $"Array<{typeName}>";
         }
 
@@ -169,7 +177,7 @@ public sealed class TypeScriptConverter : ModelConverter
         return genericTypeArgs;
     }
 
-    private string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties)
+    internal string CreatePropertyDeclaration(ClassDescriptor classDescriptor, IEnumerable<IPropertyDescriptor> properties)
     {
         var builder = new StringBuilder();
         foreach (var prop in properties)
@@ -181,7 +189,7 @@ public sealed class TypeScriptConverter : ModelConverter
                     builder.AppendLine(Indent + summary);
             }
 
-            var property = ConvertProperty(prop);
+            var property = ConvertProperty(classDescriptor, prop);
             builder.AppendLine(property);
         }
 
@@ -253,7 +261,7 @@ public sealed class TypeScriptConverter : ModelConverter
             : XmlDocument.JsDocClassSummary(model) + "\n";
         var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
         var @override = model.Parent != null ? "override " : string.Empty;
-        var propertyDeclaration = CreatePropertyDeclaration(properties);
+        var propertyDeclaration = CreatePropertyDeclaration(model, properties);
         var constructorDeclaration = CreateConstructorDeclaration(model);
         var template =
             $@"{summary}export class {className}{parentClass} {{

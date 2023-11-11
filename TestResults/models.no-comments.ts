@@ -4,6 +4,20 @@ export enum Gender {
     Female = 2
 }
 
+export class ConstrainedGeneric<T> {
+    data!: T;
+    name!: string;
+
+    constructor(value: any = null) {
+        if (value?.hasOwnProperty('data'))
+            this.data = value.data;
+
+        if (value?.hasOwnProperty('name'))
+            this.name = value.name;
+
+    }
+}
+
 export class ConstValues {
     static readonly static: string = "Static";
     static readonly first: string = "First";
@@ -109,7 +123,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "361641f4-2a86-4120-8601-99ba3c270a02";
+    identifier: string = "327fd442-fa89-4fef-b116-c559210ab142";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;

@@ -377,7 +377,6 @@ public abstract class TypeScriptConverterTests
         }
     }
 
-
     [TestClass]
     public class GenericClassSupport : TypeScriptConverterTests
     {
@@ -422,6 +421,9 @@ public abstract class TypeScriptConverterTests
             // Assert
             Assert.AreEqual(1, converter.Models.Count);
             var descriptor = converter.Models.Single(x => x.Name == "GenericComplexStandalone");
+            Assert.AreEqual(2, descriptor.GenericParameterNames.Count);
+            Assert.IsTrue(descriptor.GenericParameterNames.Contains("TFirst"));
+            Assert.IsTrue(descriptor.GenericParameterNames.Contains("TSecond"));
 
             // Should not contain readonly properties.
             Assert.IsFalse(descriptor.Properties.Any(x=>x.Readonly));
@@ -439,7 +441,6 @@ public abstract class TypeScriptConverterTests
 
             var secondAsScript = converter.ResolveScriptType(secondProperty.Type);
             Assert.AreEqual("Array<TSecond>", secondAsScript);
-            
         }
 
         [TestMethod]
