@@ -6,7 +6,7 @@ namespace Sushi.Tests.Models;
 ///     A class with const values.
 /// </summary>
 [ConvertToScript]
-public sealed class ConstValues
+public class ConstValues
 {
     /// <summary>
     ///     The First value.

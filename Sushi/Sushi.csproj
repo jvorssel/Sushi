@@ -20,7 +20,7 @@
         <PackageReleaseNotes>Support for static/const fields and readonly properties.</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Version>1.0.2</Version>
-        <PackageVersion>1.2.3</PackageVersion>
+        <PackageVersion>1.2.4</PackageVersion>
         <PackageIcon>logo.png</PackageIcon>
         <LangVersion>10</LangVersion>
     </PropertyGroup>

@@ -195,9 +195,10 @@ public sealed class TypeScriptConverter : ModelConverter
 
         var builder = new StringBuilder();
         builder.AppendLine($"{Indent}constructor(value: any = null) {{");
-        if (model.Parent?.GenerateConstructor == true)
+        if (model.Parent != null)
         {
-            builder.AppendLine(Indent + Indent + "super(value);");
+            var hasCtorArguments = model.Parent.GenerateConstructor ? "value" : string.Empty;
+            builder.AppendLine(Indent + Indent + $"super({hasCtorArguments});");
             builder.AppendLine();
         }
 
