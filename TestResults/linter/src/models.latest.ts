@@ -9,7 +9,7 @@ export enum Gender {
  * Sushi.Tests.Models.ConstrainedGeneric`1
  */
 export class ConstrainedGeneric<T> {
-    data: T = null;
+    data!: T;
     name: string = "";
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
@@ -67,7 +67,7 @@ export class ViewModel {
     /** The view model identifier. */
     guid: string = "";
     /** When this view model was created. */
-    createdOn: Date | string | null = null;
+    createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
         if (value.guid) this.guid = value.guid;
@@ -119,7 +119,7 @@ export class InheritedViewModel extends BaseViewModel {
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "3833d883-3166-4021-b94a-01c79bf142fe";
+    identifier: string = "e1dbd353-dfa4-4a0a-89b8-3e9bc37c59fe";
     /** The Name of the person. */
     name: string = "";
     /** The Surname of the person. */
@@ -147,7 +147,7 @@ export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
     grade: number = 9;
     /** The name of the School. */
-    school: SchoolViewModel = null;
+    school!: SchoolViewModel;
 
     constructor(value: Partial<StudentViewModel> = {}) {
         super(value);
@@ -173,7 +173,7 @@ export class SchoolViewModel extends ViewModel {
     /** The AmountOfStudents of this SchoolViewModel. */
     amountOfStudents: number = 0;
     /** The Owner of this SchoolViewModel. */
-    owner: PersonViewModel = null;
+    owner!: PersonViewModel;
     /** The Address of this SchoolViewModel. */
     address: string = "";
     /** The ZipCode of this SchoolViewModel. */
@@ -216,7 +216,7 @@ export class TypeModel extends ViewModel {
     /** A nullable string, defaults to null. */
     nullableString: string = "";
     /** A DateTime instance. */
-    date: Date | string | null = null;
+    date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};

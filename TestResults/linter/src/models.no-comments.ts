@@ -5,7 +5,7 @@ export enum Gender {
 }
 
 export class ConstrainedGeneric<T> {
-    data: T = null;
+    data!: T;
     name: string = "";
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
@@ -46,7 +46,7 @@ export class GenericStandalone<TEntry> {
 
 export class ViewModel {
     guid: string = "";
-    createdOn: Date | string | null = null;
+    createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
         if (value.guid) this.guid = value.guid;
@@ -85,7 +85,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "08f78d61-5be9-4821-a020-c0d6f5b1cbd9";
+    identifier: string = "3a508c84-24fb-4395-87f1-1de4bbe66af5";
     name: string = "";
     surname: string = "";
     gender: Gender | number = 1;
@@ -104,7 +104,7 @@ export class PersonViewModel extends ViewModel {
 
 export class StudentViewModel extends PersonViewModel {
     grade: number = 9;
-    school: SchoolViewModel = null;
+    school!: SchoolViewModel;
 
     constructor(value: Partial<StudentViewModel> = {}) {
         super(value);
@@ -123,7 +123,7 @@ export class StudentViewModel extends PersonViewModel {
 export class SchoolViewModel extends ViewModel {
     name: string = "";
     amountOfStudents: number = 0;
-    owner: PersonViewModel = null;
+    owner!: PersonViewModel;
     address: string = "";
     zipCode: string = "";
     houseNumber: number = 0;
@@ -153,7 +153,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string = "";
-    date: Date | string | null = null;
+    date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
