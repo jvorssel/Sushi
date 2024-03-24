@@ -9,10 +9,10 @@ export class ConstrainedGeneric<T> {
     name!: string;
 
     constructor(value: any = null) {
-        if (Object.hasOwnProperty(value, 'data'))
+        if (Object.prototype.hasOwnProperty.call(value, 'data'))
             this.data = value.data;
 
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
     }
@@ -32,13 +32,13 @@ export class GenericComplexStandalone<TFirst, TSecond> {
     totalAmount!: number;
 
     constructor(value: any = null) {
-        if (Object.hasOwnProperty(value, 'first'))
+        if (Object.prototype.hasOwnProperty.call(value, 'first'))
             this.first = value.first;
 
-        if (Object.hasOwnProperty(value, 'second'))
+        if (Object.prototype.hasOwnProperty.call(value, 'second'))
             this.second = value.second;
 
-        if (Object.hasOwnProperty(value, 'totalAmount'))
+        if (Object.prototype.hasOwnProperty.call(value, 'totalAmount'))
             this.totalAmount = value.totalAmount;
 
     }
@@ -49,10 +49,10 @@ export class GenericStandalone<TEntry> {
     totalAmount!: number;
 
     constructor(value: any = null) {
-        if (Object.hasOwnProperty(value, 'values'))
+        if (Object.prototype.hasOwnProperty.call(value, 'values'))
             this.values = value.values;
 
-        if (Object.hasOwnProperty(value, 'totalAmount'))
+        if (Object.prototype.hasOwnProperty.call(value, 'totalAmount'))
             this.totalAmount = value.totalAmount;
 
     }
@@ -63,10 +63,10 @@ export class ViewModel {
     createdOn!: Date | string | null;
 
     constructor(value: any = null) {
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
@@ -79,16 +79,16 @@ export class BaseViewModel extends ViewModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'value'))
+        if (Object.prototype.hasOwnProperty.call(value, 'value'))
             this.value = value.value;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'base'))
+        if (Object.prototype.hasOwnProperty.call(value, 'base'))
             this.base = value.base;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
@@ -101,29 +101,29 @@ export class InheritedViewModel extends BaseViewModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'value'))
+        if (Object.prototype.hasOwnProperty.call(value, 'value'))
             this.value = value.value;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'addition'))
+        if (Object.prototype.hasOwnProperty.call(value, 'addition'))
             this.addition = value.addition;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'base'))
+        if (Object.prototype.hasOwnProperty.call(value, 'base'))
             this.base = value.base;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "1fd3a8c1-6841-4675-a466-bf2535756af4";
+    identifier: string = "6c15af83-02e9-47db-943b-30acc13baf89";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -131,22 +131,22 @@ export class PersonViewModel extends ViewModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'identifier'))
+        if (Object.prototype.hasOwnProperty.call(value, 'identifier'))
             this.identifier = value.identifier;
 
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
-        if (Object.hasOwnProperty(value, 'surname'))
+        if (Object.prototype.hasOwnProperty.call(value, 'surname'))
             this.surname = value.surname;
 
-        if (Object.hasOwnProperty(value, 'gender'))
+        if (Object.prototype.hasOwnProperty.call(value, 'gender'))
             this.gender = value.gender;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
@@ -159,28 +159,28 @@ export class StudentViewModel extends PersonViewModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'grade'))
+        if (Object.prototype.hasOwnProperty.call(value, 'grade'))
             this.grade = value.grade;
 
-        if (Object.hasOwnProperty(value, 'school'))
+        if (Object.prototype.hasOwnProperty.call(value, 'school'))
             this.school = value.school;
 
-        if (Object.hasOwnProperty(value, 'identifier'))
+        if (Object.prototype.hasOwnProperty.call(value, 'identifier'))
             this.identifier = value.identifier;
 
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
-        if (Object.hasOwnProperty(value, 'surname'))
+        if (Object.prototype.hasOwnProperty.call(value, 'surname'))
             this.surname = value.surname;
 
-        if (Object.hasOwnProperty(value, 'gender'))
+        if (Object.prototype.hasOwnProperty.call(value, 'gender'))
             this.gender = value.gender;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
@@ -201,40 +201,40 @@ export class SchoolViewModel extends ViewModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
-        if (Object.hasOwnProperty(value, 'amountOfStudents'))
+        if (Object.prototype.hasOwnProperty.call(value, 'amountOfStudents'))
             this.amountOfStudents = value.amountOfStudents;
 
-        if (Object.hasOwnProperty(value, 'owner'))
+        if (Object.prototype.hasOwnProperty.call(value, 'owner'))
             this.owner = value.owner;
 
-        if (Object.hasOwnProperty(value, 'address'))
+        if (Object.prototype.hasOwnProperty.call(value, 'address'))
             this.address = value.address;
 
-        if (Object.hasOwnProperty(value, 'zipCode'))
+        if (Object.prototype.hasOwnProperty.call(value, 'zipCode'))
             this.zipCode = value.zipCode;
 
-        if (Object.hasOwnProperty(value, 'houseNumber'))
+        if (Object.prototype.hasOwnProperty.call(value, 'houseNumber'))
             this.houseNumber = value.houseNumber;
 
-        if (Object.hasOwnProperty(value, 'houseNumberAddition'))
+        if (Object.prototype.hasOwnProperty.call(value, 'houseNumberAddition'))
             this.houseNumberAddition = value.houseNumberAddition;
 
-        if (Object.hasOwnProperty(value, 'averageGrade'))
+        if (Object.prototype.hasOwnProperty.call(value, 'averageGrade'))
             this.averageGrade = value.averageGrade;
 
-        if (Object.hasOwnProperty(value, 'students'))
+        if (Object.prototype.hasOwnProperty.call(value, 'students'))
             this.students = value.students;
 
-        if (Object.hasOwnProperty(value, 'timmy'))
+        if (Object.prototype.hasOwnProperty.call(value, 'timmy'))
             this.timmy = value.timmy;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
@@ -252,28 +252,28 @@ export class TypeModel extends ViewModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'nullableBool'))
+        if (Object.prototype.hasOwnProperty.call(value, 'nullableBool'))
             this.nullableBool = value.nullableBool;
 
-        if (Object.hasOwnProperty(value, 'nullableString'))
+        if (Object.prototype.hasOwnProperty.call(value, 'nullableString'))
             this.nullableString = value.nullableString;
 
-        if (Object.hasOwnProperty(value, 'guid'))
+        if (Object.prototype.hasOwnProperty.call(value, 'guid'))
             this.guid = value.guid;
 
-        if (Object.hasOwnProperty(value, 'date'))
+        if (Object.prototype.hasOwnProperty.call(value, 'date'))
             this.date = value.date;
 
-        if (Object.hasOwnProperty(value, 'student'))
+        if (Object.prototype.hasOwnProperty.call(value, 'student'))
             this.student = value.student;
 
-        if (Object.hasOwnProperty(value, 'students'))
+        if (Object.prototype.hasOwnProperty.call(value, 'students'))
             this.students = value.students;
 
-        if (Object.hasOwnProperty(value, 'studentPerClass'))
+        if (Object.prototype.hasOwnProperty.call(value, 'studentPerClass'))
             this.studentPerClass = value.studentPerClass;
 
-        if (Object.hasOwnProperty(value, 'createdOn'))
+        if (Object.prototype.hasOwnProperty.call(value, 'createdOn'))
             this.createdOn = value.createdOn;
 
     }
@@ -283,7 +283,7 @@ export class AbstractBaseModel {
     name!: string;
 
     constructor(value: any = null) {
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
     }
@@ -295,10 +295,10 @@ export class AbstractParentModel extends AbstractBaseModel {
     constructor(value: any = null) {
         super(value);
 
-        if (Object.hasOwnProperty(value, 'surname'))
+        if (Object.prototype.hasOwnProperty.call(value, 'surname'))
             this.surname = value.surname;
 
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
     }
@@ -308,7 +308,7 @@ export class CtorFixModel {
     name!: string;
 
     constructor(value: any = null) {
-        if (Object.hasOwnProperty(value, 'name'))
+        if (Object.prototype.hasOwnProperty.call(value, 'name'))
             this.name = value.name;
 
     }

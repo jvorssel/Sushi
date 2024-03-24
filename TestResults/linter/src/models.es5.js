@@ -2,95 +2,70 @@
  * Sushi.Tests.Models.ConstrainedGeneric`1
  */
 function ConstrainedGeneric(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.data = value.data;
     this.name = value.name;
-
 }
-
-ConstrainedGeneric.prototype.mapFrom = function(obj) {
-    return _.extend(new ConstrainedGeneric(), obj); 
-};
 
 /**
  * A class with const values.
  */
 function ConstValues(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.static = value.static;
     this.first = value.first;
     this.last = value.last;
-
 }
-
-ConstValues.prototype.mapFrom = function(obj) {
-    return _.extend(new ConstValues(), obj); 
-};
 
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
  */
 function GenericComplexStandalone(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.first = value.first;
     this.second = value.second;
     this.totalAmount = value.totalAmount;
-
 }
-
-GenericComplexStandalone.prototype.mapFrom = function(obj) {
-    return _.extend(new GenericComplexStandalone(), obj); 
-};
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
  */
 function GenericStandalone(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.values = value.values;
     this.totalAmount = value.totalAmount;
-
 }
-
-GenericStandalone.prototype.mapFrom = function(obj) {
-    return _.extend(new GenericStandalone(), obj); 
-};
 
 /**
  * The view model base class.
  */
 function ViewModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
-
-ViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new ViewModel(), obj); 
-};
 
 /**
  * Sushi.Tests.Models.BaseViewModel
  * @extends ViewModel 
  */
 function BaseViewModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
@@ -98,19 +73,14 @@ function BaseViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
-
 }
-
-BaseViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new BaseViewModel(), obj); 
-};
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
  * @extends BaseViewModel 
  */
 function InheritedViewModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
@@ -120,19 +90,14 @@ function InheritedViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
-
 }
-
-InheritedViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new InheritedViewModel(), obj); 
-};
 
 /**
  * The PersonViewModel that represents a Person.
  * @extends ViewModel 
  */
 function PersonViewModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
@@ -142,19 +107,14 @@ function PersonViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
-
-PersonViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new PersonViewModel(), obj); 
-};
 
 /**
  * Represents a Student in a school.
  * @extends PersonViewModel 
  */
 function StudentViewModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
@@ -166,19 +126,14 @@ function StudentViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
-
-StudentViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new StudentViewModel(), obj); 
-};
 
 /**
  * Basic information about a School.
  * @extends ViewModel 
  */
 function SchoolViewModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
@@ -194,19 +149,14 @@ function SchoolViewModel(obj) {
     this.timmy = value.timmy;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
-
-SchoolViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new SchoolViewModel(), obj); 
-};
 
 /**
  * Simple model to verify complex types.
  * @extends ViewModel 
  */
 function TypeModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
@@ -219,76 +169,51 @@ function TypeModel(obj) {
     this.studentPerClass = value.studentPerClass;
     this.createdOn = value.createdOn;
     this.readonlyString = value.readonlyString;
-
 }
-
-TypeModel.prototype.mapFrom = function(obj) {
-    return _.extend(new TypeModel(), obj); 
-};
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
  */
 function AbstractBaseModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.name = value.name;
-
 }
-
-AbstractBaseModel.prototype.mapFrom = function(obj) {
-    return _.extend(new AbstractBaseModel(), obj); 
-};
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
  * @extends AbstractBaseModel 
  */
 function AbstractParentModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.surname = value.surname;
     this.name = value.name;
-
 }
-
-AbstractParentModel.prototype.mapFrom = function(obj) {
-    return _.extend(new AbstractParentModel(), obj); 
-};
 
 /**
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
  */
 function CtorFixModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.name = value.name;
-
 }
-
-CtorFixModel.prototype.mapFrom = function(obj) {
-    return _.extend(new CtorFixModel(), obj); 
-};
 
 /**
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
  */
 function NoXmlDocumentationModel(obj) {
-    var value = obj;
+    let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.name = value.name;
-
 }
-
-NoXmlDocumentationModel.prototype.mapFrom = function(obj) {
-    return _.extend(new NoXmlDocumentationModel(), obj); 
-};
 

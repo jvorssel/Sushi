@@ -54,7 +54,7 @@ namespace Sushi.Converters
 
 			var template =
 				$@"{summary}function {model.Name}(obj) {{
-{Indent}var value = obj;
+{Indent}let value = obj;
 {Indent}if (!(value instanceof Object)) 
 {Indent}{Indent}value = {{}};
 
