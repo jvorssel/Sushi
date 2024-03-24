@@ -11,6 +11,7 @@
 
 #region
 
+using System.Runtime.InteropServices;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
@@ -47,31 +48,29 @@ namespace Sushi.Converters
 
 		private string Compile(ClassDescriptor model)
 		{
-			var summary = XmlDocument == null ? string.Empty : XmlDocument.JsDocClassSummary(model) + "\n";
-			var properties = new StringBuilder();
-			foreach (var prop in model.Properties)
-				properties.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
-
-			var template =
-				$@"{summary}function {model.Name}(obj) {{
-{Indent}let value = obj;
-{Indent}if (!(value instanceof Object)) 
-{Indent}{Indent}value = {{}};
-
-{properties}
-}}
-";
-			if (_includeUnderscoreExtend)
-			{
-				template += 
-					$@"
-{model.Name}.prototype.mapFrom = function(obj) {{
-{Indent}return _.extend(new {model.Name}(), obj); 
-}};
-";
-			}
+			var builder = new StringBuilder();
 			
-			return template;
+			builder.AppendJsDoc(XmlDocument, model);
+
+			builder.AppendLine($"function {model.Name}(obj) {{");
+			builder.AppendLine(Indent + "let value = obj;");
+			builder.AppendLine(Indent + "if (!(value instanceof Object)) ");
+			builder.AppendLine(Indent + Indent + "value = {};");
+			builder.AppendLine();
+			
+			foreach (var prop in model.Properties)
+				builder.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+			builder.AppendLine("}");
+
+			if (!_includeUnderscoreExtend) 
+				return builder.ToString();
+			
+			builder.AppendLine();
+			builder.AppendLine($"{model.Name}.prototype.mapFrom = function(obj) {{");
+			builder.AppendLine($"{Indent}return _.extend(new {model.Name}(), obj); ");
+			builder.AppendLine("};");
+
+			return builder.ToString();
 		}
 	}
 }

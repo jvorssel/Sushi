@@ -116,7 +116,7 @@ namespace Sushi.Documentation
 		/// <summary>
 		///     Try to resolve the <see cref="XmlSummaryDescriptor" /> for the given <see cref="Type" />.
 		/// </summary>
-		public XmlSummaryDescriptor GetDocumentationForType(Type type)
+		public XmlSummaryDescriptor? GetDocumentationForType(Type type)
 		{
 			var typeMembers = Members.Where(x => x.FieldType == ReferenceType.Type);
 			var doc = typeMembers.SingleOrDefault(x => x.IsSameType(type));
@@ -127,9 +127,7 @@ namespace Sushi.Documentation
 			var interfaces = type.GetInterfaces();
 			foreach (var interfaceType in interfaces)
 			{
-				var interfaceNamespace = interfaceType.Namespace?.Split(',')[0];
 				var interfaceDoc = Members.SingleOrDefault(x => x.IsSameType(interfaceType));
-
 				if (interfaceDoc == null)
 					continue;
 
@@ -154,7 +152,7 @@ namespace Sushi.Documentation
 		/// <summary>
 		///     Try to resolve the <see cref="XmlSummaryDescriptor" /> for the given <see cref="PropertyInfo" />.
 		/// </summary>
-		public XmlSummaryDescriptor GetDocumentationForProperty(IPropertyDescriptor descriptor)
+		public XmlSummaryDescriptor? GetDocumentationForProperty(IPropertyDescriptor? descriptor)
 		{
 			if (descriptor?.ClassType == null)
 				throw new ArgumentNullException(nameof(descriptor));

@@ -8,7 +8,6 @@ function ConstrainedGeneric(obj) {
 
     this.data = value.data;
     this.name = value.name;
-
 }
 
 ConstrainedGeneric.prototype.mapFrom = function(obj) {
@@ -26,7 +25,6 @@ function ConstValues(obj) {
     this.static = value.static;
     this.first = value.first;
     this.last = value.last;
-
 }
 
 ConstValues.prototype.mapFrom = function(obj) {
@@ -44,7 +42,6 @@ function GenericComplexStandalone(obj) {
     this.first = value.first;
     this.second = value.second;
     this.totalAmount = value.totalAmount;
-
 }
 
 GenericComplexStandalone.prototype.mapFrom = function(obj) {
@@ -61,7 +58,6 @@ function GenericStandalone(obj) {
 
     this.values = value.values;
     this.totalAmount = value.totalAmount;
-
 }
 
 GenericStandalone.prototype.mapFrom = function(obj) {
@@ -78,7 +74,6 @@ function ViewModel(obj) {
 
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 ViewModel.prototype.mapFrom = function(obj) {
@@ -98,7 +93,6 @@ function BaseViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
-
 }
 
 BaseViewModel.prototype.mapFrom = function(obj) {
@@ -120,7 +114,6 @@ function InheritedViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
-
 }
 
 InheritedViewModel.prototype.mapFrom = function(obj) {
@@ -142,7 +135,6 @@ function PersonViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 PersonViewModel.prototype.mapFrom = function(obj) {
@@ -166,7 +158,6 @@ function StudentViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 StudentViewModel.prototype.mapFrom = function(obj) {
@@ -194,7 +185,6 @@ function SchoolViewModel(obj) {
     this.timmy = value.timmy;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 SchoolViewModel.prototype.mapFrom = function(obj) {
@@ -219,7 +209,6 @@ function TypeModel(obj) {
     this.studentPerClass = value.studentPerClass;
     this.createdOn = value.createdOn;
     this.readonlyString = value.readonlyString;
-
 }
 
 TypeModel.prototype.mapFrom = function(obj) {
@@ -235,7 +224,6 @@ function AbstractBaseModel(obj) {
         value = {};
 
     this.name = value.name;
-
 }
 
 AbstractBaseModel.prototype.mapFrom = function(obj) {
@@ -253,7 +241,6 @@ function AbstractParentModel(obj) {
 
     this.surname = value.surname;
     this.name = value.name;
-
 }
 
 AbstractParentModel.prototype.mapFrom = function(obj) {
@@ -269,7 +256,6 @@ function CtorFixModel(obj) {
         value = {};
 
     this.name = value.name;
-
 }
 
 CtorFixModel.prototype.mapFrom = function(obj) {
@@ -285,7 +271,6 @@ function NoXmlDocumentationModel(obj) {
         value = {};
 
     this.name = value.name;
-
 }
 
 NoXmlDocumentationModel.prototype.mapFrom = function(obj) {

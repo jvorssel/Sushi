@@ -47,8 +47,9 @@ public sealed class TypeScriptConverter : ModelConverter
             yield return ToTypeScriptClass(model);
     }
 
-    internal string ConvertProperty(ClassDescriptor classDescriptor, IPropertyDescriptor property)
+    internal void ConvertProperty(StringBuilder builder, ClassDescriptor classDescriptor, IPropertyDescriptor property)
     {
+        builder.AppendLine();
         var scriptType = ResolveScriptType(property.Type, string.Empty);
         if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
             throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");
@@ -64,7 +65,8 @@ public sealed class TypeScriptConverter : ModelConverter
         var modifiers = $"{staticPrefix}{@override}{readonlyPrefix}";
         var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
 
-        return $"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};";
+        builder.AppendJsDoc(XmlDocument, property, Indent, scriptType);
+        builder.Append($"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};");
     }
 
     public string ResolveScriptType(Type type, string prefix = "")
@@ -181,15 +183,8 @@ public sealed class TypeScriptConverter : ModelConverter
         var builder = new StringBuilder();
         foreach (var prop in properties)
         {
-            if (XmlDocument != null)
-            {
-                var summary = XmlDocument.JsDocPropertySummary(prop);
-                if (!summary.IsEmpty())
-                    builder.AppendLine(Indent + summary);
-            }
-
-            var property = ConvertProperty(classDescriptor, prop);
-            builder.AppendLine(property);
+            ConvertProperty(builder, classDescriptor, prop);
+            builder.AppendLine();
         }
 
         return builder.ToString();
@@ -253,19 +248,17 @@ public sealed class TypeScriptConverter : ModelConverter
         var className = FormatClassName(model);
         var properties = model.GetProperties(true).ToList();
 
-        var summary = XmlDocument == null
-            ? string.Empty
-            : XmlDocument.JsDocClassSummary(model) + "\n";
+        var builder = new StringBuilder();
+        builder.AppendJsDoc(XmlDocument, model);
+
         var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
         var propertyDeclaration = CreatePropertyDeclaration(model, properties);
         var constructorDeclaration = CreateConstructorDeclaration(className, model);
-        var template =
-            $@"{summary}export class {className}{parentClass} {{
-{propertyDeclaration}
-{constructorDeclaration}
-}}
-";
+        builder.AppendLine($"export class {className}{parentClass} {{");
+        builder.AppendLine(propertyDeclaration);
+        builder.AppendLine(constructorDeclaration);
+        builder.AppendLine("}");
 
-        return template;
+        return builder.ToString();
     }
 }

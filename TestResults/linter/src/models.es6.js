@@ -12,9 +12,8 @@ export class ConstrainedGeneric {
         this.data = value.data;
         this.name = value.name;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new ConstrainedGeneric(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -22,11 +21,17 @@ export class ConstrainedGeneric {
  * A class with const values.
  */
 export class ConstValues {
-    /** A Static value. */
+    /**
+     * A Static value.
+     */
     Static;
-    /** The First value. */
+    /**
+     * The First value.
+     */
     First;
-    /** The Last value. */
+    /**
+     * The Last value.
+     */
     Last;
 
     constructor(value) {
@@ -37,9 +42,8 @@ export class ConstValues {
         this.first = value.first;
         this.last = value.last;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new ConstValues(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -59,9 +63,8 @@ export class GenericComplexStandalone {
         this.second = value.second;
         this.totalAmount = value.totalAmount;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new GenericComplexStandalone(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -79,9 +82,8 @@ export class GenericStandalone {
         this.values = value.values;
         this.totalAmount = value.totalAmount;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new GenericStandalone(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -89,9 +91,13 @@ export class GenericStandalone {
  * The view model base class.
  */
 export class ViewModel {
-    /** The view model identifier. */
+    /**
+     * The view model identifier.
+     */
     Guid;
-    /** When this view model was created. */
+    /**
+     * When this view model was created.
+     */
     CreatedOn;
 
     constructor(value) {
@@ -101,9 +107,8 @@ export class ViewModel {
         this.guid = value.guid;
         this.createdOn = value.createdOn;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new ViewModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -124,9 +129,8 @@ export class BaseViewModel extends ViewModel {
         this.value = value.value;
         this.base = value.base;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new BaseViewModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -147,9 +151,8 @@ export class InheritedViewModel extends BaseViewModel {
         this.guid = value.guid;
         this.addition = value.addition;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new InheritedViewModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -158,13 +161,21 @@ export class InheritedViewModel extends BaseViewModel {
  * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
-    /** The Identifier that this Model refers to. */
+    /**
+     * The Identifier that this Model refers to.
+     */
     Identifier;
-    /** The Name of the person. */
+    /**
+     * The Name of the person.
+     */
     Name;
-    /** The Surname of the person. */
+    /**
+     * The Surname of the person.
+     */
     Surname;
-    /** The Gender of the person. */
+    /**
+     * The Gender of the person.
+     */
     Gender;
 
     constructor(value) {
@@ -178,9 +189,8 @@ export class PersonViewModel extends ViewModel {
         this.surname = value.surname;
         this.gender = value.gender;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new PersonViewModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -189,9 +199,13 @@ export class PersonViewModel extends ViewModel {
  * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
-    /** What Grade the Student is in. */
+    /**
+     * What Grade the Student is in.
+     */
     Grade;
-    /** The name of the School. */
+    /**
+     * The name of the School.
+     */
     School;
 
     constructor(value) {
@@ -203,9 +217,8 @@ export class StudentViewModel extends PersonViewModel {
         this.grade = value.grade;
         this.school = value.school;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new StudentViewModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -214,23 +227,41 @@ export class StudentViewModel extends PersonViewModel {
  * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
-    /** The Name of this SchoolViewModel. */
+    /**
+     * The Name of this SchoolViewModel.
+     */
     Name;
-    /** The AmountOfStudents of this SchoolViewModel. */
+    /**
+     * The AmountOfStudents of this SchoolViewModel.
+     */
     AmountOfStudents;
-    /** The Owner of this SchoolViewModel. */
+    /**
+     * The Owner of this SchoolViewModel.
+     */
     Owner;
-    /** The Address of this SchoolViewModel. */
+    /**
+     * The Address of this SchoolViewModel.
+     */
     Address;
-    /** The ZipCode of this SchoolViewModel. */
+    /**
+     * The ZipCode of this SchoolViewModel.
+     */
     ZipCode;
-    /** The HouseNumber of this SchoolViewModel. */
+    /**
+     * The HouseNumber of this SchoolViewModel.
+     */
     HouseNumber;
-    /** The HouseNumberAddition of this SchoolViewModel. */
+    /**
+     * The HouseNumberAddition of this SchoolViewModel.
+     */
     HouseNumberAddition;
-    /** The school student aren't doing too great ... */
+    /**
+     * The school student aren't doing too great ...
+     */
     AverageGrade;
-    /** The Students of this SchoolViewModel. */
+    /**
+     * The Students of this SchoolViewModel.
+     */
     Students;
     Timmy;
 
@@ -251,9 +282,8 @@ export class SchoolViewModel extends ViewModel {
         this.students = value.students;
         this.timmy = value.timmy;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new SchoolViewModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -262,16 +292,24 @@ export class SchoolViewModel extends ViewModel {
  * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
-    /** A nullable boolean. */
+    /**
+     * A nullable boolean.
+     */
     NullableBool;
-    /** A nullable string, defaults to null. */
+    /**
+     * A nullable string, defaults to null.
+     */
     NullableString;
-    /** A DateTime instance. */
+    /**
+     * A DateTime instance.
+     */
     Date;
     Student;
     Students;
     StudentPerClass;
-    /** A readonly string. */
+    /**
+     * A readonly string.
+     */
     ReadonlyString;
 
     constructor(value) {
@@ -288,9 +326,8 @@ export class TypeModel extends ViewModel {
         this.studentPerClass = value.studentPerClass;
         this.readonlyString = value.readonlyString;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new TypeModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -306,9 +343,8 @@ export class AbstractBaseModel {
 
         this.name = value.name;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new AbstractBaseModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -327,9 +363,8 @@ export class AbstractParentModel extends AbstractBaseModel {
 
         this.surname = value.surname;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new AbstractParentModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -345,9 +380,8 @@ export class CtorFixModel {
 
         this.name = value.name;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new CtorFixModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 
@@ -363,9 +397,8 @@ export class NoXmlDocumentationModel {
 
         this.name = value.name;
     }
-
     static mapFrom(obj) {
-        return Object.assign(new NoXmlDocumentationModel(), obj);
+        return Object.assign(new {model.Name}(), obj);
     }
 }
 

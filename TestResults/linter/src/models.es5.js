@@ -8,7 +8,6 @@ function ConstrainedGeneric(obj) {
 
     this.data = value.data;
     this.name = value.name;
-
 }
 
 /**
@@ -22,7 +21,6 @@ function ConstValues(obj) {
     this.static = value.static;
     this.first = value.first;
     this.last = value.last;
-
 }
 
 /**
@@ -36,7 +34,6 @@ function GenericComplexStandalone(obj) {
     this.first = value.first;
     this.second = value.second;
     this.totalAmount = value.totalAmount;
-
 }
 
 /**
@@ -49,7 +46,6 @@ function GenericStandalone(obj) {
 
     this.values = value.values;
     this.totalAmount = value.totalAmount;
-
 }
 
 /**
@@ -62,7 +58,6 @@ function ViewModel(obj) {
 
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 /**
@@ -78,7 +73,6 @@ function BaseViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
-
 }
 
 /**
@@ -96,7 +90,6 @@ function InheritedViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
-
 }
 
 /**
@@ -114,7 +107,6 @@ function PersonViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 /**
@@ -134,7 +126,6 @@ function StudentViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 /**
@@ -158,7 +149,6 @@ function SchoolViewModel(obj) {
     this.timmy = value.timmy;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
-
 }
 
 /**
@@ -179,7 +169,6 @@ function TypeModel(obj) {
     this.studentPerClass = value.studentPerClass;
     this.createdOn = value.createdOn;
     this.readonlyString = value.readonlyString;
-
 }
 
 /**
@@ -191,7 +180,6 @@ function AbstractBaseModel(obj) {
         value = {};
 
     this.name = value.name;
-
 }
 
 /**
@@ -205,7 +193,6 @@ function AbstractParentModel(obj) {
 
     this.surname = value.surname;
     this.name = value.name;
-
 }
 
 /**
@@ -217,7 +204,6 @@ function CtorFixModel(obj) {
         value = {};
 
     this.name = value.name;
-
 }
 
 /**
@@ -229,6 +215,5 @@ function NoXmlDocumentationModel(obj) {
         value = {};
 
     this.name = value.name;
-
 }
 

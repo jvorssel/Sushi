@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Tests.Models;
@@ -28,10 +29,11 @@ public class MalformattedGenericType : TestBase
         var genericProperty = descriptor.Properties.Single(x => x.Name == nameof(ConstrainedGeneric<object>.Data));
         Assert.IsTrue(genericProperty.Type.IsGenericParameter);
 
-        var typescript = converter.TypeScript(new ConverterOptions{Indent = string.Empty});
-        var propertyScript = typescript.ConvertProperty(descriptor, genericProperty);
+        var typescript = converter.TypeScript(new ConverterOptions { Indent = string.Empty });
+        var builder = new StringBuilder();
+        typescript.ConvertProperty(builder, descriptor, genericProperty);
         var expectedScript = "data!: T;";
-        
-        Assert.AreEqual(expectedScript, propertyScript);
+
+        Assert.AreEqual(expectedScript, builder.ToString());
     }
 }

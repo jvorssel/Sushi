@@ -70,9 +70,9 @@ public static class Extensions
         switch (type)
         {
             case NativeType.Undefined:
-                return @"undefined";
+                return "undefined";
             case NativeType.Bool:
-                return @"boolean";
+                return "boolean";
             case NativeType.Enum:
             case NativeType.Byte:
             case NativeType.Short:
@@ -81,14 +81,14 @@ public static class Extensions
             case NativeType.Double:
             case NativeType.Float:
             case NativeType.Decimal:
-                return @"number";
+                return "number";
             case NativeType.Object:
-                return @"any";
+                return "any";
             case NativeType.Char:
             case NativeType.String:
-                return @"string";
+                return "string";
             case NativeType.Null:
-                return @"null";
+                return "null";
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
