@@ -109,7 +109,7 @@ export class ViewModel {
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class BaseViewModel extends ViewModel {
     Value;
@@ -132,7 +132,7 @@ export class BaseViewModel extends ViewModel {
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @extends BaseViewModel 
+ * @extends BaseViewModel
  */
 export class InheritedViewModel extends BaseViewModel {
     Guid;
@@ -155,7 +155,7 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
@@ -186,7 +186,7 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
- * @extends PersonViewModel 
+ * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
@@ -211,7 +211,7 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
@@ -259,7 +259,7 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
@@ -314,7 +314,7 @@ export class AbstractBaseModel {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @extends AbstractBaseModel 
+ * @extends AbstractBaseModel
  */
 export class AbstractParentModel extends AbstractBaseModel {
     Surname;

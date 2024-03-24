@@ -17,6 +17,7 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Helpers;

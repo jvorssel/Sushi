@@ -77,12 +77,17 @@ public sealed class ClassDescriptor
     {
         foreach (var prop in Properties)
         {
-            var isInherited = this.IsPropertyInherited(prop);
+            var isInherited = this.IsPropertyInherited(prop, true);
             if (excludeInherited && isInherited)
                 continue;
 
             yield return prop;
         }
+    }
+
+    public IPropertyDescriptor? GetProperty(string name)
+    {
+        return Properties.SingleOrDefault(x => x.Name == name);
     }
 
     #region Equality members

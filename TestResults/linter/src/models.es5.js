@@ -8,6 +8,7 @@ function ConstrainedGeneric(obj) {
 
     this.data = value.data;
     this.name = value.name;
+
 }
 
 /**
@@ -21,6 +22,7 @@ function ConstValues(obj) {
     this.static = value.static;
     this.first = value.first;
     this.last = value.last;
+
 }
 
 /**
@@ -34,6 +36,7 @@ function GenericComplexStandalone(obj) {
     this.first = value.first;
     this.second = value.second;
     this.totalAmount = value.totalAmount;
+
 }
 
 /**
@@ -46,6 +49,7 @@ function GenericStandalone(obj) {
 
     this.values = value.values;
     this.totalAmount = value.totalAmount;
+
 }
 
 /**
@@ -58,11 +62,12 @@ function ViewModel(obj) {
 
     this.guid = value.guid;
     this.createdOn = value.createdOn;
+
 }
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @extends ViewModel 
+ * @extends ViewModel
  */
 function BaseViewModel(obj) {
     let value = obj;
@@ -73,11 +78,12 @@ function BaseViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
+
 }
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @extends BaseViewModel 
+ * @extends BaseViewModel
  */
 function InheritedViewModel(obj) {
     let value = obj;
@@ -90,11 +96,12 @@ function InheritedViewModel(obj) {
     this.guid = value.guid;
     this.base = value.base;
     this.createdOn = value.createdOn;
+
 }
 
 /**
  * The PersonViewModel that represents a Person.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 function PersonViewModel(obj) {
     let value = obj;
@@ -107,11 +114,12 @@ function PersonViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
+
 }
 
 /**
  * Represents a Student in a school.
- * @extends PersonViewModel 
+ * @extends PersonViewModel
  */
 function StudentViewModel(obj) {
     let value = obj;
@@ -126,11 +134,12 @@ function StudentViewModel(obj) {
     this.gender = value.gender;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
+
 }
 
 /**
  * Basic information about a School.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 function SchoolViewModel(obj) {
     let value = obj;
@@ -149,11 +158,12 @@ function SchoolViewModel(obj) {
     this.timmy = value.timmy;
     this.guid = value.guid;
     this.createdOn = value.createdOn;
+
 }
 
 /**
  * Simple model to verify complex types.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 function TypeModel(obj) {
     let value = obj;
@@ -169,6 +179,7 @@ function TypeModel(obj) {
     this.studentPerClass = value.studentPerClass;
     this.createdOn = value.createdOn;
     this.readonlyString = value.readonlyString;
+
 }
 
 /**
@@ -180,11 +191,12 @@ function AbstractBaseModel(obj) {
         value = {};
 
     this.name = value.name;
+
 }
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @extends AbstractBaseModel 
+ * @extends AbstractBaseModel
  */
 function AbstractParentModel(obj) {
     let value = obj;
@@ -193,6 +205,7 @@ function AbstractParentModel(obj) {
 
     this.surname = value.surname;
     this.name = value.name;
+
 }
 
 /**
@@ -204,6 +217,7 @@ function CtorFixModel(obj) {
         value = {};
 
     this.name = value.name;
+
 }
 
 /**
@@ -215,5 +229,6 @@ function NoXmlDocumentationModel(obj) {
         value = {};
 
     this.name = value.name;
+
 }
 

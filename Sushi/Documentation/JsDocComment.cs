@@ -46,7 +46,7 @@ namespace Sushi.Documentation
 				builder.AppendLine($" * {descriptor.FullName}");
 
 			if (descriptor.Parent != null)
-				builder.AppendLine($" * @extends {descriptor.Parent.Name} ");
+				builder.AppendLine($" * @extends {descriptor.Parent.Name}");
 
 			builder.Append(" */");
 			return builder.ToString();

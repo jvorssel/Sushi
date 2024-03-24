@@ -52,24 +52,19 @@ public sealed class TypeScriptConverter : ModelConverter
         var scriptType = ResolveScriptType(property.Type, string.Empty);
         if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
             throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");
-        
+
         var defaultValue = ResolveDefaultValue(property);
 
         var name = ApplyCasingStyle(property.Name);
         var nameSuffix = defaultValue.IsEmpty() ? "!" : string.Empty;
+        var @override = classDescriptor.IsPropertyInherited(property, false) ? "override " : string.Empty;
+        var readonlyPrefix = property is { Readonly: true, DefaultValue: not null } ? "readonly " : string.Empty;
+        var staticPrefix = property.IsStatic ? "static " : string.Empty;
 
-        var modifiers = GetPropertyModifiers(property);
+        var modifiers = $"{staticPrefix}{@override}{readonlyPrefix}";
         var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
 
         return $"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};";
-    }
-
-    internal string GetPropertyModifiers(IPropertyDescriptor property)
-    {
-        var readonlyPrefix = property.Readonly ? "readonly " : string.Empty;
-        var staticPrefix = property.IsStatic ? "static " : string.Empty;
-
-        return $"{staticPrefix}{readonlyPrefix}";
     }
 
     public string ResolveScriptType(Type type, string prefix = "")
@@ -126,7 +121,7 @@ public sealed class TypeScriptConverter : ModelConverter
 
         if (prop.Type?.IsNullable() ?? false)
             return "null";
-
+  
         if (prop.DefaultValue == null)
             return string.Empty;
 
@@ -177,7 +172,8 @@ public sealed class TypeScriptConverter : ModelConverter
         return genericTypeArgs;
     }
 
-    internal string CreatePropertyDeclaration(ClassDescriptor classDescriptor, IEnumerable<IPropertyDescriptor> properties)
+    internal string CreatePropertyDeclaration(ClassDescriptor classDescriptor,
+        IEnumerable<IPropertyDescriptor> properties)
     {
         var builder = new StringBuilder();
         foreach (var prop in properties)
@@ -260,7 +256,6 @@ public sealed class TypeScriptConverter : ModelConverter
             ? string.Empty
             : XmlDocument.JsDocClassSummary(model) + "\n";
         var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
-        var @override = model.Parent != null ? "override " : string.Empty;
         var propertyDeclaration = CreatePropertyDeclaration(model, properties);
         var constructorDeclaration = CreateConstructorDeclaration(model);
         var template =

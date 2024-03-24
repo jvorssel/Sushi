@@ -95,7 +95,7 @@ export class ViewModel {
 
 /**
  * Sushi.Tests.Models.BaseViewModel
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class BaseViewModel extends ViewModel {
     value: string = "base";
@@ -121,10 +121,10 @@ export class BaseViewModel extends ViewModel {
 
 /**
  * Sushi.Tests.Models.InheritedViewModel
- * @extends BaseViewModel 
+ * @extends BaseViewModel
  */
 export class InheritedViewModel extends BaseViewModel {
-    guid: string = "new guid";
+    override guid: string = "new guid";
     addition: string = "added";
 
     constructor(value: any = null) {
@@ -153,11 +153,11 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
     /** The Identifier that this Model refers to. */
-    identifier: string = "02bc4440-272b-4fd1-970c-a6a9c2f02284";
+    identifier: string = "ae1e8f68-41ff-4981-bbdd-50aee6e60e45";
     /** The Name of the person. */
     name!: string;
     /** The Surname of the person. */
@@ -191,7 +191,7 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
- * @extends PersonViewModel 
+ * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
     /** What Grade the Student is in. */
@@ -231,7 +231,7 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
     /** The Name of this SchoolViewModel. */
@@ -298,7 +298,7 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
@@ -311,7 +311,7 @@ export class TypeModel extends ViewModel {
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     /** A readonly string. */
-    static readonly readonlyString!: string;
+    static readonly readonlyString: string = "readonly";
 
     constructor(value: any = null) {
         super(value);
@@ -358,7 +358,7 @@ export class AbstractBaseModel {
 
 /**
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @extends AbstractBaseModel 
+ * @extends AbstractBaseModel
  */
 export class AbstractParentModel extends AbstractBaseModel {
     surname!: string;
@@ -392,7 +392,7 @@ export class CtorFixModel {
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-    readonly name!: string;
+    name!: string;
 
 
 }

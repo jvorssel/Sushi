@@ -53,12 +53,16 @@ public static class DescriptorHelpers
         return descriptors;
     }
 
-    public static bool IsPropertyInherited(this ClassDescriptor model, IPropertyDescriptor property)
+    public static bool IsPropertyInherited(this ClassDescriptor model, IPropertyDescriptor property, bool sameType)
     {
         var parent = model.Parent;
         while (parent != null)
         {
-            if (parent.Properties.Any(x => x.Name == property.Name && x.Type == property.Type))
+            var query = parent.Properties.AsQueryable();
+            if (sameType)
+                query = query.Where(x => x.Type == property.Type);
+            
+            if (query.Any(x => x.Name == property.Name))
                 return true;
 
             parent = parent.Parent;

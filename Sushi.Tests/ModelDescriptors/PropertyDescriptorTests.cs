@@ -12,6 +12,7 @@
 #region
 
 using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Tests.Models;
@@ -20,38 +21,38 @@ using Sushi.Tests.Models;
 
 namespace Sushi.Tests.ModelDescriptors
 {
-	public abstract class PropertyDescriptorTests
-	{
-		[TestClass]
-		public class TypeMapTests : PropertyDescriptorTests
-		{
-			[TestMethod]
-			public void GuidProperty_ShouldMapCorrectly()
-			{
-				// Arrange
-				var propertyType = typeof(ViewModel).GetProperty(nameof(ViewModel.Guid));
+    public abstract class PropertyDescriptorTests
+    {
+        [TestClass]
+        public class TypeMapTests : PropertyDescriptorTests
+        {
+            [TestMethod]
+            public void GuidProperty_ShouldMapCorrectly()
+            {
+                // Arrange
+                var classDescriptor = new ClassDescriptor(typeof(ViewModel));
 
-				// Act
-				var descriptor = new PropertyDescriptor(propertyType);
+                // Act
+                var descriptor = classDescriptor.GetProperty(nameof(ViewModel.Guid));
 
-				// Assert
-				Assert.AreEqual(nameof(ViewModel.Guid), descriptor.Name);
-				Assert.AreEqual(typeof(Guid), descriptor.Type);
-			}
+                // Assert
+                Assert.AreEqual(nameof(ViewModel.Guid), descriptor.Name);
+                Assert.AreEqual(typeof(Guid), descriptor.Type);
+            }
 
-			[TestMethod]
-			public void NullableProperty_ShouldMapCorrectly()
-			{
-				// Arrange
-				var propertyType = typeof(TypeModel).GetProperty(nameof(TypeModel.NullableBool));
+            [TestMethod]
+            public void NullableProperty_ShouldMapCorrectly()
+            {
+                // Arrange
+                var classDescriptor = new ClassDescriptor(typeof(TypeModel));
 
-				// Act
-				var descriptor = new PropertyDescriptor(propertyType);
+                // Act
+                var descriptor = classDescriptor.GetProperty(nameof(TypeModel.NullableBool));
 
-				// Assert
-				Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
-				Assert.AreEqual(typeof(bool?), descriptor.Type);
-			}
-		}
-	}
+                // Assert
+                Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
+                Assert.AreEqual(typeof(bool?), descriptor.Type);
+            }
+        }
+    }
 }

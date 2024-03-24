@@ -11,10 +11,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using Sushi.Converters;
 using Sushi.Enum;
+using Sushi.Helpers;
 using Sushi.Tests.Models;
 
 namespace Sushi.Tests.Converters;
@@ -129,7 +131,34 @@ public abstract class ModelConverterTests : TestBase
 			Assert.AreEqual(EnumType, resolvedListType);
 			Assert.AreEqual(EnumType, resolvedArrayType);
 		}
-		
-		
+
+		[TestMethod]
+		public void ReadonlyType_Property_ShouldResolveDefaultValueTest()
+		{
+			// Assert
+			var result = Converter.Models.Single(x => x.Type == Type);
+			var properties = result.Type.GetFieldDescriptors().ToList();
+			var property = properties.Single(x => x.Name == "ReadonlyString");
+			
+			// Act
+			var defaultValue = Converter.ResolveDefaultValue(property);
+			
+			// Assert
+			Assert.IsNotNull(defaultValue);
+			Assert.AreEqual("\"readonly\"", defaultValue);
+		}
+
+		[TestMethod]
+		public void ReadonlyType_ShouldResolveDefaultValueTest()
+		{
+			// Act
+			var result = Converter.Models.Single(x => x.Type == Type);
+			var property = result.Properties.SingleOrDefault(x => x.Name == "ReadonlyString");
+			
+			// Assert
+			Assert.IsNotNull(property);
+			Assert.IsTrue(property.Readonly);
+			Assert.AreEqual("readonly", property.DefaultValue);
+		}
 	}
 }

@@ -95,7 +95,7 @@ export class BaseViewModel extends ViewModel {
 }
 
 export class InheritedViewModel extends BaseViewModel {
-    guid: string = "new guid";
+    override guid: string = "new guid";
     addition: string = "added";
 
     constructor(value: any = null) {
@@ -123,7 +123,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "6c15af83-02e9-47db-943b-30acc13baf89";
+    identifier: string = "440513b5-4b48-4958-8e96-4a8cb627c783";
     name!: string;
     surname!: string;
     gender: Gender | number = 1;
@@ -247,7 +247,7 @@ export class TypeModel extends ViewModel {
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
-    static readonly readonlyString!: string;
+    static readonly readonlyString: string = "readonly";
 
     constructor(value: any = null) {
         super(value);
@@ -315,7 +315,7 @@ export class CtorFixModel {
 }
 
 export class NoXmlDocumentationModel {
-    readonly name!: string;
+    name!: string;
 
 
 }

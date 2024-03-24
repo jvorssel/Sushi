@@ -63,7 +63,8 @@ public sealed class FieldDescriptor : IPropertyDescriptor
 
         try
         {
-            DefaultValue = fieldInfo.GetValue(null);
+            var instance = _field.DeclaringType?.CreateInstance();
+            DefaultValue = fieldInfo.GetValue(instance);
         }
         catch (Exception e)
         {
