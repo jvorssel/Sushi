@@ -214,7 +214,7 @@ public sealed class TypeScriptConverter : ModelConverter
         foreach (var prop in model.Properties.Where(x => !x.Readonly))
         {
             var name = ApplyCasingStyle(prop.Name);
-            builder.AppendLine($"{Indent + Indent}if (value?.hasOwnProperty('{name}'))");
+            builder.AppendLine($"{Indent + Indent}if (Object.hasOwnProperty(value, '{name}'))");
             builder.AppendLine($"{Indent + Indent + Indent}this.{name} = value.{name};");
             builder.AppendLine();
         }

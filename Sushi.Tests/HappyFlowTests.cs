@@ -68,7 +68,7 @@ namespace Sushi.Tests
 			// Act
 			var script = converter.ECMAScript5().ToString();
 
-			WriteToFile(script, GetFilePath("models.es5.js"));
+			WriteToFile(script, GetFilePath("linter/models.es5.js"));
 		}
 
 		[TestMethod]
@@ -83,7 +83,7 @@ namespace Sushi.Tests
 				.IncludeUnderscoreMapper()
 				.ToString();
 
-			WriteToFile(script, GetFilePath("models.es5.map.js"));
+			WriteToFile(script, GetFilePath("linter/models.es5.map.js"));
 		}
 
 		[TestMethod]
@@ -95,7 +95,7 @@ namespace Sushi.Tests
 
 			// Act
 			var script = converter.ECMAScript6().ToString();
-			WriteToFile(script, GetFilePath("models.es6.js"));
+			WriteToFile(script, GetFilePath("linter/models.es6.js"));
 		}
 
 		[TestMethod]
@@ -108,7 +108,7 @@ namespace Sushi.Tests
 			// Act
 			var script = converter.TypeScript().ToString();
 
-			WriteToFile(script, GetFilePath("models.latest.ts"));
+			WriteToFile(script, GetFilePath("linter/models.latest.ts"));
 		}
 
 		[TestMethod]
@@ -127,7 +127,7 @@ namespace Sushi.Tests
 			var script = converter.TypeScript(options).ToString();
 
 			// 4) The resulting script can be written to a file(stream).
-			WriteToFile(script, GetFilePath("models.no-comments.ts"));
+			WriteToFile(script, GetFilePath("linter/models.no-comments.ts"));
 		}
 	}
 }
