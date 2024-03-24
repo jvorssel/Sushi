@@ -52,48 +52,32 @@ You can get the script default value using: `TypeScriptConverter.ResolveDefaultV
 ```
 /**
  * Simple model to verify complex types.
- * @extends ViewModel 
+ * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
     /** A nullable boolean. */
     nullableBool: boolean | null = null;
     /** A nullable string, defaults to null. */
-    nullableString!: string;
+    nullableString: string = "";
     /** A DateTime instance. */
-    date: Date | string | null = null;
+    date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     /** A readonly string. */
-    static readonly readonlyString!: string;
+    static readonly readonlyString: string = "readonly";
 
-    constructor(value: any = null) {
+    constructor(value: Partial<TypeModel> = {}) {
         super(value);
 
-        if (value?.hasOwnProperty('nullableBool'))
-            this.nullableBool = value.nullableBool.;
-
-        if (value?.hasOwnProperty('nullableString'))
-            this.nullableString = value.nullableString;
-
-        if (value?.hasOwnProperty('guid'))
-            this.guid = value.guid;
-
-        if (value?.hasOwnProperty('date'))
-            this.date = value.date;
-
-        if (value?.hasOwnProperty('student'))
-            this.student = value.student;
-
-        if (value?.hasOwnProperty('students'))
-            this.students = value.students;
-
-        if (value?.hasOwnProperty('studentPerClass'))
-            this.studentPerClass = value.studentPerClass;
-
-        if (value?.hasOwnProperty('createdOn'))
-            this.createdOn = value.createdOn;
-
+        if (value.nullableBool) this.nullableBool = value.nullableBool;
+        if (value.nullableString) this.nullableString = value.nullableString;
+        if (value.guid) this.guid = value.guid;
+        if (value.date) this.date = value.date;
+        if (value.student) this.student = value.student;
+        if (value.students) this.students = value.students;
+        if (value.studentPerClass) this.studentPerClass = value.studentPerClass;
+        if (value.createdOn) this.createdOn = value.createdOn;
     }
 }
 ```
