@@ -25,7 +25,7 @@ namespace Sushi.Tests.Models
 
 		/// <inheritdoc />
 		public long AmountOfStudents { get; set; }
-		
+
 		/// <summary>
 		///     The <see cref="Owner" /> of this <see cref="SchoolViewModel" />.
 		/// </summary>

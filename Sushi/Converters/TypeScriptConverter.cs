@@ -121,17 +121,17 @@ public sealed class TypeScriptConverter : ModelConverter
 
         if (prop.Type?.IsNullable() ?? false)
             return "null";
-  
-        if (prop.DefaultValue == null)
-            return string.Empty;
 
-        var defaultValueType = prop.DefaultValue.GetType();
-        var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType && x.HasParameterlessCtor);
-        if (descriptor != null)
-            return $"new {descriptor.Name}()";
+        if (prop.DefaultValue != null)
+        {
+            var defaultValueType = prop.DefaultValue.GetType();
+            var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType && x.HasParameterlessCtor);
+            if (descriptor != null)
+                return $"new {descriptor.Name}()";
 
-        if (defaultValueType.IsClass && defaultValueType != typeof(string))
-            return defaultValueType.IsDictionary() ? "{}" : string.Empty;
+            if (defaultValueType.IsClass && defaultValueType != typeof(string))
+                return defaultValueType.IsDictionary() ? "{}" : string.Empty;
+        }
 
         var nativeType = prop.Type.ToNativeScriptType();
         switch (nativeType)
@@ -147,6 +147,9 @@ public sealed class TypeScriptConverter : ModelConverter
             case NativeType.Float:
             case NativeType.Decimal:
             {
+                if (prop.DefaultValue == null)
+                    return string.Empty;
+
                 var asDecimal = Convert.ToDecimal(prop.DefaultValue).ToString(CultureInfo.InvariantCulture);
                 return asDecimal.Substring(0, Math.Min(asDecimal.Length, 15));
             }
@@ -154,8 +157,8 @@ public sealed class TypeScriptConverter : ModelConverter
             case NativeType.String:
                 return $"\"{prop.DefaultValue}\"";
             case NativeType.Null:
-            case NativeType.Object:
                 return "null";
+            case NativeType.Object:
             case NativeType.Undefined:
             default:
                 return string.Empty;
@@ -192,13 +195,13 @@ public sealed class TypeScriptConverter : ModelConverter
         return builder.ToString();
     }
 
-    public string CreateConstructorDeclaration(ClassDescriptor model)
+    public string CreateConstructorDeclaration(string className, ClassDescriptor model)
     {
         if (!model.GenerateConstructor)
             return string.Empty;
 
         var builder = new StringBuilder();
-        builder.AppendLine($"{Indent}constructor(value: any = null) {{");
+        builder.AppendLine($"{Indent}constructor(value: Partial<{className}> = {{}}) {{");
         if (model.Parent != null)
         {
             var hasCtorArguments = model.Parent.GenerateConstructor ? "value" : string.Empty;
@@ -210,9 +213,7 @@ public sealed class TypeScriptConverter : ModelConverter
         foreach (var prop in model.Properties.Where(x => !x.Readonly))
         {
             var name = ApplyCasingStyle(prop.Name);
-            builder.AppendLine($"{Indent + Indent}if (Object.prototype.hasOwnProperty.call(value, '{name}'))");
-            builder.AppendLine($"{Indent + Indent + Indent}this.{name} = value.{name};");
-            builder.AppendLine();
+            builder.AppendLine($"{Indent + Indent}if (value.{name}) this.{name} = value.{name};");
         }
 
         builder.Append(Indent + "}");
@@ -257,7 +258,7 @@ public sealed class TypeScriptConverter : ModelConverter
             : XmlDocument.JsDocClassSummary(model) + "\n";
         var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
         var propertyDeclaration = CreatePropertyDeclaration(model, properties);
-        var constructorDeclaration = CreateConstructorDeclaration(model);
+        var constructorDeclaration = CreateConstructorDeclaration(className, model);
         var template =
             $@"{summary}export class {className}{parentClass} {{
 {propertyDeclaration}
