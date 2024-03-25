@@ -209,7 +209,7 @@ public sealed class TypeScriptConverter : ModelConverter
         foreach (var prop in model.Properties.Where(x => !x.Readonly))
         {
             var name = ApplyCasingStyle(prop.Name);
-            builder.AppendLine($"{Indent + Indent}if (value.{name}) this.{name} = value.{name};");
+            builder.AppendLine($"{Indent + Indent}if (value.{name} !== undefined) this.{name} = value.{name};");
         }
 
         builder.Append(Indent + "}");

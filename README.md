@@ -87,14 +87,14 @@ export class TypeModel extends ViewModel {
     constructor(value: Partial<TypeModel> = {}) {
         super(value);
 
-        if (value.nullableBool) this.nullableBool = value.nullableBool;
-        if (value.nullableString) this.nullableString = value.nullableString;
-        if (value.guid) this.guid = value.guid;
-        if (value.date) this.date = value.date;
-        if (value.student) this.student = value.student;
-        if (value.students) this.students = value.students;
-        if (value.studentPerClass) this.studentPerClass = value.studentPerClass;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.nullableBool !== undefined) this.nullableBool = value.nullableBool;
+        if (value.nullableString !== undefined) this.nullableString = value.nullableString;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.date !== undefined) this.date = value.date;
+        if (value.student !== undefined) this.student = value.student;
+        if (value.students !== undefined) this.students = value.students;
+        if (value.studentPerClass !== undefined) this.studentPerClass = value.studentPerClass;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 ```

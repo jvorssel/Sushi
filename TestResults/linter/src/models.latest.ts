@@ -15,8 +15,8 @@ export class ConstrainedGeneric<T> {
     name: string = "";
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
-        if (value.data) this.data = value.data;
-        if (value.name) this.name = value.name;
+        if (value.data !== undefined) this.data = value.data;
+        if (value.name !== undefined) this.name = value.name;
     }
 }
 
@@ -58,9 +58,9 @@ export class GenericComplexStandalone<TFirst, TSecond> {
     totalAmount!: number;
 
     constructor(value: Partial<GenericComplexStandalone<TFirst, TSecond>> = {}) {
-        if (value.first) this.first = value.first;
-        if (value.second) this.second = value.second;
-        if (value.totalAmount) this.totalAmount = value.totalAmount;
+        if (value.first !== undefined) this.first = value.first;
+        if (value.second !== undefined) this.second = value.second;
+        if (value.totalAmount !== undefined) this.totalAmount = value.totalAmount;
     }
 }
 
@@ -73,8 +73,8 @@ export class GenericStandalone<TEntry> {
     totalAmount!: number;
 
     constructor(value: Partial<GenericStandalone<TEntry>> = {}) {
-        if (value.values) this.values = value.values;
-        if (value.totalAmount) this.totalAmount = value.totalAmount;
+        if (value.values !== undefined) this.values = value.values;
+        if (value.totalAmount !== undefined) this.totalAmount = value.totalAmount;
     }
 }
 
@@ -97,8 +97,8 @@ export class ViewModel {
     createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
-        if (value.guid) this.guid = value.guid;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -113,10 +113,10 @@ export class BaseViewModel extends ViewModel {
     constructor(value: Partial<BaseViewModel> = {}) {
         super(value);
 
-        if (value.value) this.value = value.value;
-        if (value.guid) this.guid = value.guid;
-        if (value.base) this.base = value.base;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.value !== undefined) this.value = value.value;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.base !== undefined) this.base = value.base;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -131,12 +131,12 @@ export class InheritedViewModel extends BaseViewModel {
     constructor(value: Partial<InheritedViewModel> = {}) {
         super(value);
 
-        if (value.value) this.value = value.value;
-        if (value.guid) this.guid = value.guid;
-        if (value.addition) this.addition = value.addition;
-        if (value.guid) this.guid = value.guid;
-        if (value.base) this.base = value.base;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.value !== undefined) this.value = value.value;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.addition !== undefined) this.addition = value.addition;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.base !== undefined) this.base = value.base;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -151,7 +151,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "5203291b-cc76-460a-8faf-613246b4bf78";
+    identifier: string = "4fb1abb1-e536-4052-9dd9-9dbb0a545170";
 
     /**
      * The Name of the person.
@@ -174,12 +174,12 @@ export class PersonViewModel extends ViewModel {
     constructor(value: Partial<PersonViewModel> = {}) {
         super(value);
 
-        if (value.identifier) this.identifier = value.identifier;
-        if (value.name) this.name = value.name;
-        if (value.surname) this.surname = value.surname;
-        if (value.gender) this.gender = value.gender;
-        if (value.guid) this.guid = value.guid;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.identifier !== undefined) this.identifier = value.identifier;
+        if (value.name !== undefined) this.name = value.name;
+        if (value.surname !== undefined) this.surname = value.surname;
+        if (value.gender !== undefined) this.gender = value.gender;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -205,14 +205,14 @@ export class StudentViewModel extends PersonViewModel {
     constructor(value: Partial<StudentViewModel> = {}) {
         super(value);
 
-        if (value.grade) this.grade = value.grade;
-        if (value.school) this.school = value.school;
-        if (value.identifier) this.identifier = value.identifier;
-        if (value.name) this.name = value.name;
-        if (value.surname) this.surname = value.surname;
-        if (value.gender) this.gender = value.gender;
-        if (value.guid) this.guid = value.guid;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.grade !== undefined) this.grade = value.grade;
+        if (value.school !== undefined) this.school = value.school;
+        if (value.identifier !== undefined) this.identifier = value.identifier;
+        if (value.name !== undefined) this.name = value.name;
+        if (value.surname !== undefined) this.surname = value.surname;
+        if (value.gender !== undefined) this.gender = value.gender;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -281,18 +281,18 @@ export class SchoolViewModel extends ViewModel {
     constructor(value: Partial<SchoolViewModel> = {}) {
         super(value);
 
-        if (value.name) this.name = value.name;
-        if (value.amountOfStudents) this.amountOfStudents = value.amountOfStudents;
-        if (value.owner) this.owner = value.owner;
-        if (value.address) this.address = value.address;
-        if (value.zipCode) this.zipCode = value.zipCode;
-        if (value.houseNumber) this.houseNumber = value.houseNumber;
-        if (value.houseNumberAddition) this.houseNumberAddition = value.houseNumberAddition;
-        if (value.averageGrade) this.averageGrade = value.averageGrade;
-        if (value.students) this.students = value.students;
-        if (value.timmy) this.timmy = value.timmy;
-        if (value.guid) this.guid = value.guid;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.name !== undefined) this.name = value.name;
+        if (value.amountOfStudents !== undefined) this.amountOfStudents = value.amountOfStudents;
+        if (value.owner !== undefined) this.owner = value.owner;
+        if (value.address !== undefined) this.address = value.address;
+        if (value.zipCode !== undefined) this.zipCode = value.zipCode;
+        if (value.houseNumber !== undefined) this.houseNumber = value.houseNumber;
+        if (value.houseNumberAddition !== undefined) this.houseNumberAddition = value.houseNumberAddition;
+        if (value.averageGrade !== undefined) this.averageGrade = value.averageGrade;
+        if (value.students !== undefined) this.students = value.students;
+        if (value.timmy !== undefined) this.timmy = value.timmy;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -333,14 +333,14 @@ export class TypeModel extends ViewModel {
     constructor(value: Partial<TypeModel> = {}) {
         super(value);
 
-        if (value.nullableBool) this.nullableBool = value.nullableBool;
-        if (value.nullableString) this.nullableString = value.nullableString;
-        if (value.guid) this.guid = value.guid;
-        if (value.date) this.date = value.date;
-        if (value.student) this.student = value.student;
-        if (value.students) this.students = value.students;
-        if (value.studentPerClass) this.studentPerClass = value.studentPerClass;
-        if (value.createdOn) this.createdOn = value.createdOn;
+        if (value.nullableBool !== undefined) this.nullableBool = value.nullableBool;
+        if (value.nullableString !== undefined) this.nullableString = value.nullableString;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.date !== undefined) this.date = value.date;
+        if (value.student !== undefined) this.student = value.student;
+        if (value.students !== undefined) this.students = value.students;
+        if (value.studentPerClass !== undefined) this.studentPerClass = value.studentPerClass;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -351,7 +351,7 @@ export class AbstractBaseModel {
     name: string = "";
 
     constructor(value: Partial<AbstractBaseModel> = {}) {
-        if (value.name) this.name = value.name;
+        if (value.name !== undefined) this.name = value.name;
     }
 }
 
@@ -365,8 +365,8 @@ export class AbstractParentModel extends AbstractBaseModel {
     constructor(value: Partial<AbstractParentModel> = {}) {
         super(value);
 
-        if (value.surname) this.surname = value.surname;
-        if (value.name) this.name = value.name;
+        if (value.surname !== undefined) this.surname = value.surname;
+        if (value.name !== undefined) this.name = value.name;
     }
 }
 
@@ -377,7 +377,7 @@ export class CtorFixModel {
     name: string = "";
 
     constructor(value: Partial<CtorFixModel> = {}) {
-        if (value.name) this.name = value.name;
+        if (value.name !== undefined) this.name = value.name;
     }
 }
 
