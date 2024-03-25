@@ -119,13 +119,10 @@ public class HappyFlowTests : TestBase
         var converter = new SushiConverter(assembly);
 
         // Act
-        // 2) Specify conversion options.
-        var options = new ConverterOptions();
+        // 2) Specify the target language and invoke ToString().
+        var script = converter.TypeScript().ToString();
 
-        // 3) Specify the target language and invoke ToString().
-        var script = converter.TypeScript(options).ToString();
-
-        // 4) The resulting script can be written to a file(stream).
+        // 3) The resulting script can be written to a file(stream).
         WriteToFile(script, GetFilePath(SourcePath + "models.no-comments.ts"));
     }
 }

@@ -1,3 +1,4 @@
+// noinspection JSUnusedGlobalSymbols
 
 export enum Gender {
     Undefined = 0,
@@ -86,7 +87,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "2f476ba7-3b7f-4071-9011-de5d5f59c165";
+    identifier: string = "b3c02d57-115d-4305-b777-35a9b49e95f4";
     name: string = "";
     surname: string = "";
     gender: Gender | number = 1;
