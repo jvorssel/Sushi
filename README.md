@@ -52,19 +52,36 @@ You can get the script default value using: `TypeScriptConverter.ResolveDefaultV
 ```
 /**
  * Simple model to verify complex types.
+ * Sushi.Tests.Models.TypeModel
  * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
-    /** A nullable boolean. */
+
+    /**
+     * A nullable boolean.
+     * @type (boolean | null)
+     */
     nullableBool: boolean | null = null;
-    /** A nullable string, defaults to null. */
+
+    /**
+     * A nullable string, defaults to null.
+     * @type (string)
+     */
     nullableString: string = "";
-    /** A DateTime instance. */
+
+    /**
+     * A DateTime instance.
+     * @type (Date | string | null)
+     */
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
-    /** A readonly string. */
+
+    /**
+     * A readonly string.
+     * @type (string)
+     */
     static readonly readonlyString: string = "readonly";
 
     constructor(value: Partial<TypeModel> = {}) {
