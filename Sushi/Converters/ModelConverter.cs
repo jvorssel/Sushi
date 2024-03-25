@@ -28,7 +28,7 @@ namespace Sushi.Converters
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
-		protected readonly XmlDocumentationReader XmlDocument;
+		protected readonly XmlDocumentationReader? XmlDocument;
 		public HashSet<ClassDescriptor> Models { get; }
 		public HashSet<EnumDescriptor> EnumModels { get; }
 

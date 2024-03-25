@@ -122,7 +122,7 @@ public sealed class XmlSummaryDescriptor
         return fd.IsSameType(type);
     }
 
-    public static bool operator !=(XmlSummaryDescriptor ms, Type type)
+    public static bool operator !=(XmlSummaryDescriptor? ms, Type? type)
     {
         return !(ms == type);
     }

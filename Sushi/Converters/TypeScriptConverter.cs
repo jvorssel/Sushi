@@ -49,7 +49,6 @@ public sealed class TypeScriptConverter : ModelConverter
 
     internal void ConvertProperty(StringBuilder builder, ClassDescriptor classDescriptor, IPropertyDescriptor property)
     {
-        builder.AppendLine();
         var scriptType = ResolveScriptType(property.Type, string.Empty);
         if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
             throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");

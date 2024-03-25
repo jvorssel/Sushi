@@ -34,6 +34,7 @@ public static class JsDocFormatter
         if (summary == null)
             return;
 
+        builder.AppendLine();
         builder.AppendLine(prefix + "/**");
         builder.AppendLine(prefix + $" * {summary.Summary}");
         if (!scriptType.IsEmpty())
@@ -44,21 +45,24 @@ public static class JsDocFormatter
     public static void AppendJsDoc(this StringBuilder builder, XmlDocumentationReader? doc, ClassDescriptor descriptor,
         string prefix = "")
     {
+        if (doc == null)
+            return;
+
         // Return the rows for the js-doc
         builder.AppendLine(prefix + "/**");
 
-        if (doc != null)
-        {
-            var typeDoc = doc.GetDocumentationForType(descriptor.Type);
-            builder.AppendLine(prefix + $" * {typeDoc?.Summary ?? descriptor.FullName}");
-        }
-        else
-        {
-            builder.AppendLine(prefix + $" * {descriptor.FullName}");
-        }
+        var typeDoc = doc.GetDocumentationForType(descriptor.Type);
+        if (typeDoc != null)
+            builder.AppendLine(prefix + $" * {typeDoc.Summary}");
+        builder.AppendLine(prefix + $" * {descriptor.FullName}");
 
         if (descriptor.Parent != null)
             builder.AppendLine(prefix + $" * @extends {descriptor.Parent.Name}");
+
+        if (descriptor.GenericParameterNames.Any())
+            foreach (var genericArg in descriptor.GenericParameterNames)
+                builder.AppendLine(prefix + $" * @template {{any}} {genericArg}");
+
 
         builder.AppendLine(prefix + " */");
     }

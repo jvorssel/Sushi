@@ -4,13 +4,8 @@ export enum Gender {
     Female = 2
 }
 
-/**
- * Sushi.Tests.Models.ConstrainedGeneric`1
- */
 export class ConstrainedGeneric<T> {
-
     data!: T;
-
     name: string = "";
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
@@ -19,29 +14,17 @@ export class ConstrainedGeneric<T> {
     }
 }
 
-/**
- * Sushi.Tests.Models.ConstValues
- */
 export class ConstValues {
-
     static readonly static: string = "Static";
-
     static readonly first: string = "First";
-
     static readonly last: string = "Last";
 
 
 }
 
-/**
- * Sushi.Tests.Models.GenericComplexStandalone`2
- */
 export class GenericComplexStandalone<TFirst, TSecond> {
-
     first: Array<TFirst> = [];
-
     second: Array<TSecond> = [];
-
     totalAmount!: number;
 
     constructor(value: Partial<GenericComplexStandalone<TFirst, TSecond>> = {}) {
@@ -51,13 +34,8 @@ export class GenericComplexStandalone<TFirst, TSecond> {
     }
 }
 
-/**
- * Sushi.Tests.Models.GenericStandalone`1
- */
 export class GenericStandalone<TEntry> {
-
     values: Array<TEntry> = [];
-
     totalAmount!: number;
 
     constructor(value: Partial<GenericStandalone<TEntry>> = {}) {
@@ -66,13 +44,8 @@ export class GenericStandalone<TEntry> {
     }
 }
 
-/**
- * Sushi.Tests.Models.ViewModel
- */
 export class ViewModel {
-
     guid: string = "";
-
     createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
@@ -81,14 +54,8 @@ export class ViewModel {
     }
 }
 
-/**
- * Sushi.Tests.Models.BaseViewModel
- * @extends ViewModel
- */
 export class BaseViewModel extends ViewModel {
-
     value: string = "base";
-
     base: boolean = true;
 
     constructor(value: Partial<BaseViewModel> = {}) {
@@ -101,14 +68,8 @@ export class BaseViewModel extends ViewModel {
     }
 }
 
-/**
- * Sushi.Tests.Models.InheritedViewModel
- * @extends BaseViewModel
- */
 export class InheritedViewModel extends BaseViewModel {
-
     override guid: string = "new guid";
-
     addition: string = "added";
 
     constructor(value: Partial<InheritedViewModel> = {}) {
@@ -123,18 +84,10 @@ export class InheritedViewModel extends BaseViewModel {
     }
 }
 
-/**
- * Sushi.Tests.Models.PersonViewModel
- * @extends ViewModel
- */
 export class PersonViewModel extends ViewModel {
-
-    identifier: string = "e4a2e0ff-c185-4479-a758-06ca377dfc26";
-
+    identifier: string = "293f6add-3154-4b5c-bb01-0b284bb99671";
     name: string = "";
-
     surname: string = "";
-
     gender: Gender | number = 1;
 
     constructor(value: Partial<PersonViewModel> = {}) {
@@ -149,14 +102,8 @@ export class PersonViewModel extends ViewModel {
     }
 }
 
-/**
- * Sushi.Tests.Models.StudentViewModel
- * @extends PersonViewModel
- */
 export class StudentViewModel extends PersonViewModel {
-
     grade: number = 9;
-
     school!: SchoolViewModel;
 
     constructor(value: Partial<StudentViewModel> = {}) {
@@ -173,30 +120,16 @@ export class StudentViewModel extends PersonViewModel {
     }
 }
 
-/**
- * Sushi.Tests.Models.SchoolViewModel
- * @extends ViewModel
- */
 export class SchoolViewModel extends ViewModel {
-
     name: string = "";
-
     amountOfStudents: number = 0;
-
     owner!: PersonViewModel;
-
     address: string = "";
-
     zipCode: string = "";
-
     houseNumber: number = 0;
-
     houseNumberAddition: string = "";
-
     averageGrade: number = 2.6666666666666;
-
     students: Array<StudentViewModel> = [];
-
     timmy: StudentViewModel = new StudentViewModel();
 
     constructor(value: Partial<SchoolViewModel> = {}) {
@@ -217,24 +150,13 @@ export class SchoolViewModel extends ViewModel {
     }
 }
 
-/**
- * Sushi.Tests.Models.TypeModel
- * @extends ViewModel
- */
 export class TypeModel extends ViewModel {
-
     nullableBool: boolean | null = null;
-
     nullableString: string = "";
-
     date!: Date | string | null;
-
     student: StudentViewModel = new StudentViewModel();
-
     students: Array<StudentViewModel> = [];
-
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
-
     static readonly readonlyString: string = "readonly";
 
     constructor(value: Partial<TypeModel> = {}) {
@@ -251,11 +173,7 @@ export class TypeModel extends ViewModel {
     }
 }
 
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- */
 export class AbstractBaseModel {
-
     name: string = "";
 
     constructor(value: Partial<AbstractBaseModel> = {}) {
@@ -263,12 +181,7 @@ export class AbstractBaseModel {
     }
 }
 
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
- * @extends AbstractBaseModel
- */
 export class AbstractParentModel extends AbstractBaseModel {
-
     surname: string = "";
 
     constructor(value: Partial<AbstractParentModel> = {}) {
@@ -279,11 +192,7 @@ export class AbstractParentModel extends AbstractBaseModel {
     }
 }
 
-/**
- * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- */
 export class CtorFixModel {
-
     name: string = "";
 
     constructor(value: Partial<CtorFixModel> = {}) {
@@ -291,11 +200,7 @@ export class CtorFixModel {
     }
 }
 
-/**
- * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- */
 export class NoXmlDocumentationModel {
-
     name: string = "";
 
 

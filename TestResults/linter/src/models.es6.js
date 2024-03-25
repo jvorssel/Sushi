@@ -1,5 +1,6 @@
 /**
  * Sushi.Tests.Models.ConstrainedGeneric`1
+ * @template {any} T
  */
 export class ConstrainedGeneric {
     Data;
@@ -19,16 +20,20 @@ export class ConstrainedGeneric {
 
 /**
  * A class with const values.
+ * Sushi.Tests.Models.ConstValues
  */
 export class ConstValues {
+
     /**
      * A Static value.
      */
     Static;
+
     /**
      * The First value.
      */
     First;
+
     /**
      * The Last value.
      */
@@ -49,6 +54,8 @@ export class ConstValues {
 
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
+ * @template {any} TFirst
+ * @template {any} TSecond
  */
 export class GenericComplexStandalone {
     First;
@@ -70,6 +77,7 @@ export class GenericComplexStandalone {
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
+ * @template {any} TEntry
  */
 export class GenericStandalone {
     Values;
@@ -89,12 +97,15 @@ export class GenericStandalone {
 
 /**
  * The view model base class.
+ * Sushi.Tests.Models.ViewModel
  */
 export class ViewModel {
+
     /**
      * The view model identifier.
      */
     Guid;
+
     /**
      * When this view model was created.
      */
@@ -158,21 +169,26 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
+ * Sushi.Tests.Models.PersonViewModel
  * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
+
     /**
      * The Identifier that this Model refers to.
      */
     Identifier;
+
     /**
      * The Name of the person.
      */
     Name;
+
     /**
      * The Surname of the person.
      */
     Surname;
+
     /**
      * The Gender of the person.
      */
@@ -196,13 +212,16 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
+ * Sushi.Tests.Models.StudentViewModel
  * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
+
     /**
      * What Grade the Student is in.
      */
     Grade;
+
     /**
      * The name of the School.
      */
@@ -224,41 +243,51 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
+ * Sushi.Tests.Models.SchoolViewModel
  * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
+
     /**
      * The Name of this SchoolViewModel.
      */
     Name;
+
     /**
      * The AmountOfStudents of this SchoolViewModel.
      */
     AmountOfStudents;
+
     /**
      * The Owner of this SchoolViewModel.
      */
     Owner;
+
     /**
      * The Address of this SchoolViewModel.
      */
     Address;
+
     /**
      * The ZipCode of this SchoolViewModel.
      */
     ZipCode;
+
     /**
      * The HouseNumber of this SchoolViewModel.
      */
     HouseNumber;
+
     /**
      * The HouseNumberAddition of this SchoolViewModel.
      */
     HouseNumberAddition;
+
     /**
      * The school student aren't doing too great ...
      */
     AverageGrade;
+
     /**
      * The Students of this SchoolViewModel.
      */
@@ -289,17 +318,21 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
+ * Sushi.Tests.Models.TypeModel
  * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
+
     /**
      * A nullable boolean.
      */
     NullableBool;
+
     /**
      * A nullable string, defaults to null.
      */
     NullableString;
+
     /**
      * A DateTime instance.
      */
@@ -307,6 +340,7 @@ export class TypeModel extends ViewModel {
     Student;
     Students;
     StudentPerClass;
+
     /**
      * A readonly string.
      */

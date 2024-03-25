@@ -31,7 +31,7 @@ namespace Sushi
         public HashSet<ClassDescriptor> Models { get; }
         public HashSet<EnumDescriptor> EnumModels { get; }
 
-        public XmlDocumentationReader Documentation { get; private set; }
+        public XmlDocumentationReader? Documentation { get; private set; }
 
         /// <summary>
         ///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> to convert.

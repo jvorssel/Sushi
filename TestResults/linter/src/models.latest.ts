@@ -7,11 +7,10 @@ export enum Gender {
 
 /**
  * Sushi.Tests.Models.ConstrainedGeneric`1
+ * @template {any} T
  */
 export class ConstrainedGeneric<T> {
-
     data!: T;
-
     name: string = "";
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
@@ -22,6 +21,7 @@ export class ConstrainedGeneric<T> {
 
 /**
  * A class with const values.
+ * Sushi.Tests.Models.ConstValues
  */
 export class ConstValues {
 
@@ -48,13 +48,12 @@ export class ConstValues {
 
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
+ * @template {any} TFirst
+ * @template {any} TSecond
  */
 export class GenericComplexStandalone<TFirst, TSecond> {
-
     first: Array<TFirst> = [];
-
     second: Array<TSecond> = [];
-
     totalAmount!: number;
 
     constructor(value: Partial<GenericComplexStandalone<TFirst, TSecond>> = {}) {
@@ -66,11 +65,10 @@ export class GenericComplexStandalone<TFirst, TSecond> {
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
+ * @template {any} TEntry
  */
 export class GenericStandalone<TEntry> {
-
     values: Array<TEntry> = [];
-
     totalAmount!: number;
 
     constructor(value: Partial<GenericStandalone<TEntry>> = {}) {
@@ -81,6 +79,7 @@ export class GenericStandalone<TEntry> {
 
 /**
  * The view model base class.
+ * Sushi.Tests.Models.ViewModel
  */
 export class ViewModel {
 
@@ -107,9 +106,7 @@ export class ViewModel {
  * @extends ViewModel
  */
 export class BaseViewModel extends ViewModel {
-
     value: string = "base";
-
     base: boolean = true;
 
     constructor(value: Partial<BaseViewModel> = {}) {
@@ -127,9 +124,7 @@ export class BaseViewModel extends ViewModel {
  * @extends BaseViewModel
  */
 export class InheritedViewModel extends BaseViewModel {
-
     override guid: string = "new guid";
-
     addition: string = "added";
 
     constructor(value: Partial<InheritedViewModel> = {}) {
@@ -146,6 +141,7 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
+ * Sushi.Tests.Models.PersonViewModel
  * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
@@ -154,7 +150,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "e3cf7c9c-d05e-484f-bdea-422eaf612361";
+    identifier: string = "031a6c59-5709-46fe-a650-64efc93e184f";
 
     /**
      * The Name of the person.
@@ -188,6 +184,7 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
+ * Sushi.Tests.Models.StudentViewModel
  * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
@@ -220,6 +217,7 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
+ * Sushi.Tests.Models.SchoolViewModel
  * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
@@ -277,7 +275,6 @@ export class SchoolViewModel extends ViewModel {
      * @type (Array<StudentViewModel>)
      */
     students: Array<StudentViewModel> = [];
-
     timmy: StudentViewModel = new StudentViewModel();
 
     constructor(value: Partial<SchoolViewModel> = {}) {
@@ -300,6 +297,7 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
+ * Sushi.Tests.Models.TypeModel
  * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
@@ -321,11 +319,8 @@ export class TypeModel extends ViewModel {
      * @type (Date | string | null)
      */
     date!: Date | string | null;
-
     student: StudentViewModel = new StudentViewModel();
-
     students: Array<StudentViewModel> = [];
-
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
 
     /**
@@ -352,7 +347,6 @@ export class TypeModel extends ViewModel {
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
  */
 export class AbstractBaseModel {
-
     name: string = "";
 
     constructor(value: Partial<AbstractBaseModel> = {}) {
@@ -365,7 +359,6 @@ export class AbstractBaseModel {
  * @extends AbstractBaseModel
  */
 export class AbstractParentModel extends AbstractBaseModel {
-
     surname: string = "";
 
     constructor(value: Partial<AbstractParentModel> = {}) {
@@ -380,7 +373,6 @@ export class AbstractParentModel extends AbstractBaseModel {
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
  */
 export class CtorFixModel {
-
     name: string = "";
 
     constructor(value: Partial<CtorFixModel> = {}) {
@@ -392,7 +384,6 @@ export class CtorFixModel {
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-
     name: string = "";
 
 

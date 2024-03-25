@@ -1,5 +1,6 @@
 /**
  * Sushi.Tests.Models.ConstrainedGeneric`1
+ * @template {any} T
  */
 function ConstrainedGeneric(obj) {
     let value = obj;
@@ -16,6 +17,7 @@ ConstrainedGeneric.prototype.mapFrom = function(obj) {
 
 /**
  * A class with const values.
+ * Sushi.Tests.Models.ConstValues
  */
 function ConstValues(obj) {
     let value = obj;
@@ -33,6 +35,8 @@ ConstValues.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.Models.GenericComplexStandalone`2
+ * @template {any} TFirst
+ * @template {any} TSecond
  */
 function GenericComplexStandalone(obj) {
     let value = obj;
@@ -50,6 +54,7 @@ GenericComplexStandalone.prototype.mapFrom = function(obj) {
 
 /**
  * Sushi.Tests.Models.GenericStandalone`1
+ * @template {any} TEntry
  */
 function GenericStandalone(obj) {
     let value = obj;
@@ -66,6 +71,7 @@ GenericStandalone.prototype.mapFrom = function(obj) {
 
 /**
  * The view model base class.
+ * Sushi.Tests.Models.ViewModel
  */
 function ViewModel(obj) {
     let value = obj;
@@ -122,6 +128,7 @@ InheritedViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * The PersonViewModel that represents a Person.
+ * Sushi.Tests.Models.PersonViewModel
  * @extends ViewModel
  */
 function PersonViewModel(obj) {
@@ -143,6 +150,7 @@ PersonViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Represents a Student in a school.
+ * Sushi.Tests.Models.StudentViewModel
  * @extends PersonViewModel
  */
 function StudentViewModel(obj) {
@@ -166,6 +174,7 @@ StudentViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Basic information about a School.
+ * Sushi.Tests.Models.SchoolViewModel
  * @extends ViewModel
  */
 function SchoolViewModel(obj) {
@@ -193,6 +202,7 @@ SchoolViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Simple model to verify complex types.
+ * Sushi.Tests.Models.TypeModel
  * @extends ViewModel
  */
 function TypeModel(obj) {
