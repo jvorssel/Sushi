@@ -1,3 +1,4 @@
+
 export enum Gender {
     Undefined = 0,
     Male = 1,
@@ -85,7 +86,7 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "293f6add-3154-4b5c-bb01-0b284bb99671";
+    identifier: string = "2f476ba7-3b7f-4071-9011-de5d5f59c165";
     name: string = "";
     surname: string = "";
     gender: Gender | number = 1;

@@ -40,6 +40,8 @@ public sealed class TypeScriptConverter : ModelConverter
         foreach (var line in HeaderLines)
             yield return line;
 
+        yield return string.Empty;
+
         foreach (var model in EnumModels)
             yield return ToTypeScriptEnum(model);
 
