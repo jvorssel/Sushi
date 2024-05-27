@@ -41,7 +41,7 @@ public sealed class ClassDescriptor
 
     public bool IsApplicable { get; } = false;
 
-    public IReadOnlyList<IPropertyDescriptor> Properties { get; }
+    public Dictionary<string, IPropertyDescriptor> Properties { get; } = new();
 
     public IReadOnlyList<string> GenericParameterNames { get; } = new List<string>();
 
@@ -49,7 +49,7 @@ public sealed class ClassDescriptor
 
     public HashSet<ClassDescriptor> Children { get; } = new();
 
-    public bool GenerateConstructor => Properties.Any(x => !x.Readonly);
+    public bool GenerateConstructor => Properties.Any(x => !x.Value.Readonly);
 
     public ClassDescriptor(Type type)
     {
@@ -62,7 +62,8 @@ public sealed class ClassDescriptor
         // Get the available properties in the given type
         var properties = Type.GetPropertyDescriptors();
         var fields = Type.GetFieldDescriptors();
-        Properties = properties.Cast<IPropertyDescriptor>().Concat(fields).ToList();
+        foreach (var descriptor in properties.Cast<IPropertyDescriptor>().Concat(fields))
+            Properties.Add(descriptor.Name, descriptor);
 
         if (!Type.IsGenericTypeDefinition)
             return;
@@ -71,15 +72,35 @@ public sealed class ClassDescriptor
     }
 
     /// <summary>
-    ///     Get the <see cref="Properties" /> <see cref="List{T}" /> but allows filtering inherited properties.
+    ///     Get the <see cref="Properties" /> <see cref="List{T}" />.
     /// </summary>
-    public IEnumerable<IPropertyDescriptor> GetProperties(bool excludeInherited)
+    public IEnumerable<IPropertyDescriptor> GetProperties()
     {
-        foreach (var prop in Properties)
+        foreach (var prop in Properties.Select(x => x.Value))
         {
-            var isInherited = this.IsPropertyInherited(prop, true);
-            if (excludeInherited && isInherited)
+            // No parent, return the property.
+            if (Parent == null)
+            {
+                yield return prop;
                 continue;
+            }
+
+            // Check if parent contains a property with the same name.
+            var isInherited = Parent.Properties.ContainsKey(prop.Name);
+            if (!isInherited)
+            {
+                yield return prop;
+                continue;
+            }
+
+            // Throw an error if the name changes.
+            var parentPropertyType = Parent.Properties[prop.Name].Type;
+            if (parentPropertyType != prop.Type)
+            {
+                var message =
+                    $"Casting the type for {Name}.{prop.Name} from {parentPropertyType.Name} to {prop.Type.Name} is not supported.";
+                throw new InvalidCastException(message);
+            }
 
             yield return prop;
         }
@@ -87,7 +108,7 @@ public sealed class ClassDescriptor
 
     public IPropertyDescriptor? GetProperty(string name)
     {
-        return Properties.SingleOrDefault(x => x.Name == name);
+        return Properties[name];
     }
 
     #region Equality members
@@ -106,4 +127,6 @@ public sealed class ClassDescriptor
     }
 
     #endregion
+
+    
 }

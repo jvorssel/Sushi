@@ -98,7 +98,6 @@ function BaseViewModel(obj) {
     this.value = value.value;
     this.guid = value.guid;
     this.base = value.base;
-    this.createdOn = value.createdOn;
 }
 
 BaseViewModel.prototype.mapFrom = function(obj) {
@@ -115,11 +114,7 @@ function InheritedViewModel(obj) {
         value = {};
 
     this.value = value.value;
-    this.guid = value.guid;
     this.addition = value.addition;
-    this.guid = value.guid;
-    this.base = value.base;
-    this.createdOn = value.createdOn;
 }
 
 InheritedViewModel.prototype.mapFrom = function(obj) {
@@ -138,8 +133,6 @@ function NullablePropertiesViewModel(obj) {
 
     this.guid = value.guid;
     this.value2 = value.value2;
-    this.guid = value.guid;
-    this.createdOn = value.createdOn;
     this.value = value.value;
 }
 
@@ -161,8 +154,6 @@ function PersonViewModel(obj) {
     this.name = value.name;
     this.surname = value.surname;
     this.gender = value.gender;
-    this.guid = value.guid;
-    this.createdOn = value.createdOn;
 }
 
 PersonViewModel.prototype.mapFrom = function(obj) {
@@ -181,12 +172,6 @@ function StudentViewModel(obj) {
 
     this.grade = value.grade;
     this.school = value.school;
-    this.identifier = value.identifier;
-    this.name = value.name;
-    this.surname = value.surname;
-    this.gender = value.gender;
-    this.guid = value.guid;
-    this.createdOn = value.createdOn;
 }
 
 StudentViewModel.prototype.mapFrom = function(obj) {
@@ -213,8 +198,6 @@ function SchoolViewModel(obj) {
     this.averageGrade = value.averageGrade;
     this.students = value.students;
     this.timmy = value.timmy;
-    this.guid = value.guid;
-    this.createdOn = value.createdOn;
 }
 
 SchoolViewModel.prototype.mapFrom = function(obj) {
@@ -238,7 +221,6 @@ function TypeModel(obj) {
     this.student = value.student;
     this.students = value.students;
     this.studentPerClass = value.studentPerClass;
-    this.createdOn = value.createdOn;
     this.readonlyString = value.readonlyString;
 }
 
@@ -262,20 +244,19 @@ AbstractBaseModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
+ * Sushi.Tests.BugFixes.AbstractBaseClass+ChildModel
  * @extends AbstractBaseModel
  */
-function AbstractParentModel(obj) {
+function ChildModel(obj) {
     let value = obj;
     if (!(value instanceof Object)) 
         value = {};
 
     this.surname = value.surname;
-    this.name = value.name;
 }
 
-AbstractParentModel.prototype.mapFrom = function(obj) {
-    return _.extend(new AbstractParentModel(), obj); 
+ChildModel.prototype.mapFrom = function(obj) {
+    return _.extend(new ChildModel(), obj); 
 };
 
 /**

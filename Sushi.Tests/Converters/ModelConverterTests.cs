@@ -153,7 +153,7 @@ public abstract class ModelConverterTests : TestBase
 		{
 			// Act
 			var result = Converter.Models.Single(x => x.Type == Type);
-			var property = result.Properties.SingleOrDefault(x => x.Name == "ReadonlyString");
+			var property = result.Properties["ReadonlyString"];
 			
 			// Assert
 			Assert.IsNotNull(property);

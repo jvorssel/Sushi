@@ -23,11 +23,11 @@ public class AbstractBaseClass : TestBase
         }
     }
 
-    public class AbstractParentModel : AbstractBaseModel
+    public class ChildModel : AbstractBaseModel
     {
         public string Surname { get; set; }
 
-        public AbstractParentModel(string name, string surname) : base(name)
+        public ChildModel(string name, string surname) : base(name)
         {
             Surname = surname;
         }
@@ -37,22 +37,25 @@ public class AbstractBaseClass : TestBase
     public void NoParameterlessCtor_ShouldMapModelTest()
     {
         // Arrange
-        var type = typeof(AbstractParentModel);
+        var parentDescriptor = new ClassDescriptor(typeof(AbstractBaseModel));
+        var descriptor = new ClassDescriptor(typeof(ChildModel));
+        var types = new [] {parentDescriptor,descriptor};
+        new DescriptorTreeBuilder(types).BuildTree();
 
         // Act
-        var descriptor = new ClassDescriptor(type);
 
         // Assert
-        Assert.AreEqual(2, descriptor.Properties.Count);
-        Assert.IsTrue(descriptor.Properties.Any(x => x.Name == nameof(AbstractParentModel.Name)));
-        Assert.IsTrue(descriptor.Properties.Any(x => x.Name == nameof(AbstractParentModel.Surname)));
+        Assert.AreEqual(1, descriptor.Properties.Count);
+        Assert.IsTrue(descriptor.Properties.ContainsKey(nameof(ChildModel.Surname)));
+        Assert.AreEqual(1, descriptor.Parent.Properties.Count);
+        Assert.IsTrue(descriptor.Parent.Properties.ContainsKey(nameof(ChildModel.Name)));
     }
     
     [TestMethod]
     public void NoParameterlessCtor_ShouldConvertToTypeScriptTest()
     {
         // Arrange
-        var sushi = new SushiConverter(typeof(AbstractParentModel), typeof(AbstractBaseModel));
+        var sushi = new SushiConverter(typeof(ChildModel), typeof(AbstractBaseModel));
         
         // Act
         var script = sushi.TypeScript().ToString();

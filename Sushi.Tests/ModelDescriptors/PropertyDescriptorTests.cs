@@ -54,9 +54,10 @@ namespace Sushi.Tests.ModelDescriptors
                 Assert.AreEqual(typeof(bool?), descriptor.Type);
             }
             
+            
 
             [TestMethod]
-            public void NullableStringValue_ShouldMapCorrectly()
+            public void NullableStringValue2_ShouldMapCorrectly()
             {
                 // Arrange
                 var converter = new SushiConverter().TypeScript();

@@ -13,7 +13,7 @@ namespace Sushi.Tests.BugFixes;
 public class NoParameterlessCtorTests : TestBase
 {
     [ConvertToScript]
-    public class CtorFixModel 
+    public class CtorFixModel
     {
         public string Name { get; set; }
 
@@ -34,6 +34,6 @@ public class NoParameterlessCtorTests : TestBase
 
         // Assert
         Assert.AreEqual(1, descriptor.Properties.Count);
-        Assert.AreEqual(nameof(CtorFixModel.Name), descriptor.Properties.Single().Name);
+        Assert.AreEqual(nameof(CtorFixModel.Name), descriptor.Properties.Values.Single().Name);
     }
 }

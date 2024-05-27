@@ -44,14 +44,14 @@ namespace Sushi.Tests
 			Assert.IsNotNull(personModel);
 
 			// PersonModel has 2 properties
-			Assert.AreEqual(6, personModel.Properties.Count);
+			Assert.AreEqual(4, personModel.Properties.Count);
 
 			// The name property
-			var name = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonViewModel.Name));
+			var name = personModel.Properties[nameof(PersonViewModel.Name)];
 			Assert.IsNotNull(name);
 
 			// The surname property
-			var surname = personModel.Properties.SingleOrDefault(x => x.Name == nameof(PersonViewModel.Surname));
+			var surname = personModel.Properties[nameof(PersonViewModel.Surname)];
 			Assert.IsNotNull(surname);
 		}
 

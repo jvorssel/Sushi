@@ -35,7 +35,7 @@ public sealed class FieldDescriptor : IPropertyDescriptor
     public bool IsStatic => true;
 
     /// <inheritdoc />
-    public Type Type => (IsNullable ? Nullable.GetUnderlyingType(_field.FieldType) : _field.FieldType)!;
+    public Type Type => IsNullable ? Nullable.GetUnderlyingType(_field.FieldType)  ?? _field.FieldType : _field.FieldType;
 
     /// <inheritdoc />
     public Type? ClassType => _field.DeclaringType;
@@ -43,7 +43,7 @@ public sealed class FieldDescriptor : IPropertyDescriptor
     /// <inheritdoc />
     public object? DefaultValue { get; }
 
-    public bool IsNullable => _field.FieldType.IsNullable();
+    public bool IsNullable => _field.FieldType.IsNullable() || (_field.FieldType == typeof(string) && DefaultValue == null);
 
     /// <inheritdoc />
     public bool IsOverridden => _field.DeclaringType.IsPropertyHidingBaseClassProperty(Name);

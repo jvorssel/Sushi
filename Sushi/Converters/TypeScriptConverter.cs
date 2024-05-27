@@ -59,7 +59,9 @@ public sealed class TypeScriptConverter : ModelConverter
 
         var name = ApplyCasingStyle(property.Name);
         var nameSuffix = defaultValue.IsEmpty() ? "!" : string.Empty;
-        var @override = classDescriptor.IsPropertyInherited(property, false) ? "override " : string.Empty;
+        
+        var @override = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
+        
         var readonlyPrefix = property is { Readonly: true, DefaultValue: not null } ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
 
@@ -131,7 +133,8 @@ public sealed class TypeScriptConverter : ModelConverter
         if (prop.Type?.IsArrayType() ?? false)
             return "[]";
 
-        if (prop.IsNullable)
+        var isNullableString = prop.Type == typeof(string) && prop.DefaultValue == null;
+        if (prop.IsNullable || isNullableString)
             return "null";
 
         if (prop.DefaultValue != null)
@@ -215,7 +218,7 @@ public sealed class TypeScriptConverter : ModelConverter
         }
 
         // Skip properties without a setter.
-        foreach (var prop in model.Properties.Where(x => !x.Readonly))
+        foreach (var prop in model.Properties.Select(x=>x.Value).Where(x => !x.Readonly))
         {
             var name = ApplyCasingStyle(prop.Name);
             builder.AppendLine($"{Indent + Indent}if (value.{name} !== undefined) this.{name} = value.{name};");
@@ -256,7 +259,7 @@ public sealed class TypeScriptConverter : ModelConverter
     internal string ToTypeScriptClass(ClassDescriptor model)
     {
         var className = FormatClassName(model);
-        var properties = model.GetProperties(true).ToList();
+        var properties = model.GetProperties().ToList();
 
         var builder = new StringBuilder();
         builder.AppendJsDoc(XmlDocument, model);

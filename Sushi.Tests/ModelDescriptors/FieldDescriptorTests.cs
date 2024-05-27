@@ -37,6 +37,24 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.IsFalse(descriptor.IsNullable);
 				Assert.AreEqual(NativeType.String, descriptor.NativeType);
 			}
+			
+
+			[TestMethod]
+			public void NullableStringValue_ShouldMapCorrectly()
+			{
+				// Arrange
+				var converter = new SushiConverter().TypeScript();
+				var field = typeof(NullablePropertiesViewModel).GetField("Value");
+
+				var descriptor = new FieldDescriptor(field);
+
+				// Act
+				var value = converter.ResolveDefaultValue(descriptor);
+
+				// Assert
+				Assert.AreEqual("null", value);
+				Assert.IsTrue(descriptor.IsNullable);
+			}
 		}	
 	}
 }

@@ -22,8 +22,6 @@ namespace Sushi.Tests.Models
 		/// <inheritdoc />
 		public override string Value { get; set; } = "override";
 
-		public new string Guid { get; set; } = "new guid";
-
 		public string Addition { get; set; } = "added";
 	}
 

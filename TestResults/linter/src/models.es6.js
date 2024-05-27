@@ -129,6 +129,7 @@ export class ViewModel {
  */
 export class BaseViewModel extends ViewModel {
     Value;
+    Guid;
     Base;
 
     constructor(value) {
@@ -138,6 +139,7 @@ export class BaseViewModel extends ViewModel {
             return;
 
         this.value = value.value;
+        this.guid = value.guid;
         this.base = value.base;
     }
     static mapFrom(obj) {
@@ -150,7 +152,11 @@ export class BaseViewModel extends ViewModel {
  * @extends BaseViewModel
  */
 export class InheritedViewModel extends BaseViewModel {
-    Guid;
+
+    /**
+     * .
+     */
+    Value;
     Addition;
 
     constructor(value) {
@@ -159,7 +165,7 @@ export class InheritedViewModel extends BaseViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.guid = value.guid;
+        this.value = value.value;
         this.addition = value.addition;
     }
     static mapFrom(obj) {
@@ -371,6 +377,11 @@ export class TypeModel extends ViewModel {
     NullableString;
 
     /**
+     * .
+     */
+    Guid;
+
+    /**
      * A DateTime instance.
      */
     Date;
@@ -391,6 +402,7 @@ export class TypeModel extends ViewModel {
 
         this.nullableBool = value.nullableBool;
         this.nullableString = value.nullableString;
+        this.guid = value.guid;
         this.date = value.date;
         this.student = value.student;
         this.students = value.students;
@@ -420,10 +432,10 @@ export class AbstractBaseModel {
 }
 
 /**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractParentModel
+ * Sushi.Tests.BugFixes.AbstractBaseClass+ChildModel
  * @extends AbstractBaseModel
  */
-export class AbstractParentModel extends AbstractBaseModel {
+export class ChildModel extends AbstractBaseModel {
     Surname;
 
     constructor(value) {

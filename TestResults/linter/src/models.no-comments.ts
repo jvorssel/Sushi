@@ -27,7 +27,7 @@ export class ConstValues {
 export class GenericComplexStandalone<TFirst, TSecond> {
     first: Array<TFirst> = [];
     second: Array<TSecond> = [];
-    totalAmount: number | null = null;
+    totalAmount!: number;
 
     constructor(value: Partial<GenericComplexStandalone<TFirst, TSecond>> = {}) {
         if (value.first !== undefined) this.first = value.first;
@@ -38,7 +38,7 @@ export class GenericComplexStandalone<TFirst, TSecond> {
 
 export class GenericStandalone<TEntry> {
     values: Array<TEntry> = [];
-    totalAmount: number | null = null;
+    totalAmount!: number;
 
     constructor(value: Partial<GenericStandalone<TEntry>> = {}) {
         if (value.values !== undefined) this.values = value.values;
@@ -47,8 +47,8 @@ export class GenericStandalone<TEntry> {
 }
 
 export class ViewModel {
-    guid: string | null = null;
-    createdOn: Date | string | null = null;
+    guid: string = "";
+    createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
         if (value.guid !== undefined) this.guid = value.guid;
@@ -58,6 +58,7 @@ export class ViewModel {
 
 export class BaseViewModel extends ViewModel {
     value: string = "base";
+    override guid: string = "00000000-0000-0000-0000-000000000000";
     base: boolean = true;
 
     constructor(value: Partial<BaseViewModel> = {}) {
@@ -66,43 +67,36 @@ export class BaseViewModel extends ViewModel {
         if (value.value !== undefined) this.value = value.value;
         if (value.guid !== undefined) this.guid = value.guid;
         if (value.base !== undefined) this.base = value.base;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
 export class InheritedViewModel extends BaseViewModel {
-    override guid: string = "new guid";
+    override value: string = "override";
     addition: string = "added";
 
     constructor(value: Partial<InheritedViewModel> = {}) {
         super(value);
 
         if (value.value !== undefined) this.value = value.value;
-        if (value.guid !== undefined) this.guid = value.guid;
         if (value.addition !== undefined) this.addition = value.addition;
-        if (value.guid !== undefined) this.guid = value.guid;
-        if (value.base !== undefined) this.base = value.base;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
 export class NullablePropertiesViewModel extends ViewModel {
-    override guid: string | null = null;
+    override guid: string = "00000000-0000-0000-0000-000000000000";
     value2: string | null = null;
-    static value: string = "";
+    static value: string | null = null;
 
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
         if (value.guid !== undefined) this.guid = value.guid;
         if (value.value2 !== undefined) this.value2 = value.value2;
-        if (value.guid !== undefined) this.guid = value.guid;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "36cd1643-3907-42df-87c4-126b3e4bff34";
+    identifier: string = "141907b6-4a20-4b14-9b9e-829f55fcbe87";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -114,33 +108,25 @@ export class PersonViewModel extends ViewModel {
         if (value.name !== undefined) this.name = value.name;
         if (value.surname !== undefined) this.surname = value.surname;
         if (value.gender !== undefined) this.gender = value.gender;
-        if (value.guid !== undefined) this.guid = value.guid;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
 export class StudentViewModel extends PersonViewModel {
     grade: number = 9;
-    school: SchoolViewModel | null = null;
+    school!: SchoolViewModel;
 
     constructor(value: Partial<StudentViewModel> = {}) {
         super(value);
 
         if (value.grade !== undefined) this.grade = value.grade;
         if (value.school !== undefined) this.school = value.school;
-        if (value.identifier !== undefined) this.identifier = value.identifier;
-        if (value.name !== undefined) this.name = value.name;
-        if (value.surname !== undefined) this.surname = value.surname;
-        if (value.gender !== undefined) this.gender = value.gender;
-        if (value.guid !== undefined) this.guid = value.guid;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
 export class SchoolViewModel extends ViewModel {
     name: string | null = null;
     amountOfStudents: number = 0;
-    owner: PersonViewModel | null = null;
+    owner!: PersonViewModel;
     address: string = "";
     zipCode: string | null = null;
     houseNumber: number = 0;
@@ -162,17 +148,16 @@ export class SchoolViewModel extends ViewModel {
         if (value.averageGrade !== undefined) this.averageGrade = value.averageGrade;
         if (value.students !== undefined) this.students = value.students;
         if (value.timmy !== undefined) this.timmy = value.timmy;
-        if (value.guid !== undefined) this.guid = value.guid;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
+    override guid: string = "fa9bb032-4b7b-498d-87df-a4b7c0f1d2b1";
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
-    students: Array<StudentViewModel | null> = [];
+    students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     static readonly readonlyString: string = "readonly";
 
@@ -186,7 +171,6 @@ export class TypeModel extends ViewModel {
         if (value.student !== undefined) this.student = value.student;
         if (value.students !== undefined) this.students = value.students;
         if (value.studentPerClass !== undefined) this.studentPerClass = value.studentPerClass;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 
@@ -198,14 +182,13 @@ export class AbstractBaseModel {
     }
 }
 
-export class AbstractParentModel extends AbstractBaseModel {
+export class ChildModel extends AbstractBaseModel {
     surname: string | null = null;
 
-    constructor(value: Partial<AbstractParentModel> = {}) {
+    constructor(value: Partial<ChildModel> = {}) {
         super(value);
 
         if (value.surname !== undefined) this.surname = value.surname;
-        if (value.name !== undefined) this.name = value.name;
     }
 }
 

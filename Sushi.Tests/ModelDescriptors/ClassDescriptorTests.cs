@@ -53,7 +53,7 @@ namespace Sushi.Tests.ModelDescriptors
 				var descriptor = new ClassDescriptor(type);
 
 				// Assert
-				Assert.AreEqual(6, descriptor.Properties.Count);
+				Assert.AreEqual(4, descriptor.Properties.Count);
 				Assert.AreEqual(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
 				Assert.IsFalse(descriptor.HasParameterlessCtor);
 			}
@@ -163,34 +163,13 @@ namespace Sushi.Tests.ModelDescriptors
 				var descriptor = new ClassDescriptor(type);
 
 				// Assert
-				Assert.AreEqual(9, descriptor.Properties.Count);
-				Assert.AreEqual(8, descriptor.Properties.Count(x => x is PropertyDescriptor));
-				Assert.AreEqual(1, descriptor.Properties.Count(x => x is FieldDescriptor));
+				Assert.AreEqual(8, descriptor.Properties.Count);
 			}
 		}
 
 		[TestClass]
 		public class GetPropertiesTests : ClassDescriptorTests
 		{
-			[TestMethod]
-			public void GetProperties_IncludeInheritedTest()
-			{
-				// Arrange
-				var descriptor = new ClassDescriptor(typeof(InheritedViewModel))
-				{
-					Parent = new ClassDescriptor(typeof(BaseViewModel))
-				};
-
-				// Act
-				var properties = descriptor.GetProperties(false).ToList();
-
-				// Assert
-				Assert.IsTrue(properties.Any(x => x.Name == "Guid"));
-				Assert.IsTrue(properties.Any(x => x.Name == "Addition"));
-				Assert.IsTrue(properties.Any(x => x.Name == "Value"));
-				Assert.IsTrue(properties.Any(x => x.Name == "Base"));
-			}
-
 			[TestMethod]
 			public void GetProperties_ExcludeInheritedTest()
 			{
@@ -201,12 +180,12 @@ namespace Sushi.Tests.ModelDescriptors
 				};
 
 				// Act
-				var properties = descriptor.GetProperties(true).ToList();
+				var properties = descriptor.GetProperties().ToList();
 
 				// Assert
-				Assert.IsTrue(properties.Any(x => x.Name  == "Guid"));
+				Assert.IsFalse(properties.Any(x => x.Name  == "Guid"));
 				Assert.IsTrue(properties.Any(x => x.Name  == "Addition"));
-				Assert.IsFalse(properties.Any(x => x.Name == "Value"));
+				Assert.IsTrue(properties.Any(x => x.Name == "Value"));
 				Assert.IsFalse(properties.Any(x => x.Name == "Base"));
 			}
 		}

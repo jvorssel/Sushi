@@ -10,7 +10,7 @@ public sealed class NullablePropertiesViewModel : ViewModel
     /// <summary>
     ///     An overridden, nullable Guid identifier.
     /// </summary>
-    public new Guid? Guid { get; set; } = null;
+    public new Guid Guid { get; set; }
     
     /// <summary>
     ///     Nullable string.

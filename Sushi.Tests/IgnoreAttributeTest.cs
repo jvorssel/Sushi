@@ -53,9 +53,10 @@ public class IgnoreAttributeTest
         var model = converter.Models.Flatten().SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));
         Assert.IsNotNull(model);
 
-        Assert.IsTrue(model.Properties.Any(x => x.Name == nameof(DoNotIgnoreMe.ShouldExist)),
+        Assert.IsTrue(model.Properties.ContainsKey(nameof(DoNotIgnoreMe.ShouldExist)),
             $"Expected the {nameof(DoNotIgnoreMe.ShouldExist)} to be available");
-        Assert.IsTrue(model.Properties.All(x => x.Name != nameof(DoNotIgnoreMe.ShouldNotExist)),
+        
+        Assert.IsFalse(model.Properties.ContainsKey(nameof(DoNotIgnoreMe.ShouldNotExist)),
             $"Expected the {nameof(DoNotIgnoreMe.ShouldNotExist)} to not be available");
     }
 

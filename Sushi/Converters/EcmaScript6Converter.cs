@@ -77,7 +77,7 @@ public sealed class EcmaScript6Converter : ModelConverter
 
     private string Compile(ClassDescriptor model)
     {
-        var properties = model.GetProperties(true).ToList();
+        var properties = model.GetProperties().ToList();
         var builder = new StringBuilder();
         builder.AppendJsDoc(XmlDocument, model);
 

@@ -38,7 +38,7 @@ public sealed class PropertyDescriptor : IPropertyDescriptor
     public bool IsStatic => _property?.GetGetMethod().IsStatic ?? false;
 
     /// <inheritdoc />
-    public bool IsNullable => Type.IsNullable() || DefaultValue == null;
+    public bool IsNullable => Type.IsNullable() || (Type == typeof(string) && DefaultValue == null);
 
     /// <inheritdoc />
     public bool IsOverridden => ClassType?.IsPropertyHidingBaseClassProperty(Name) ?? false;

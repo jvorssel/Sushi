@@ -103,10 +103,11 @@ public static class ReflectionExtensions
         if (@this == null)
             yield break;
 
-        var type = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
-        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var classType = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
+        var properties = classType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(x=>x.DeclaringType == @classType);
 
-        var instance = type.CreateInstance();
+        var instance = classType.CreateInstance();
         foreach (var prp in properties)
         {
             var defaultValue = instance != null && prp.CanWrite ? prp.GetValue(instance) : null;

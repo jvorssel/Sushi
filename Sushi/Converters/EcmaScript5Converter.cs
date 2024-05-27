@@ -20,57 +20,57 @@ using Sushi.Interfaces;
 
 #endregion
 
-namespace Sushi.Converters
+namespace Sushi.Converters;
+
+/// <summary>
+///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
+/// </summary>
+public sealed class EcmaScript5Converter : ModelConverter
 {
-	/// <summary>
-	///     Add the JavaScript class declaration to the <see cref="SushiConverter.Models" />.
-	/// </summary>
-	public sealed class EcmaScript5Converter : ModelConverter
-	{
-		private bool _includeUnderscoreExtend = false;
-		
-		/// <inheritdoc />
-		public EcmaScript5Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
-		{}
+    private bool _includeUnderscoreExtend = false;
 
-		/// / <inheritdoc />
-		protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
-		{
-			foreach (var model in descriptors)
-				yield return Compile(model);
-		}
+    /// <inheritdoc />
+    public EcmaScript5Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
+    {
+    }
 
-		public EcmaScript5Converter IncludeUnderscoreMapper()
-		{
-			_includeUnderscoreExtend = true;
-			return this;
-		}
+    /// / <inheritdoc />
+    protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
+    {
+        foreach (var model in descriptors)
+            yield return Compile(model);
+    }
 
-		private string Compile(ClassDescriptor model)
-		{
-			var builder = new StringBuilder();
-			
-			builder.AppendJsDoc(XmlDocument, model);
+    public EcmaScript5Converter IncludeUnderscoreMapper()
+    {
+        _includeUnderscoreExtend = true;
+        return this;
+    }
 
-			builder.AppendLine($"function {model.Name}(obj) {{");
-			builder.AppendLine(Indent + "let value = obj;");
-			builder.AppendLine(Indent + "if (!(value instanceof Object)) ");
-			builder.AppendLine(Indent + Indent + "value = {};");
-			builder.AppendLine();
-			
-			foreach (var prop in model.Properties)
-				builder.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
-			builder.AppendLine("}");
+    private string Compile(ClassDescriptor model)
+    {
+        var builder = new StringBuilder();
 
-			if (!_includeUnderscoreExtend) 
-				return builder.ToString();
-			
-			builder.AppendLine();
-			builder.AppendLine($"{model.Name}.prototype.mapFrom = function(obj) {{");
-			builder.AppendLine($"{Indent}return _.extend(new {model.Name}(), obj); ");
-			builder.AppendLine("};");
+        builder.AppendJsDoc(XmlDocument, model);
 
-			return builder.ToString();
-		}
-	}
+        builder.AppendLine($"function {model.Name}(obj) {{");
+        builder.AppendLine(Indent + "let value = obj;");
+        builder.AppendLine(Indent + "if (!(value instanceof Object)) ");
+        builder.AppendLine(Indent + Indent + "value = {};");
+        builder.AppendLine();
+
+        foreach (var prop in model.Properties.Select(x => x.Value))
+            builder.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+        builder.AppendLine("}");
+
+        if (!_includeUnderscoreExtend)
+            return builder.ToString();
+
+        builder.AppendLine();
+        builder.AppendLine($"{model.Name}.prototype.mapFrom = function(obj) {{");
+        builder.AppendLine($"{Indent}return _.extend(new {model.Name}(), obj); ");
+        builder.AppendLine("};");
+
+        return builder.ToString();
+    }
 }
