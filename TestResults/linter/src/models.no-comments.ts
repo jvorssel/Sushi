@@ -102,7 +102,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "68966070-a7e4-4646-b57a-03d994171743";
+    identifier: string = "f30766bb-f61e-485d-b533-fb140703af6d";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;

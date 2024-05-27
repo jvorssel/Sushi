@@ -1,15 +1,11 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
-
-namespace Sushi.Extensions
+﻿namespace Sushi.Extensions
 {
     public static class StringExtensions
     {
         /// <summary>
         ///     If given <see cref="string"/> <paramref name="this"/> is null or empty.
         /// </summary>
-        internal static bool IsEmpty(this string @this)
-            => string.IsNullOrEmpty(@this) || string.IsNullOrWhiteSpace(@this) || @this.Length < 1;
+        internal static bool IsEmpty(this string @this) => string.IsNullOrWhiteSpace(@this);
 
         /// <summary>
         ///     Remove the escaped characters from the given <see cref="string"/> <paramref name="this"/>.

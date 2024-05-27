@@ -230,7 +230,7 @@ public sealed class TypeScriptConverter : ModelConverter
         if (!descriptor.GenericParameterNames.Any())
             return descriptor.Name;
 
-        var genericTypeArgs = $"<{descriptor.GenericParameterNames.Glue(", ")}>";
+        var genericTypeArgs = $"<{string.Join(", ", descriptor.GenericParameterNames)}>";
         return $"{descriptor.Name}{genericTypeArgs}";
     }
 

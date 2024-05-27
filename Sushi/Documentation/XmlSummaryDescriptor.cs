@@ -79,7 +79,7 @@ public sealed class XmlSummaryDescriptor
             case ReferenceType.Type:
                 Name = split.Last();
                 DeclaringTypeName = split.Last();
-                Namespace = split.Take(split.Count - 1).Glue(".");
+                Namespace = string.Join(".", split.Take(split.Count - 1));
                 break;
             case ReferenceType.Method:
             case ReferenceType.Event:
@@ -87,7 +87,7 @@ public sealed class XmlSummaryDescriptor
             case ReferenceType.Field:
                 Name = split.Last();
                 DeclaringTypeName = split[split.Count - 2];
-                Namespace = split.Take(split.Count - 2).Glue(".");
+                Namespace = string.Join(".", split.Take(split.Count - 2));
                 break;
             case ReferenceType.Namespace:
             case ReferenceType.Error:
