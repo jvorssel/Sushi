@@ -14,7 +14,6 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
-using Sushi.Helpers;
 using Sushi.Tests.Models;
 
 #endregion

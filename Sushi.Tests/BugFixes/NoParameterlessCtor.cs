@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Attributes;
 using Sushi.Descriptors;
-using Sushi.Tests.Models;
 
 namespace Sushi.Tests.BugFixes;
 

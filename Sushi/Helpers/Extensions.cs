@@ -11,7 +11,6 @@
 
 #region
 
-using System.Text;
 using Sushi.Enum;
 
 #endregion
