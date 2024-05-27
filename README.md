@@ -113,12 +113,18 @@ export class TypeModel extends ViewModel {
     nullableString: string | null = null;
 
     /**
+     * .
+     * @type (string)
+     */
+    override guid: string = "f64db319-ebb2-4b6d-89f4-18abbb2604e7";
+
+    /**
      * A DateTime instance.
      * @type (Date | string | null)
      */
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
-    students: Array<StudentViewModel | null> = [];
+    students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
 
     /**
@@ -137,7 +143,6 @@ export class TypeModel extends ViewModel {
         if (value.student !== undefined) this.student = value.student;
         if (value.students !== undefined) this.students = value.students;
         if (value.studentPerClass !== undefined) this.studentPerClass = value.studentPerClass;
-        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
 }
 ```
