@@ -13,6 +13,7 @@
 
 using System.Diagnostics;
 using System.Reflection;
+using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
@@ -25,27 +26,33 @@ namespace Sushi.Descriptors;
 /// </summary>
 public sealed class PropertyDescriptor : IPropertyDescriptor
 {
-    private readonly PropertyInfo _property;
+    private readonly PropertyInfo? _property;
 
     /// <inheritdoc />
     public object? DefaultValue { get; }
 
     /// <inheritdoc />
-    public bool Readonly => !_property.CanWrite;
+    public bool Readonly => !_property?.CanWrite ?? false;
     
     /// <inheritdoc />
-    public bool IsStatic => _property.GetGetMethod().IsStatic;
+    public bool IsStatic => _property?.GetGetMethod().IsStatic ?? false;
+
+    /// <inheritdoc />
+    public bool IsNullable => Type.IsNullable() || DefaultValue == null;
+
+    /// <inheritdoc />
+    public bool IsOverridden => ClassType?.IsPropertyHidingBaseClassProperty(Name) ?? false;
 
     /// <inheritdoc />
     public string Name { get; }
 
     /// <inheritdoc />
-    public Type? Type { get; }
+    public Type Type { get; }
 
     /// <inheritdoc />
-    public Type ClassType => _property.DeclaringType;
+    public Type? ClassType => _property?.DeclaringType;
 
-    public PropertyDescriptor(PropertyInfo property, object defaultValue = null)
+    public PropertyDescriptor(PropertyInfo property, object? defaultValue = null)
     {
         var type = property.PropertyType;
 
@@ -55,7 +62,7 @@ public sealed class PropertyDescriptor : IPropertyDescriptor
         DefaultValue = defaultValue;
     }
 
-    public PropertyDescriptor(Type type, object defaultValue = null)
+    public PropertyDescriptor(Type type, object? defaultValue = null)
     {
         Type = type;
         DefaultValue = defaultValue;
@@ -64,6 +71,6 @@ public sealed class PropertyDescriptor : IPropertyDescriptor
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{ClassType.Namespace}.{ClassType.Name}.{_property.Name}";
+        return $"{ClassType?.Namespace}.{ClassType?.Name}.{_property?.Name}";
     }
 }

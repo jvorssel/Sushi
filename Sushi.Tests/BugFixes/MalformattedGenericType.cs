@@ -27,6 +27,7 @@ public class MalformattedGenericType : TestBase
         Assert.AreEqual("T", descriptor.GenericParameterNames.Single());
 
         var genericProperty = descriptor.Properties.Single(x => x.Name == nameof(ConstrainedGeneric<object>.Data));
+        Assert.IsNotNull(genericProperty);
         Assert.IsTrue(genericProperty.Type.IsGenericParameter);
 
         var typescript = converter.TypeScript(new ConverterOptions { Indent = string.Empty });

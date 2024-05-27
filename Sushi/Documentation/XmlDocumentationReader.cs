@@ -38,7 +38,7 @@ namespace Sushi.Documentation
 
 		public List<XmlSummaryDescriptor> Members { get; private set; } = new List<XmlSummaryDescriptor>();
 
-		public static readonly Regex RemoveMethodArgs = new Regex(@"^([a-zA-Z.]*)");
+		public static readonly Regex RemoveMethodArgs = new Regex(@"^([a-zA-Z0-9.]*)");
 
 		public XmlDocumentationReader(string path)
 		{

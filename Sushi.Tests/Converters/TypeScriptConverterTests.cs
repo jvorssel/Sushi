@@ -148,7 +148,7 @@ public abstract class TypeScriptConverterTests
             var converter = new SushiConverter(TestTypes).TypeScript();
 
             // Act
-            var result = converter.ResolveScriptType(typeof(List<List<List<List<List<bool?>>>>>));
+            var result = converter.ResolveScriptType(typeof(List<List<List<List<List<bool?>>>>>), isNullable: true);
 
             // Assert
             Assert.AreEqual("Array<Array<Array<Array<Array<boolean | null>>>>>", result);
@@ -174,7 +174,7 @@ public abstract class TypeScriptConverterTests
             var converter = new SushiConverter().TypeScript();
 
             // Act
-            var result = converter.ResolveScriptType(typeof(bool?));
+            var result = converter.ResolveScriptType(typeof(bool?), isNullable: true);
 
             // Assert
             Assert.AreEqual("boolean | null", result);
@@ -198,6 +198,19 @@ public abstract class TypeScriptConverterTests
             Assert.AreEqual("Array<vm.StudentViewModel>", arrayType);
             Assert.AreEqual("Array<vm.GenericStandalone<vm.StudentViewModel>>", genericType);
             Assert.AreEqual("boolean", nativeType);
+        }
+
+        [TestMethod]
+        public void ResolveScriptType_Overridden_ShouldFormatCorrectly()
+        {
+            // Act
+            var converter = new SushiConverter(typeof(ViewModel), typeof(NullablePropertiesViewModel)).TypeScript();
+            const string prefix = "vm.";
+
+            // Assert
+            var model = converter.Models.Single(x => x.Name == nameof(NullablePropertiesViewModel));
+            Assert.IsTrue(model.Properties.Any(x => x is { Name: "Guid", IsOverridden: true }));
+            Assert.IsTrue(model.Properties.Any(x => x is { Name: "Guid", IsOverridden: false }));
         }
     }
 
@@ -240,13 +253,13 @@ public abstract class TypeScriptConverterTests
         {
             // Arrange
             var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(int));
+            var prop = new PropertyDescriptor(typeof(int?));
 
             // Act
             var value = converter.ResolveDefaultValue(prop);
 
             // Assert
-            Assert.AreEqual(string.Empty, value);
+            Assert.AreEqual("null", value);
         }
 
         [TestMethod]
@@ -349,17 +362,17 @@ public abstract class TypeScriptConverterTests
         }
 
         [TestMethod]
-        public void ResolveDefaultValue_NullValue_ExpectEmptyTest()
+        public void ResolveDefaultValue_NullValue_ExpectNullTest()
         {
             // Arrange
             var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(null as Type, true);
+            var prop = new PropertyDescriptor(typeof(string));
 
             // Act
             var result = converter.ResolveDefaultValue(prop);
 
             // Assert
-            Assert.AreEqual(string.Empty, result);
+            Assert.AreEqual("null", result);
         }
 
         [TestMethod]
@@ -400,7 +413,7 @@ public abstract class TypeScriptConverterTests
             var valuesProperty = descriptor.Properties.Single(x => x.Name == "Values");
             Assert.IsTrue(valuesProperty.Type.IsGenericType);
 
-            var genericTypeArgument = converter.GetGenericTypeArguments(valuesProperty.Type, string.Empty);
+            var genericTypeArgument = converter.GetGenericTypeArguments(valuesProperty.Type, string.Empty, false);
             var valuesAsScript = converter.ResolveScriptType(valuesProperty.Type);
             Assert.AreEqual("Array<TEntry>", valuesAsScript);
 
@@ -427,8 +440,8 @@ public abstract class TypeScriptConverterTests
             Assert.IsTrue(descriptor.GenericParameterNames.Contains("TSecond"));
 
             // Should not contain readonly properties.
-            Assert.IsFalse(descriptor.Properties.Any(x=>x.Readonly));
-            
+            Assert.IsFalse(descriptor.Properties.Any(x => x.Readonly));
+
             Assert.AreEqual(3, descriptor.Properties.Count);
 
             var firstProperty = descriptor.Properties.Single(x => x.Name == "First");
@@ -476,7 +489,7 @@ public abstract class TypeScriptConverterTests
             // Assert
             Assert.AreEqual(1, converter.Models.Count);
             var descriptor = converter.Models.Single(x => x.Name == nameof(ConstValues));
-    
+
             Assert.AreEqual(3, descriptor.Properties.Count);
             Assert.IsTrue(descriptor.Properties.Any(x => x.DefaultValue.ToString() == ConstValues.First));
             Assert.IsTrue(descriptor.Properties.Any(x => x.DefaultValue.ToString() == ConstValues.Last));

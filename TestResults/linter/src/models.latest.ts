@@ -12,7 +12,7 @@ export enum Gender {
  */
 export class ConstrainedGeneric<T> {
     data!: T;
-    name: string = "";
+    name: string | null = null;
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
         if (value.data !== undefined) this.data = value.data;
@@ -55,7 +55,7 @@ export class ConstValues {
 export class GenericComplexStandalone<TFirst, TSecond> {
     first: Array<TFirst> = [];
     second: Array<TSecond> = [];
-    totalAmount!: number;
+    totalAmount: number | null = null;
 
     constructor(value: Partial<GenericComplexStandalone<TFirst, TSecond>> = {}) {
         if (value.first !== undefined) this.first = value.first;
@@ -70,7 +70,7 @@ export class GenericComplexStandalone<TFirst, TSecond> {
  */
 export class GenericStandalone<TEntry> {
     values: Array<TEntry> = [];
-    totalAmount!: number;
+    totalAmount: number | null = null;
 
     constructor(value: Partial<GenericStandalone<TEntry>> = {}) {
         if (value.values !== undefined) this.values = value.values;
@@ -86,15 +86,15 @@ export class ViewModel {
 
     /**
      * The view model identifier.
-     * @type (string)
+     * @type (string | null)
      */
-    guid: string = "";
+    guid: string | null = null;
 
     /**
      * When this view model was created.
      * @type (Date | string | null)
      */
-    createdOn!: Date | string | null;
+    createdOn: Date | string | null = null;
 
     constructor(value: Partial<ViewModel> = {}) {
         if (value.guid !== undefined) this.guid = value.guid;
@@ -141,6 +141,41 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 /**
+ * For testing nullable properties.
+ * Sushi.Tests.Models.NullablePropertiesViewModel
+ * @extends ViewModel
+ */
+export class NullablePropertiesViewModel extends ViewModel {
+
+    /**
+     * An overridden, nullable Guid identifier.
+     * @type (string | null)
+     */
+    override guid: string | null = null;
+
+    /**
+     * Nullable string w get/set.
+     * @type (string | null)
+     */
+    value2: string | null = null;
+
+    /**
+     * Nullable string.
+     * @type (string)
+     */
+    static value: string = "";
+
+    constructor(value: Partial<NullablePropertiesViewModel> = {}) {
+        super(value);
+
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.value2 !== undefined) this.value2 = value.value2;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
+    }
+}
+
+/**
  * The PersonViewModel that represents a Person.
  * Sushi.Tests.Models.PersonViewModel
  * @extends ViewModel
@@ -151,19 +186,19 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "4fb1abb1-e536-4052-9dd9-9dbb0a545170";
+    identifier: string = "2aa1f129-866f-4fad-af06-8d048f916f64";
 
     /**
      * The Name of the person.
-     * @type (string)
+     * @type (string | null)
      */
-    name: string = "";
+    name: string | null = null;
 
     /**
      * The Surname of the person.
-     * @type (string)
+     * @type (string | null)
      */
-    surname: string = "";
+    surname: string | null = null;
 
     /**
      * The Gender of the person.
@@ -198,9 +233,9 @@ export class StudentViewModel extends PersonViewModel {
 
     /**
      * The name of the School.
-     * @type (SchoolViewModel)
+     * @type (SchoolViewModel | null)
      */
-    school!: SchoolViewModel;
+    school: SchoolViewModel | null = null;
 
     constructor(value: Partial<StudentViewModel> = {}) {
         super(value);
@@ -225,9 +260,9 @@ export class SchoolViewModel extends ViewModel {
 
     /**
      * The Name of this SchoolViewModel.
-     * @type (string)
+     * @type (string | null)
      */
-    name: string = "";
+    name: string | null = null;
 
     /**
      * The AmountOfStudents of this SchoolViewModel.
@@ -237,9 +272,9 @@ export class SchoolViewModel extends ViewModel {
 
     /**
      * The Owner of this SchoolViewModel.
-     * @type (PersonViewModel)
+     * @type (PersonViewModel | null)
      */
-    owner!: PersonViewModel;
+    owner: PersonViewModel | null = null;
 
     /**
      * The Address of this SchoolViewModel.
@@ -249,9 +284,9 @@ export class SchoolViewModel extends ViewModel {
 
     /**
      * The ZipCode of this SchoolViewModel.
-     * @type (string)
+     * @type (string | null)
      */
-    zipCode: string = "";
+    zipCode: string | null = null;
 
     /**
      * The HouseNumber of this SchoolViewModel.
@@ -261,9 +296,9 @@ export class SchoolViewModel extends ViewModel {
 
     /**
      * The HouseNumberAddition of this SchoolViewModel.
-     * @type (string)
+     * @type (string | null)
      */
-    houseNumberAddition: string = "";
+    houseNumberAddition: string | null = null;
 
     /**
      * The school student aren't doing too great ...
@@ -311,9 +346,9 @@ export class TypeModel extends ViewModel {
 
     /**
      * A nullable string, defaults to null.
-     * @type (string)
+     * @type (string | null)
      */
-    nullableString: string = "";
+    nullableString: string | null = null;
 
     /**
      * A DateTime instance.
@@ -321,7 +356,7 @@ export class TypeModel extends ViewModel {
      */
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
-    students: Array<StudentViewModel> = [];
+    students: Array<StudentViewModel | null> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
 
     /**
@@ -348,7 +383,7 @@ export class TypeModel extends ViewModel {
  * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
  */
 export class AbstractBaseModel {
-    name: string = "";
+    name: string | null = null;
 
     constructor(value: Partial<AbstractBaseModel> = {}) {
         if (value.name !== undefined) this.name = value.name;
@@ -360,7 +395,7 @@ export class AbstractBaseModel {
  * @extends AbstractBaseModel
  */
 export class AbstractParentModel extends AbstractBaseModel {
-    surname: string = "";
+    surname: string | null = null;
 
     constructor(value: Partial<AbstractParentModel> = {}) {
         super(value);
@@ -374,7 +409,7 @@ export class AbstractParentModel extends AbstractBaseModel {
  * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
  */
 export class CtorFixModel {
-    name: string = "";
+    name: string | null = null;
 
     constructor(value: Partial<CtorFixModel> = {}) {
         if (value.name !== undefined) this.name = value.name;
@@ -385,7 +420,7 @@ export class CtorFixModel {
  * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
  */
 export class NoXmlDocumentationModel {
-    name: string = "";
+    name: string | null = null;
 
 
 }

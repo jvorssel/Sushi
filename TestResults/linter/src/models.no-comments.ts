@@ -8,7 +8,7 @@ export enum Gender {
 
 export class ConstrainedGeneric<T> {
     data!: T;
-    name: string = "";
+    name: string | null = null;
 
     constructor(value: Partial<ConstrainedGeneric<T>> = {}) {
         if (value.data !== undefined) this.data = value.data;
@@ -27,7 +27,7 @@ export class ConstValues {
 export class GenericComplexStandalone<TFirst, TSecond> {
     first: Array<TFirst> = [];
     second: Array<TSecond> = [];
-    totalAmount!: number;
+    totalAmount: number | null = null;
 
     constructor(value: Partial<GenericComplexStandalone<TFirst, TSecond>> = {}) {
         if (value.first !== undefined) this.first = value.first;
@@ -38,7 +38,7 @@ export class GenericComplexStandalone<TFirst, TSecond> {
 
 export class GenericStandalone<TEntry> {
     values: Array<TEntry> = [];
-    totalAmount!: number;
+    totalAmount: number | null = null;
 
     constructor(value: Partial<GenericStandalone<TEntry>> = {}) {
         if (value.values !== undefined) this.values = value.values;
@@ -47,8 +47,8 @@ export class GenericStandalone<TEntry> {
 }
 
 export class ViewModel {
-    guid: string = "";
-    createdOn!: Date | string | null;
+    guid: string | null = null;
+    createdOn: Date | string | null = null;
 
     constructor(value: Partial<ViewModel> = {}) {
         if (value.guid !== undefined) this.guid = value.guid;
@@ -86,10 +86,25 @@ export class InheritedViewModel extends BaseViewModel {
     }
 }
 
+export class NullablePropertiesViewModel extends ViewModel {
+    override guid: string | null = null;
+    value2: string | null = null;
+    static value: string = "";
+
+    constructor(value: Partial<NullablePropertiesViewModel> = {}) {
+        super(value);
+
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.value2 !== undefined) this.value2 = value.value2;
+        if (value.guid !== undefined) this.guid = value.guid;
+        if (value.createdOn !== undefined) this.createdOn = value.createdOn;
+    }
+}
+
 export class PersonViewModel extends ViewModel {
-    identifier: string = "c9446e3b-4ad7-4f7f-bad1-19a65b9df773";
-    name: string = "";
-    surname: string = "";
+    identifier: string = "68966070-a7e4-4646-b57a-03d994171743";
+    name: string | null = null;
+    surname: string | null = null;
     gender: Gender | number = 1;
 
     constructor(value: Partial<PersonViewModel> = {}) {
@@ -106,7 +121,7 @@ export class PersonViewModel extends ViewModel {
 
 export class StudentViewModel extends PersonViewModel {
     grade: number = 9;
-    school!: SchoolViewModel;
+    school: SchoolViewModel | null = null;
 
     constructor(value: Partial<StudentViewModel> = {}) {
         super(value);
@@ -123,13 +138,13 @@ export class StudentViewModel extends PersonViewModel {
 }
 
 export class SchoolViewModel extends ViewModel {
-    name: string = "";
+    name: string | null = null;
     amountOfStudents: number = 0;
-    owner!: PersonViewModel;
+    owner: PersonViewModel | null = null;
     address: string = "";
-    zipCode: string = "";
+    zipCode: string | null = null;
     houseNumber: number = 0;
-    houseNumberAddition: string = "";
+    houseNumberAddition: string | null = null;
     averageGrade: number = 2.6666666666666;
     students: Array<StudentViewModel> = [];
     timmy: StudentViewModel = new StudentViewModel();
@@ -154,10 +169,10 @@ export class SchoolViewModel extends ViewModel {
 
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
-    nullableString: string = "";
+    nullableString: string | null = null;
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
-    students: Array<StudentViewModel> = [];
+    students: Array<StudentViewModel | null> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
     static readonly readonlyString: string = "readonly";
 
@@ -176,7 +191,7 @@ export class TypeModel extends ViewModel {
 }
 
 export class AbstractBaseModel {
-    name: string = "";
+    name: string | null = null;
 
     constructor(value: Partial<AbstractBaseModel> = {}) {
         if (value.name !== undefined) this.name = value.name;
@@ -184,7 +199,7 @@ export class AbstractBaseModel {
 }
 
 export class AbstractParentModel extends AbstractBaseModel {
-    surname: string = "";
+    surname: string | null = null;
 
     constructor(value: Partial<AbstractParentModel> = {}) {
         super(value);
@@ -195,7 +210,7 @@ export class AbstractParentModel extends AbstractBaseModel {
 }
 
 export class CtorFixModel {
-    name: string = "";
+    name: string | null = null;
 
     constructor(value: Partial<CtorFixModel> = {}) {
         if (value.name !== undefined) this.name = value.name;
@@ -203,7 +218,7 @@ export class CtorFixModel {
 }
 
 export class NoXmlDocumentationModel {
-    name: string = "";
+    name: string | null = null;
 
 
 }

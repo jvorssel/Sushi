@@ -19,9 +19,6 @@ using System.Reflection;
 
 namespace Sushi.Extensions;
 
-/// <summary>
-///     SOURCED FROM: Royaldesk.Common.Utility.Extensions
-/// </summary>
 public static class ReflectionExtensions
 {
     #region Get Property or Field
@@ -226,5 +223,38 @@ public static class ReflectionExtensions
         if (genericDefinition != typeof(Task<>)) return false;
         innerType = type.GetGenericArguments()[0];
         return true;
+    }
+    
+    internal static bool IsPropertyHidingBaseClassProperty(this Type? derivedType, string propertyName)
+    {
+        // Get the base type of the derived type
+        var baseType = derivedType?.BaseType;
+
+        // Ensure the base type is not null (i.e., derivedType is not Object)
+        if (derivedType == null || baseType == null)
+        {
+            return false;
+        }
+
+        // Get the property from the derived class
+        var derivedProperty = derivedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        if (derivedProperty == null)
+        {
+            throw new ArgumentException($"Property '{propertyName}' does not exist in type '{derivedType.Name}'.");
+        }
+
+        // Get the property from the base class
+        var baseProperty = baseType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
+        if (baseProperty == null)
+        {
+            return false;
+        }
+
+        // Get the getter methods for both properties
+        var baseMethod = baseProperty.GetGetMethod();
+        var derivedMethod = derivedProperty.GetGetMethod();
+
+        // Compare the methods to determine if they are different
+        return derivedMethod != null && baseMethod != null && derivedMethod != baseMethod;
     }
 }

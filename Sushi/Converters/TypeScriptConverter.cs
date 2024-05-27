@@ -51,7 +51,7 @@ public sealed class TypeScriptConverter : ModelConverter
 
     internal void ConvertProperty(StringBuilder builder, ClassDescriptor classDescriptor, IPropertyDescriptor property)
     {
-        var scriptType = ResolveScriptType(property.Type, string.Empty);
+        var scriptType = ResolveScriptType(property.Type, string.Empty, property.IsNullable);
         if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
             throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");
 
@@ -70,17 +70,23 @@ public sealed class TypeScriptConverter : ModelConverter
         builder.Append($"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};");
     }
 
-    public string ResolveScriptType(Type type, string prefix = "")
+    public string ResolveScriptType(Type type, string prefix = "", bool isNullable = false)
     {
         // Check if any of the available models have the same name and should be used.
         var classModel =
             Models.SingleOrDefault(x => x.Type == (type.IsGenericType ? type.GetGenericTypeDefinition() : type));
 
-        var genericTypeArgs = type.IsGenericType ? GetGenericTypeArguments(type, prefix).ToList() : new List<string>();
+        var genericTypeArgs = type.IsGenericType
+            ? GetGenericTypeArguments(type, prefix, isNullable).ToList()
+            : new List<string>();
         if (classModel != null)
-            return type.IsGenericType
-                ? $"{prefix}{classModel.Name}<{genericTypeArgs.Glue(", ")}>"
+        {
+            var className = type.IsGenericType
+                ? $"{prefix}{classModel.Name}<{string.Join(", ", genericTypeArgs)}>"
                 : prefix + classModel.Name;
+
+            return isNullable ? $"{className} | null" : className;
+        }
 
         if (type.IsGenericParameter)
             return type.Name;
@@ -91,8 +97,8 @@ public sealed class TypeScriptConverter : ModelConverter
         if (type.IsArrayType() && !isDictionary)
         {
             var typeName = type.IsGenericType
-                ? genericTypeArgs.Glue(", ")
-                : ResolveScriptType(actualType, prefix);
+                ? string.Join(", ", genericTypeArgs)
+                : ResolveScriptType(actualType, prefix, isNullable);
             return $"Array<{typeName}>";
         }
 
@@ -114,15 +120,18 @@ public sealed class TypeScriptConverter : ModelConverter
             return "Date | string | null";
 
         var scriptType = actualType.ToNativeScriptType().ToScriptType();
-        return type.IsNullable() ? $"{scriptType} | null" : scriptType;
+        return isNullable ? $"{scriptType} | null" : scriptType;
     }
 
     public string ResolveDefaultValue(IPropertyDescriptor prop)
     {
+        if (prop.Type.IsGenericParameter)
+            return string.Empty;
+        
         if (prop.Type?.IsArrayType() ?? false)
             return "[]";
 
-        if (prop.Type?.IsNullable() ?? false)
+        if (prop.IsNullable)
             return "null";
 
         if (prop.DefaultValue != null)
@@ -168,13 +177,13 @@ public sealed class TypeScriptConverter : ModelConverter
         }
     }
 
-    internal IEnumerable<string> GetGenericTypeArguments(Type type, string prefix)
+    internal IEnumerable<string> GetGenericTypeArguments(Type type, string prefix, bool isNullable)
     {
         if (!type.IsGenericType)
             throw new ArgumentException("Expected given type to be generic.");
 
         var genericTypeArgs = type.GenericTypeArguments
-            .Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x, prefix));
+            .Select(x => x.IsGenericParameter ? x.Name : ResolveScriptType(x, prefix, isNullable));
         return genericTypeArgs;
     }
 

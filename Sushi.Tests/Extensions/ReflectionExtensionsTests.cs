@@ -203,4 +203,46 @@ public abstract class ReflectionExtensionsTests
             Assert.IsFalse(interfaceType);
         }
     }
+
+    [TestClass]
+    public class IsPropertyHidingBaseClassPropertyMethod : ReflectionExtensionsTests
+    {
+        [TestMethod]
+        public void IsPropertyHidingBaseClassProperty_NotFound_ShouldThrow()
+        {
+            // Arrange
+            var classType = typeof(NullablePropertiesViewModel);
+            
+            // Assert
+            Assert.ThrowsException<ArgumentException>(() => classType.IsPropertyHidingBaseClassProperty("nope"));
+        }
+        
+        [TestMethod]
+        public void IsPropertyHidingBaseClassProperty_Inherited_ShouldReturnTrueTest()
+        {
+            // Arrange
+            var classType = typeof(NullablePropertiesViewModel);
+            var propertyName = nameof(NullablePropertiesViewModel.Guid);
+            
+            // Act
+            var result = classType.IsPropertyHidingBaseClassProperty(propertyName);
+            
+            // Assert
+            Assert.IsTrue(result);
+        }
+        
+        [TestMethod]
+        public void IsPropertyHidingBaseClassProperty_NotInherited_ShouldReturnTrueTest()
+        {
+            // Arrange
+            var classType = typeof(NullablePropertiesViewModel);
+            var propertyName = nameof(NullablePropertiesViewModel.Value2);
+            
+            // Act
+            var result = classType.IsPropertyHidingBaseClassProperty(propertyName);
+            
+            // Assert
+            Assert.IsFalse(result);
+        }
+    }
 }

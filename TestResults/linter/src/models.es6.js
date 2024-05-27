@@ -168,6 +168,43 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 /**
+ * For testing nullable properties.
+ * Sushi.Tests.Models.NullablePropertiesViewModel
+ * @extends ViewModel
+ */
+export class NullablePropertiesViewModel extends ViewModel {
+
+    /**
+     * An overridden, nullable Guid identifier.
+     */
+    Guid;
+
+    /**
+     * Nullable string w get/set.
+     */
+    Value2;
+
+    /**
+     * Nullable string.
+     */
+    Value;
+
+    constructor(value) {
+        super(value);
+
+        if (!(value instanceof Object))
+            return;
+
+        this.guid = value.guid;
+        this.value2 = value.value2;
+        this.value = value.value;
+    }
+    static mapFrom(obj) {
+        return Object.assign(new {model.Name}(), obj);
+    }
+}
+
+/**
  * The PersonViewModel that represents a Person.
  * Sushi.Tests.Models.PersonViewModel
  * @extends ViewModel

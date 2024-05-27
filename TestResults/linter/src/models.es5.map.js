@@ -127,6 +127,27 @@ InheritedViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
+ * For testing nullable properties.
+ * Sushi.Tests.Models.NullablePropertiesViewModel
+ * @extends ViewModel
+ */
+function NullablePropertiesViewModel(obj) {
+    let value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+    this.guid = value.guid;
+    this.value2 = value.value2;
+    this.guid = value.guid;
+    this.createdOn = value.createdOn;
+    this.value = value.value;
+}
+
+NullablePropertiesViewModel.prototype.mapFrom = function(obj) {
+    return _.extend(new NullablePropertiesViewModel(), obj); 
+};
+
+/**
  * The PersonViewModel that represents a Person.
  * Sushi.Tests.Models.PersonViewModel
  * @extends ViewModel

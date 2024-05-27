@@ -29,24 +29,24 @@ public sealed class FieldDescriptor : IPropertyDescriptor
     public string Name => _field.Name;
 
     /// <inheritdoc />
-    public bool Readonly { get; } = true;
+    public bool Readonly => true;
 
     /// <inheritdoc />
-    public bool IsStatic { get; } = true;
+    public bool IsStatic => true;
 
     /// <inheritdoc />
-    public Type Type { get; }
+    public Type Type => (IsNullable ? Nullable.GetUnderlyingType(_field.FieldType) : _field.FieldType)!;
 
     /// <inheritdoc />
-    public Type ClassType => _field.DeclaringType;
+    public Type? ClassType => _field.DeclaringType;
 
     /// <inheritdoc />
     public object? DefaultValue { get; }
 
-    /// <summary>
-    ///     If the field is nullable.
-    /// </summary>
-    public bool IsNullable { get; }
+    public bool IsNullable => _field.FieldType.IsNullable();
+
+    /// <inheritdoc />
+    public bool IsOverridden => _field.DeclaringType.IsPropertyHidingBaseClassProperty(Name);
 
     /// <summary>
     ///     The <see cref="NativeType"/> that matches this field.
@@ -58,9 +58,7 @@ public sealed class FieldDescriptor : IPropertyDescriptor
     public FieldDescriptor(FieldInfo fieldInfo)
     {
         _field = fieldInfo;
-        Type = _field.FieldType;
-        IsNullable = Type.IsNullable();
-
+        
         try
         {
             var instance = _field.DeclaringType?.CreateInstance();
@@ -70,8 +68,5 @@ public sealed class FieldDescriptor : IPropertyDescriptor
         {
             DefaultValue = null;
         }
-
-        if (IsNullable)
-            Type = Nullable.GetUnderlyingType(Type);
     }
 }

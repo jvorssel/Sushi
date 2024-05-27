@@ -26,7 +26,7 @@ public interface IPropertyDescriptor
     /// <summary>
     ///     The type of the class that the property or field belongs to.
     /// </summary>
-    Type ClassType { get; }
+    Type? ClassType { get; }
 
     /// <summary>
     ///		The default value assigned to the property.
@@ -42,4 +42,14 @@ public interface IPropertyDescriptor
     ///     If the property is static.
     /// </summary>
     bool IsStatic { get; }
+    
+    /// <summary>
+    ///     If the property is nullable.
+    /// </summary>
+    bool IsNullable { get; }
+
+    /// <summary>
+    ///     If the property is inherited and overridden.
+    /// </summary>
+    bool IsOverridden { get; }
 }

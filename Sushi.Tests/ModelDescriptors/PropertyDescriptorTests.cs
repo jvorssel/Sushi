@@ -53,6 +53,24 @@ namespace Sushi.Tests.ModelDescriptors
                 Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
                 Assert.AreEqual(typeof(bool?), descriptor.Type);
             }
+            
+
+            [TestMethod]
+            public void NullableStringValue_ShouldMapCorrectly()
+            {
+                // Arrange
+                var converter = new SushiConverter().TypeScript();
+                var property = typeof(NullablePropertiesViewModel).GetProperty("Value2");
+
+                var prop = new PropertyDescriptor(property, null);
+
+                // Act
+                var value = converter.ResolveDefaultValue(prop);
+
+                // Assert
+                Assert.AreEqual("null", value);
+                Assert.IsTrue(prop.IsNullable);
+            }
         }
     }
 }
