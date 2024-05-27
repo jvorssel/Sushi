@@ -1,5 +1,4 @@
--# Sushi
-Library for converting .NET classes to script language classes.
+-# SushiScript Library for converting .NET classes to script language classes.
 
 **Currently supports**
 
@@ -10,7 +9,7 @@ Library for converting .NET classes to script language classes.
 
 **Author**
 
-Jeroen Vorsselman @ 2023
+Jeroen Vorsselman @ 2024
 
 **[GitHub](https://github.com/jvorssel)**
 
@@ -38,16 +37,60 @@ ConverterOptions options = new ConverterOptions(excludeComments: true);
 string result = converter.TypeScript(options).ToString();
 ```
 
-Create a new `SushiConverter` instance with the given `Assembly` or `Type[]` that contain the types you want to convert.  <br />
+Create a new `SushiConverter` instance with the given `Assembly` or `Type[]` that contain the types you want to convert.  
 These classes must be decorated with the `ConvertToScriptAttribute` or inherit the `IScriptModel` interface. Classes can be excluded using the `IgnoreForScriptAttribute`.
-The converter contains a collection of type- and enum-descriptors. These are used to generate script models.  <br />
+The converter contains a collection of type- and enum-descriptors. These are used to generate script models.  
 
 
 ## Helpers
-You can check if a type exists using: `IsSushiType(IConvertModels converter, Type type, out Type resolvedType) : boolean`  <br />
-You can convert types using: `TypeScriptConverter.ResolveScriptType(Type type, string prefix = "") : string`  <br />
-You can get the script default value using: `TypeScriptConverter.ResolveDefaultValue(IPropertyDescriptor prop) : string`  <br />
-## Typescript result
+You can check if a type exists using: 
+`IsSushiType(IConvertModels converter, Type type, out Type resolvedType) : boolean`
+
+You can convert types using:
+`TypeScriptConverter.ResolveScriptType(Type type, string prefix = "") : string`
+
+You can get the script default value using:
+`TypeScriptConverter.ResolveDefaultValue(IPropertyDescriptor prop) : string`
+
+## Conversion result
+### C# class
+```
+/// <summary>
+///     Simple model to verify complex types.
+/// </summary>
+public sealed class TypeModel : ViewModel
+{
+  /// <summary>
+  ///     A nullable boolean.
+  /// </summary>
+  public bool? NullableBool { get; set; } = null;
+  
+  /// <summary>
+  ///     A nullable string, defaults to null.
+  /// </summary>
+  public string? NullableString { get; set; } = null;
+  
+  /// <summary>
+  ///     A readonly string.
+  /// </summary>
+  public readonly string ReadonlyString = "readonly";
+  
+  /// <inheritdoc cref="Guid" />
+  public new Guid Guid { get; set; } = Guid.NewGuid();
+  
+  /// <summary>
+  ///     A DateTime instance.
+  /// </summary>
+  public DateTime Date{get;set;} = DateTime.Now;
+  
+  public StudentViewModel Student { get; set; } = new StudentViewModel();
+  
+  public List<StudentViewModel> Students { get; set; }
+  
+  public Dictionary<string, StudentViewModel[]> StudentPerClass { get; set; } = new ();
+}
+```
+### Typescript class
 
 ```
 /**
@@ -65,9 +108,9 @@ export class TypeModel extends ViewModel {
 
     /**
      * A nullable string, defaults to null.
-     * @type (string)
+     * @type (string | null)
      */
-    nullableString: string = "";
+    nullableString: string | null = null;
 
     /**
      * A DateTime instance.
@@ -75,7 +118,7 @@ export class TypeModel extends ViewModel {
      */
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
-    students: Array<StudentViewModel> = [];
+    students: Array<StudentViewModel | null> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
 
     /**
