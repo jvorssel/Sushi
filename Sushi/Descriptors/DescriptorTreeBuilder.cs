@@ -15,50 +15,52 @@
 
 using Sushi.Extensions;
 
-namespace Sushi.Descriptors
+namespace Sushi.Descriptors;
+
+public class DescriptorTreeBuilder
 {
-	public class DescriptorTreeBuilder
-	{
-		private readonly IEnumerable<ClassDescriptor> _types;
+    private readonly IEnumerable<ClassDescriptor> _types;
 
-		public DescriptorTreeBuilder(IEnumerable<ClassDescriptor> types)
-			=> _types = types;
+    public DescriptorTreeBuilder(IEnumerable<ClassDescriptor> types)
+    {
+        _types = types;
+    }
 
-		public IEnumerable<ClassDescriptor> BuildTree()
-		{
-			var flat = _types.ToList();
+    public IEnumerable<ClassDescriptor> BuildTree()
+    {
+        var flat = _types.ToList();
+        var dict = flat.ToDictionary(x => x.Type, x => x);
 
-			var tree = new HashSet<ClassDescriptor>();
-			foreach (var cd in flat)
-			{
-				if (tree.FindDescriptor(cd.Type) != null)
-					continue;
+        var tree = new HashSet<ClassDescriptor>();
+        foreach (var cd in flat)
+        {
+            if (tree.FindDescriptor(cd.Type) != null)
+                continue;
 
-				var current = cd;
-				if (current.Type.BaseType == typeof(object))
-				{
-					tree.Add(current);
-					continue;
-				}
+            var current = cd;
+            if (current.Type.BaseType == typeof(object))
+            {
+                tree.Add(current);
+                continue;
+            }
 
-				var fromList = flat.SingleOrDefault(x => x.Type == current.Type.BaseType);
-				if (fromList == null)
-				{
-					throw new InvalidOperationException(
-						$"Base type {current.Type.BaseType} for {current.Type} is missing.");
-				}
+            if (!dict.TryGetValue(current.Type.BaseType, out var fromList))
+                throw new InvalidOperationException(
+                    $"Base type {current.Type.BaseType} for {current.Type} is missing.");
 
-				while (fromList != null)
-				{
-					current.Parent = fromList;
-					fromList.Children.Add(current);
+            while (fromList != null)
+            {
+                current.Parent = fromList;
+                fromList.Children.Add(current);
 
-					current = fromList;
-					fromList = flat.SingleOrDefault(x => x.Type == current.Type.BaseType);
-				}
-			}
+                current = fromList;
+                if (current.Type.BaseType == typeof(object))
+                    break;
 
-			return tree;
-		}
-	}
+                fromList = dict[current.Type.BaseType];
+            }
+        }
+
+        return tree;
+    }
 }

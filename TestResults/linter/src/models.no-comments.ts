@@ -103,7 +103,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "45aa2346-0fc7-435a-8b30-1abb659180f4";
+    identifier: string = "b46ca98e-3058-4568-989e-0f5e3f99852a";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -161,7 +161,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "1904663f-70ed-46b9-9b1d-4ac554402ebd";
+    override guid: string = "72a8d216-e3da-4060-823e-39d303e403f7";
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
