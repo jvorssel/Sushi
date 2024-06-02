@@ -15,22 +15,21 @@ using System;
 
 #endregion
 
-namespace Sushi.Tests.Models
+namespace Sushi.Tests.Models;
+
+public class InheritedViewModel : BaseViewModel
 {
-	public class InheritedViewModel : BaseViewModel
-	{
-		/// <inheritdoc />
-		public override string Value { get; set; } = "override";
+	/// <inheritdoc />
+	public override string Value { get; set; } = "override";
 
-		public string Addition { get; set; } = "added";
-	}
+	public string Addition { get; set; } = "added";
+}
 
-	public class BaseViewModel : ViewModel
-	{
-		public virtual string Value { get; set; } = "base";
+public class BaseViewModel : ViewModel
+{
+	public virtual string Value { get; set; } = "base";
 
-		public Guid Guid { get; set; }
+	public Guid Guid { get; set; }
 
-		public bool Base { get; set; } = true;
-	}
+	public bool Base { get; set; } = true;
 }

@@ -21,125 +21,75 @@ using Sushi.Tests.Models;
 
 #endregion
 
-namespace Sushi.Tests.ModelDescriptors
+namespace Sushi.Tests.ModelDescriptors;
+
+public abstract class DescriptorTreeBuilderTests
 {
-	public abstract class DescriptorTreeBuilderTests
+	private readonly List<Type> Types = new List<Type>
 	{
-		private readonly List<Type> Types = new List<Type>
+		typeof(PersonViewModel),
+		typeof(SchoolViewModel),
+		typeof(StudentViewModel),
+		typeof(ViewModel),
+		typeof(ScriptModel)
+	};
+
+	private List<ClassDescriptor> AsDescriptors(params Type[] types)
+		=> types.Select(x => new ClassDescriptor(x)).ToList();
+
+	[TestClass]
+	public class BuildTreeTests : DescriptorTreeBuilderTests
+	{
+		[TestMethod]
+		public void BuildTree_MissingBaseType_ShouldThrow()
 		{
-			typeof(PersonViewModel),
-			typeof(SchoolViewModel),
-			typeof(StudentViewModel),
-			typeof(ViewModel),
-			typeof(ScriptModel)
-		};
+			// Arrange
+			var descriptors = new ClassDescriptor(typeof(TypeModel));
+			var message = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
 
-		private List<ClassDescriptor> AsDescriptors(params Type[] types)
-			=> types.Select(x => new ClassDescriptor(x)).ToList();
-
-		[TestClass]
-		public class FindDescriptorTest : DescriptorTreeBuilderTests
-		{
-			[TestMethod]
-			public void EqualType_ShouldFind()
-			{
-				// Arrange
-				var type = typeof(ViewModel);
-
-				// Act
-				var descriptor = AsDescriptors(type).FindDescriptor(type);
-
-				// Assert
-				Assert.IsNotNull(descriptor);
-				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
-			}
-
-			[TestMethod]
-			public void EqualTypeInChildren_ShouldFind()
-			{
-				// Arrange
-				var descriptors = new List<ClassDescriptor> { new(typeof(PersonViewModel)) };
-				descriptors[0].Children.Add(new ClassDescriptor(typeof(ViewModel)));
-
-				// Act
-				var descriptor = descriptors.FindDescriptor(typeof(ViewModel));
-
-				// Assert
-				Assert.IsNotNull(descriptor);
-				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
-			}
-
-			[TestMethod]
-			public void EqualTypeInChildren_ShouldFindDeep()
-			{
-				// Arrange
-				var descriptors = new List<ClassDescriptor> { new(typeof(StudentViewModel)) };
-				descriptors[0].Children.Add(new ClassDescriptor(typeof(PersonViewModel)));
-				descriptors[0].Children.Single().Children.Add(new ClassDescriptor(typeof(ViewModel)));
-
-				// Act
-				var descriptor = descriptors.FindDescriptor(typeof(ViewModel));
-
-				// Assert
-				Assert.IsNotNull(descriptor);
-				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
-			}
+			// Act & Assert
+			Assert.ThrowsException<InvalidOperationException>(() => new[] { descriptors }.BuildTree(), message);
 		}
 
-		[TestClass]
-		public class BuildTreeTests : DescriptorTreeBuilderTests
+		[TestMethod]
+		public void BuildTree_ShouldNestCorrectlyTest()
 		{
-			[TestMethod]
-			public void BuildTree_MissingBaseType_ShouldThrow()
-			{
-				// Arrange
-				var descriptors = new ClassDescriptor(typeof(TypeModel));
-				var message = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
+			// Arrange
+			var types = AsDescriptors(Types.ToArray());
 
-				// Act & Assert
-				Assert.ThrowsException<InvalidOperationException>(() => new[] { descriptors }.BuildTree(), message);
-			}
+			// Act
+			var result = types.BuildTree().ToList();
 
-			[TestMethod]
-			public void BuildTree_ShouldNestCorrectlyTest()
-			{
-				// Arrange
-				var types = AsDescriptors(Types.ToArray());
+			// Assert
+			Assert.AreEqual(1, result.Count, "Only one class defined as the root of the tree.");
 
-				// Act
-				var result = types.BuildTree().ToList();
+			// The view-model class should be the root.
+			var scriptModel = result.Single();
+			Assert.AreEqual(nameof(ScriptModel), scriptModel.Name);
+			Assert.IsNull(scriptModel.Parent);
 
-				// Assert
-				Assert.AreEqual(1, result.Count, "Only one class defined as the root of the tree.");
+			var viewModelDescriptor = scriptModel.Children.Single();
 
-				// The view-model class should be the root.
-				var scriptModel = result.Single();
-				Assert.AreEqual(nameof(ScriptModel), scriptModel.Name);
-				Assert.IsNull(scriptModel.Parent);
+			// The view-model class is inherited twice.
+			Assert.AreEqual(2, viewModelDescriptor.Children.Count);
 
-				var viewModelDescriptor = scriptModel.Children.Single();
+			// Once by the person
+			var personDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
+			Assert.IsNotNull(personDescriptor);
+			Assert.AreEqual(1, personDescriptor.Children.Count);
 
-				// The view-model class is inherited twice.
-				Assert.AreEqual(2, viewModelDescriptor.Children.Count);
+			// The student class inherits the person class
+			var studentDescriptor =
+				personDescriptor.Children.SingleOrDefault(x => x.Name == nameof(StudentViewModel));
+			Assert.IsNotNull(studentDescriptor);
+			Assert.AreEqual(nameof(PersonViewModel), studentDescriptor.Parent.Name);
 
-				// Once by the person
-				var personDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
-				Assert.IsNotNull(personDescriptor);
-				Assert.AreEqual(1, personDescriptor.Children.Count);
+			// And once by the school
+			var schoolDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(SchoolViewModel));
+			Assert.IsNotNull(schoolDescriptor);
 
-				// The student class inherits the person class
-				var studentDescriptor =
-					personDescriptor.Children.SingleOrDefault(x => x.Name == nameof(StudentViewModel));
-				Assert.IsNotNull(studentDescriptor);
-				Assert.AreEqual(nameof(PersonViewModel), studentDescriptor.Parent.Name);
-
-				// And once by the school
-				var schoolDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(SchoolViewModel));
-				Assert.IsNotNull(schoolDescriptor);
-
-				Assert.IsFalse(schoolDescriptor.Children.Any());
-				Assert.AreEqual(nameof(ViewModel), schoolDescriptor.Parent.Name);
-			}
+			Assert.IsFalse(schoolDescriptor.Children.Any());
+			Assert.AreEqual(nameof(ViewModel), schoolDescriptor.Parent.Name);
 		}
 	}
 }

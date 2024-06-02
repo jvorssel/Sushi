@@ -12,7 +12,7 @@ public class NotAScriptModel
 
     public NotAScriptModel()
     {
-        Included = excluded.Included;
+        Included = excluded?.Included ?? false;
         throw new Exception("Should not be initialized.");
     }
     

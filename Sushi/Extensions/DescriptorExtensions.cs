@@ -16,24 +16,6 @@ namespace Sushi.Extensions;
 public static class DescriptorExtensions
 {
     /// <summary>
-    ///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
-    /// </summary>
-    public static ClassDescriptor? FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
-    {
-        foreach (var d in tree)
-        {
-            if (d.Type == type)
-                return d;
-
-            var child = FindDescriptor(d.Children, type);
-            if (child != null)
-                return child;
-        }
-
-        return null;
-    }
-
-    /// <summary>
     ///		Flatten the <see cref="ClassDescriptor"/> tree to a flat list.
     /// </summary>
     public static IEnumerable<ClassDescriptor> Flatten(this IEnumerable<ClassDescriptor> tree)
@@ -54,9 +36,6 @@ public static class DescriptorExtensions
         var tree = new HashSet<ClassDescriptor>();
         foreach (var cd in flat)
         {
-            if (tree.FindDescriptor(cd.Type) != null)
-                continue;
-
             var current = cd;
             if (current.Type.BaseType == typeof(object))
             {

@@ -20,20 +20,20 @@ using Sushi.Tests.Models;
 
 #endregion
 
-namespace Sushi.Tests.Documentation
+namespace Sushi.Tests.Documentation;
+
+public abstract class XmlDocumentationReaderTests
 {
-	public abstract class XmlDocumentationReaderTests
+	public string FilePath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sushi.Tests.xml");
+
+	public XmlDocumentationReader Reader { get; set; }
+
+	[TestClass]
+	public class Initialize : XmlDocumentationReaderTests
 	{
-		public string FilePath { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sushi.Tests.xml");
-
-		public XmlDocumentationReader Reader { get; set; }
-
-		[TestClass]
-		public class Initialize : XmlDocumentationReaderTests
+		[TestMethod]
+		public void InitializeTest()
 		{
-			[TestMethod]
-			public void InitializeTest()
-			{
 				// Act
 				Reader = new XmlDocumentationReader(FilePath);
 
@@ -45,14 +45,14 @@ namespace Sushi.Tests.Documentation
 						.All(x => x.DeclaringTypeName.Length > 0),
 					"Expected each field to have a declaring type name.");
 			}
-		}
+	}
 
-		[TestClass]
-		public class GetDocumentationForType : XmlDocumentationReaderTests
+	[TestClass]
+	public class GetDocumentationForType : XmlDocumentationReaderTests
+	{
+		[TestMethod]
+		public void GetDocumentationForType_ViewModel_ShouldResolveTest()
 		{
-			[TestMethod]
-			public void GetDocumentationForType_ViewModel_ShouldResolveTest()
-			{
 				// Arrange
 				Reader = new XmlDocumentationReader(FilePath);
 				var type = typeof(SchoolViewModel);
@@ -67,9 +67,9 @@ namespace Sushi.Tests.Documentation
 				Assert.IsTrue(doc.Summary.Length > 0);
 			}
 
-			[TestMethod]
-			public void GetDocumentationForType_Inherited_ShouldResolveFromInterfaceTest()
-			{
+		[TestMethod]
+		public void GetDocumentationForType_Inherited_ShouldResolveFromInterfaceTest()
+		{
 				// Arrange
 				Reader = new XmlDocumentationReader(FilePath);
 				var type = typeof(SchoolViewModel);
@@ -83,14 +83,14 @@ namespace Sushi.Tests.Documentation
 				Assert.IsTrue(doc.IsInherited);
 				Assert.IsTrue(doc.Summary.Length > 0);
 			}
-		}
+	}
 
-		[TestClass]
-		public class GetDocumentationForProperty : XmlDocumentationReaderTests
+	[TestClass]
+	public class GetDocumentationForProperty : XmlDocumentationReaderTests
+	{
+		[TestMethod]
+		public void GetDocumentationForProperty_NoDescriptor_ShouldThrowTest()
 		{
-			[TestMethod]
-			public void GetDocumentationForProperty_NoDescriptor_ShouldThrowTest()
-			{
 				// Arrange
 				Reader = new XmlDocumentationReader(FilePath);
 				var instance = new SchoolViewModel();
@@ -99,9 +99,9 @@ namespace Sushi.Tests.Documentation
 				Assert.ThrowsException<ArgumentNullException>(() => Reader.GetDocumentationForProperty(null));
 			}
 
-			[TestMethod]
-			public void GetDocumentationForProperty_Property_ShouldGetSummaryTest()
-			{
+		[TestMethod]
+		public void GetDocumentationForProperty_Property_ShouldGetSummaryTest()
+		{
 				// Arrange
 				Reader = new XmlDocumentationReader(FilePath);
 				var instance = new SchoolViewModel();
@@ -116,9 +116,9 @@ namespace Sushi.Tests.Documentation
 				Assert.IsFalse(doc.IsInherited);
 			}
 			
-			[TestMethod]
-			public void GetDocumentationForProperty_InheritedProperty_ShouldGetFromInterfaceTest()
-			{
+		[TestMethod]
+		public void GetDocumentationForProperty_InheritedProperty_ShouldGetFromInterfaceTest()
+		{
 				// Arrange
 				Reader = new XmlDocumentationReader(FilePath);
 				var instance = new SchoolViewModel();
@@ -133,6 +133,5 @@ namespace Sushi.Tests.Documentation
 				Assert.IsTrue(doc.IsInherited);
 				Assert.AreEqual(typeof(ISchoolViewModel), doc.InheritedFrom);
 			}
-		}
 	}
 }

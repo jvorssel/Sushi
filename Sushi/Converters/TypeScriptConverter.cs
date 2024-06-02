@@ -130,7 +130,7 @@ public sealed class TypeScriptConverter : ModelConverter
         if (prop.Type.IsGenericParameter)
             return string.Empty;
 
-        if (prop.Type?.IsArrayType() ?? false)
+        if (prop.Type.IsArrayType())
             return "[]";
 
         var isNullableString = prop.Type == typeof(string) && prop.DefaultValue == null;
@@ -190,7 +190,7 @@ public sealed class TypeScriptConverter : ModelConverter
         return genericTypeArgs;
     }
 
-    internal string CreatePropertyDeclaration(ClassDescriptor classDescriptor,
+    private string CreatePropertyDeclaration(ClassDescriptor classDescriptor,
         IEnumerable<IPropertyDescriptor> properties)
     {
         var builder = new StringBuilder();
@@ -203,7 +203,7 @@ public sealed class TypeScriptConverter : ModelConverter
         return builder.ToString();
     }
 
-    public string CreateConstructorDeclaration(string className, ClassDescriptor model)
+    private string CreateConstructorDeclaration(string className, ClassDescriptor model)
     {
         if (!model.GenerateConstructor)
             return string.Empty;
@@ -223,9 +223,8 @@ public sealed class TypeScriptConverter : ModelConverter
             .Where(x => !x.Readonly)
             .ToList();
         
-        foreach (var prop in properties)
+        foreach (var name in properties.Select(prop => ApplyCasingStyle(prop.Name)))
         {
-            var name = ApplyCasingStyle(prop.Name);
             builder.AppendLine($"{Indent + Indent}if (value.{name} !== undefined) this.{name} = value.{name};");
         }
 
@@ -242,7 +241,7 @@ public sealed class TypeScriptConverter : ModelConverter
         return $"{descriptor.Name}{genericTypeArgs}";
     }
 
-    internal string ToTypeScriptEnum(EnumDescriptor descriptor)
+    private string ToTypeScriptEnum(EnumDescriptor descriptor)
     {
         var builder = new StringBuilder();
         builder.AppendLine($"export enum {descriptor.Name} {{");
@@ -261,7 +260,7 @@ public sealed class TypeScriptConverter : ModelConverter
         return builder.ToString();
     }
 
-    internal string ToTypeScriptClass(ClassDescriptor model)
+    private string ToTypeScriptClass(ClassDescriptor model)
     {
         var className = FormatClassName(model);
         var properties = model.GetProperties().ToList();

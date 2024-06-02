@@ -25,7 +25,7 @@ namespace Sushi.Converters;
 /// </summary>
 public sealed class EcmaScript5Converter : ModelConverter
 {
-    private bool _includeUnderscoreExtend = false;
+    private bool _includeUnderscoreExtend;
 
     /// <inheritdoc />
     public EcmaScript5Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
@@ -35,8 +35,7 @@ public sealed class EcmaScript5Converter : ModelConverter
     /// / <inheritdoc />
     protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
     {
-        foreach (var model in descriptors)
-            yield return Compile(model);
+        return descriptors.Select(Compile);
     }
 
     public EcmaScript5Converter IncludeUnderscoreMapper()

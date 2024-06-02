@@ -72,7 +72,7 @@ public abstract class XmlSummaryDescriptorTests
 		{
 			// Arrange
 			var type = typeof(PersonViewModel);
-			var name = type.FullName;
+			var name = type.FullName ?? string.Empty;
 
 			var summary = "A property value.";
 			var xmlDocValues = new Dictionary<string, string> { { "summary", summary } };

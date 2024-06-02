@@ -47,10 +47,10 @@ public static class ReflectionExtensions
                 return ctor.Invoke(arguments);
             }
         }
-        catch (Exception e)
+        catch
         {
 #if DEBUG
-            throw e;
+            throw;
 #endif
             return null;
         }
@@ -73,20 +73,23 @@ public static class ReflectionExtensions
 
         // If the Type is a primitive type, or if it is another publicly-visible value type (i.e. struct), return a 
         //  default instance of the value type
-        if (type.IsPrimitive || !type.IsNotPublic)
-            try
-            {
-                return Activator.CreateInstance(type);
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException(
-                    "{" + MethodBase.GetCurrentMethod() +
-                    "} Error:\n\nThe Activator.CreateInstance method could not " +
-                    "create a default instance of the supplied value type <" + type +
-                    "> (Inner Exception message: \"" + e.Message + "\")",
-                    e);
-            }
+        if (type is { IsPrimitive: false, IsNotPublic: true })
+            throw new ArgumentException("{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" +
+                                        type +
+                                        "> is not a publicly-visible type, so the default value cannot be retrieved");
+        try
+        {
+            return Activator.CreateInstance(type);
+        }
+        catch (Exception e)
+        {
+            throw new ArgumentException(
+                "{" + MethodBase.GetCurrentMethod() +
+                "} Error:\n\nThe Activator.CreateInstance method could not " +
+                "create a default instance of the supplied value type <" + type +
+                "> (Inner Exception message: \"" + e.Message + "\")",
+                e);
+        }
 
         // Fail with exception
         throw new ArgumentException("{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" +
@@ -98,20 +101,20 @@ public static class ReflectionExtensions
     ///     Get the <see cref="Type" /> and default <see cref="object" /> value
     ///     for the available Properties in the given <typeparamref name="T" /> <paramref name="this" />.
     /// </summary>
-    internal static IEnumerable<KeyValuePair<PropertyInfo, object>> GetPropertiesWithStaticValue<T>(this T @this)
+    internal static IEnumerable<KeyValuePair<PropertyInfo, object?>> GetPropertiesWithStaticValue<T>(this T @this)
     {
         if (@this == null)
             yield break;
 
         var classType = (typeof(T) == typeof(Type) ? @this as Type : typeof(T)) ?? typeof(T);
         var properties = classType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-            .Where(x=>x.DeclaringType == @classType);
+            .Where(x => x.DeclaringType == classType);
 
         var instance = classType.CreateInstance();
         foreach (var prp in properties)
         {
             var defaultValue = instance != null && prp.CanWrite ? prp.GetValue(instance) : null;
-            yield return new KeyValuePair<PropertyInfo, object>(prp, defaultValue);
+            yield return new KeyValuePair<PropertyInfo, object?>(prp, defaultValue);
         }
     }
 
@@ -132,19 +135,19 @@ public static class ReflectionExtensions
         var unary = propertyLambda.Body as UnaryExpression;
         var member = unary?.Operand as MemberExpression ?? propertyLambda.Body as MemberExpression;
         if (member == null)
-            throw new ArgumentException($@"Expression '{propertyLambda}' refers to a method, not a property.",
+            throw new ArgumentException($"Expression '{propertyLambda}' refers to a method, not a property.",
                 nameof(propertyLambda));
 
         var propInfo = member.Member as PropertyInfo;
         if (propInfo == null)
-            throw new ArgumentException($@"Expression '{propertyLambda}' refers to a field, not a property.",
+            throw new ArgumentException($"Expression '{propertyLambda}' refers to a field, not a property.",
                 nameof(propertyLambda));
 
         if (type != propInfo.ReflectedType &&
             !type.IsSubclassOf(propInfo.ReflectedType) &&
             checkReflectedType)
             throw new ArgumentException(
-                $@"Expression '{propertyLambda}' refers to a property that is not from type {type}.",
+                $"Expression '{propertyLambda}' refers to a property that is not from type {type}.",
                 nameof(propertyLambda));
 
         return propInfo;
@@ -200,22 +203,21 @@ public static class ReflectionExtensions
     /// </summary>
     internal static Type GetBaseType(this Type type)
     {
-        if (type.IsArray)
-            return type.GetElementType();
+        while (true)
+        {
+            if (type.IsArray) return type.GetElementType();
 
-        if (type.IsTaskType(out var innerType) && innerType != null)
-            return innerType.GetBaseType();
+            if (!type.IsTaskType(out var innerType) || innerType == null)
+                return type.IsGenericType ? type.GetGenericArguments()[0] : type;
 
-        if (type.IsGenericType)
-            return type.GetGenericArguments()[0];
-
-        return type;
+            type = innerType;
+        }
     }
 
     /// <summary>
     ///		If the given <see cref="Type"/> is a Task. 
     /// </summary>
-    internal static bool IsTaskType(this Type type, out Type? innerType)
+    private static bool IsTaskType(this Type type, out Type? innerType)
     {
         innerType = null;
 
@@ -225,31 +227,24 @@ public static class ReflectionExtensions
         innerType = type.GetGenericArguments()[0];
         return true;
     }
-    
+
     internal static bool IsPropertyHidingBaseClassProperty(this Type? derivedType, string propertyName)
     {
         // Get the base type of the derived type
         var baseType = derivedType?.BaseType;
 
         // Ensure the base type is not null (i.e., derivedType is not Object)
-        if (derivedType == null || baseType == null)
-        {
-            return false;
-        }
+        if (derivedType == null || baseType == null) return false;
 
         // Get the property from the derived class
-        var derivedProperty = derivedType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        var derivedProperty = derivedType.GetProperty(propertyName,
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
         if (derivedProperty == null)
-        {
             throw new ArgumentException($"Property '{propertyName}' does not exist in type '{derivedType.Name}'.");
-        }
 
         // Get the property from the base class
         var baseProperty = baseType.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
-        if (baseProperty == null)
-        {
-            return false;
-        }
+        if (baseProperty == null) return false;
 
         // Get the getter methods for both properties
         var baseMethod = baseProperty.GetGetMethod();

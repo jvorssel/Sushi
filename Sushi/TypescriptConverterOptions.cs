@@ -1,6 +1,6 @@
 namespace Sushi;
 
-public class TypescriptConverterOptions : ConverterOptions
+public sealed class TypescriptConverterOptions : ConverterOptions
 {
     public TypescriptConverterOptions()
     {

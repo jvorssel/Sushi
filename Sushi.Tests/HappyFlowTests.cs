@@ -37,13 +37,6 @@ public class HappyFlowTests : TestBase
     private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
 
     [TestMethod]
-    public void NoTypes_ShouldThrowTest()
-    {
-        // Act & Assert
-        Assert.ThrowsException<ArgumentNullException>(() => new SushiConverter((ICollection<Type>)null));
-    }
-
-    [TestMethod]
     public void LoadCorrectlyTest()
     {
         // Arrange

@@ -18,59 +18,58 @@ using Sushi.Tests.Models;
 
 #endregion
 
-namespace Sushi.Tests.ModelDescriptors
+namespace Sushi.Tests.ModelDescriptors;
+
+public abstract class PropertyDescriptorTests
 {
-    public abstract class PropertyDescriptorTests
+    [TestClass]
+    public class TypeMapTests : PropertyDescriptorTests
     {
-        [TestClass]
-        public class TypeMapTests : PropertyDescriptorTests
+        [TestMethod]
+        public void GuidProperty_ShouldMapCorrectly()
         {
-            [TestMethod]
-            public void GuidProperty_ShouldMapCorrectly()
-            {
-                // Arrange
-                var classDescriptor = new ClassDescriptor(typeof(ViewModel));
+            // Arrange
+            var classDescriptor = new ClassDescriptor(typeof(ViewModel));
 
-                // Act
-                var descriptor = classDescriptor.GetProperty(nameof(ViewModel.Guid));
+            // Act
+            var descriptor = classDescriptor.GetProperty(nameof(ViewModel.Guid));
 
-                // Assert
-                Assert.AreEqual(nameof(ViewModel.Guid), descriptor.Name);
-                Assert.AreEqual(typeof(Guid), descriptor.Type);
-            }
+            // Assert
+            Assert.AreEqual(nameof(ViewModel.Guid), descriptor.Name);
+            Assert.AreEqual(typeof(Guid), descriptor.Type);
+        }
 
-            [TestMethod]
-            public void NullableProperty_ShouldMapCorrectly()
-            {
-                // Arrange
-                var classDescriptor = new ClassDescriptor(typeof(TypeModel));
+        [TestMethod]
+        public void NullableProperty_ShouldMapCorrectly()
+        {
+            // Arrange
+            var classDescriptor = new ClassDescriptor(typeof(TypeModel));
 
-                // Act
-                var descriptor = classDescriptor.GetProperty(nameof(TypeModel.NullableBool));
+            // Act
+            var descriptor = classDescriptor.GetProperty(nameof(TypeModel.NullableBool));
 
-                // Assert
-                Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
-                Assert.AreEqual(typeof(bool?), descriptor.Type);
-            }
+            // Assert
+            Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
+            Assert.AreEqual(typeof(bool?), descriptor.Type);
+        }
             
             
 
-            [TestMethod]
-            public void NullableStringValue2_ShouldMapCorrectly()
-            {
-                // Arrange
-                var converter = new SushiConverter().TypeScript();
-                var property = typeof(NullablePropertiesViewModel).GetProperty("Value2");
+        [TestMethod]
+        public void NullableStringValue2_ShouldMapCorrectly()
+        {
+            // Arrange
+            var converter = new SushiConverter().TypeScript();
+            var property = typeof(NullablePropertiesViewModel).GetProperty("Value2") ?? throw new InvalidOperationException("Unable to resolve property.");
 
-                var prop = new PropertyDescriptor(property, null);
+            var prop = new PropertyDescriptor(property, null);
 
-                // Act
-                var value = converter.ResolveDefaultValue(prop);
+            // Act
+            var value = converter.ResolveDefaultValue(prop);
 
-                // Assert
-                Assert.AreEqual("null", value);
-                Assert.IsTrue(prop.IsNullable);
-            }
+            // Assert
+            Assert.AreEqual("null", value);
+            Assert.IsTrue(prop.IsNullable);
         }
     }
 }

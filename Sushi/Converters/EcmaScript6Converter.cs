@@ -33,8 +33,7 @@ public sealed class EcmaScript6Converter : ModelConverter
     /// / <inheritdoc />
     protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
     {
-        foreach (var model in descriptors)
-            yield return Compile(model);
+        return descriptors.Select(Compile);
     }
 
     private string CreatePropertyDeclaration(IEnumerable<IPropertyDescriptor> properties)

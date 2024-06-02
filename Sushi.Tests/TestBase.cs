@@ -19,27 +19,24 @@ using Sushi.Extensions;
 
 #endregion
 
-namespace Sushi.Tests
+namespace Sushi.Tests;
+
+public abstract class TestBase
 {
-	public abstract class TestBase
-	{
-		public TestContext TestContext { get; set; }
+	public TestContext TestContext { get; set; } = null!;
 		
-		/// <summary>
-		///     Write the generated script values to the file.
-		/// </summary>
-		/// <param name="path">The <paramref name="path" /> to the folder to store the file in.</param>
-		/// <param name="encoding">What <see cref="Encoding" /> method should be used to create the file.</param>
-		public void WriteToFile(string script, string path, Encoding encoding = null)
-		{
-			if (path.IsEmpty())
-				throw new ArgumentNullException(nameof(path));
+	/// <summary>
+	///     Write the generated script values to the file.
+	/// </summary>
+	internal void WriteToFile(string script, string path, Encoding? encoding = null)
+	{
+		if (path.IsEmpty())
+			throw new ArgumentNullException(nameof(path));
 
-			var directory = Path.GetDirectoryName(path);
-			if (!Directory.Exists(directory))
-				Directory.CreateDirectory(directory);
+		var directory = Path.GetDirectoryName(path) ?? string.Empty;
+		if (!Directory.Exists(directory))
+			Directory.CreateDirectory(directory);
 
-			File.WriteAllText(path, script, encoding ?? Encoding.Default);
-		}
+		File.WriteAllText(path, script, encoding ?? Encoding.Default);
 	}
 }

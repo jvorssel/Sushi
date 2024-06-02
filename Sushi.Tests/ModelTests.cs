@@ -20,57 +20,56 @@ using Sushi.Tests.Models;
 
 #endregion
 
-namespace Sushi.Tests
+namespace Sushi.Tests;
+
+[TestClass]
+public class ModelTests
 {
-	[TestClass]
-	public class ModelTests
+	private readonly Assembly _assembly = typeof(PersonViewModel).Assembly;
+
+	[TestMethod]
+	public void ModelsInAssemblyTest()
 	{
-		private readonly Assembly _assembly = typeof(PersonViewModel).Assembly;
+		var converter = new SushiConverter(_assembly);
+		Assert.IsTrue(converter.Models.Count > 0, "Expected at least one model to be available.");
+		Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(ViewModel)), "Expected at least one ");
+	}
 
-		[TestMethod]
-		public void ModelsInAssemblyTest()
-		{
-			var converter = new SushiConverter(_assembly);
-			Assert.IsTrue(converter.Models.Count > 0, "Expected at least one model to be available.");
-			Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(ViewModel)), "Expected at least one ");
-		}
+	[TestMethod]
+	public void ModelPropertyRecognitionTest()
+	{
+		var converter = new SushiConverter(_assembly);
 
-		[TestMethod]
-		public void ModelPropertyRecognitionTest()
-		{
-			var converter = new SushiConverter(_assembly);
+		var personModel = converter.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
+		Assert.IsNotNull(personModel);
 
-			var personModel = converter.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
-			Assert.IsNotNull(personModel);
+		// PersonModel has 2 properties
+		Assert.AreEqual(4, personModel.Properties.Count);
 
-			// PersonModel has 2 properties
-			Assert.AreEqual(4, personModel.Properties.Count);
+		// The name property
+		var name = personModel.Properties[nameof(PersonViewModel.Name)];
+		Assert.IsNotNull(name);
 
-			// The name property
-			var name = personModel.Properties[nameof(PersonViewModel.Name)];
-			Assert.IsNotNull(name);
+		// The surname property
+		var surname = personModel.Properties[nameof(PersonViewModel.Surname)];
+		Assert.IsNotNull(surname);
+	}
 
-			// The surname property
-			var surname = personModel.Properties[nameof(PersonViewModel.Surname)];
-			Assert.IsNotNull(surname);
-		}
+	[TestMethod]
+	public void GenericModelTest()
+	{
+		// Arrange
+		var sushi = new SushiConverter(typeof(GenericStandalone<>));
 
-		[TestMethod]
-		public void GenericModelTest()
-		{
-			// Arrange
-			var sushi = new SushiConverter(typeof(GenericStandalone<>));
+		// Act
+		var typescript = sushi.TypeScript();
 
-			// Act
-			var typescript = sushi.TypeScript();
+		// Assert
+		var descriptor = sushi.Models.Single();
+		Assert.AreEqual("GenericStandalone", descriptor.Name);
+		Assert.AreEqual(1, descriptor.GenericParameterNames.Count);
+		Assert.AreEqual("TEntry", descriptor.GenericParameterNames.Single());
 
-			// Assert
-			var descriptor = sushi.Models.Single();
-			Assert.AreEqual("GenericStandalone", descriptor.Name);
-			Assert.AreEqual(1, descriptor.GenericParameterNames.Count);
-			Assert.AreEqual("TEntry", descriptor.GenericParameterNames.Single());
-
-			Assert.IsFalse(typescript.ToString().IsEmpty());
-		}
+		Assert.IsFalse(typescript.ToString().IsEmpty());
 	}
 }

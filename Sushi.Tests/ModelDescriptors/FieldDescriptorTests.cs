@@ -9,52 +9,57 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Enum;
 using Sushi.Tests.Models;
 
-namespace Sushi.Tests.ModelDescriptors
+namespace Sushi.Tests.ModelDescriptors;
+
+public abstract class FieldDescriptorTests
 {
-	public abstract class FieldDescriptorTests
-	{
-		[TestClass]
-		public class TypeMapTests : FieldDescriptorTests
-		{
-			[TestMethod]
-			public void ReadonlyString_ShouldMapCorrectly()
-			{
-				// Arrange
-				var fieldType = typeof(TypeModel).GetField(nameof(TypeModel.ReadonlyString));
-				
-				// Act
-				var descriptor = new FieldDescriptor(fieldType);
-				
-				// Assert
-				Assert.AreEqual(nameof(TypeModel.ReadonlyString), descriptor.Name);
-				Assert.IsTrue(descriptor.Readonly);
-				Assert.AreEqual(typeof(string), descriptor.Type);
-				Assert.IsFalse(descriptor.IsNullable);
-				Assert.AreEqual(NativeType.String, descriptor.NativeType);
-			}
-			
+    [TestClass]
+    public class TypeMapTests : FieldDescriptorTests
+    {
+        [TestMethod]
+        public void ReadonlyString_ShouldMapCorrectly()
+        {
+            // Arrange
+            var fieldType = typeof(TypeModel).GetField(nameof(TypeModel.ReadonlyString)) ??
+                            throw new InvalidOperationException("Unable to resolve field.");
+            ;
 
-			[TestMethod]
-			public void NullableStringValue_ShouldMapCorrectly()
-			{
-				// Arrange
-				var converter = new SushiConverter().TypeScript();
-				var field = typeof(NullablePropertiesViewModel).GetField("Value");
+            // Act
+            var descriptor = new FieldDescriptor(fieldType);
 
-				var descriptor = new FieldDescriptor(field);
+            // Assert
+            Assert.AreEqual(nameof(TypeModel.ReadonlyString), descriptor.Name);
+            Assert.IsTrue(descriptor.Readonly);
+            Assert.AreEqual(typeof(string), descriptor.Type);
+            Assert.IsFalse(descriptor.IsNullable);
+            Assert.AreEqual(NativeType.String, descriptor.NativeType);
+        }
 
-				// Act
-				var value = converter.ResolveDefaultValue(descriptor);
 
-				// Assert
-				Assert.AreEqual("null", value);
-				Assert.IsTrue(descriptor.IsNullable);
-			}
-		}	
-	}
+        [TestMethod]
+        public void NullableStringValue_ShouldMapCorrectly()
+        {
+            // Arrange
+            var converter = new SushiConverter().TypeScript();
+            var field = typeof(NullablePropertiesViewModel).GetField("Value") ??
+                        throw new InvalidOperationException("Unable to resolve field.");
+            ;
+            ;
+
+            var descriptor = new FieldDescriptor(field);
+
+            // Act
+            var value = converter.ResolveDefaultValue(descriptor);
+
+            // Assert
+            Assert.AreEqual("null", value);
+            Assert.IsTrue(descriptor.IsNullable);
+        }
+    }
 }

@@ -64,7 +64,7 @@ public sealed class FieldDescriptor : IPropertyDescriptor
             var instance = _field.DeclaringType?.CreateInstance();
             DefaultValue = fieldInfo.GetValue(instance);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             DefaultValue = null;
         }

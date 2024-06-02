@@ -197,7 +197,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "57ff9928-8fcd-4162-b5c4-0182fd78094b";
+    identifier: string = "34837ead-3540-4553-bf24-677c4543a803";
 
     /**
      * The Name of the person.
@@ -355,7 +355,7 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "476553d6-a3dd-4884-a31d-7b3b77ab8718";
+    override guid: string = "73175868-f37f-4615-9c9c-fc6bf682dca2";
 
     /**
      * A DateTime instance.

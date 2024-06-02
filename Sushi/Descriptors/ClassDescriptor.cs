@@ -106,7 +106,7 @@ public sealed class ClassDescriptor
         }
     }
 
-    public IPropertyDescriptor? GetProperty(string name)
+    public IPropertyDescriptor GetProperty(string name)
     {
         return Properties[name];
     }

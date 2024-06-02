@@ -16,40 +16,39 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace Sushi.Tests.Models
+namespace Sushi.Tests.Models;
+
+/// <summary>
+///     Simple model to verify complex types.
+/// </summary>
+public sealed class TypeModel : ViewModel
 {
 	/// <summary>
-	///     Simple model to verify complex types.
+	///     A nullable boolean.
 	/// </summary>
-	public sealed class TypeModel : ViewModel
-	{
-		/// <summary>
-		///     A nullable boolean.
-		/// </summary>
-		public bool? NullableBool { get; set; } = null;
+	public bool? NullableBool { get; set; } = null;
 		
-		/// <summary>
-		///     A nullable string, defaults to null.
-		/// </summary>
-		public string? NullableString { get; set; } = null;
+	/// <summary>
+	///     A nullable string, defaults to null.
+	/// </summary>
+	public string? NullableString { get; set; } = null;
 
-		/// <summary>
-		///     A readonly string.
-		/// </summary>
-		public readonly string ReadonlyString = "readonly";
+	/// <summary>
+	///     A readonly string.
+	/// </summary>
+	public readonly string ReadonlyString = "readonly";
 
-		/// <inheritdoc cref="Guid" />
-		public new Guid Guid { get; set; } = Guid.NewGuid();
+	/// <inheritdoc cref="Guid" />
+	public new Guid Guid { get; set; } = Guid.NewGuid();
 		
-		/// <summary>
-		///     A DateTime instance.
-		/// </summary>
-		public DateTime Date{get;set;} = DateTime.Now;
+	/// <summary>
+	///     A DateTime instance.
+	/// </summary>
+	public DateTime Date{get;set;} = DateTime.Now;
 
-		public StudentViewModel Student { get; set; } = new StudentViewModel();
+	public StudentViewModel Student { get; set; } = new StudentViewModel();
 
-		public List<StudentViewModel> Students { get; set; }
+	public List<StudentViewModel> Students { get; set; }
 
-		public Dictionary<string, StudentViewModel[]> StudentPerClass { get; set; } = new ();
-	}
+	public Dictionary<string, StudentViewModel[]> StudentPerClass { get; set; } = new ();
 }

@@ -18,207 +18,206 @@ using Sushi.Tests.Models;
 
 #endregion
 
-namespace Sushi.Tests.ModelDescriptors
+namespace Sushi.Tests.ModelDescriptors;
+
+public abstract class ClassDescriptorTests
 {
-	public abstract class ClassDescriptorTests
+	[TestClass]
+	public class InitializerTests : ClassDescriptorTests
 	{
-		[TestClass]
-		public class InitializerTests : ClassDescriptorTests
+		[TestMethod]
+		public void Initialize_WithSimpleClass_ShouldMapCorrectly()
 		{
-			[TestMethod]
-			public void Initialize_WithSimpleClass_ShouldMapCorrectly()
-			{
-				// Arrange
-				var type = typeof(ViewModel);
+			// Arrange
+			var type = typeof(ViewModel);
 
-				// Act
-				var descriptor = new ClassDescriptor(type);
+			// Act
+			var descriptor = new ClassDescriptor(type);
 
-				// Assert
-				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
-				Assert.AreEqual(type.FullName, descriptor.FullName);
+			// Assert
+			Assert.AreEqual(nameof(ViewModel), descriptor.Name);
+			Assert.AreEqual(type.FullName, descriptor.FullName);
 
-				Assert.AreEqual(2, descriptor.Properties.Count);
-				Assert.IsFalse(descriptor.HasParameterlessCtor);
-			}
-
-			[TestMethod]
-			public void Initialize_WithNestedClass_ShouldMapCorrectly()
-			{
-				// Arrange
-				var type = typeof(PersonViewModel);
-
-				// Act
-				var descriptor = new ClassDescriptor(type);
-
-				// Assert
-				Assert.AreEqual(4, descriptor.Properties.Count);
-				Assert.AreEqual(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
-				Assert.IsFalse(descriptor.HasParameterlessCtor);
-			}
-			
-			[TestMethod]
-			public void Initialize_GenericClassWithoutType_ShouldMapCorrectly()
-			{
-				// Arrange
-				var withoutGenericType = typeof(GenericStandalone<>);
-
-				// Act
-				var result = new ClassDescriptor(withoutGenericType);
-
-				// Assert
-				Assert.AreEqual(2, result.Properties.Count);
-				Assert.AreEqual("TEntry", result.GenericParameterNames.Single());
-				Assert.IsTrue(result.HasParameterlessCtor);
-			}
-			
-			[TestMethod]
-			public void Initialize_GenericClassWithType_ShouldMapCorrectly()
-			{
-				// Arrange
-				var withGenericType = typeof(GenericStandalone<string>);
-
-				// Act
-				var result = new ClassDescriptor(withGenericType);
-
-				// Assert
-				Assert.AreEqual(2, result.Properties.Count);
-				Assert.IsFalse(result.GenericParameterNames.Any());
-				Assert.IsTrue(result.HasParameterlessCtor);
-			}
-			
-			[TestMethod]
-			public void Initialize_WithExcludedClass_ShouldThrowCorrectly()
-			{
-				// Arrange
-				var type = typeof(NotAScriptModel);
-
-				// Act
-				var result = new ClassDescriptor(type);
-
-				// Assert
-				Assert.IsFalse(result.IsApplicable);
-			}
+			Assert.AreEqual(2, descriptor.Properties.Count);
+			Assert.IsFalse(descriptor.HasParameterlessCtor);
 		}
 
-		[TestClass]
-		public class EqualityOperatorTests
+		[TestMethod]
+		public void Initialize_WithNestedClass_ShouldMapCorrectly()
 		{
-			[TestMethod]
-			public void Equal_WithClass_ShouldBeEqual()
-			{
-				// Arrange
-				var m1 = new ClassDescriptor(typeof(ViewModel));
-				var m2 = new ClassDescriptor(typeof(ViewModel));
+			// Arrange
+			var type = typeof(PersonViewModel);
 
-				// Act
-				var result = m1 == m2;
+			// Act
+			var descriptor = new ClassDescriptor(type);
 
-				// Assert
-				Assert.IsTrue(result);
-			}
-
-			[TestMethod]
-			public void Equal_WithInheritedClass_ShouldNotBeEqual()
-			{
-				// Arrange
-				var m1 = new ClassDescriptor(typeof(ViewModel));
-				var m2 = new ClassDescriptor(typeof(PersonViewModel));
-
-				// Act
-				var result = m1 == m2;
-
-				// Assert
-				Assert.IsFalse(result);
-			}
+			// Assert
+			Assert.AreEqual(4, descriptor.Properties.Count);
+			Assert.AreEqual(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
+			Assert.IsFalse(descriptor.HasParameterlessCtor);
+		}
 			
-			[TestMethod]
-			public void Equal_WithNullValues_ShouldNotBeEqual()
-			{
-				// Arrange
-				var m1 = new ClassDescriptor(typeof(ViewModel));
-				var m2 = (ClassDescriptor)null;
-
-				// Act & Assert
-				Assert.IsFalse(m1 == m2);
-				Assert.IsTrue(m2 != m1);
-				Assert.IsFalse(m1.Equals(m2));
-				Assert.IsFalse(m1.Equals((object)null));
-				Assert.IsTrue(m1.Equals((object)m1));
-				Assert.IsTrue(m1.GetHashCode() == m1.GetHashCode());
-			}
-		}
-
-		[TestClass]
-		public class PropertyDescriptorsTests
+		[TestMethod]
+		public void Initialize_GenericClassWithoutType_ShouldMapCorrectly()
 		{
-			[TestMethod]
-			public void NestedTypeModel_ShouldFindAllFieldsAndPropertiesTest()
-			{
-				// Arrange
-				var type = typeof(TypeModel);
+			// Arrange
+			var withoutGenericType = typeof(GenericStandalone<>);
 
-				// Act
-				var descriptor = new ClassDescriptor(type);
+			// Act
+			var result = new ClassDescriptor(withoutGenericType);
 
-				// Assert
-				Assert.AreEqual(8, descriptor.Properties.Count);
-			}
+			// Assert
+			Assert.AreEqual(2, result.Properties.Count);
+			Assert.AreEqual("TEntry", result.GenericParameterNames.Single());
+			Assert.IsTrue(result.HasParameterlessCtor);
 		}
-
-		[TestClass]
-		public class GetPropertiesTests : ClassDescriptorTests
+			
+		[TestMethod]
+		public void Initialize_GenericClassWithType_ShouldMapCorrectly()
 		{
-			[TestMethod]
-			public void GetProperties_ExcludeInheritedTest()
-			{
-				// Arrange
-				var descriptor = new ClassDescriptor(typeof(InheritedViewModel))
-				{
-					Parent = new ClassDescriptor(typeof(BaseViewModel))
-				};
+			// Arrange
+			var withGenericType = typeof(GenericStandalone<string>);
 
-				// Act
-				var properties = descriptor.GetProperties().ToList();
+			// Act
+			var result = new ClassDescriptor(withGenericType);
 
-				// Assert
-				Assert.IsFalse(properties.Any(x => x.Name  == "Guid"));
-				Assert.IsTrue(properties.Any(x => x.Name  == "Addition"));
-				Assert.IsTrue(properties.Any(x => x.Name == "Value"));
-				Assert.IsFalse(properties.Any(x => x.Name == "Base"));
-			}
+			// Assert
+			Assert.AreEqual(2, result.Properties.Count);
+			Assert.IsFalse(result.GenericParameterNames.Any());
+			Assert.IsTrue(result.HasParameterlessCtor);
 		}
+			
+		[TestMethod]
+		public void Initialize_WithExcludedClass_ShouldThrowCorrectly()
+		{
+			// Arrange
+			var type = typeof(NotAScriptModel);
+
+			// Act
+			var result = new ClassDescriptor(type);
+
+			// Assert
+			Assert.IsFalse(result.IsApplicable);
+		}
+	}
+
+	[TestClass]
+	public class EqualityOperatorTests
+	{
+		[TestMethod]
+		public void Equal_WithClass_ShouldBeEqual()
+		{
+			// Arrange
+			var m1 = new ClassDescriptor(typeof(ViewModel));
+			var m2 = new ClassDescriptor(typeof(ViewModel));
+
+			// Act
+			var result = m1 == m2;
+
+			// Assert
+			Assert.IsTrue(result);
+		}
+
+		[TestMethod]
+		public void Equal_WithInheritedClass_ShouldNotBeEqual()
+		{
+			// Arrange
+			var m1 = new ClassDescriptor(typeof(ViewModel));
+			var m2 = new ClassDescriptor(typeof(PersonViewModel));
+
+			// Act
+			var result = m1 == m2;
+
+			// Assert
+			Assert.IsFalse(result);
+		}
+			
+		[TestMethod]
+		public void Equal_WithNullValues_ShouldNotBeEqual()
+		{
+			// Arrange
+			var m1 = new ClassDescriptor(typeof(ViewModel));
+			var m2 = (ClassDescriptor)null;
+
+			// Act & Assert
+			Assert.IsFalse(m1 == m2);
+			Assert.IsTrue(m2 != m1);
+			Assert.IsFalse(m1.Equals(m2));
+			Assert.IsFalse(m1.Equals((object)null));
+			Assert.IsTrue(m1.Equals((object)m1));
+			Assert.IsTrue(m1.GetHashCode() == m1.GetHashCode());
+		}
+	}
+
+	[TestClass]
+	public class PropertyDescriptorsTests
+	{
+		[TestMethod]
+		public void NestedTypeModel_ShouldFindAllFieldsAndPropertiesTest()
+		{
+			// Arrange
+			var type = typeof(TypeModel);
+
+			// Act
+			var descriptor = new ClassDescriptor(type);
+
+			// Assert
+			Assert.AreEqual(8, descriptor.Properties.Count);
+		}
+	}
+
+	[TestClass]
+	public class GetPropertiesTests : ClassDescriptorTests
+	{
+		[TestMethod]
+		public void GetProperties_ExcludeInheritedTest()
+		{
+			// Arrange
+			var descriptor = new ClassDescriptor(typeof(InheritedViewModel))
+			{
+				Parent = new ClassDescriptor(typeof(BaseViewModel))
+			};
+
+			// Act
+			var properties = descriptor.GetProperties().ToList();
+
+			// Assert
+			Assert.IsFalse(properties.Any(x => x.Name  == "Guid"));
+			Assert.IsTrue(properties.Any(x => x.Name  == "Addition"));
+			Assert.IsTrue(properties.Any(x => x.Name == "Value"));
+			Assert.IsFalse(properties.Any(x => x.Name == "Base"));
+		}
+	}
 		
-		[TestClass]
-		public class FilterTypesTest : ClassDescriptorTests
+	[TestClass]
+	public class FilterTypesTest : ClassDescriptorTests
+	{
+		[TestMethod]
+		public void FilterTypes_WithoutAttribute_ShouldFilterTest()
 		{
-			[TestMethod]
-			public void FilterTypes_WithoutAttribute_ShouldFilterTest()
-			{
-				// Arrange
-				var descriptors = new[] { typeof(ViewModel), typeof(string) }.Select(x=> new ClassDescriptor(x));
+			// Arrange
+			var descriptors = new[] { typeof(ViewModel), typeof(string) }.Select(x=> new ClassDescriptor(x));
 
-				// Act
-				var result = descriptors.Where(x=>x.IsApplicable).ToList();
+			// Act
+			var result = descriptors.Where(x=>x.IsApplicable).ToList();
 
-				// Assert
-				Assert.AreEqual(1, result.Count);
-				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
-			}
+			// Assert
+			Assert.AreEqual(1, result.Count);
+			Assert.AreEqual(typeof(ViewModel), result.Single().Type);
+		}
 
-			[TestMethod]
-			public void FilterTypes_WithNonClassTypes_ShouldFilterTest()
-			{
-				// Arrange
-				var descriptors = new[] { typeof(ViewModel), typeof(bool), typeof(Gender) }.Select(x=> new ClassDescriptor(x));
+		[TestMethod]
+		public void FilterTypes_WithNonClassTypes_ShouldFilterTest()
+		{
+			// Arrange
+			var descriptors = new[] { typeof(ViewModel), typeof(bool), typeof(Gender) }.Select(x=> new ClassDescriptor(x));
 
-				// Act
-				var result = descriptors.Where(x=>x.IsApplicable).ToList();
+			// Act
+			var result = descriptors.Where(x=>x.IsApplicable).ToList();
 
-				// Assert
-				Assert.AreEqual(1, result.Count);
-				Assert.AreEqual(typeof(ViewModel), result.Single().Type);
-			}
+			// Assert
+			Assert.AreEqual(1, result.Count);
+			Assert.AreEqual(typeof(ViewModel), result.Single().Type);
 		}
 	}
 }
