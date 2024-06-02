@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Attributes;
 using Sushi.Descriptors;
+using Sushi.Extensions;
 
 namespace Sushi.Tests.BugFixes;
 

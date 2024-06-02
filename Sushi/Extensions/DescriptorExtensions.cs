@@ -9,14 +9,16 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-namespace Sushi.Descriptors;
+using Sushi.Descriptors;
+
+namespace Sushi.Extensions;
 
 public static class DescriptorExtensions
 {
     /// <summary>
     ///		Find the  <see cref="ClassDescriptor"/> of <paramref name="type"/> in the descriptor tree.
     /// </summary>
-    public static ClassDescriptor FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
+    public static ClassDescriptor? FindDescriptor(this ICollection<ClassDescriptor> tree, Type type)
     {
         foreach (var d in tree)
         {

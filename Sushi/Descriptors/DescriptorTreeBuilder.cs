@@ -13,6 +13,8 @@
 
 #endregion
 
+using Sushi.Extensions;
+
 namespace Sushi.Descriptors
 {
 	public class DescriptorTreeBuilder

@@ -16,6 +16,7 @@ using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
 using Sushi.Enum;
+using Sushi.Extensions;
 using Sushi.Interfaces;
 
 #endregion
