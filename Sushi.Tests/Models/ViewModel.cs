@@ -12,7 +12,6 @@
 #region
 
 using System;
-using Sushi.Interfaces;
 
 #endregion
 
@@ -21,7 +20,7 @@ namespace Sushi.Tests.Models
 	/// <summary>
 	///     The view model base class.
 	/// </summary>
-	public abstract class ViewModel : IScriptModel
+	public abstract class ViewModel : ScriptModel
 	{
 		/// <summary>
 		///     The view model identifier.

@@ -59,9 +59,9 @@ public sealed class TypeScriptConverter : ModelConverter
 
         var name = ApplyCasingStyle(property.Name);
         var nameSuffix = defaultValue.IsEmpty() ? "!" : string.Empty;
-        
+
         var @override = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
-        
+
         var readonlyPrefix = property is { Readonly: true, DefaultValue: not null } ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
 
@@ -129,7 +129,7 @@ public sealed class TypeScriptConverter : ModelConverter
     {
         if (prop.Type.IsGenericParameter)
             return string.Empty;
-        
+
         if (prop.Type?.IsArrayType() ?? false)
             return "[]";
 
@@ -212,13 +212,18 @@ public sealed class TypeScriptConverter : ModelConverter
         builder.AppendLine($"{Indent}constructor(value: Partial<{className}> = {{}}) {{");
         if (model.Parent != null)
         {
-            var hasCtorArguments = model.HasParameterizedSuperConstructor() ? "value" : string.Empty;
-            builder.AppendLine(Indent + Indent + $"super({hasCtorArguments});");
+            builder.AppendLine(Indent + Indent +
+                               (model.HasParameterizedSuperConstructor() ? "super(value);" : "super();"));
             builder.AppendLine();
         }
 
         // Skip properties without a setter.
-        foreach (var prop in model.Properties.Select(x=>x.Value).Where(x => !x.Readonly))
+        var properties = model.Properties
+            .Select(x => x.Value)
+            .Where(x => !x.Readonly)
+            .ToList();
+        
+        foreach (var prop in properties)
         {
             var name = ApplyCasingStyle(prop.Name);
             builder.AppendLine($"{Indent + Indent}if (value.{name} !== undefined) this.{name} = value.{name};");

@@ -70,8 +70,24 @@ GenericStandalone.prototype.mapFrom = function(obj) {
 };
 
 /**
+ * .
+ * Sushi.Tests.Models.ScriptModel
+ */
+function ScriptModel(obj) {
+    let value = obj;
+    if (!(value instanceof Object)) 
+        value = {};
+
+}
+
+ScriptModel.prototype.mapFrom = function(obj) {
+    return _.extend(new ScriptModel(), obj); 
+};
+
+/**
  * The view model base class.
  * Sushi.Tests.Models.ViewModel
+ * @extends ScriptModel
  */
 function ViewModel(obj) {
     let value = obj;

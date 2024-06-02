@@ -96,10 +96,27 @@ export class GenericStandalone {
 }
 
 /**
+ * .
+ * Sushi.Tests.Models.ScriptModel
+ */
+export class ScriptModel {
+
+    constructor(value) {
+        if (!(value instanceof Object))
+            return;
+
+    }
+    static mapFrom(obj) {
+        return Object.assign(new {model.Name}(), obj);
+    }
+}
+
+/**
  * The view model base class.
  * Sushi.Tests.Models.ViewModel
+ * @extends ScriptModel
  */
-export class ViewModel {
+export class ViewModel extends ScriptModel {
 
     /**
      * The view model identifier.
@@ -112,6 +129,8 @@ export class ViewModel {
     CreatedOn;
 
     constructor(value) {
+        super(value);
+
         if (!(value instanceof Object))
             return;
 

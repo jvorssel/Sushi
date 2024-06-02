@@ -51,7 +51,7 @@ public static class DescriptorExtensions
         var descriptor = tree;
         while (descriptor != null)
         {
-            if (descriptor.GenerateConstructor)
+            if (descriptor.Parent?.GenerateConstructor ?? false)
                 return true;
 
             descriptor = descriptor.Parent;

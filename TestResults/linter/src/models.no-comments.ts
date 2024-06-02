@@ -46,11 +46,18 @@ export class GenericStandalone<TEntry> {
     }
 }
 
-export class ViewModel {
+export class ScriptModel {
+
+
+}
+
+export class ViewModel extends ScriptModel {
     guid: string = "";
     createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
+        super();
+
         if (value.guid !== undefined) this.guid = value.guid;
         if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
@@ -96,7 +103,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "f3b7b581-8500-4594-a51f-6191f17b8055";
+    identifier: string = "45aa2346-0fc7-435a-8b30-1abb659180f4";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -154,7 +161,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "18af4521-d133-4485-b6c5-3f9de32a9b64";
+    override guid: string = "1904663f-70ed-46b9-9b1d-4ac554402ebd";
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];

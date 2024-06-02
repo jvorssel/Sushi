@@ -79,10 +79,20 @@ export class GenericStandalone<TEntry> {
 }
 
 /**
+ * .
+ * Sushi.Tests.Models.ScriptModel
+ */
+export class ScriptModel {
+
+
+}
+
+/**
  * The view model base class.
  * Sushi.Tests.Models.ViewModel
+ * @extends ScriptModel
  */
-export class ViewModel {
+export class ViewModel extends ScriptModel {
 
     /**
      * The view model identifier.
@@ -97,6 +107,8 @@ export class ViewModel {
     createdOn!: Date | string | null;
 
     constructor(value: Partial<ViewModel> = {}) {
+        super();
+
         if (value.guid !== undefined) this.guid = value.guid;
         if (value.createdOn !== undefined) this.createdOn = value.createdOn;
     }
@@ -185,7 +197,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "d31636d1-9b60-4c53-9484-c7f5ef64eb06";
+    identifier: string = "1e73a7ef-8716-4e4e-8499-eb534ab9374c";
 
     /**
      * The Name of the person.
@@ -343,7 +355,7 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "8b1141e3-88ef-47f8-bada-dde803e567a1";
+    override guid: string = "3a601081-31c4-44a4-bbf9-5f034a8ff7e4";
 
     /**
      * A DateTime instance.

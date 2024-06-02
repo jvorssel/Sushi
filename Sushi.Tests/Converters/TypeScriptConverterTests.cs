@@ -72,7 +72,7 @@ public abstract class TypeScriptConverterTests
             // Arrange
             var descriptor = new ClassDescriptor(typeof(StudentViewModel));
             var types = new[]
-                { descriptor, new ClassDescriptor(typeof(PersonViewModel)), new ClassDescriptor(typeof(ViewModel)) };
+                { descriptor, new ClassDescriptor(typeof(PersonViewModel)), new ClassDescriptor(typeof(ViewModel)), new ClassDescriptor(typeof(ScriptModel)) };
 
             new DescriptorTreeBuilder(types).BuildTree();
             

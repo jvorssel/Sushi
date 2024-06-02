@@ -30,7 +30,8 @@ namespace Sushi.Tests.ModelDescriptors
 			typeof(PersonViewModel),
 			typeof(SchoolViewModel),
 			typeof(StudentViewModel),
-			typeof(ViewModel)
+			typeof(ViewModel),
+			typeof(ScriptModel)
 		};
 
 		private List<ClassDescriptor> AsDescriptors(params Type[] types)
@@ -113,15 +114,17 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(1, result.Count, "Only one class defined as the root of the tree.");
 
 				// The view-model class should be the root.
-				var descriptor = result.Single();
-				Assert.AreEqual(nameof(ViewModel), descriptor.Name);
-				Assert.IsNull(descriptor.Parent);
+				var scriptModel = result.Single();
+				Assert.AreEqual(nameof(ScriptModel), scriptModel.Name);
+				Assert.IsNull(scriptModel.Parent);
+
+				var viewModelDescriptor = scriptModel.Children.Single();
 
 				// The view-model class is inherited twice.
-				Assert.AreEqual(2, descriptor.Children.Count);
+				Assert.AreEqual(2, viewModelDescriptor.Children.Count);
 
 				// Once by the person
-				var personDescriptor = descriptor.Children.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
+				var personDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
 				Assert.IsNotNull(personDescriptor);
 				Assert.AreEqual(1, personDescriptor.Children.Count);
 
@@ -132,7 +135,7 @@ namespace Sushi.Tests.ModelDescriptors
 				Assert.AreEqual(nameof(PersonViewModel), studentDescriptor.Parent.Name);
 
 				// And once by the school
-				var schoolDescriptor = descriptor.Children.SingleOrDefault(x => x.Name == nameof(SchoolViewModel));
+				var schoolDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(SchoolViewModel));
 				Assert.IsNotNull(schoolDescriptor);
 
 				Assert.IsFalse(schoolDescriptor.Children.Any());
