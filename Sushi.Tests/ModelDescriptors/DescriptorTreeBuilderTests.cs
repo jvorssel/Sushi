@@ -94,21 +94,20 @@ namespace Sushi.Tests.ModelDescriptors
 			{
 				// Arrange
 				var descriptors = new ClassDescriptor(typeof(TypeModel));
-				var builder = new DescriptorTreeBuilder(new[] { descriptors });
 				var message = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
 
 				// Act & Assert
-				Assert.ThrowsException<InvalidOperationException>(() => builder.BuildTree(), message);
+				Assert.ThrowsException<InvalidOperationException>(() => new[] { descriptors }.BuildTree(), message);
 			}
 
 			[TestMethod]
 			public void BuildTree_ShouldNestCorrectlyTest()
 			{
 				// Arrange
-				var builder = new DescriptorTreeBuilder(AsDescriptors(Types.ToArray()));
+				var types = AsDescriptors(Types.ToArray());
 
 				// Act
-				var result = builder.BuildTree().ToList();
+				var result = types.BuildTree().ToList();
 
 				// Assert
 				Assert.AreEqual(1, result.Count, "Only one class defined as the root of the tree.");

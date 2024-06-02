@@ -37,9 +37,10 @@ public class AbstractBaseClass : TestBase
     {
         // Arrange
         var parentDescriptor = new ClassDescriptor(typeof(AbstractBaseModel));
-        var descriptor = new ClassDescriptor(typeof(ChildModel));
-        var types = new [] {parentDescriptor,descriptor};
-        new DescriptorTreeBuilder(types).BuildTree();
+        var descriptor = new ClassDescriptor(typeof(ChildModel))
+        {
+            Parent = parentDescriptor
+        };
 
         // Act
 

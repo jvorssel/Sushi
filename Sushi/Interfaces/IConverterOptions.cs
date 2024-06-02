@@ -29,7 +29,7 @@ namespace Sushi.Interfaces
 		///		Casing style for properties, default is camel case.
 		/// </summary>
 		PropertyNameCasing CasingStyle { get; set; }
-		
+
 		/// <summary>
 		///		A list of headers written at the start of the file.
 		///		Can be used to suppress es-lint warnings or add licence(s).

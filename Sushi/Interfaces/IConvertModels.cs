@@ -4,6 +4,6 @@ namespace Sushi.Interfaces;
 
 public interface IConvertModels
 {
-    HashSet<ClassDescriptor> Models { get; }
-    HashSet<EnumDescriptor> EnumModels { get; }
+    IReadOnlyCollection<ClassDescriptor> Models { get; }
+    IReadOnlyCollection<EnumDescriptor> EnumModels { get; }
 }

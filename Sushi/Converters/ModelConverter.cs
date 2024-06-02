@@ -25,13 +25,13 @@ namespace Sushi.Converters
 {
 	public abstract class ModelConverter : IConvertModels
 	{
-		protected List<string> HeaderLines { get; set; }
+		protected List<string> HeaderLines { get; }
 		protected string Indent { get; }
 		protected PropertyNameCasing CasingStyle { get; }
 
 		protected readonly XmlDocumentationReader? XmlDocument;
-		public HashSet<ClassDescriptor> Models { get; }
-		public HashSet<EnumDescriptor> EnumModels { get; }
+		public IReadOnlyCollection<ClassDescriptor> Models { get; }
+		public IReadOnlyCollection<EnumDescriptor> EnumModels { get; }
 
 		/// <summary>
 		///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
@@ -52,10 +52,9 @@ namespace Sushi.Converters
 		public override string ToString()
 		{
 			var builder = new StringBuilder();
-			var descriptors = new DescriptorTreeBuilder(Models)
+			var descriptors = Models
 				.BuildTree()
-				.Flatten()
-				.ToList();
+				.Flatten();
 			
 			foreach (var script in ConvertToScript(descriptors))
 				builder.AppendLine(script);

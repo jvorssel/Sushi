@@ -28,8 +28,8 @@ namespace Sushi
     /// </summary>
     public sealed class SushiConverter : IConvertModels
     {
-        public HashSet<ClassDescriptor> Models { get; }
-        public HashSet<EnumDescriptor> EnumModels { get; }
+        public IReadOnlyCollection<ClassDescriptor> Models { get; }
+        public IReadOnlyCollection<EnumDescriptor> EnumModels { get; }
 
         public XmlDocumentationReader? Documentation { get; private set; }
 
@@ -44,8 +44,10 @@ namespace Sushi
             Models = types
                 .Select(x => new ClassDescriptor(x))
                 .Where(x=> x.IsApplicable)
+                .BuildTree()
+                .Flatten()
                 .ToHashSet();
-
+            
             EnumModels = types
                 .Where(x => x.IsEnum)
                 .Select(x => new EnumDescriptor(x))

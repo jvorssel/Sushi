@@ -33,7 +33,7 @@ public class NoDeepCtorInheritanceTests : TestBase
         // Arrange
         var types = new[] { typeof(BaseModel), typeof(MiddleClass), typeof(GenerateCtorClass) };
         var sushi = new SushiConverter(types).TypeScript();
-        new DescriptorTreeBuilder(sushi.Models).BuildTree();
+        
         var descriptor = sushi.Models.Single(x => x.Name == nameof(GenerateCtorClass));
 
         // Act

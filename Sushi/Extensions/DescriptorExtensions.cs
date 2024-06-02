@@ -45,6 +45,44 @@ public static class DescriptorExtensions
                 yield return cdc;
         }
     }
+    
+    public static IEnumerable<ClassDescriptor> BuildTree(this IEnumerable<ClassDescriptor> values)
+    {
+        var flat = values.ToList();
+        var dict = flat.ToDictionary(x => x.Type, x => x);
+
+        var tree = new HashSet<ClassDescriptor>();
+        foreach (var cd in flat)
+        {
+            if (tree.FindDescriptor(cd.Type) != null)
+                continue;
+
+            var current = cd;
+            if (current.Type.BaseType == typeof(object))
+            {
+                tree.Add(current);
+                continue;
+            }
+
+            if (!dict.TryGetValue(current.Type.BaseType, out var fromList))
+                throw new InvalidOperationException(
+                    $"Base type {current.Type.BaseType} for {current.Type} is missing.");
+
+            while (fromList != null)
+            {
+                current.Parent = fromList;
+                fromList.Children.Add(current);
+
+                current = fromList;
+                if (current.Type.BaseType == typeof(object))
+                    break;
+
+                fromList = dict[current.Type.BaseType];
+            }
+        }
+
+        return tree;
+    }
 
     public static bool HasParameterizedSuperConstructor(this ClassDescriptor tree)
     {

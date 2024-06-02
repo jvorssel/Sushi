@@ -40,7 +40,7 @@ namespace Sushi.Tests
 		{
 			var converter = new SushiConverter(_assembly);
 
-			var personModel = converter.Models.Flatten().SingleOrDefault(x => x.Name == nameof(PersonViewModel));
+			var personModel = converter.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
 			Assert.IsNotNull(personModel);
 
 			// PersonModel has 2 properties

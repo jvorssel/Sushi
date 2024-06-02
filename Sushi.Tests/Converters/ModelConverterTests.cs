@@ -82,7 +82,7 @@ public abstract class ModelConverterTests : TestBase
 		{
 			Type = typeof(TypeModel);
 			EnumType = typeof(Gender);
-			Converter = new SushiConverter(Type, EnumType).TypeScript();
+			Converter = new SushiConverter(Type, typeof(ViewModel), typeof(ScriptModel), EnumType).TypeScript();
 		}
 		
 		[TestMethod]

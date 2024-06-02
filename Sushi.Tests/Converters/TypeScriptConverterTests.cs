@@ -19,6 +19,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Enum;
+using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Tests.Models;
 
@@ -29,7 +30,10 @@ namespace Sushi.Tests.Converters;
 public abstract class TypeScriptConverterTests
 {
     protected Type[] TestTypes => new[]
-        { typeof(TypeModel), typeof(StudentViewModel), typeof(PersonViewModel), typeof(ViewModel), typeof(Gender) };
+    {
+        typeof(TypeModel), typeof(StudentViewModel), typeof(PersonViewModel), typeof(ViewModel), typeof(ScriptModel),
+        typeof(Gender)
+    };
 
     [TestClass]
     public class ResolveScriptTypeTests : TypeScriptConverterTests
@@ -56,7 +60,7 @@ public abstract class TypeScriptConverterTests
             // Arrange
             var descriptor = new ClassDescriptor(typeof(TypeModel));
             var propertyDescriptor = descriptor.Properties[nameof(TypeModel.Student)];
-            var converter = new SushiConverter(typeof(TypeModel), typeof(ViewModel))
+            var converter = new SushiConverter(typeof(TypeModel), typeof(ViewModel), typeof(ScriptModel))
                 .TypeScript();
 
             // Act
@@ -72,10 +76,11 @@ public abstract class TypeScriptConverterTests
             // Arrange
             var descriptor = new ClassDescriptor(typeof(StudentViewModel));
             var types = new[]
-                { descriptor, new ClassDescriptor(typeof(PersonViewModel)), new ClassDescriptor(typeof(ViewModel)), new ClassDescriptor(typeof(ScriptModel)) };
+            {
+                descriptor, new ClassDescriptor(typeof(PersonViewModel)), new ClassDescriptor(typeof(ViewModel)),
+                new ClassDescriptor(typeof(ScriptModel))
+            }.BuildTree();
 
-            new DescriptorTreeBuilder(types).BuildTree();
-            
             var propertyDescriptor = descriptor.Parent.Properties[nameof(StudentViewModel.Gender)];
             var converter = new SushiConverter(TestTypes.Where(x => x != typeof(Gender)).ToList())
                 .TypeScript();
@@ -188,19 +193,19 @@ public abstract class TypeScriptConverterTests
         public void ResolveScriptType_WithPrefix_ShouldFormatCorrectly()
         {
             // Arrange
-            var converter = new SushiConverter(typeof(StudentViewModel), typeof(GenericStandalone<>)).TypeScript();
+            var converter = new SushiConverter(typeof(ScriptModel), typeof(GenericStandalone<>)).TypeScript();
             const string prefix = "vm.";
 
             // Act
-            var classType = converter.ResolveScriptType(typeof(StudentViewModel), prefix);
-            var arrayType = converter.ResolveScriptType(typeof(StudentViewModel[]), prefix);
-            var genericType = converter.ResolveScriptType(typeof(GenericStandalone<StudentViewModel>[]), prefix);
+            var classType = converter.ResolveScriptType(typeof(ScriptModel), prefix);
+            var arrayType = converter.ResolveScriptType(typeof(ScriptModel[]), prefix);
+            var genericType = converter.ResolveScriptType(typeof(GenericStandalone<ScriptModel>[]), prefix);
             var nativeType = converter.ResolveScriptType(typeof(bool), prefix);
 
             // Assert
-            Assert.AreEqual("vm.StudentViewModel", classType);
-            Assert.AreEqual("Array<vm.StudentViewModel>", arrayType);
-            Assert.AreEqual("Array<vm.GenericStandalone<vm.StudentViewModel>>", genericType);
+            Assert.AreEqual("vm.ScriptModel", classType);
+            Assert.AreEqual("Array<vm.ScriptModel>", arrayType);
+            Assert.AreEqual("Array<vm.GenericStandalone<vm.ScriptModel>>", genericType);
             Assert.AreEqual("boolean", nativeType);
         }
 
@@ -208,7 +213,9 @@ public abstract class TypeScriptConverterTests
         public void ResolveScriptType_Overridden_ShouldFormatCorrectly()
         {
             // Act
-            var converter = new SushiConverter(typeof(ViewModel), typeof(NullablePropertiesViewModel)).TypeScript();
+            var converter =
+                new SushiConverter(typeof(ScriptModel), typeof(ViewModel), typeof(NullablePropertiesViewModel))
+                    .TypeScript();
 
             // Assert
             var model = converter.Models.Single(x => x.Name == nameof(NullablePropertiesViewModel));
@@ -341,7 +348,7 @@ public abstract class TypeScriptConverterTests
         public void ResolveDefaultValue_ClassValue_ReturnsNewClassTest()
         {
             // Arrange
-            var converter = new SushiConverter(typeof(ViewModel), typeof(PersonViewModel), typeof(StudentViewModel))
+            var converter = new SushiConverter(TestTypes)
                 .TypeScript();
             var prop = new PropertyDescriptor(typeof(StudentViewModel), new StudentViewModel());
 
