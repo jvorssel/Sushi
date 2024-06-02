@@ -38,8 +38,8 @@ public sealed class ClassDescriptor
     public string FullName => Type.FullName;
 
     public bool HasParameterlessCtor => Type.GetConstructor(Type.EmptyTypes) != null;
-
-    public bool IsApplicable { get; } = false;
+    
+    public bool IsApplicable { get; }
 
     public Dictionary<string, IPropertyDescriptor> Properties { get; } = new();
 

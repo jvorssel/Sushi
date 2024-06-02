@@ -212,7 +212,7 @@ public sealed class TypeScriptConverter : ModelConverter
         builder.AppendLine($"{Indent}constructor(value: Partial<{className}> = {{}}) {{");
         if (model.Parent != null)
         {
-            var hasCtorArguments = model.Parent.GenerateConstructor ? "value" : string.Empty;
+            var hasCtorArguments = model.HasParameterizedSuperConstructor() ? "value" : string.Empty;
             builder.AppendLine(Indent + Indent + $"super({hasCtorArguments});");
             builder.AppendLine();
         }
