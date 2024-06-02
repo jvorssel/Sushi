@@ -20,7 +20,7 @@
         <PackageReleaseNotes>Fixed overridden, readonly properties. Using partial for property mapping. Fixed lint errors based on angular standards. Improved JSDoc generation.</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <Version>1.0.2</Version>
-        <PackageVersion>1.5.0-alpha.2</PackageVersion>
+        <PackageVersion>1.5.0</PackageVersion>
         <PackageIcon>logo.png</PackageIcon>
         <LangVersion>10</LangVersion>
     </PropertyGroup>
