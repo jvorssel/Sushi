@@ -1,6 +1,6 @@
 using Sushi.Attributes;
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///     A class with const values.

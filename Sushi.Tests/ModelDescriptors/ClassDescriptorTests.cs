@@ -11,10 +11,11 @@
 
 #region
 
+using System;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
 
 #endregion
 
@@ -22,10 +23,10 @@ namespace Sushi.Tests.ModelDescriptors;
 
 public abstract class ClassDescriptorTests
 {
-	[TestClass]
-	public class InitializerTests : ClassDescriptorTests
+	
+	public sealed class InitializerTests : ClassDescriptorTests
 	{
-		[TestMethod]
+		[Fact]
 		public void Initialize_WithSimpleClass_ShouldMapCorrectly()
 		{
 			// Arrange
@@ -35,14 +36,14 @@ public abstract class ClassDescriptorTests
 			var descriptor = new ClassDescriptor(type);
 
 			// Assert
-			Assert.AreEqual(nameof(ViewModel), descriptor.Name);
-			Assert.AreEqual(type.FullName, descriptor.FullName);
+			Assert.Equal(nameof(ViewModel), descriptor.Name);
+			Assert.Equal(type.FullName, descriptor.FullName);
 
-			Assert.AreEqual(2, descriptor.Properties.Count);
-			Assert.IsFalse(descriptor.HasParameterlessCtor);
+			Assert.Equal(2, descriptor.Properties.Count);
+			Assert.False(descriptor.HasParameterlessCtor);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void Initialize_WithNestedClass_ShouldMapCorrectly()
 		{
 			// Arrange
@@ -52,12 +53,12 @@ public abstract class ClassDescriptorTests
 			var descriptor = new ClassDescriptor(type);
 
 			// Assert
-			Assert.AreEqual(4, descriptor.Properties.Count);
-			Assert.AreEqual(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
-			Assert.IsFalse(descriptor.HasParameterlessCtor);
+			Assert.Equal(4, descriptor.Properties.Count);
+			Assert.Equal(descriptor.Properties.Distinct().Count(), descriptor.Properties.Count);
+			Assert.False(descriptor.HasParameterlessCtor);
 		}
 			
-		[TestMethod]
+		[Fact]
 		public void Initialize_GenericClassWithoutType_ShouldMapCorrectly()
 		{
 			// Arrange
@@ -67,12 +68,12 @@ public abstract class ClassDescriptorTests
 			var result = new ClassDescriptor(withoutGenericType);
 
 			// Assert
-			Assert.AreEqual(2, result.Properties.Count);
-			Assert.AreEqual("TEntry", result.GenericParameterNames.Single());
-			Assert.IsTrue(result.HasParameterlessCtor);
+			Assert.Equal(2, result.Properties.Count);
+			Assert.Equal("TEntry", result.GenericParameterNames.Single());
+			Assert.True(result.HasParameterlessCtor);
 		}
 			
-		[TestMethod]
+		[Fact]
 		public void Initialize_GenericClassWithType_ShouldMapCorrectly()
 		{
 			// Arrange
@@ -82,12 +83,12 @@ public abstract class ClassDescriptorTests
 			var result = new ClassDescriptor(withGenericType);
 
 			// Assert
-			Assert.AreEqual(2, result.Properties.Count);
-			Assert.IsFalse(result.GenericParameterNames.Any());
-			Assert.IsTrue(result.HasParameterlessCtor);
+			Assert.Equal(2, result.Properties.Count);
+			Assert.False(result.GenericParameterNames.Any());
+			Assert.True(result.HasParameterlessCtor);
 		}
 			
-		[TestMethod]
+		[Fact]
 		public void Initialize_WithExcludedClass_ShouldThrowCorrectly()
 		{
 			// Arrange
@@ -97,62 +98,53 @@ public abstract class ClassDescriptorTests
 			var result = new ClassDescriptor(type);
 
 			// Assert
-			Assert.IsFalse(result.IsApplicable);
+			Assert.False(result.IsApplicable);
 		}
 	}
 
-	[TestClass]
-	public class EqualityOperatorTests
+	
+	public sealed class EqualityOperatorTests
 	{
-		[TestMethod]
-		public void Equal_WithClass_ShouldBeEqual()
+		[Theory]
+		[InlineData(typeof(ViewModel), typeof(ViewModel), true)]
+		[InlineData(typeof(ViewModel), typeof(PersonViewModel), false)]
+		[InlineData(typeof(Gender), typeof(NotAScriptModel), false)]
+		[InlineData(typeof(TypeModel), typeof(TypeModel), true)]
+		public void EqualityOperator_CompareClassTest(Type source, Type compareTo, bool equality)
 		{
 			// Arrange
-			var m1 = new ClassDescriptor(typeof(ViewModel));
-			var m2 = new ClassDescriptor(typeof(ViewModel));
+			var m1 = new ClassDescriptor(source);
+			var m2 = new ClassDescriptor(compareTo);
 
 			// Act
 			var result = m1 == m2;
 
 			// Assert
-			Assert.IsTrue(result);
-		}
-
-		[TestMethod]
-		public void Equal_WithInheritedClass_ShouldNotBeEqual()
-		{
-			// Arrange
-			var m1 = new ClassDescriptor(typeof(ViewModel));
-			var m2 = new ClassDescriptor(typeof(PersonViewModel));
-
-			// Act
-			var result = m1 == m2;
-
-			// Assert
-			Assert.IsFalse(result);
+			Assert.Equal(equality, result);
 		}
 			
-		[TestMethod]
-		public void Equal_WithNullValues_ShouldNotBeEqual()
+		[Fact]
+		public void EqualityOperator_ExpectNullTest()
 		{
 			// Arrange
 			var m1 = new ClassDescriptor(typeof(ViewModel));
-			var m2 = (ClassDescriptor)null;
+			ClassDescriptor? m2 = null;
 
 			// Act & Assert
-			Assert.IsFalse(m1 == m2);
-			Assert.IsTrue(m2 != m1);
-			Assert.IsFalse(m1.Equals(m2));
-			Assert.IsFalse(m1.Equals((object)null));
-			Assert.IsTrue(m1.Equals((object)m1));
-			Assert.IsTrue(m1.GetHashCode() == m1.GetHashCode());
+			Assert.False(m1 == m2);
+			Assert.True(m2 != m1);
+			Assert.False(m1 is null);
+			Assert.True(m2 is null);
+			Assert.False(m1.Equals(m2));
+			Assert.False(m1.Equals(null));
+			Assert.False(m1.GetHashCode() == m2?.GetHashCode());
 		}
 	}
 
-	[TestClass]
-	public class PropertyDescriptorsTests
+	
+	public sealed class PropertyDescriptorsTests
 	{
-		[TestMethod]
+		[Fact]
 		public void NestedTypeModel_ShouldFindAllFieldsAndPropertiesTest()
 		{
 			// Arrange
@@ -162,14 +154,14 @@ public abstract class ClassDescriptorTests
 			var descriptor = new ClassDescriptor(type);
 
 			// Assert
-			Assert.AreEqual(8, descriptor.Properties.Count);
+			Assert.Equal(8, descriptor.Properties.Count);
 		}
 	}
 
-	[TestClass]
-	public class GetPropertiesTests : ClassDescriptorTests
+	
+	public sealed class GetPropertiesTests : ClassDescriptorTests
 	{
-		[TestMethod]
+		[Fact]
 		public void GetProperties_ExcludeInheritedTest()
 		{
 			// Arrange
@@ -182,17 +174,17 @@ public abstract class ClassDescriptorTests
 			var properties = descriptor.GetProperties().ToList();
 
 			// Assert
-			Assert.IsFalse(properties.Any(x => x.Name  == "Guid"));
-			Assert.IsTrue(properties.Any(x => x.Name  == "Addition"));
-			Assert.IsTrue(properties.Any(x => x.Name == "Value"));
-			Assert.IsFalse(properties.Any(x => x.Name == "Base"));
+			Assert.DoesNotContain(properties, x => x.Name  == "Guid");
+			Assert.Contains(properties, x => x.Name  == "Addition");
+			Assert.Contains(properties, x => x.Name == "Value");
+			Assert.DoesNotContain(properties, x => x.Name == "Base");
 		}
 	}
 		
-	[TestClass]
-	public class FilterTypesTest : ClassDescriptorTests
+	
+	public sealed class FilterTypesTest : ClassDescriptorTests
 	{
-		[TestMethod]
+		[Fact]
 		public void FilterTypes_WithoutAttribute_ShouldFilterTest()
 		{
 			// Arrange
@@ -202,11 +194,11 @@ public abstract class ClassDescriptorTests
 			var result = descriptors.Where(x=>x.IsApplicable).ToList();
 
 			// Assert
-			Assert.AreEqual(1, result.Count);
-			Assert.AreEqual(typeof(ViewModel), result.Single().Type);
+			Assert.Single(result);
+			Assert.Equal(typeof(ViewModel), result.Single().Type);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void FilterTypes_WithNonClassTypes_ShouldFilterTest()
 		{
 			// Arrange
@@ -216,8 +208,8 @@ public abstract class ClassDescriptorTests
 			var result = descriptors.Where(x=>x.IsApplicable).ToList();
 
 			// Assert
-			Assert.AreEqual(1, result.Count);
-			Assert.AreEqual(typeof(ViewModel), result.Single().Type);
+			Assert.Single(result);
+			Assert.Equal(typeof(ViewModel), result.Single().Type);
 		}
 	}
 }

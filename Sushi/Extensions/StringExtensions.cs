@@ -1,6 +1,6 @@
 ﻿namespace Sushi.Extensions;
 
-public static class StringExtensions
+internal static class StringExtensions
 {
     /// <summary>
     ///     If given <see cref="string"/> <paramref name="this"/> is null or empty.

@@ -1,7 +1,6 @@
-﻿using System;
-using Sushi.Attributes;
+﻿using Sushi.Attributes;
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///     Should NOT be included.

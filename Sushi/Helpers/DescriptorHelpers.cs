@@ -24,7 +24,7 @@ namespace Sushi.Helpers;
 /// <summary>
 ///     Logic for describing C# model.
 /// </summary>
-public static class DescriptorHelpers
+internal static class DescriptorHelpers
 {
     /// <summary>
     ///     Iterate over every property of the given <see cref="Type" />

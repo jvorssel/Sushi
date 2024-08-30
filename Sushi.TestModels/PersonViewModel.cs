@@ -9,9 +9,7 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-using System;
-
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///		The <see cref="PersonViewModel"/> that represents a Person.

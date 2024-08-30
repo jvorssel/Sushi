@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Sushi.Tests.Models;
+﻿namespace Sushi.TestModels;
 
 /// <summary>
 ///     Should NOT be included.
 /// </summary>
-public class NotAScriptModel
+public sealed class NotAScriptModel
 {
     public ExcludedModel? excluded = null;
     public bool Included { get; set; } = false;

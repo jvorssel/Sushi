@@ -1,6 +1,6 @@
 using Sushi.Interfaces;
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <inheritdoc />
 public abstract class ScriptModel : IScriptModel

@@ -1,7 +1,7 @@
 ﻿namespace Sushi.Enum;
 
 /// <summary>
-///     Enum for available <see cref="NativeType"/>(s).
+///     Enum for available .NET <see cref="NativeType"/>(s).
 /// </summary>
 public enum NativeType
 {

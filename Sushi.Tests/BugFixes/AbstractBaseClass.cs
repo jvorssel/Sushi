@@ -1,14 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Attributes;
+﻿using Sushi.Attributes;
 using Sushi.Descriptors;
-using Sushi.Extensions;
+using Sushi.Tests.Extensions;
+using Xunit;
+
 
 namespace Sushi.Tests.BugFixes;
 
 /// <summary>
 ///     Abstract classes can not be initiated to discover their public exported properties.
 /// </summary>
-[TestClass]
+
 public class AbstractBaseClass : TestBase
 {
     [ConvertToScript]
@@ -22,7 +23,7 @@ public class AbstractBaseClass : TestBase
         }
     }
 
-    public class ChildModel : AbstractBaseModel
+    public sealed class ChildModel : AbstractBaseModel
     {
         public string Surname { get; set; }
 
@@ -32,7 +33,7 @@ public class AbstractBaseClass : TestBase
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void NoParameterlessCtor_ShouldMapModelTest()
     {
         // Arrange
@@ -45,13 +46,13 @@ public class AbstractBaseClass : TestBase
         // Act
 
         // Assert
-        Assert.AreEqual(1, descriptor.Properties.Count);
-        Assert.IsTrue(descriptor.Properties.ContainsKey(nameof(ChildModel.Surname)));
-        Assert.AreEqual(1, descriptor.Parent.Properties.Count);
-        Assert.IsTrue(descriptor.Parent.Properties.ContainsKey(nameof(ChildModel.Name)));
+        Assert.Single(descriptor.Properties);
+        Assert.True(descriptor.Properties.ContainsKey(nameof(ChildModel.Surname)));
+        Assert.Single(descriptor.Parent.Properties);
+        Assert.True(descriptor.Parent.Properties.ContainsKey(nameof(ChildModel.Name)));
     }
     
-    [TestMethod]
+    [Fact]
     public void NoParameterlessCtor_ShouldConvertToTypeScriptTest()
     {
         // Arrange
@@ -61,6 +62,6 @@ public class AbstractBaseClass : TestBase
         var script = sushi.TypeScript().ToString();
 
         // Assert
-        Assert.IsFalse(script.IsEmpty());
+        Assert.False(script.IsEmpty());
     }
 }

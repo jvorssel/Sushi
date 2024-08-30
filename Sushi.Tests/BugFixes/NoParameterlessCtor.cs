@@ -1,18 +1,19 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Attributes;
 using Sushi.Descriptors;
+using Xunit;
+
 
 namespace Sushi.Tests.BugFixes;
 
 /// <summary>
 ///     Classes without a parameterless ctor require a specific init.
 /// </summary>
-[TestClass]
-public class NoParameterlessCtorTests : TestBase
+
+public sealed class NoParameterlessCtorTests : TestBase
 {
     [ConvertToScript]
-    public class CtorFixModel
+    public sealed class CtorFixModel
     {
         public string Name { get; set; }
 
@@ -22,7 +23,7 @@ public class NoParameterlessCtorTests : TestBase
         }
     }
 
-    [TestMethod]
+    [Fact]
     public void NoParameterlessCtor_ShouldMapModelTest()
     {
         // Arrange
@@ -32,7 +33,7 @@ public class NoParameterlessCtorTests : TestBase
         var descriptor = new ClassDescriptor(type);
 
         // Assert
-        Assert.AreEqual(1, descriptor.Properties.Count);
-        Assert.AreEqual(nameof(CtorFixModel.Name), descriptor.Properties.Values.Single().Name);
+        Assert.Single(descriptor.Properties);
+        Assert.Equal(nameof(CtorFixModel.Name), descriptor.Properties.Values.Single().Name);
     }
 }

@@ -12,20 +12,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Converters;
 using Sushi.Enum;
 using Sushi.Helpers;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
 
 namespace Sushi.Tests.Converters;
 
 public abstract class ModelConverterTests : TestBase
 {
-	[TestClass]
-	public class ApplyCasingStyleMethod : ModelConverterTests
+	
+	public sealed class ApplyCasingStyleMethod : ModelConverterTests
 	{
-		[TestMethod]
+		[Fact]
 		public void ApplyCasingStyle_Default_KeepValueTests()
 		{
 			// Arrange
@@ -37,10 +37,10 @@ public abstract class ModelConverterTests : TestBase
 			var result = converter.ApplyCasingStyle(value);
 			
 			// Assert
-			Assert.AreEqual(value, result);
+			Assert.Equal(value, result);
 		}
 		
-		[TestMethod]
+		[Fact]
 		public void ApplyCasingStyle_CamelCasing_ShouldTransformValueTests()
 		{
 			// Arrange
@@ -52,27 +52,26 @@ public abstract class ModelConverterTests : TestBase
 			var result = converter.ApplyCasingStyle(value);
 			
 			// Assert
-			Assert.AreEqual("casingTest", result);
+			Assert.Equal("casingTest", result);
 		}
 		
-		[TestMethod]
+		[Fact]
 		public void ApplyCasingStyle_UnsupportedValue_ShouldThrow()
 		{
 			// Arrange
 			var options = new ConverterOptions(casing: (PropertyNameCasing)500);
 			var converter = new SushiConverter().TypeScript(options);
-			var value = "CasingTest";
-			
+
 			// Act & Assert
-			Assert.ThrowsException<ArgumentOutOfRangeException>(() =>
+			Assert.Throws<ArgumentOutOfRangeException>(() =>
 			{
 				converter.ApplyCasingStyle("");
 			});
 		}
 	}
 
-	[TestClass]
-	public class IsSushiTypeMethod : ModelConverterTests
+	
+	public sealed class IsSushiTypeMethod : ModelConverterTests
 	{
 		public Type Type { get; }
 		public Type EnumType { get; }
@@ -85,7 +84,7 @@ public abstract class ModelConverterTests : TestBase
 			Converter = new SushiConverter(Type, typeof(ViewModel), typeof(ScriptModel), EnumType).TypeScript();
 		}
 		
-		[TestMethod]
+		[Fact]
 		public void IsSushiType_Arrays_ShouldResolveType()
 		{
 			// Arrange
@@ -99,16 +98,16 @@ public abstract class ModelConverterTests : TestBase
 			var isArrayFound = Converter.IsSushiType(arrayType, out var resolvedArrayType);
 			
 			// Assert
-			Assert.IsTrue(typeFound);
-			Assert.IsTrue(isListFound);
-			Assert.IsTrue(isArrayFound);
+			Assert.True(typeFound);
+			Assert.True(isListFound);
+			Assert.True(isArrayFound);
 			
-			Assert.AreEqual(Type, resolvedType);
-			Assert.AreEqual(Type, resolvedListType);
-			Assert.AreEqual(Type, resolvedArrayType);
+			Assert.Equal(Type, resolvedType);
+			Assert.Equal(Type, resolvedListType);
+			Assert.Equal(Type, resolvedArrayType);
 		}
 		
-		[TestMethod]
+		[Fact]
 		public void IsSushiType_Enums_ShouldResolveType()
 		{
 			// Arrange
@@ -122,16 +121,16 @@ public abstract class ModelConverterTests : TestBase
 			var isArrayFound = Converter.IsSushiType(arrayType, out var resolvedArrayType);
 			
 			// Assert
-			Assert.IsTrue(typeFound);
-			Assert.IsTrue(isListFound);
-			Assert.IsTrue(isArrayFound);
+			Assert.True(typeFound);
+			Assert.True(isListFound);
+			Assert.True(isArrayFound);
 			
-			Assert.AreEqual(EnumType, resolvedType);
-			Assert.AreEqual(EnumType, resolvedListType);
-			Assert.AreEqual(EnumType, resolvedArrayType);
+			Assert.Equal(EnumType, resolvedType);
+			Assert.Equal(EnumType, resolvedListType);
+			Assert.Equal(EnumType, resolvedArrayType);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ReadonlyType_Property_ShouldResolveDefaultValueTest()
 		{
 			// Assert
@@ -143,11 +142,11 @@ public abstract class ModelConverterTests : TestBase
 			var defaultValue = Converter.ResolveDefaultValue(property);
 			
 			// Assert
-			Assert.IsNotNull(defaultValue);
-			Assert.AreEqual("\"readonly\"", defaultValue);
+			Assert.NotNull(defaultValue);
+			Assert.Equal("\"readonly\"", defaultValue);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void ReadonlyType_ShouldResolveDefaultValueTest()
 		{
 			// Act
@@ -155,9 +154,9 @@ public abstract class ModelConverterTests : TestBase
 			var property = result.Properties["ReadonlyString"];
 			
 			// Assert
-			Assert.IsNotNull(property);
-			Assert.IsTrue(property.Readonly);
-			Assert.AreEqual("readonly", property.DefaultValue);
+			Assert.NotNull(property);
+			Assert.True(property.Readonly);
+			Assert.Equal("readonly", property.DefaultValue);
 		}
 	}
 }

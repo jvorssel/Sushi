@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Attributes;
-using Sushi.Descriptors;
-using Sushi.Extensions;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
+
 
 namespace Sushi.Tests;
 
-[TestClass]
-public class IgnoreAttributeTest
+
+public sealed class IgnoreAttributeTest
 {
     private readonly List<Type> _types = new() { typeof(IgnoreMe), typeof(IgnoreTestRoot), typeof(DoNotIgnoreMe) };
 
     [IgnoreForScript]
-    private class IgnoreMe : IgnoreTestRoot
+    private sealed class IgnoreMe : IgnoreTestRoot
     {
     }
 
@@ -24,44 +23,44 @@ public class IgnoreAttributeTest
     {
     }
 
-    private class DoNotIgnoreMe : IgnoreTestRoot
+    private sealed class DoNotIgnoreMe : IgnoreTestRoot
     {
-        public string ShouldExist { get; set; }
+        public string ShouldExist { get; set; } = string.Empty;
 
-        [IgnoreForScript] public string ShouldNotExist { get; set; }
+        [IgnoreForScript] public string ShouldNotExist { get; set; } = string.Empty;
     }
 
-    [TestMethod]
+    [Fact]
     public void FindModelWithAttributeTest()
     {
         var converter = new SushiConverter(_types);
 
         // Have the ConvertToScript attribute, should exist in queue.
-        Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(DoNotIgnoreMe) || x.Name == nameof(IgnoreTestRoot)),
+        Assert.True(converter.Models.Any(x => x.Name == nameof(DoNotIgnoreMe) || x.Name == nameof(IgnoreTestRoot)),
             $"Expected the {nameof(DoNotIgnoreMe)} and {nameof(IgnoreTestRoot)} classes to be available.");
 
         // IgnoreMe has the ignore attribute, should not exist in queue.
-        Assert.IsTrue(converter.Models.All(x => x.Name != nameof(IgnoreMe)),
+        Assert.True(converter.Models.All(x => x.Name != nameof(IgnoreMe)),
             $"Expected the {nameof(IgnoreMe)} class not to be available.");
     }
 
-    [TestMethod]
+    [Fact]
     public void ExcludePropertyWithAttributeTest()
     {
         var converter = new SushiConverter(_types);
 
         // Get the model with the properties that should use the Ignore attribute.
         var model = converter.Models.SingleOrDefault(x => x.Name == nameof(DoNotIgnoreMe));
-        Assert.IsNotNull(model);
+        Assert.NotNull(model);
 
-        Assert.IsTrue(model.Properties.ContainsKey(nameof(DoNotIgnoreMe.ShouldExist)),
+        Assert.True(model.Properties.ContainsKey(nameof(DoNotIgnoreMe.ShouldExist)),
             $"Expected the {nameof(DoNotIgnoreMe.ShouldExist)} to be available");
         
-        Assert.IsFalse(model.Properties.ContainsKey(nameof(DoNotIgnoreMe.ShouldNotExist)),
+        Assert.False(model.Properties.ContainsKey(nameof(DoNotIgnoreMe.ShouldNotExist)),
             $"Expected the {nameof(DoNotIgnoreMe.ShouldNotExist)} to not be available");
     }
 
-    [TestMethod]
+    [Fact]
     public void ExcludeClassWithoutAttributeTest()
     {
         // Arrange
@@ -72,10 +71,10 @@ public class IgnoreAttributeTest
         var converter = new SushiConverter(assembly);
 
         // Assert
-        Assert.IsFalse(converter.Models.Any(x => x.Type == type));
+        Assert.DoesNotContain(converter.Models, x => x.Type == type);
     }
     
-    [TestMethod]
+    [Fact]
     public void ExcludeClassWithExcludeAttributeTest()
     {
         // Arrange
@@ -86,6 +85,6 @@ public class IgnoreAttributeTest
         var converter = new SushiConverter(assembly);
 
         // Assert
-        Assert.IsFalse(converter.Models.Any(x => x.Type == type));
+        Assert.DoesNotContain(converter.Models, x => x.Type == type);
     }
 }

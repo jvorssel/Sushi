@@ -20,9 +20,9 @@ using Sushi.Interfaces;
 
 namespace Sushi.Documentation;
 
-public static class JsDocFormatter
+internal static class JsDocFormatter
 {
-    public static void AppendJsDoc(this StringBuilder builder, XmlDocumentationReader? doc,
+    internal static void AppendJsDoc(this StringBuilder builder, XmlDocumentationReader? doc,
         IPropertyDescriptor descriptor, string prefix = "", string scriptType = "")
     {
         if (doc == null)
@@ -41,7 +41,7 @@ public static class JsDocFormatter
         builder.AppendLine(prefix + " */");
     }
 
-    public static void AppendJsDoc(this StringBuilder builder, XmlDocumentationReader? doc, ClassDescriptor descriptor,
+    internal static void AppendJsDoc(this StringBuilder builder, XmlDocumentationReader? doc, ClassDescriptor descriptor,
         string prefix = "")
     {
         if (doc == null)

@@ -1,5 +1,5 @@
-﻿// /***************************************************************************\
-// Module Name:       ViewModel.cs
+// /***************************************************************************\
+// Module Name:       GenericStandalone.cs
 // Project:                   Sushi.Tests
 // Author:                   Jeroen Vorsselman 14-05-2023
 // Copyright:              Goblin workshop @ 2023
@@ -11,24 +11,25 @@
 
 #region
 
-using System;
-
 #endregion
 
-namespace Sushi.Tests.Models;
+using Sushi.Attributes;
+
+namespace Sushi.TestModels;
 
 /// <summary>
-///     The view model base class.
+///     A Generic class for a collection and a total amount of available entries.
 /// </summary>
-public abstract class ViewModel : ScriptModel
+[ConvertToScript]
+public sealed class GenericStandalone<TEntry>
 {
 	/// <summary>
-	///     The view model identifier.
+	///     The list of values.
 	/// </summary>
-	public Guid Guid { get; set; } = Guid.NewGuid();
+	public List<TEntry> Values { get; set; } = new();
 
 	/// <summary>
-	///     When this view model was created.
+	///     The total amount of available entries.
 	/// </summary>
-	public DateTime CreatedOn { get; set; } = DateTime.Now;
+	public long TotalAmount { get; set; }
 }

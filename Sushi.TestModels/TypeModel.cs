@@ -11,12 +11,9 @@
 
 #region
 
-using System;
-using System.Collections.Generic;
-
 #endregion
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///     Simple model to verify complex types.

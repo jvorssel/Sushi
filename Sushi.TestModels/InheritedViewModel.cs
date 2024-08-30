@@ -11,11 +11,9 @@
 
 #region
 
-using System;
-
 #endregion
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 public class InheritedViewModel : BaseViewModel
 {

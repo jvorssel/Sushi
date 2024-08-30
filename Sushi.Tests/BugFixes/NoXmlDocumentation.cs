@@ -1,14 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Attributes;
-using Sushi.Extensions;
+﻿using Sushi.Attributes;
+using Sushi.Tests.Extensions;
+using Xunit;
+
 
 namespace Sushi.Tests.BugFixes;
 
-[TestClass]
-public class NoXmlDocumentation : TestBase
+
+public sealed class NoXmlDocumentation : TestBase
 {
     [ConvertToScript]
-    public class NoXmlDocumentationModel
+    public sealed class NoXmlDocumentationModel
     {
         public string Name { get; }
 
@@ -18,7 +19,7 @@ public class NoXmlDocumentation : TestBase
         }
     }
     
-    [TestMethod]
+    [Fact]
     public void NoXmlDocumentationModel_ShouldConvertToTypeScriptTest()
     {
         // Arrange
@@ -29,6 +30,6 @@ public class NoXmlDocumentation : TestBase
         var script = sushi.TypeScript().ToString();
 
         // Assert
-        Assert.IsFalse(script.IsEmpty());
+        Assert.False(script.IsEmpty());
     }
 }

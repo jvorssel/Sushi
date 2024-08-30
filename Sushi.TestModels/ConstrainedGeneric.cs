@@ -1,6 +1,6 @@
 using Sushi.Attributes;
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///     Another Generic class with a constraint.

@@ -1,6 +1,4 @@
-using System;
-
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///     For testing nullable properties.

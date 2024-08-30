@@ -11,11 +11,9 @@
 
 #region
 
-using System.Collections.Generic;
-
 #endregion
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <inheritdoc cref="ISchoolViewModel" />
 public sealed class SchoolViewModel : ViewModel, ISchoolViewModel

@@ -2,7 +2,7 @@
 
 using Sushi.Attributes;
 
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
 ///     Specify a biological Sex / <see cref="Gender" />.

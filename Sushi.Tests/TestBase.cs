@@ -14,8 +14,7 @@
 using System;
 using System.IO;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Extensions;
+using Sushi.Tests.Extensions;
 
 #endregion
 
@@ -23,8 +22,8 @@ namespace Sushi.Tests;
 
 public abstract class TestBase
 {
-	public TestContext TestContext { get; set; } = null!;
-		
+	protected const string XmlFileName = "Sushi.TestModels.xml";
+	
 	/// <summary>
 	///     Write the generated script values to the file.
 	/// </summary>

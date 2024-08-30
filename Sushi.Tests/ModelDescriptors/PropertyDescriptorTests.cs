@@ -12,9 +12,10 @@
 #region
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
+
 
 #endregion
 
@@ -22,10 +23,10 @@ namespace Sushi.Tests.ModelDescriptors;
 
 public abstract class PropertyDescriptorTests
 {
-    [TestClass]
-    public class TypeMapTests : PropertyDescriptorTests
+    
+    public sealed class TypeMapTests : PropertyDescriptorTests
     {
-        [TestMethod]
+        [Fact]
         public void GuidProperty_ShouldMapCorrectly()
         {
             // Arrange
@@ -35,11 +36,11 @@ public abstract class PropertyDescriptorTests
             var descriptor = classDescriptor.GetProperty(nameof(ViewModel.Guid));
 
             // Assert
-            Assert.AreEqual(nameof(ViewModel.Guid), descriptor.Name);
-            Assert.AreEqual(typeof(Guid), descriptor.Type);
+            Assert.Equal(nameof(ViewModel.Guid), descriptor.Name);
+            Assert.Equal(typeof(Guid), descriptor.Type);
         }
 
-        [TestMethod]
+        [Fact]
         public void NullableProperty_ShouldMapCorrectly()
         {
             // Arrange
@@ -49,13 +50,13 @@ public abstract class PropertyDescriptorTests
             var descriptor = classDescriptor.GetProperty(nameof(TypeModel.NullableBool));
 
             // Assert
-            Assert.AreEqual(nameof(TypeModel.NullableBool), descriptor.Name);
-            Assert.AreEqual(typeof(bool?), descriptor.Type);
+            Assert.Equal(nameof(TypeModel.NullableBool), descriptor.Name);
+            Assert.Equal(typeof(bool?), descriptor.Type);
         }
             
             
 
-        [TestMethod]
+        [Fact]
         public void NullableStringValue2_ShouldMapCorrectly()
         {
             // Arrange
@@ -68,8 +69,8 @@ public abstract class PropertyDescriptorTests
             var value = converter.ResolveDefaultValue(prop);
 
             // Assert
-            Assert.AreEqual("null", value);
-            Assert.IsTrue(prop.IsNullable);
+            Assert.Equal("null", value);
+            Assert.True(prop.IsNullable);
         }
     }
 }

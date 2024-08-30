@@ -12,18 +12,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Extensions;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
+
 
 namespace Sushi.Tests.Extensions;
 
 public abstract class ReflectionExtensionsTests
 {
-    [TestClass]
-    public class CreateInstance : ReflectionExtensionsTests
+    
+    public sealed class CreateInstance : ReflectionExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void CreateInstance_SimpleViewModel_ShouldInitializeTest()
         {
             // Arrange
@@ -33,26 +34,25 @@ public abstract class ReflectionExtensionsTests
             var instance = type.CreateInstance();
 
             // Assert
-            Assert.IsNotNull(instance);
-            Assert.IsNotNull(instance as PersonViewModel);
+            Assert.NotNull(instance);
+            Assert.NotNull(instance as PersonViewModel);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateInstance_ComplexViewModel_ShouldInitializeTest()
         {
             // Arrange
             var type = typeof(SchoolViewModel);
-            var property = type.GetProperty("AverageGrade");
 
             // Act
             var instance = type.CreateInstance();
 
             // Assert
-            Assert.IsNotNull(instance);
-            Assert.IsNotNull(instance as SchoolViewModel);
+            Assert.NotNull(instance);
+            Assert.NotNull(instance as SchoolViewModel);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateInstance_GenericType_ShouldInitializeTest()
         {
             // Arrange
@@ -62,11 +62,11 @@ public abstract class ReflectionExtensionsTests
             var instance = type.CreateInstance();
 
             // Assert
-            Assert.IsNotNull(instance);
-            Assert.IsNotNull(instance as GenericStandalone<string>);
+            Assert.NotNull(instance);
+            Assert.NotNull(instance as GenericStandalone<string>);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateInstance_GenericTypeDefinition_ShouldReturnNullTest()
         {
             // Arrange
@@ -76,10 +76,10 @@ public abstract class ReflectionExtensionsTests
             var instance = type.CreateInstance();
 
             // Assert
-            Assert.IsNull(instance);
+            Assert.Null(instance);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateInstance_Interface_ShouldReturnNullTest()
         {
             // Arrange
@@ -89,10 +89,10 @@ public abstract class ReflectionExtensionsTests
             var result = type.CreateInstance();
 
             // Assert
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateInstance_AbstractType_ShouldReturnNullTest()
         {
             // Arrange
@@ -102,14 +102,14 @@ public abstract class ReflectionExtensionsTests
             var result = type.CreateInstance();
 
             // Assert
-            Assert.IsNull(result);
+            Assert.Null(result);
         }
     }
 
-    [TestClass]
-    public class InheritsInterface : ReflectionExtensionsTests
+    
+    public sealed class InheritsInterface : ReflectionExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void IsOrInheritsInterface_Equal_ReturnTrueTest()
         {
             // Arrange
@@ -119,10 +119,10 @@ public abstract class ReflectionExtensionsTests
             var result = type.IsOrInheritsInterface<IEnumerable<int>>();
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsOrInheritsInterface_InheritedArgument_ReturnTrueTest()
         {
             // Arrange
@@ -132,10 +132,10 @@ public abstract class ReflectionExtensionsTests
             var result = type.IsOrInheritsInterface<IEnumerable>();
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsOrInheritsInterface_NotAnInterface_ShouldThrow()
         {
             // Arrange
@@ -144,15 +144,15 @@ public abstract class ReflectionExtensionsTests
 
             // Act & Assert
             var result =
-                Assert.ThrowsException<ArgumentException>(() => type.IsOrInheritsInterface<StudentViewModel>());
-            Assert.AreEqual(exception.Message, result.Message);
+                Assert.Throws<ArgumentException>(() => type.IsOrInheritsInterface<StudentViewModel>());
+            Assert.Equal(exception.Message, result.Message);
         }
     }
 
-    [TestClass]
-    public class IsArrayType : ReflectionExtensionsTests
+    
+    public sealed class IsArrayType : ReflectionExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void IsArrayType_IEnumerable_ReturnTrueTest()
         {
             // Arrange
@@ -162,10 +162,10 @@ public abstract class ReflectionExtensionsTests
             var result = type.IsArrayType();
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsArrayType_Array_ReturnTrueTest()
         {
             // Arrange
@@ -175,10 +175,10 @@ public abstract class ReflectionExtensionsTests
             var result = type.IsArrayType();
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsArrayType_String_ReturnFalseTest()
         {
             // Arrange
@@ -188,10 +188,10 @@ public abstract class ReflectionExtensionsTests
             var result = type.IsArrayType();
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.False(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsArrayType_Dictionary_ReturnFalseTest()
         {
             // Act
@@ -199,25 +199,25 @@ public abstract class ReflectionExtensionsTests
             var interfaceType = typeof(IDictionary<string, int>).IsArrayType();
             
             // Act & Assert
-            Assert.IsFalse(valueType);
-            Assert.IsFalse(interfaceType);
+            Assert.False(valueType);
+            Assert.False(interfaceType);
         }
     }
 
-    [TestClass]
-    public class IsPropertyHidingBaseClassPropertyMethod : ReflectionExtensionsTests
+    
+    public sealed class IsPropertyHidingBaseClassPropertyMethod : ReflectionExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void IsPropertyHidingBaseClassProperty_NotFound_ShouldThrow()
         {
             // Arrange
             var classType = typeof(NullablePropertiesViewModel);
             
             // Assert
-            Assert.ThrowsException<ArgumentException>(() => classType.IsPropertyHidingBaseClassProperty("nope"));
+            Assert.Throws<ArgumentException>(() => classType.IsPropertyHidingBaseClassProperty("nope"));
         }
         
-        [TestMethod]
+        [Fact]
         public void IsPropertyHidingBaseClassProperty_Inherited_ShouldReturnTrueTest()
         {
             // Arrange
@@ -228,10 +228,10 @@ public abstract class ReflectionExtensionsTests
             var result = classType.IsPropertyHidingBaseClassProperty(propertyName);
             
             // Assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
         
-        [TestMethod]
+        [Fact]
         public void IsPropertyHidingBaseClassProperty_NotInherited_ShouldReturnTrueTest()
         {
             // Arrange
@@ -242,7 +242,7 @@ public abstract class ReflectionExtensionsTests
             var result = classType.IsPropertyHidingBaseClassProperty(propertyName);
             
             // Assert
-            Assert.IsFalse(result);
+            Assert.False(result);
         }
     }
 }

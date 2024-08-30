@@ -19,7 +19,7 @@ using System.Reflection;
 
 namespace Sushi.Extensions;
 
-public static class ReflectionExtensions
+internal static class ReflectionExtensions
 {
     #region Get Property or Field
 

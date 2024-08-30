@@ -10,19 +10,20 @@
 // \***************************************************************************/
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Enum;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
+
 
 namespace Sushi.Tests.ModelDescriptors;
 
 public abstract class FieldDescriptorTests
 {
-    [TestClass]
-    public class TypeMapTests : FieldDescriptorTests
+    
+    public sealed class TypeMapTests : FieldDescriptorTests
     {
-        [TestMethod]
+        [Fact]
         public void ReadonlyString_ShouldMapCorrectly()
         {
             // Arrange
@@ -34,15 +35,15 @@ public abstract class FieldDescriptorTests
             var descriptor = new FieldDescriptor(fieldType);
 
             // Assert
-            Assert.AreEqual(nameof(TypeModel.ReadonlyString), descriptor.Name);
-            Assert.IsTrue(descriptor.Readonly);
-            Assert.AreEqual(typeof(string), descriptor.Type);
-            Assert.IsFalse(descriptor.IsNullable);
-            Assert.AreEqual(NativeType.String, descriptor.NativeType);
+            Assert.Equal(nameof(TypeModel.ReadonlyString), descriptor.Name);
+            Assert.True(descriptor.Readonly);
+            Assert.Equal(typeof(string), descriptor.Type);
+            Assert.False(descriptor.IsNullable);
+            Assert.Equal(NativeType.String, descriptor.NativeType);
         }
 
 
-        [TestMethod]
+        [Fact]
         public void NullableStringValue_ShouldMapCorrectly()
         {
             // Arrange
@@ -58,8 +59,8 @@ public abstract class FieldDescriptorTests
             var value = converter.ResolveDefaultValue(descriptor);
 
             // Assert
-            Assert.AreEqual("null", value);
-            Assert.IsTrue(descriptor.IsNullable);
+            Assert.Equal("null", value);
+            Assert.True(descriptor.IsNullable);
         }
     }
 }

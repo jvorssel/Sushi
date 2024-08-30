@@ -14,10 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Descriptors;
 using Sushi.Extensions;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Xunit;
 
 #endregion
 
@@ -37,21 +37,21 @@ public abstract class DescriptorTreeBuilderTests
 	private List<ClassDescriptor> AsDescriptors(params Type[] types)
 		=> types.Select(x => new ClassDescriptor(x)).ToList();
 
-	[TestClass]
-	public class BuildTreeTests : DescriptorTreeBuilderTests
+	
+	public sealed class BuildTreeTests : DescriptorTreeBuilderTests
 	{
-		[TestMethod]
+		[Fact]
 		public void BuildTree_MissingBaseType_ShouldThrow()
 		{
 			// Arrange
 			var descriptors = new ClassDescriptor(typeof(TypeModel));
-			var message = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
+			_ = $"Base type {typeof(ViewModel)} for {typeof(TypeModel)} is missing.";
 
 			// Act & Assert
-			Assert.ThrowsException<InvalidOperationException>(() => new[] { descriptors }.BuildTree(), message);
+			Assert.Throws<InvalidOperationException>(() => new[] { descriptors }.BuildTree());
 		}
 
-		[TestMethod]
+		[Fact]
 		public void BuildTree_ShouldNestCorrectlyTest()
 		{
 			// Arrange
@@ -61,35 +61,35 @@ public abstract class DescriptorTreeBuilderTests
 			var result = types.BuildTree().ToList();
 
 			// Assert
-			Assert.AreEqual(1, result.Count, "Only one class defined as the root of the tree.");
+			Assert.Single(result);
 
 			// The view-model class should be the root.
 			var scriptModel = result.Single();
-			Assert.AreEqual(nameof(ScriptModel), scriptModel.Name);
-			Assert.IsNull(scriptModel.Parent);
+			Assert.Equal(nameof(ScriptModel), scriptModel.Name);
+			Assert.Null(scriptModel.Parent);
 
 			var viewModelDescriptor = scriptModel.Children.Single();
 
 			// The view-model class is inherited twice.
-			Assert.AreEqual(2, viewModelDescriptor.Children.Count);
+			Assert.Equal(2, viewModelDescriptor.Children.Count);
 
 			// Once by the person
 			var personDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
-			Assert.IsNotNull(personDescriptor);
-			Assert.AreEqual(1, personDescriptor.Children.Count);
+			Assert.NotNull(personDescriptor);
+			Assert.Single(personDescriptor.Children);
 
 			// The student class inherits the person class
 			var studentDescriptor =
 				personDescriptor.Children.SingleOrDefault(x => x.Name == nameof(StudentViewModel));
-			Assert.IsNotNull(studentDescriptor);
-			Assert.AreEqual(nameof(PersonViewModel), studentDescriptor.Parent.Name);
+			Assert.NotNull(studentDescriptor);
+			Assert.Equal(nameof(PersonViewModel), studentDescriptor.Parent?.Name);
 
 			// And once by the school
 			var schoolDescriptor = viewModelDescriptor.Children.SingleOrDefault(x => x.Name == nameof(SchoolViewModel));
-			Assert.IsNotNull(schoolDescriptor);
+			Assert.NotNull(schoolDescriptor);
 
-			Assert.IsFalse(schoolDescriptor.Children.Any());
-			Assert.AreEqual(nameof(ViewModel), schoolDescriptor.Parent.Name);
+			Assert.False(schoolDescriptor.Children.Any());
+			Assert.Equal(nameof(ViewModel), schoolDescriptor.Parent?.Name);
 		}
 	}
 }

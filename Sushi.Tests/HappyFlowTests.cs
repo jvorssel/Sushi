@@ -12,31 +12,32 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Tests.Models;
+using System.Reflection;
+using Sushi.TestModels;
+using Xunit;
+
 
 #endregion
 
 namespace Sushi.Tests;
 
-[TestClass]
-public class HappyFlowTests : TestBase
-{
-    public const string SourcePath = @"linter/src/";
 
-    public string GetFilePath(string fileName)
+public sealed class HappyFlowTests : TestBase
+{
+    private const string SourcePath = @"linter/src/";
+
+    private static string GetFilePath(string fileName)
     {
-        var testResultsPath = Path.GetDirectoryName(TestContext.TestDir);
+        var assemblyCodeBase = Assembly.GetExecutingAssembly().Location;
+        var testResultsPath = Path.GetDirectoryName(assemblyCodeBase);
         return testResultsPath + $"/{fileName}";
     }
 
-    public const string XML_FILE_NAME = "Sushi.tests.xml";
-    private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XML_FILE_NAME);
+    private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XmlFileName);
 
-    [TestMethod]
+    [Fact]
     public void LoadCorrectlyTest()
     {
         // Arrange
@@ -46,11 +47,11 @@ public class HappyFlowTests : TestBase
         var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
         // Assert
-        Assert.IsNotNull(converter.Documentation);
-        Assert.IsTrue(converter.Documentation.Members.Any());
+        Assert.NotNull(converter.Documentation);
+        Assert.True(converter.Documentation.Members.Any());
     }
 
-    [TestMethod]
+    [Fact]
     public void ECMAScript5_CompileTest()
     {
         // Arrange
@@ -63,7 +64,7 @@ public class HappyFlowTests : TestBase
         WriteToFile(script, GetFilePath(SourcePath + "models.es5.js"));
     }
 
-    [TestMethod]
+    [Fact]
     public void ECMAScript5_WithUnderscore_CompileTest()
     {
         // Arrange
@@ -78,7 +79,7 @@ public class HappyFlowTests : TestBase
         WriteToFile(script, GetFilePath(SourcePath + "models.es5.map.js"));
     }
 
-    [TestMethod]
+    [Fact]
     public void ECMAScript6_CompileTest()
     {
         // Arrange
@@ -90,7 +91,7 @@ public class HappyFlowTests : TestBase
         WriteToFile(script, GetFilePath(SourcePath + "models.es6.js"));
     }
 
-    [TestMethod]
+    [Fact]
     public void Typescript_CompileTest()
     {
         // Arrange
@@ -103,7 +104,7 @@ public class HappyFlowTests : TestBase
         WriteToFile(script, GetFilePath(SourcePath + "models.latest.ts"));
     }
 
-    [TestMethod]
+    [Fact]
     public void Typescript_WithoutComments_CompileTest()
     {
         // Arrange

@@ -14,10 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sushi.Documentation;
-using Sushi.Extensions;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Sushi.Tests.Extensions;
+using Xunit;
 
 #endregion
 
@@ -25,23 +25,23 @@ namespace Sushi.Tests.Documentation;
 
 public abstract class XmlSummaryDescriptorTests
 {
-	[TestClass]
-	public class Constructor : XmlSummaryDescriptorTests
+	
+	public sealed class Constructor : XmlSummaryDescriptorTests
 	{
-		[TestMethod]
+		[Fact]
 		public void Constructor_EmptyName_ShouldThrowTest()
 		{
 			// Arrange
 			var name = string.Empty;
 
 			// Act & Assert
-			Assert.ThrowsException<ArgumentNullException>(() => new XmlSummaryDescriptor(
+			Assert.Throws<ArgumentNullException>(() => new XmlSummaryDescriptor(
 				name,
 				ReferenceType.Property,
 				new Dictionary<string, string>()));
 		}
 
-		[TestMethod]
+		[Fact]
 		public void Constructor_Property_ShouldInitializeCorrectlyTest()
 		{
 			// Arrange
@@ -56,18 +56,18 @@ public abstract class XmlSummaryDescriptorTests
 			var descriptor = new XmlSummaryDescriptor(name, ReferenceType.Property, xmlDocValues);
 
 			// Assert
-			Assert.IsNotNull(descriptor);
-			Assert.AreEqual(name, descriptor.RawName);
-			Assert.AreEqual(xmlDocValues, descriptor.Values);
-			Assert.AreEqual(summary, descriptor.Summary);
-			Assert.AreEqual(ReferenceType.Property, descriptor.FieldType);
-			Assert.IsFalse(descriptor.IsInherited);
-			Assert.AreEqual(property.Name.Split(".").Last(), descriptor.Name);
-			Assert.AreEqual(nameof(PersonViewModel), descriptor.DeclaringTypeName);
-			Assert.AreEqual(type.Namespace, descriptor.Namespace);
+			Assert.NotNull(descriptor);
+			Assert.Equal(name, descriptor.RawName);
+			Assert.Equal(xmlDocValues, descriptor.Values);
+			Assert.Equal(summary, descriptor.Summary);
+			Assert.Equal(ReferenceType.Property, descriptor.FieldType);
+			Assert.False(descriptor.IsInherited);
+			Assert.Equal(property.Name.Split(".").Last(), descriptor.Name);
+			Assert.Equal(nameof(PersonViewModel), descriptor.DeclaringTypeName);
+			Assert.Equal(type.Namespace, descriptor.Namespace);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void Constructor_Type_ShouldInitializeCorrectlyTest()
 		{
 			// Arrange
@@ -81,18 +81,18 @@ public abstract class XmlSummaryDescriptorTests
 			var descriptor = new XmlSummaryDescriptor(name, ReferenceType.Type, xmlDocValues);
 
 			// Assert
-			Assert.IsNotNull(descriptor);
-			Assert.AreEqual(name, descriptor.RawName);
-			Assert.AreEqual(xmlDocValues, descriptor.Values);
-			Assert.AreEqual(summary, descriptor.Summary);
-			Assert.AreEqual(ReferenceType.Type, descriptor.FieldType);
-			Assert.IsFalse(descriptor.IsInherited);
-			Assert.AreEqual(nameof(PersonViewModel), descriptor.Name);
-			Assert.AreEqual(nameof(PersonViewModel), descriptor.DeclaringTypeName);
-			Assert.AreEqual(type.Namespace, descriptor.Namespace);
+			Assert.NotNull(descriptor);
+			Assert.Equal(name, descriptor.RawName);
+			Assert.Equal(xmlDocValues, descriptor.Values);
+			Assert.Equal(summary, descriptor.Summary);
+			Assert.Equal(ReferenceType.Type, descriptor.FieldType);
+			Assert.False(descriptor.IsInherited);
+			Assert.Equal(nameof(PersonViewModel), descriptor.Name);
+			Assert.Equal(nameof(PersonViewModel), descriptor.DeclaringTypeName);
+			Assert.Equal(type.Namespace, descriptor.Namespace);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void Constructor_UnsupportedType_ShouldNotMapTest()
 		{
 			// Arrange
@@ -109,18 +109,18 @@ public abstract class XmlSummaryDescriptorTests
 			var undefined = new XmlSummaryDescriptor(name, ReferenceType.Undefined, xmlDocValues);
 
 			// Assert
-			Assert.IsTrue(new[] { @namespace, error, undefined }.All(x => x != null));
-			Assert.IsTrue(new[] { @namespace.Name, error.Name, undefined.Name }.All(x => x.IsEmpty()));
-			Assert.IsTrue(new[] { @namespace.DeclaringTypeName, error.DeclaringTypeName, undefined.DeclaringTypeName }
+			Assert.True(new[] { @namespace, error, undefined }.All(x => x != null));
+			Assert.True(new[] { @namespace.Name, error.Name, undefined.Name }.All(x => x.IsEmpty()));
+			Assert.True(new[] { @namespace.DeclaringTypeName, error.DeclaringTypeName, undefined.DeclaringTypeName }
 				.All(x => x.IsEmpty()));
-			Assert.IsTrue(new[] { @namespace.Namespace, error.Namespace, undefined.Namespace }.All(x => x.IsEmpty()));
+			Assert.True(new[] { @namespace.Namespace, error.Namespace, undefined.Namespace }.All(x => x.IsEmpty()));
 		}
 	}
 
-	[TestClass]
-	public class Equality : XmlSummaryDescriptorTests
+	
+	public sealed class Equality : XmlSummaryDescriptorTests
 	{
-		[TestMethod]
+		[Fact]
 		public void Equality_Type_ShouldMatchTest()
 		{
 			// Arrange
@@ -139,12 +139,12 @@ public abstract class XmlSummaryDescriptorTests
 			var isNull = descriptor1.IsEqualTo(null);
 
 			// Assert
-			Assert.IsTrue(areEqual);
-			Assert.IsFalse(areNotEqual);
-			Assert.IsFalse(isNull);
+			Assert.True(areEqual);
+			Assert.False(areNotEqual);
+			Assert.False(isNull);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualityOperator_Type_ShouldMatchTest()
 		{
 			// Arrange
@@ -158,12 +158,12 @@ public abstract class XmlSummaryDescriptorTests
 			var isNotNull = descriptor.IsSameType(null);
 
 			// Assert
-			Assert.IsTrue(areEqual);
-			Assert.IsTrue(areNotEqual);
-			Assert.IsFalse(isNotNull);
+			Assert.True(areEqual);
+			Assert.True(areNotEqual);
+			Assert.False(isNotNull);
 		}
 
-		[TestMethod]
+		[Fact]
 		public void EqualityOperator_Descriptor_ShouldMatchTest()
 		{
 			// Arrange
@@ -176,8 +176,8 @@ public abstract class XmlSummaryDescriptorTests
 			var areNotEqual = descriptor != typeof(SchoolViewModel);
 
 			// Assert
-			Assert.IsTrue(areEqual);
-			Assert.IsTrue(areNotEqual);
+			Assert.True(areEqual);
+			Assert.True(areNotEqual);
 		}
 	}
 }

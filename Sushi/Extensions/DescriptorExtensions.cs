@@ -13,12 +13,12 @@ using Sushi.Descriptors;
 
 namespace Sushi.Extensions;
 
-public static class DescriptorExtensions
+internal static class DescriptorExtensions
 {
     /// <summary>
     ///		Flatten the <see cref="ClassDescriptor"/> tree to a flat list.
     /// </summary>
-    public static IEnumerable<ClassDescriptor> Flatten(this IEnumerable<ClassDescriptor> tree)
+    internal static IEnumerable<ClassDescriptor> Flatten(this IEnumerable<ClassDescriptor> tree)
     {
         foreach (var cd in tree)
         {
@@ -28,7 +28,7 @@ public static class DescriptorExtensions
         }
     }
     
-    public static IEnumerable<ClassDescriptor> BuildTree(this IEnumerable<ClassDescriptor> values)
+    internal static IEnumerable<ClassDescriptor> BuildTree(this IEnumerable<ClassDescriptor> values)
     {
         var flat = values.ToList();
         var dict = flat.ToDictionary(x => x.Type, x => x);
@@ -63,7 +63,7 @@ public static class DescriptorExtensions
         return tree;
     }
 
-    public static bool HasParameterizedSuperConstructor(this ClassDescriptor tree)
+    internal static bool HasParameterizedSuperConstructor(this ClassDescriptor tree)
     {
         var descriptor = tree;
         while (descriptor != null)

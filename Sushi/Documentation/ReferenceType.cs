@@ -1,6 +1,6 @@
 ﻿namespace Sushi.Documentation;
 
-public enum ReferenceType
+internal enum ReferenceType
 {
     /// <summary>
     ///     <see cref="Undefined"/> field type
@@ -43,12 +43,12 @@ public enum ReferenceType
     Error = 7
 }
 
-public static class ReferenceTypeExtensions
+internal static class ReferenceTypeExtensions
 {
     /// <summary>
     ///		What <see cref="ReferenceType"/> belongs to the given <paramref name="specifier"/>.
     /// </summary>
-    public static ReferenceType GetFieldType(this string specifier)
+    internal static ReferenceType GetFieldType(this string specifier)
     {
         return specifier switch
         {

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sushi", "Sushi\Sushi.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sushi.Tests", "Sushi.Tests\Sushi.Tests.csproj", "{B02E945F-125A-41BD-8387-FBE60E511DDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sushi.TestModels", "Sushi.TestModels\Sushi.TestModels.csproj", "{0FF81C07-F4A8-4C9C-BD4C-EA433B8F2740}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B02E945F-125A-41BD-8387-FBE60E511DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B02E945F-125A-41BD-8387-FBE60E511DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B02E945F-125A-41BD-8387-FBE60E511DDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FF81C07-F4A8-4C9C-BD4C-EA433B8F2740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FF81C07-F4A8-4C9C-BD4C-EA433B8F2740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FF81C07-F4A8-4C9C-BD4C-EA433B8F2740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FF81C07-F4A8-4C9C-BD4C-EA433B8F2740}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

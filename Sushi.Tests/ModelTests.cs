@@ -13,49 +13,48 @@
 
 using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sushi.Descriptors;
-using Sushi.Extensions;
-using Sushi.Tests.Models;
+using Sushi.TestModels;
+using Sushi.Tests.Extensions;
+using Xunit;
 
 #endregion
 
 namespace Sushi.Tests;
 
-[TestClass]
-public class ModelTests
+
+public sealed class ModelTests
 {
 	private readonly Assembly _assembly = typeof(PersonViewModel).Assembly;
 
-	[TestMethod]
+	[Fact]
 	public void ModelsInAssemblyTest()
 	{
 		var converter = new SushiConverter(_assembly);
-		Assert.IsTrue(converter.Models.Count > 0, "Expected at least one model to be available.");
-		Assert.IsTrue(converter.Models.Any(x => x.Name == nameof(ViewModel)), "Expected at least one ");
+		Assert.True(converter.Models.Count > 0, "Expected at least one model to be available.");
+		Assert.True(converter.Models.Any(x => x.Name == nameof(ViewModel)), "Expected at least one ");
 	}
 
-	[TestMethod]
+	[Fact]
 	public void ModelPropertyRecognitionTest()
 	{
 		var converter = new SushiConverter(_assembly);
 
 		var personModel = converter.Models.SingleOrDefault(x => x.Name == nameof(PersonViewModel));
-		Assert.IsNotNull(personModel);
+		Assert.NotNull(personModel);
 
 		// PersonModel has 2 properties
-		Assert.AreEqual(4, personModel.Properties.Count);
+		Assert.Equal(4, personModel.Properties.Count);
 
 		// The name property
 		var name = personModel.Properties[nameof(PersonViewModel.Name)];
-		Assert.IsNotNull(name);
+		Assert.NotNull(name);
 
 		// The surname property
 		var surname = personModel.Properties[nameof(PersonViewModel.Surname)];
-		Assert.IsNotNull(surname);
+		Assert.NotNull(surname);
 	}
 
-	[TestMethod]
+	[Fact]
 	public void GenericModelTest()
 	{
 		// Arrange
@@ -66,10 +65,10 @@ public class ModelTests
 
 		// Assert
 		var descriptor = sushi.Models.Single();
-		Assert.AreEqual("GenericStandalone", descriptor.Name);
-		Assert.AreEqual(1, descriptor.GenericParameterNames.Count);
-		Assert.AreEqual("TEntry", descriptor.GenericParameterNames.Single());
+		Assert.Equal("GenericStandalone", descriptor.Name);
+		Assert.Single(descriptor.GenericParameterNames);
+		Assert.Equal("TEntry", descriptor.GenericParameterNames.Single());
 
-		Assert.IsFalse(typescript.ToString().IsEmpty());
+		Assert.False(typescript.ToString().IsEmpty());
 	}
 }

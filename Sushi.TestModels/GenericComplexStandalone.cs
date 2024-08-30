@@ -1,7 +1,7 @@
-// /***************************************************************************\
-// Module Name:       GenericStandalone.cs
+﻿// /***************************************************************************\
+// Module Name:       GenericComplexStandalone.cs
 // Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 14-05-2023
+// Author:                   Jeroen Vorsselman 15-05-2023
 // Copyright:              Goblin workshop @ 2023
 // 
 // THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
@@ -9,28 +9,28 @@
 // WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 // \***************************************************************************/
 
-#region
-
-using System.Collections.Generic;
 using Sushi.Attributes;
 
-#endregion
-
-namespace Sushi.Tests.Models;
+namespace Sushi.TestModels;
 
 /// <summary>
-///     A Generic class for a collection and a total amount of available entries.
+///     Another Generic class for a collection and a total amount of available entries.
 /// </summary>
 [ConvertToScript]
-public sealed class GenericStandalone<TEntry>
+public sealed class GenericComplexStandalone<TFirst, TSecond>
 {
 	/// <summary>
-	///     The list of values.
+	///     The first list of values.
 	/// </summary>
-	public List<TEntry> Values { get; set; } = new();
+	public List<TFirst> First { get; set; } = new();
+	
+	/// <summary>
+	///     The second list of values.
+	/// </summary>
+	public List<TSecond> Second { get; set; } = new();
 
 	/// <summary>
 	///     The total amount of available entries.
 	/// </summary>
 	public long TotalAmount { get; set; }
-}
+}    

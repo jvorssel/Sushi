@@ -20,7 +20,7 @@ namespace Sushi.Documentation;
 /// <summary>
 ///     Describes xml-summary about a field, property or method.
 /// </summary>
-public sealed class XmlSummaryDescriptor
+internal sealed class XmlSummaryDescriptor
 {
     /// <summary>
     ///     <see cref="Dictionary{TKey,TValue}" /> that describes direct child-elements of the member.

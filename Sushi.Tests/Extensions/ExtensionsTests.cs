@@ -1,5 +1,9 @@
 namespace Sushi.Tests.Extensions;
 
-public abstract class ExtensionsTests
+public static class ExtensionsTests
 {
+    internal static bool IsEmpty(this string value)
+    {
+        return string.IsNullOrWhiteSpace(value);
+    }
 }
