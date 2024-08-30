@@ -1,6 +1,6 @@
 ﻿namespace Sushi.Documentation;
 
-internal enum ReferenceType
+public enum ReferenceType
 {
     /// <summary>
     ///     <see cref="Undefined"/> field type

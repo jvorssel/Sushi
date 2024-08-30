@@ -14,7 +14,7 @@ public abstract class ModelConverter : IConvertModels
     protected string Indent { get; }
     private PropertyNameCasing CasingStyle { get; }
 
-    internal readonly XmlDocumentationReader? XmlDocument;
+    protected readonly XmlDocumentationReader? XmlDocument;
     public IReadOnlyCollection<ClassDescriptor> Models { get; }
     public IReadOnlyCollection<EnumDescriptor> EnumModels { get; }
 

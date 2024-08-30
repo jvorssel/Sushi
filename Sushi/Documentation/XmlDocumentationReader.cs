@@ -14,7 +14,7 @@ namespace Sushi.Documentation;
 ///     its <see cref="Members" /> with <see cref="XmlSummaryDescriptor" />(s) that
 ///     describe property / field / method / class documentation.
 /// </summary>
-internal sealed class XmlDocumentationReader
+public sealed class XmlDocumentationReader
 {
     private readonly XDocument _doc;
 

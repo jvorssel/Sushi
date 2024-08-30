@@ -16,7 +16,7 @@ public sealed class SushiConverter : IConvertModels
     public IReadOnlyCollection<ClassDescriptor> Models { get; }
     public IReadOnlyCollection<EnumDescriptor> EnumModels { get; }
 
-    internal XmlDocumentationReader? Documentation { get; private set; }
+    public XmlDocumentationReader? Documentation { get; private set; }
 
     /// <summary>
     ///     Initialize a new <see cref="SushiConverter" /> with given <paramref name="types" /> to convert.
