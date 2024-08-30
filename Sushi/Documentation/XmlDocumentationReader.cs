@@ -60,14 +60,12 @@ public sealed class XmlDocumentationReader
     private bool TryParseXmlDoc()
     {
         var root = _doc.Element("doc");
-        if (root == null)
-            return false;
 
-        var assembly = root.Element("assembly");
+        var assembly = root?.Element("assembly");
         if (assembly == null)
             return false;
 
-        var membersElement = root.Element("members");
+        var membersElement = root?.Element("members");
         if (membersElement == null)
             return false;
 

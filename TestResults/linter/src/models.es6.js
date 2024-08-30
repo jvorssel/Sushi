@@ -1,5 +1,5 @@
 /**
- * Sushi.Tests.Models.ConstrainedGeneric`1
+ * Sushi.TestModels.ConstrainedGeneric`1
  * @template {any} T
  */
 export class ConstrainedGeneric {
@@ -20,7 +20,7 @@ export class ConstrainedGeneric {
 
 /**
  * A class with const values.
- * Sushi.Tests.Models.ConstValues
+ * Sushi.TestModels.ConstValues
  */
 export class ConstValues {
 
@@ -53,7 +53,7 @@ export class ConstValues {
 }
 
 /**
- * Sushi.Tests.Models.GenericComplexStandalone`2
+ * Sushi.TestModels.GenericComplexStandalone`2
  * @template {any} TFirst
  * @template {any} TSecond
  */
@@ -76,7 +76,7 @@ export class GenericComplexStandalone {
 }
 
 /**
- * Sushi.Tests.Models.GenericStandalone`1
+ * Sushi.TestModels.GenericStandalone`1
  * @template {any} TEntry
  */
 export class GenericStandalone {
@@ -97,7 +97,7 @@ export class GenericStandalone {
 
 /**
  * .
- * Sushi.Tests.Models.ScriptModel
+ * Sushi.TestModels.ScriptModel
  */
 export class ScriptModel {
 
@@ -113,7 +113,7 @@ export class ScriptModel {
 
 /**
  * The view model base class.
- * Sushi.Tests.Models.ViewModel
+ * Sushi.TestModels.ViewModel
  * @extends ScriptModel
  */
 export class ViewModel extends ScriptModel {
@@ -143,7 +143,7 @@ export class ViewModel extends ScriptModel {
 }
 
 /**
- * Sushi.Tests.Models.BaseViewModel
+ * Sushi.TestModels.BaseViewModel
  * @extends ViewModel
  */
 export class BaseViewModel extends ViewModel {
@@ -167,7 +167,7 @@ export class BaseViewModel extends ViewModel {
 }
 
 /**
- * Sushi.Tests.Models.InheritedViewModel
+ * Sushi.TestModels.InheritedViewModel
  * @extends BaseViewModel
  */
 export class InheritedViewModel extends BaseViewModel {
@@ -194,7 +194,7 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * For testing nullable properties.
- * Sushi.Tests.Models.NullablePropertiesViewModel
+ * Sushi.TestModels.NullablePropertiesViewModel
  * @extends ViewModel
  */
 export class NullablePropertiesViewModel extends ViewModel {
@@ -231,7 +231,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
- * Sushi.Tests.Models.PersonViewModel
+ * Sushi.TestModels.PersonViewModel
  * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
@@ -274,7 +274,7 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
- * Sushi.Tests.Models.StudentViewModel
+ * Sushi.TestModels.StudentViewModel
  * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
@@ -305,7 +305,7 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
- * Sushi.Tests.Models.SchoolViewModel
+ * Sushi.TestModels.SchoolViewModel
  * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
@@ -380,7 +380,7 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
- * Sushi.Tests.Models.TypeModel
+ * Sushi.TestModels.TypeModel
  * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
@@ -427,77 +427,6 @@ export class TypeModel extends ViewModel {
         this.students = value.students;
         this.studentPerClass = value.studentPerClass;
         this.readonlyString = value.readonlyString;
-    }
-    static mapFrom(obj) {
-        return Object.assign(new {model.Name}(), obj);
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- */
-export class AbstractBaseModel {
-    Name;
-
-    constructor(value) {
-        if (!(value instanceof Object))
-            return;
-
-        this.name = value.name;
-    }
-    static mapFrom(obj) {
-        return Object.assign(new {model.Name}(), obj);
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+ChildModel
- * @extends AbstractBaseModel
- */
-export class ChildModel extends AbstractBaseModel {
-    Surname;
-
-    constructor(value) {
-        super(value);
-
-        if (!(value instanceof Object))
-            return;
-
-        this.surname = value.surname;
-    }
-    static mapFrom(obj) {
-        return Object.assign(new {model.Name}(), obj);
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- */
-export class CtorFixModel {
-    Name;
-
-    constructor(value) {
-        if (!(value instanceof Object))
-            return;
-
-        this.name = value.name;
-    }
-    static mapFrom(obj) {
-        return Object.assign(new {model.Name}(), obj);
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- */
-export class NoXmlDocumentationModel {
-    Name;
-
-    constructor(value) {
-        if (!(value instanceof Object))
-            return;
-
-        this.name = value.name;
     }
     static mapFrom(obj) {
         return Object.assign(new {model.Name}(), obj);

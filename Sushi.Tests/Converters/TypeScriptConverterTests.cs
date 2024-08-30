@@ -190,24 +190,22 @@ public abstract class TypeScriptConverterTests
             Assert.Equal("boolean | null", result);
         }
 
-        [Fact]
-        public void ResolveScriptType_WithPrefix_ShouldFormatCorrectly()
+        [Theory]
+        [InlineData(typeof(ScriptModel), "vm.ScriptModel")]
+        [InlineData(typeof(ScriptModel[]), "Array<vm.ScriptModel>")]
+        [InlineData(typeof(GenericStandalone<ScriptModel>[]), "Array<vm.GenericStandalone<vm.ScriptModel>>")]
+        [InlineData(typeof(bool), "boolean")]
+        public void ResolveScriptType_WithPrefix_ShouldFormatCorrectly(Type type, string script)
         {
             // Arrange
             var converter = new SushiConverter(typeof(ScriptModel), typeof(GenericStandalone<>)).TypeScript();
             const string prefix = "vm.";
 
             // Act
-            var classType = converter.ResolveScriptType(typeof(ScriptModel), prefix);
-            var arrayType = converter.ResolveScriptType(typeof(ScriptModel[]), prefix);
-            var genericType = converter.ResolveScriptType(typeof(GenericStandalone<ScriptModel>[]), prefix);
-            var nativeType = converter.ResolveScriptType(typeof(bool), prefix);
+            var scriptType = converter.ResolveScriptType(type, prefix);
 
             // Assert
-            Assert.Equal("vm.ScriptModel", classType);
-            Assert.Equal("Array<vm.ScriptModel>", arrayType);
-            Assert.Equal("Array<vm.GenericStandalone<vm.ScriptModel>>", genericType);
-            Assert.Equal("boolean", nativeType);
+            Assert.Equal(script, scriptType);
         }
 
         [Fact]

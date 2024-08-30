@@ -1,6 +1,6 @@
 ﻿namespace Sushi.Descriptors;
 
-public sealed class EnumDescriptor
+public sealed class EnumDescriptor : ITypeDescriptor
 {
     public Type Type { get; }
     public string Name => Type.Name;

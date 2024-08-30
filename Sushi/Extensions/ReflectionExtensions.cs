@@ -14,6 +14,7 @@
 using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
+using Sushi.Descriptors;
 
 #endregion
 
@@ -201,32 +202,43 @@ internal static class ReflectionExtensions
     /// <summary>
     ///		Get the first base type if generic or array.
     /// </summary>
-    internal static Type GetBaseType(this Type type)
+    internal static Type? GetBaseType(this Type type, IReadOnlyCollection<ITypeDescriptor>? descriptors = null,
+        bool deep = true)
     {
+        var currentType = type;
+
         while (true)
         {
-            if (type.IsArray) return type.GetElementType();
+            if (descriptors != null && descriptors.Any(x => x.Type == currentType))
+                return currentType;
 
-            if (!type.IsTaskType(out var innerType) || innerType == null)
-                return type.IsGenericType ? type.GetGenericArguments()[0] : type;
+            if (currentType is { IsGenericType: false, IsArray: false, IsGenericTypeDefinition: false })
+            {
+                if (descriptors != null && descriptors.All(x => x.Type != currentType))
+                    return null;
 
-            type = innerType;
+                return currentType;
+            }
+
+            if (currentType.IsArray)
+            {
+                currentType = currentType.GetElementType() ?? currentType;
+                if (!deep)
+                    return currentType;
+            }
+            else if (currentType.IsGenericType)
+            {
+                currentType = currentType.GetGenericArguments().First();
+                if (!deep)
+                    return currentType;
+            }
+            else
+            {
+                return currentType;
+            }
         }
     }
 
-    /// <summary>
-    ///		If the given <see cref="Type"/> is a Task. 
-    /// </summary>
-    private static bool IsTaskType(this Type type, out Type? innerType)
-    {
-        innerType = null;
-
-        if (!type.IsGenericType) return false;
-        var genericDefinition = type.GetGenericTypeDefinition();
-        if (genericDefinition != typeof(Task<>)) return false;
-        innerType = type.GetGenericArguments()[0];
-        return true;
-    }
 
     internal static bool IsPropertyHidingBaseClassProperty(this Type? derivedType, string propertyName)
     {

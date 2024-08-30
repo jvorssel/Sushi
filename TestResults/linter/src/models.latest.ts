@@ -7,7 +7,7 @@ export enum Gender {
 }
 
 /**
- * Sushi.Tests.Models.ConstrainedGeneric`1
+ * Sushi.TestModels.ConstrainedGeneric`1
  * @template {any} T
  */
 export class ConstrainedGeneric<T> {
@@ -22,7 +22,7 @@ export class ConstrainedGeneric<T> {
 
 /**
  * A class with const values.
- * Sushi.Tests.Models.ConstValues
+ * Sushi.TestModels.ConstValues
  */
 export class ConstValues {
 
@@ -48,7 +48,7 @@ export class ConstValues {
 }
 
 /**
- * Sushi.Tests.Models.GenericComplexStandalone`2
+ * Sushi.TestModels.GenericComplexStandalone`2
  * @template {any} TFirst
  * @template {any} TSecond
  */
@@ -65,7 +65,7 @@ export class GenericComplexStandalone<TFirst, TSecond> {
 }
 
 /**
- * Sushi.Tests.Models.GenericStandalone`1
+ * Sushi.TestModels.GenericStandalone`1
  * @template {any} TEntry
  */
 export class GenericStandalone<TEntry> {
@@ -80,7 +80,7 @@ export class GenericStandalone<TEntry> {
 
 /**
  * .
- * Sushi.Tests.Models.ScriptModel
+ * Sushi.TestModels.ScriptModel
  */
 export class ScriptModel {
 
@@ -89,7 +89,7 @@ export class ScriptModel {
 
 /**
  * The view model base class.
- * Sushi.Tests.Models.ViewModel
+ * Sushi.TestModels.ViewModel
  * @extends ScriptModel
  */
 export class ViewModel extends ScriptModel {
@@ -115,7 +115,7 @@ export class ViewModel extends ScriptModel {
 }
 
 /**
- * Sushi.Tests.Models.BaseViewModel
+ * Sushi.TestModels.BaseViewModel
  * @extends ViewModel
  */
 export class BaseViewModel extends ViewModel {
@@ -133,7 +133,7 @@ export class BaseViewModel extends ViewModel {
 }
 
 /**
- * Sushi.Tests.Models.InheritedViewModel
+ * Sushi.TestModels.InheritedViewModel
  * @extends BaseViewModel
  */
 export class InheritedViewModel extends BaseViewModel {
@@ -155,7 +155,7 @@ export class InheritedViewModel extends BaseViewModel {
 
 /**
  * For testing nullable properties.
- * Sushi.Tests.Models.NullablePropertiesViewModel
+ * Sushi.TestModels.NullablePropertiesViewModel
  * @extends ViewModel
  */
 export class NullablePropertiesViewModel extends ViewModel {
@@ -188,7 +188,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 
 /**
  * The PersonViewModel that represents a Person.
- * Sushi.Tests.Models.PersonViewModel
+ * Sushi.TestModels.PersonViewModel
  * @extends ViewModel
  */
 export class PersonViewModel extends ViewModel {
@@ -197,7 +197,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "34837ead-3540-4553-bf24-677c4543a803";
+    identifier: string = "ad61aefe-4900-404a-8670-35f387f8e8d2";
 
     /**
      * The Name of the person.
@@ -229,7 +229,7 @@ export class PersonViewModel extends ViewModel {
 
 /**
  * Represents a Student in a school.
- * Sushi.Tests.Models.StudentViewModel
+ * Sushi.TestModels.StudentViewModel
  * @extends PersonViewModel
  */
 export class StudentViewModel extends PersonViewModel {
@@ -256,7 +256,7 @@ export class StudentViewModel extends PersonViewModel {
 
 /**
  * Basic information about a School.
- * Sushi.Tests.Models.SchoolViewModel
+ * Sushi.TestModels.SchoolViewModel
  * @extends ViewModel
  */
 export class SchoolViewModel extends ViewModel {
@@ -334,7 +334,7 @@ export class SchoolViewModel extends ViewModel {
 
 /**
  * Simple model to verify complex types.
- * Sushi.Tests.Models.TypeModel
+ * Sushi.TestModels.TypeModel
  * @extends ViewModel
  */
 export class TypeModel extends ViewModel {
@@ -355,7 +355,7 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "73175868-f37f-4615-9c9c-fc6bf682dca2";
+    override guid: string = "f80e9e40-26dd-4cde-bb89-15ca3d70234e";
 
     /**
      * A DateTime instance.
@@ -383,50 +383,5 @@ export class TypeModel extends ViewModel {
         if (value.students !== undefined) this.students = value.students;
         if (value.studentPerClass !== undefined) this.studentPerClass = value.studentPerClass;
     }
-}
-
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- */
-export class AbstractBaseModel {
-    name: string | null = null;
-
-    constructor(value: Partial<AbstractBaseModel> = {}) {
-        if (value.name !== undefined) this.name = value.name;
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+ChildModel
- * @extends AbstractBaseModel
- */
-export class ChildModel extends AbstractBaseModel {
-    surname: string | null = null;
-
-    constructor(value: Partial<ChildModel> = {}) {
-        super(value);
-
-        if (value.surname !== undefined) this.surname = value.surname;
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- */
-export class CtorFixModel {
-    name: string | null = null;
-
-    constructor(value: Partial<CtorFixModel> = {}) {
-        if (value.name !== undefined) this.name = value.name;
-    }
-}
-
-/**
- * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- */
-export class NoXmlDocumentationModel {
-    name: string | null = null;
-
-
 }
 

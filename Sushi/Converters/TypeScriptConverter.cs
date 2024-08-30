@@ -75,8 +75,9 @@ public sealed class TypeScriptConverter : ModelConverter
     public string ResolveScriptType(Type type, string prefix = "", bool isNullable = false)
     {
         // Check if any of the available models have the same name and should be used.
+        var baseType = (type.IsGenericType ? type.GetGenericTypeDefinition() : type);
         var classModel =
-            Models.SingleOrDefault(x => x.Type == (type.IsGenericType ? type.GetGenericTypeDefinition() : type));
+            Models.SingleOrDefault(x => x.Type == baseType);
 
         var genericTypeArgs = type.IsGenericType
             ? GetGenericTypeArguments(type, prefix, isNullable).ToList()
@@ -94,7 +95,7 @@ public sealed class TypeScriptConverter : ModelConverter
             return type.Name;
 
         // Array
-        var actualType = type.GetBaseType();
+        var actualType = type.GetBaseType(deep: false);
         var isDictionary = type.IsDictionary();
         if (type.IsArrayType() && !isDictionary)
         {

@@ -18,21 +18,24 @@ using System.Reflection;
 using Sushi.TestModels;
 using Xunit;
 
-
 #endregion
 
 namespace Sushi.Tests;
 
-
 public sealed class HappyFlowTests : TestBase
 {
-    private const string SourcePath = @"linter/src/";
+    private const string SourcePath = @"TestResults\linter\src\";
 
     private static string GetFilePath(string fileName)
     {
         var assemblyCodeBase = Assembly.GetExecutingAssembly().Location;
-        var testResultsPath = Path.GetDirectoryName(assemblyCodeBase);
-        return testResultsPath + $"/{fileName}";
+        var solutionFolderName = "ModelConverter";
+
+        var solutionFolder =
+            assemblyCodeBase.Substring(0, assemblyCodeBase.IndexOf(solutionFolderName) + solutionFolderName.Length);
+
+        var result = Path.Combine(solutionFolder, SourcePath, fileName);
+        return result;
     }
 
     private string XmlDocPath => Path.Combine(Environment.CurrentDirectory, XmlFileName);
@@ -61,7 +64,7 @@ public sealed class HappyFlowTests : TestBase
         // Act
         var script = converter.ECMAScript5().ToString();
 
-        WriteToFile(script, GetFilePath(SourcePath + "models.es5.js"));
+        WriteToFile(script, GetFilePath("models.es5.js"));
     }
 
     [Fact]
@@ -76,7 +79,7 @@ public sealed class HappyFlowTests : TestBase
             .IncludeUnderscoreMapper()
             .ToString();
 
-        WriteToFile(script, GetFilePath(SourcePath + "models.es5.map.js"));
+        WriteToFile(script, GetFilePath("models.es5.map.js"));
     }
 
     [Fact]
@@ -88,7 +91,7 @@ public sealed class HappyFlowTests : TestBase
 
         // Act
         var script = converter.ECMAScript6().ToString();
-        WriteToFile(script, GetFilePath(SourcePath + "models.es6.js"));
+        WriteToFile(script, GetFilePath("models.es6.js"));
     }
 
     [Fact]
@@ -101,7 +104,7 @@ public sealed class HappyFlowTests : TestBase
         // Act
         var script = converter.TypeScript().ToString();
 
-        WriteToFile(script, GetFilePath(SourcePath + "models.latest.ts"));
+        WriteToFile(script, GetFilePath("models.latest.ts"));
     }
 
     [Fact]
@@ -117,6 +120,6 @@ public sealed class HappyFlowTests : TestBase
         var script = converter.TypeScript().ToString();
 
         // 3) The resulting script can be written to a file(stream).
-        WriteToFile(script, GetFilePath(SourcePath + "models.no-comments.ts"));
+        WriteToFile(script, GetFilePath("models.no-comments.ts"));
     }
 }

@@ -66,31 +66,17 @@ public static class Extensions
 
     public static string ToScriptType(this NativeType type)
     {
-        switch (type)
+        return type switch
         {
-            case NativeType.Undefined:
-                return "undefined";
-            case NativeType.Bool:
-                return "boolean";
-            case NativeType.Enum:
-            case NativeType.Byte:
-            case NativeType.Short:
-            case NativeType.Long:
-            case NativeType.Int:
-            case NativeType.Double:
-            case NativeType.Float:
-            case NativeType.Decimal:
-                return "number";
-            case NativeType.Object:
-                return "any";
-            case NativeType.Char:
-            case NativeType.String:
-                return "string";
-            case NativeType.Null:
-                return "null";
-            default:
-                throw new ArgumentOutOfRangeException(nameof(type), type, null);
-        }
+            NativeType.Undefined => "undefined",
+            NativeType.Bool => "boolean",
+            NativeType.Enum or NativeType.Byte or NativeType.Short or NativeType.Long or NativeType.Int
+                or NativeType.Double or NativeType.Float or NativeType.Decimal => "number",
+            NativeType.Object => "any",
+            NativeType.Char or NativeType.String => "string",
+            NativeType.Null => "null",
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
     }
 
     internal static HashSet<T> ToHashSet<T>(this IEnumerable<T> source, IEqualityComparer<T>? comparer = null)

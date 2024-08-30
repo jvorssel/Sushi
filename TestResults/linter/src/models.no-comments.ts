@@ -103,7 +103,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "a96efb15-204f-4968-9817-3f21244e1ed0";
+    identifier: string = "3f21249e-2ac0-4d00-afb1-af5dce5dc4fa";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -161,7 +161,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "99b5ebc5-2801-4aba-9926-a6b4d0e87cb0";
+    override guid: string = "794ef58f-0168-4732-ab89-f548c6f9dac7";
     date!: Date | string | null;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
@@ -179,37 +179,5 @@ export class TypeModel extends ViewModel {
         if (value.students !== undefined) this.students = value.students;
         if (value.studentPerClass !== undefined) this.studentPerClass = value.studentPerClass;
     }
-}
-
-export class AbstractBaseModel {
-    name: string | null = null;
-
-    constructor(value: Partial<AbstractBaseModel> = {}) {
-        if (value.name !== undefined) this.name = value.name;
-    }
-}
-
-export class ChildModel extends AbstractBaseModel {
-    surname: string | null = null;
-
-    constructor(value: Partial<ChildModel> = {}) {
-        super(value);
-
-        if (value.surname !== undefined) this.surname = value.surname;
-    }
-}
-
-export class CtorFixModel {
-    name: string | null = null;
-
-    constructor(value: Partial<CtorFixModel> = {}) {
-        if (value.name !== undefined) this.name = value.name;
-    }
-}
-
-export class NoXmlDocumentationModel {
-    name: string | null = null;
-
-
 }
 

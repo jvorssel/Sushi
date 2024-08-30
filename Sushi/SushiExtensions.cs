@@ -8,13 +8,15 @@ public static class SushiExtensions
     /// <summary>
     ///     If the given <paramref name="type" /> is discovered by the <see cref="IConvertModels" />.
     /// </summary>
-    public static bool IsSushiType(this IConvertModels converter, Type type, out Type resolvedType)
+    public static bool IsSushiType(this IConvertModels converter, Type? type, out Type? resolvedType)
     {
-        var actualType = type.GetBaseType();
-        resolvedType = actualType;
+        if (type is null)
+            throw new ArgumentNullException(nameof(type));
 
-        var classExists = converter.Models.Any(x => x.Type == actualType);
-        var enumExists = converter.EnumModels.Any(x => x.Type == actualType);
-        return classExists || enumExists;
+        var classType = type.GetBaseType(converter.Models);
+        var enumType = type.GetBaseType(converter.EnumModels);
+        resolvedType = classType ?? enumType;
+        
+        return resolvedType is not null;
     }
 }

@@ -58,14 +58,11 @@ public abstract class ModelConverter : IConvertModels
     /// </summary>
     public string ApplyCasingStyle(string value)
     {
-        switch (CasingStyle)
+        return CasingStyle switch
         {
-            case PropertyNameCasing.Default:
-                return value;
-            case PropertyNameCasing.CamelCase:
-                return char.ToLowerInvariant(value[0]) + value.Substring(1);
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
+            PropertyNameCasing.Default => value,
+            PropertyNameCasing.CamelCase => char.ToLowerInvariant(value[0]) + value.Substring(1),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

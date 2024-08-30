@@ -24,85 +24,32 @@ public abstract class ReflectionExtensionsTests
     
     public sealed class CreateInstance : ReflectionExtensionsTests
     {
-        [Fact]
-        public void CreateInstance_SimpleViewModel_ShouldInitializeTest()
+        [Theory]
+        [InlineData(typeof(PersonViewModel))]
+        [InlineData(typeof(SchoolViewModel))]
+        [InlineData(typeof(GenericStandalone<string>))]
+        [InlineData(typeof(string))]
+        public void CreateInstance_ShouldInitializeTest(Type type)
         {
-            // Arrange
-            var type = typeof(PersonViewModel);
-
             // Act
             var instance = type.CreateInstance();
 
             // Assert
             Assert.NotNull(instance);
-            Assert.NotNull(instance as PersonViewModel);
+            Assert.IsType(type, instance);
         }
-
-        [Fact]
-        public void CreateInstance_ComplexViewModel_ShouldInitializeTest()
+        
+        [Theory]
+        [InlineData(typeof(GenericStandalone<>))]
+        [InlineData(typeof(ISchoolViewModel))]
+        [InlineData(typeof(ViewModel))]
+        public void CreateInstance_ShouldReturnNullTest(Type type)
         {
-            // Arrange
-            var type = typeof(SchoolViewModel);
-
-            // Act
-            var instance = type.CreateInstance();
-
-            // Assert
-            Assert.NotNull(instance);
-            Assert.NotNull(instance as SchoolViewModel);
-        }
-
-        [Fact]
-        public void CreateInstance_GenericType_ShouldInitializeTest()
-        {
-            // Arrange
-            var type = typeof(GenericStandalone<string>);
-
-            // Act
-            var instance = type.CreateInstance();
-
-            // Assert
-            Assert.NotNull(instance);
-            Assert.NotNull(instance as GenericStandalone<string>);
-        }
-
-        [Fact]
-        public void CreateInstance_GenericTypeDefinition_ShouldReturnNullTest()
-        {
-            // Arrange
-            var type = typeof(GenericStandalone<>);
-
             // Act
             var instance = type.CreateInstance();
 
             // Assert
             Assert.Null(instance);
-        }
-
-        [Fact]
-        public void CreateInstance_Interface_ShouldReturnNullTest()
-        {
-            // Arrange
-            var type = typeof(ISchoolViewModel);
-
-            // Act
-            var result = type.CreateInstance();
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public void CreateInstance_AbstractType_ShouldReturnNullTest()
-        {
-            // Arrange
-            var type = typeof(ViewModel);
-
-            // Act
-            var result = type.CreateInstance();
-
-            // Assert
-            Assert.Null(result);
         }
     }
 
@@ -149,58 +96,42 @@ public abstract class ReflectionExtensionsTests
         }
     }
 
-    
-    public sealed class IsArrayType : ReflectionExtensionsTests
+    public sealed class GetBaseTypeMethod : ReflectionExtensionsTests
     {
-        [Fact]
-        public void IsArrayType_IEnumerable_ReturnTrueTest()
+        [Theory]
+        [InlineData(typeof(Gender))]
+        [InlineData(typeof(Gender[]))]
+        [InlineData(typeof(List<Gender>))]
+        [InlineData(typeof(IEnumerable<Gender[]>))]
+        public void GetBaseType_GenderEnum_ShouldResolveBaseTypeTest(Type source)
         {
             // Arrange
-            var type = typeof(IEnumerable<int>);
-
-            // Act
-            var result = type.IsArrayType();
-
-            // Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void IsArrayType_Array_ReturnTrueTest()
-        {
-            // Arrange
-            var type = typeof(int[]);
-
-            // Act
-            var result = type.IsArrayType();
-
-            // Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public void IsArrayType_String_ReturnFalseTest()
-        {
-            // Arrange
-            var type = typeof(string);
-
-            // Act
-            var result = type.IsArrayType();
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
-        public void IsArrayType_Dictionary_ReturnFalseTest()
-        {
-            // Act
-            var valueType = typeof(Dictionary<string, int>).IsArrayType();
-            var interfaceType = typeof(IDictionary<string, int>).IsArrayType();
+            var expectedType = typeof(Gender);
             
-            // Act & Assert
-            Assert.False(valueType);
-            Assert.False(interfaceType);
+            // Act
+            var result = source.GetBaseType();
+            
+            // Assert
+            Assert.Equal(result, expectedType);
+        }
+    }
+    
+    
+    public sealed class IsArrayTypeMethod : ReflectionExtensionsTests
+    {
+        [Theory]
+        [InlineData(typeof(IEnumerable<int>), true)]
+        [InlineData(typeof(int[]), true)]
+        [InlineData(typeof(string), false)]
+        [InlineData(typeof(Dictionary<string,string>), false)]
+        [InlineData(typeof(IDictionary<string,string>), false)]
+        public void IsArrayTypeTest(Type type, bool expected)
+        {
+            // Act
+            var result = type.IsArrayType();
+
+            // Assert
+            Assert.Equal(expected, result);
         }
     }
 

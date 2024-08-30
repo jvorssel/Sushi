@@ -1,5 +1,5 @@
 /**
- * Sushi.Tests.Models.ConstrainedGeneric`1
+ * Sushi.TestModels.ConstrainedGeneric`1
  * @template {any} T
  */
 function ConstrainedGeneric(obj) {
@@ -17,7 +17,7 @@ ConstrainedGeneric.prototype.mapFrom = function(obj) {
 
 /**
  * A class with const values.
- * Sushi.Tests.Models.ConstValues
+ * Sushi.TestModels.ConstValues
  */
 function ConstValues(obj) {
     let value = obj;
@@ -34,7 +34,7 @@ ConstValues.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Sushi.Tests.Models.GenericComplexStandalone`2
+ * Sushi.TestModels.GenericComplexStandalone`2
  * @template {any} TFirst
  * @template {any} TSecond
  */
@@ -53,7 +53,7 @@ GenericComplexStandalone.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Sushi.Tests.Models.GenericStandalone`1
+ * Sushi.TestModels.GenericStandalone`1
  * @template {any} TEntry
  */
 function GenericStandalone(obj) {
@@ -71,7 +71,7 @@ GenericStandalone.prototype.mapFrom = function(obj) {
 
 /**
  * .
- * Sushi.Tests.Models.ScriptModel
+ * Sushi.TestModels.ScriptModel
  */
 function ScriptModel(obj) {
     let value = obj;
@@ -86,7 +86,7 @@ ScriptModel.prototype.mapFrom = function(obj) {
 
 /**
  * The view model base class.
- * Sushi.Tests.Models.ViewModel
+ * Sushi.TestModels.ViewModel
  * @extends ScriptModel
  */
 function ViewModel(obj) {
@@ -103,7 +103,7 @@ ViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Sushi.Tests.Models.BaseViewModel
+ * Sushi.TestModels.BaseViewModel
  * @extends ViewModel
  */
 function BaseViewModel(obj) {
@@ -121,7 +121,7 @@ BaseViewModel.prototype.mapFrom = function(obj) {
 };
 
 /**
- * Sushi.Tests.Models.InheritedViewModel
+ * Sushi.TestModels.InheritedViewModel
  * @extends BaseViewModel
  */
 function InheritedViewModel(obj) {
@@ -139,7 +139,7 @@ InheritedViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * For testing nullable properties.
- * Sushi.Tests.Models.NullablePropertiesViewModel
+ * Sushi.TestModels.NullablePropertiesViewModel
  * @extends ViewModel
  */
 function NullablePropertiesViewModel(obj) {
@@ -158,7 +158,7 @@ NullablePropertiesViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * The PersonViewModel that represents a Person.
- * Sushi.Tests.Models.PersonViewModel
+ * Sushi.TestModels.PersonViewModel
  * @extends ViewModel
  */
 function PersonViewModel(obj) {
@@ -178,7 +178,7 @@ PersonViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Represents a Student in a school.
- * Sushi.Tests.Models.StudentViewModel
+ * Sushi.TestModels.StudentViewModel
  * @extends PersonViewModel
  */
 function StudentViewModel(obj) {
@@ -196,7 +196,7 @@ StudentViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Basic information about a School.
- * Sushi.Tests.Models.SchoolViewModel
+ * Sushi.TestModels.SchoolViewModel
  * @extends ViewModel
  */
 function SchoolViewModel(obj) {
@@ -222,7 +222,7 @@ SchoolViewModel.prototype.mapFrom = function(obj) {
 
 /**
  * Simple model to verify complex types.
- * Sushi.Tests.Models.TypeModel
+ * Sushi.TestModels.TypeModel
  * @extends ViewModel
  */
 function TypeModel(obj) {
@@ -242,66 +242,5 @@ function TypeModel(obj) {
 
 TypeModel.prototype.mapFrom = function(obj) {
     return _.extend(new TypeModel(), obj); 
-};
-
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+AbstractBaseModel
- */
-function AbstractBaseModel(obj) {
-    let value = obj;
-    if (!(value instanceof Object)) 
-        value = {};
-
-    this.name = value.name;
-}
-
-AbstractBaseModel.prototype.mapFrom = function(obj) {
-    return _.extend(new AbstractBaseModel(), obj); 
-};
-
-/**
- * Sushi.Tests.BugFixes.AbstractBaseClass+ChildModel
- * @extends AbstractBaseModel
- */
-function ChildModel(obj) {
-    let value = obj;
-    if (!(value instanceof Object)) 
-        value = {};
-
-    this.surname = value.surname;
-}
-
-ChildModel.prototype.mapFrom = function(obj) {
-    return _.extend(new ChildModel(), obj); 
-};
-
-/**
- * Sushi.Tests.BugFixes.NoParameterlessCtorTests+CtorFixModel
- */
-function CtorFixModel(obj) {
-    let value = obj;
-    if (!(value instanceof Object)) 
-        value = {};
-
-    this.name = value.name;
-}
-
-CtorFixModel.prototype.mapFrom = function(obj) {
-    return _.extend(new CtorFixModel(), obj); 
-};
-
-/**
- * Sushi.Tests.BugFixes.NoXmlDocumentation+NoXmlDocumentationModel
- */
-function NoXmlDocumentationModel(obj) {
-    let value = obj;
-    if (!(value instanceof Object)) 
-        value = {};
-
-    this.name = value.name;
-}
-
-NoXmlDocumentationModel.prototype.mapFrom = function(obj) {
-    return _.extend(new NoXmlDocumentationModel(), obj); 
 };
 

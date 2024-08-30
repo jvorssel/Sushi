@@ -23,9 +23,9 @@ namespace Sushi.Descriptors;
 ///     Describes a <see cref="System.Type" />.
 /// </summary>
 [DebuggerDisplay("Name = {Name}")]
-public sealed class ClassDescriptor
+public sealed class ClassDescriptor : ITypeDescriptor
 {
-    public readonly Type Type;
+    public Type Type { get; }
 
     /// <summary>
     ///     The actual <see cref="Name" /> of the model that the given <see cref="System.Type" /> refers to.
@@ -50,6 +50,7 @@ public sealed class ClassDescriptor
     public HashSet<ClassDescriptor> Children { get; } = new();
 
     public bool GenerateConstructor => Properties.Any(x => !x.Value.Readonly);
+    public bool IsGeneric => Type.IsGenericType || Type.IsGenericTypeDefinition;
 
     public ClassDescriptor(Type type)
     {
