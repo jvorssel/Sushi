@@ -40,39 +40,35 @@ public sealed class TypeScriptConverter : ModelConverter
         if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
             throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");
 
-        var defaultValue = ResolveDefaultValue(property);
 
         var name = ApplyCasingStyle(property.Name);
-        var nameSuffix = defaultValue.IsEmpty() ? "!" : string.Empty;
-
-        var @override = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
-
+        var defaultValue = ResolveDefaultValue(property);
+        if (defaultValue.IsEmpty())
+            name += "!";
+        
         var readonlyPrefix = property is { Readonly: true, DefaultValue: not null } ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
-
-        var modifiers = $"{staticPrefix}{@override}{readonlyPrefix}";
+        var overridePrefix = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
         var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
 
         builder.AppendJsDoc(XmlDocument, property, Indent, scriptType);
-        builder.Append($"{Indent}{modifiers}{name}{nameSuffix}: {scriptType}{valueSuffix};");
+        builder.Append($"{Indent}{staticPrefix}{overridePrefix}{readonlyPrefix}{name}: {scriptType}{valueSuffix};");
     }
 
     public string ResolveScriptType(Type type, string prefix = "", bool isNullable = false)
     {
         // Check if any of the available models have the same name and should be used.
         var baseType = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-        var classModel =
-            Models.SingleOrDefault(x => x.Type == baseType);
-
         var genericTypeArgs = type.IsGenericType
             ? GetGenericTypeArguments(type, prefix, isNullable).ToList()
             : new List<string>();
+
+        var classModel = Models.SingleOrDefault(x => x.Type == baseType);
         if (classModel != null)
         {
             var className = type.IsGenericType
                 ? $"{prefix}{classModel.Name}<{string.Join(", ", genericTypeArgs)}>"
-                : prefix + classModel.Name;
-
+                : $"{prefix}{classModel.Name}";
             return isNullable ? $"{className} | null" : className;
         }
 
@@ -81,8 +77,8 @@ public sealed class TypeScriptConverter : ModelConverter
 
         // Array
         var actualType = type.GetBaseType(deep: false)!;
-        var isDictionary = type.IsDictionary();
-        if (type.IsArrayType() && !isDictionary)
+        var isDictionaryType = type.IsDictionary();
+        if (type.IsArrayType() && !isDictionaryType)
         {
             var typeName = type.IsGenericType
                 ? string.Join(", ", genericTypeArgs)
@@ -90,13 +86,15 @@ public sealed class TypeScriptConverter : ModelConverter
             return $"Array<{typeName}>";
         }
 
-        if (isDictionary && genericTypeArgs.Count == 2)
+        if (isDictionaryType && genericTypeArgs.Count == 2)
         {
             var keyType = genericTypeArgs[0];
-            if (keyType != NativeType.String.ToScriptType() && keyType != NativeType.Int.ToScriptType())
-                return "any"; // Unsupported, default to any.
+            var valueType = genericTypeArgs[1];
 
-            return $"{{ [key: string]: {genericTypeArgs[1]} }}";
+            // Only allow string/numeric key types
+            return keyType == NativeType.String.ToScriptType() || keyType == NativeType.Int.ToScriptType()
+                ? $"{{ [key: string]: {valueType} }}"
+                : "any";
         }
 
         var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
@@ -105,7 +103,7 @@ public sealed class TypeScriptConverter : ModelConverter
 
         // Date
         if (actualType == typeof(DateTime))
-            return "string | null";
+            return isNullable ? "string | null" : "string";
 
         var scriptType = actualType.ToNativeScriptType().ToScriptType();
         return isNullable ? $"{scriptType} | null" : scriptType;
@@ -134,6 +132,11 @@ public sealed class TypeScriptConverter : ModelConverter
                 return defaultValueType.IsDictionary() ? "{}" : string.Empty;
         }
 
+        return GetNativeTypeValue(prop);
+    }
+
+    private string GetNativeTypeValue(IPropertyDescriptor prop)
+    {
         var nativeType = prop.Type.ToNativeScriptType();
         switch (nativeType)
         {
@@ -152,7 +155,7 @@ public sealed class TypeScriptConverter : ModelConverter
                     return string.Empty;
 
                 var asDecimal = Convert.ToDecimal(prop.DefaultValue).ToString(CultureInfo.InvariantCulture);
-                return asDecimal.Substring(0, Math.Min(asDecimal.Length, 15));
+                return asDecimal.Length > 15 ? asDecimal.Substring(0, 15) : asDecimal;
             }
             case NativeType.Char:
             case NativeType.String:
@@ -191,9 +194,6 @@ public sealed class TypeScriptConverter : ModelConverter
 
     private string CreateConstructorDeclaration(string className, ClassDescriptor model)
     {
-        if (!model.GenerateConstructor)
-            return string.Empty;
-
         var builder = new StringBuilder();
         builder.AppendLine($"{Indent}constructor(value: Partial<{className}> = {{}}) {{");
         if (model.Parent != null)
@@ -208,11 +208,9 @@ public sealed class TypeScriptConverter : ModelConverter
             .Select(x => x.Value)
             .Where(x => !x.Readonly)
             .ToList();
-        
+
         foreach (var name in properties.Select(prop => ApplyCasingStyle(prop.Name)))
-        {
             builder.AppendLine($"{Indent + Indent}if (value.{name} !== undefined) this.{name} = value.{name};");
-        }
 
         builder.Append(Indent + "}");
         return builder.ToString();
@@ -250,18 +248,20 @@ public sealed class TypeScriptConverter : ModelConverter
     {
         var className = FormatClassName(model);
         var properties = model.GetProperties().ToList();
+        var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
 
         var builder = new StringBuilder();
         builder.AppendJsDoc(XmlDocument, model);
-
-        var parentClass = model.Parent == null ? string.Empty : $" extends {model.Parent.Name}";
-        var propertyDeclaration = CreatePropertyDeclaration(model, properties);
-        var constructorDeclaration = CreateConstructorDeclaration(className, model);
         builder.AppendLine($"export class {className}{parentClass} {{");
-        builder.AppendLine(propertyDeclaration);
-        builder.AppendLine(constructorDeclaration);
-        builder.AppendLine("}");
 
+        // Add properties
+        builder.AppendLine(CreatePropertyDeclaration(model, properties));
+
+        // Add constructor if available
+        if (model.GenerateConstructor)
+            builder.AppendLine(CreateConstructorDeclaration(className, model));
+
+        builder.AppendLine("}");
         return builder.ToString();
     }
 }

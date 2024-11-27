@@ -44,7 +44,6 @@ export class ConstValues {
      */
     static readonly last: string = "Last";
 
-
 }
 
 /**
@@ -84,7 +83,6 @@ export class GenericStandalone<TEntry> {
  */
 export class ScriptModel {
 
-
 }
 
 /**
@@ -102,9 +100,9 @@ export class ViewModel extends ScriptModel {
 
     /**
      * When this view model was created.
-     * @type (string | null)
+     * @type (string)
      */
-    createdOn!: string | null;
+    createdOn!: string;
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -161,16 +159,16 @@ export class InheritedViewModel extends BaseViewModel {
 export class NullablePropertiesViewModel extends ViewModel {
 
     /**
-     * Nullable string w get/set.
-     * @type (string | null)
-     */
-    value2: string | null = null;
-
-    /**
      * An overridden, nullable Guid identifier.
      * @type (string)
      */
     override guid: string = "00000000-0000-0000-0000-000000000000";
+
+    /**
+     * Nullable string w get/set.
+     * @type (string | null)
+     */
+    value2: string | null = null;
 
     /**
      * Nullable string.
@@ -181,8 +179,8 @@ export class NullablePropertiesViewModel extends ViewModel {
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.value2 !== undefined) this.value2 = value.value2;
         if (value.guid !== undefined) this.guid = value.guid;
+        if (value.value2 !== undefined) this.value2 = value.value2;
     }
 }
 
@@ -197,7 +195,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "a8c1fd7f-7462-4237-9b5d-e27a8456bb7e";
+    identifier: string = "19ef8ec1-6dc6-41c2-99a5-d4ee83e96224";
 
     /**
      * The Name of the person.
@@ -355,13 +353,13 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "aa164a97-4303-4a09-b3a8-0da7a52cf4ef";
+    override guid: string = "6d796d3a-cea2-4c6a-9d31-0380bc76b4ae";
 
     /**
      * A DateTime instance.
-     * @type (string | null)
+     * @type (string)
      */
-    date!: string | null;
+    date!: string;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};

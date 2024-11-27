@@ -21,7 +21,6 @@ export class ConstValues {
     static readonly first: string = "First";
     static readonly last: string = "Last";
 
-
 }
 
 export class GenericComplexStandalone<TFirst, TSecond> {
@@ -48,12 +47,11 @@ export class GenericStandalone<TEntry> {
 
 export class ScriptModel {
 
-
 }
 
 export class ViewModel extends ScriptModel {
     guid: string = "";
-    createdOn!: string | null;
+    createdOn!: string;
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -90,20 +88,20 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class NullablePropertiesViewModel extends ViewModel {
-    value2: string | null = null;
     override guid: string = "00000000-0000-0000-0000-000000000000";
+    value2: string | null = null;
     static value: string | null = null;
 
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.value2 !== undefined) this.value2 = value.value2;
         if (value.guid !== undefined) this.guid = value.guid;
+        if (value.value2 !== undefined) this.value2 = value.value2;
     }
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "0280b712-f3be-4f50-b427-2a5e66f81674";
+    identifier: string = "aa713484-153e-47e1-903d-27ad08978fca";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -161,8 +159,8 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "51e81358-0717-476c-be3b-d681e50725fe";
-    date!: string | null;
+    override guid: string = "f21ad8df-18b2-449f-aa01-1d401c1fedc2";
+    date!: string;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
