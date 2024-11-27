@@ -9,10 +9,10 @@ public class ConverterOptions : IConverterOptions
     public string Indent { get; set; }
 
     /// <inheritdoc />
-    public PropertyNameCasing CasingStyle { get; set; }
+    public PropertyNameCasing CasingStyle { get; }
 
     /// <inheritdoc />
-    public List<string> Headers { get; set; } = new();
+    public List<string> Headers { get; } = new();
 
     public ConverterOptions(string indent = "    ",
         PropertyNameCasing casing = PropertyNameCasing.CamelCase)

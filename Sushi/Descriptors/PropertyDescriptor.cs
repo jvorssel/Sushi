@@ -27,7 +27,7 @@ public sealed class PropertyDescriptor : IPropertyDescriptor
     public bool IsOverridden => ClassType?.IsPropertyHidingBaseClassProperty(Name) ?? false;
 
     /// <inheritdoc />
-    public string Name { get; }
+    public string Name { get; } = string.Empty;
 
     /// <inheritdoc />
     public Type Type { get; }

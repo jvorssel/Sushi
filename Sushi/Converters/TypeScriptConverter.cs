@@ -60,7 +60,7 @@ public sealed class TypeScriptConverter : ModelConverter
     public string ResolveScriptType(Type type, string prefix = "", bool isNullable = false)
     {
         // Check if any of the available models have the same name and should be used.
-        var baseType = (type.IsGenericType ? type.GetGenericTypeDefinition() : type);
+        var baseType = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
         var classModel =
             Models.SingleOrDefault(x => x.Type == baseType);
 
@@ -80,7 +80,7 @@ public sealed class TypeScriptConverter : ModelConverter
             return type.Name;
 
         // Array
-        var actualType = type.GetBaseType(deep: false);
+        var actualType = type.GetBaseType(deep: false)!;
         var isDictionary = type.IsDictionary();
         if (type.IsArrayType() && !isDictionary)
         {
@@ -105,7 +105,7 @@ public sealed class TypeScriptConverter : ModelConverter
 
         // Date
         if (actualType == typeof(DateTime))
-            return "Date | string | null";
+            return "string | null";
 
         var scriptType = actualType.ToNativeScriptType().ToScriptType();
         return isNullable ? $"{scriptType} | null" : scriptType;
@@ -138,7 +138,7 @@ public sealed class TypeScriptConverter : ModelConverter
         switch (nativeType)
         {
             case NativeType.Bool:
-                return (bool)prop.DefaultValue ? "true" : "false";
+                return prop.DefaultValue as bool? ?? false ? "true" : "false";
             case NativeType.Enum:
             case NativeType.Byte:
             case NativeType.Short:

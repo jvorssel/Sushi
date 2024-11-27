@@ -149,7 +149,7 @@ public sealed class XmlDocumentationReader
             return doc;
 
         var inheritedSummary = Members.SingleOrDefault(x =>
-            x.DeclaringTypeName == inheritedProperty.DeclaringType.Name && x.Name == inheritedProperty.Name);
-        return inheritedSummary == null ? doc : doc.UseInheritedSummary(inheritedSummary.Summary, inheritedProperty.DeclaringType);
+            x.DeclaringTypeName == inheritedProperty.DeclaringType!.Name && x.Name == inheritedProperty.Name);
+        return inheritedSummary == null ? doc : doc.UseInheritedSummary(inheritedSummary.Summary, inheritedProperty.DeclaringType!);
     }
 }

@@ -20,7 +20,7 @@ public sealed class ClassDescriptor : ITypeDescriptor
     /// <summary>
     ///     The <see cref="FullName" /> of the model that the given <see cref="System.Type" /> refers to.
     /// </summary>
-    public string FullName => Type.FullName;
+    public string FullName => Type.FullName!;
 
     public bool HasParameterlessCtor => Type.GetConstructor(Type.EmptyTypes) != null;
     
@@ -35,7 +35,6 @@ public sealed class ClassDescriptor : ITypeDescriptor
     public HashSet<ClassDescriptor> Children { get; } = new();
 
     public bool GenerateConstructor => Properties.Any(x => !x.Value.Readonly);
-    public bool IsGeneric => Type.IsGenericType || Type.IsGenericTypeDefinition;
 
     public ClassDescriptor(Type type)
     {
@@ -97,8 +96,6 @@ public sealed class ClassDescriptor : ITypeDescriptor
         return Properties[name];
     }
 
-    #region Equality members
-
     public static bool operator ==(ClassDescriptor? m1, ClassDescriptor? m2)
     {
         if (m1 is null || m2 is null)
@@ -111,8 +108,4 @@ public sealed class ClassDescriptor : ITypeDescriptor
     {
         return !(m1 == m2);
     }
-
-    #endregion
-
-    
 }

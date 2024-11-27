@@ -12,8 +12,6 @@ public sealed class FieldDescriptor : IPropertyDescriptor
 {
     private readonly FieldInfo _field;
 
-    #region Implementation of IPropertyDescriptor
-
     /// <inheritdoc />
     public string Name => _field.Name;
 
@@ -41,8 +39,6 @@ public sealed class FieldDescriptor : IPropertyDescriptor
     ///     The <see cref="NativeType"/> that matches this field.
     /// </summary>
     public NativeType NativeType => Type.ToNativeScriptType();
-
-    #endregion
 
     public FieldDescriptor(FieldInfo fieldInfo)
     {

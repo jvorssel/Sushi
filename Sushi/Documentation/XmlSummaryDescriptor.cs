@@ -96,8 +96,6 @@ public sealed class XmlSummaryDescriptor
         return this;
     }
 
-    #region Equality members
-
     public static bool operator ==(XmlSummaryDescriptor? fd, Type? type)
     {
         if (type is null || fd is null)
@@ -129,6 +127,4 @@ public sealed class XmlSummaryDescriptor
         return string.Equals(Name, type.Name) && string.Equals(Namespace, type.Namespace) &&
                string.Equals(RawName, type.FullName) && FieldType == ReferenceType.Type;
     }
-
-    #endregion
 }

@@ -7,8 +7,6 @@ namespace Sushi.Extensions;
 
 internal static class ReflectionExtensions
 {
-    #region Get Property or Field
-
     /// <summary>
     ///     Attempts to create an instance of the given type.
     ///     Does not support generic type defs, interfaces or abstract classes
@@ -76,11 +74,6 @@ internal static class ReflectionExtensions
                 "> (Inner Exception message: \"" + e.Message + "\")",
                 e);
         }
-
-        // Fail with exception
-        throw new ArgumentException("{" + MethodBase.GetCurrentMethod() + "} Error:\n\nThe supplied value type <" +
-                                    type +
-                                    "> is not a publicly-visible type, so the default value cannot be retrieved");
     }
 
     /// <summary>
@@ -103,8 +96,6 @@ internal static class ReflectionExtensions
             yield return new KeyValuePair<PropertyInfo, object?>(prp, defaultValue);
         }
     }
-
-    #endregion
 
     /// <summary>
     ///     Get the <see cref="PropertyInfo" /> of the property <paramref name="propertyLambda" /> in
@@ -129,8 +120,8 @@ internal static class ReflectionExtensions
             throw new ArgumentException($"Expression '{propertyLambda}' refers to a field, not a property.",
                 nameof(propertyLambda));
 
-        if (type != propInfo.ReflectedType &&
-            !type.IsSubclassOf(propInfo.ReflectedType) &&
+        var reflectedType = propInfo.ReflectedType!;
+        if (type != reflectedType && !type!.IsSubclassOf(reflectedType) &&
             checkReflectedType)
             throw new ArgumentException(
                 $"Expression '{propertyLambda}' refers to a property that is not from type {type}.",
