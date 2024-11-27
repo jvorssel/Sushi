@@ -1,19 +1,4 @@
-﻿// /***************************************************************************\
-// Module Name:       SchoolViewModel.cs
-// Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 12-01-2023
-// Copyright:              Goblin workshop @ 2023
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-#region
-
-#endregion
-
-namespace Sushi.TestModels;
+﻿namespace Sushi.TestModels;
 
 /// <inheritdoc cref="ISchoolViewModel" />
 public sealed class SchoolViewModel : ViewModel, ISchoolViewModel

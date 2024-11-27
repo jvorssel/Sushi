@@ -1,15 +1,4 @@
-﻿// /***************************************************************************\
-// Module Name:       IPropertyDescriptor.cs
-// Project:                   Sushi
-// Author:                   Jeroen Vorsselman 16-05-2023
-// Copyright:              Goblin workshop @ 2023
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-namespace Sushi.Interfaces;
+﻿namespace Sushi.Interfaces;
 
 public interface IPropertyDescriptor
 {

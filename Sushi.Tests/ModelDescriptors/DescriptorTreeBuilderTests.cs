@@ -1,25 +1,10 @@
-﻿// /***************************************************************************\
-// Module Name:       DescriptorTreeBuilderTests.cs
-// Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 15-05-2023
-// Copyright:              Goblin workshop @ 2023
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-#region
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sushi.Descriptors;
 using Sushi.Extensions;
 using Sushi.TestModels;
 using Xunit;
-
-#endregion
 
 namespace Sushi.Tests.ModelDescriptors;
 

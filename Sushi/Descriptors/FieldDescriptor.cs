@@ -1,15 +1,4 @@
-﻿// /***************************************************************************\
-// Module Name:       FieldDescriptor.cs
-// Project:                   Sushi
-// Author:                   Jeroen Vorsselman 02-04-2022
-// Copyright:              Royaldesk @ 2022
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using Sushi.Enum;
 using Sushi.Extensions;

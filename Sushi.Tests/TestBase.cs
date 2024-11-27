@@ -1,22 +1,7 @@
-﻿// /***************************************************************************\
-// Module Name:       TestBase.cs
-// Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 05-11-2022
-// Copyright:              Royaldesk @ 2022
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-#region
-
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using Sushi.Tests.Extensions;
-
-#endregion
 
 namespace Sushi.Tests;
 

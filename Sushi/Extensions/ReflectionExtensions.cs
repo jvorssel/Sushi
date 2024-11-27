@@ -1,22 +1,7 @@
-﻿// /***************************************************************************\
-// Module Name:       ReflectionExtensions.cs
-// Project:                   Sushi
-// Author:                   Jeroen Vorsselman 16-05-2023
-// Copyright:              Goblin workshop @ 2023
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-#region
-
-using System.Collections;
+﻿using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
 using Sushi.Descriptors;
-
-#endregion
 
 namespace Sushi.Extensions;
 

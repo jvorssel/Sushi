@@ -1,22 +1,7 @@
-﻿// /***************************************************************************\
-// Module Name:       JsDocComment.cs
-// Project:                   Sushi
-// Author:                   Jeroen Vorsselman 16-05-2023
-// Copyright:              Goblin workshop @ 2023
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-#region
-
-using System.Text;
+﻿using System.Text;
 using Sushi.Descriptors;
 using Sushi.Extensions;
 using Sushi.Interfaces;
-
-#endregion
 
 namespace Sushi.Documentation;
 

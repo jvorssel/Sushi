@@ -1,23 +1,8 @@
-﻿// /***************************************************************************\
-// Module Name:       ModelTests.cs
-// Project:                   Sushi.Tests
-// Author:                   Jeroen Vorsselman 15-05-2023
-// Copyright:              Goblin workshop @ 2023
-// 
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-// EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
-// WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
-// \***************************************************************************/
-
-#region
-
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using Sushi.TestModels;
 using Sushi.Tests.Extensions;
 using Xunit;
-
-#endregion
 
 namespace Sushi.Tests;
 
