@@ -200,14 +200,14 @@ export class InheritedViewModel extends BaseViewModel {
 export class NullablePropertiesViewModel extends ViewModel {
 
     /**
-     * An overridden, nullable Guid identifier.
-     */
-    Guid;
-
-    /**
      * Nullable string w get/set.
      */
     Value2;
+
+    /**
+     * An overridden, nullable Guid identifier.
+     */
+    Guid;
 
     /**
      * Nullable string.
@@ -220,8 +220,8 @@ export class NullablePropertiesViewModel extends ViewModel {
         if (!(value instanceof Object))
             return;
 
-        this.guid = value.guid;
         this.value2 = value.value2;
+        this.guid = value.guid;
         this.value = value.value;
     }
     static mapFrom(obj) {

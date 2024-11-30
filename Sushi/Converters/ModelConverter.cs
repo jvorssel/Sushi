@@ -10,9 +10,7 @@ namespace Sushi.Converters;
 
 public abstract class ModelConverter : IConvertModels
 {
-    protected List<string> HeaderLines { get; }
-    protected string Indent { get; }
-    private PropertyNameCasing CasingStyle { get; }
+    protected IConverterConfig Config { get; }
 
     protected readonly XmlDocumentationReader? XmlDocument;
     public IReadOnlyCollection<ClassDescriptor> Models { get; }
@@ -21,11 +19,9 @@ public abstract class ModelConverter : IConvertModels
     /// <summary>
     ///     The amount of <see cref="Models" /> found in the given <see cref="Assembly" />.
     /// </summary>
-    protected ModelConverter(SushiConverter converter, IConverterOptions options)
+    protected ModelConverter(SushiConverter converter, IConverterConfig config)
     {
-        Indent = options.Indent;
-        CasingStyle = options.CasingStyle;
-        HeaderLines = options.Headers;
+        Config = config;
         XmlDocument = converter.Documentation;
         Models = converter.Models;
         EnumModels = converter.EnumModels;
@@ -58,7 +54,7 @@ public abstract class ModelConverter : IConvertModels
     /// </summary>
     public string ApplyCasingStyle(string value)
     {
-        return CasingStyle switch
+        return Config.CasingStyle switch
         {
             PropertyNameCasing.Default => value,
             PropertyNameCasing.CamelCase => char.ToLowerInvariant(value[0]) + value.Substring(1),

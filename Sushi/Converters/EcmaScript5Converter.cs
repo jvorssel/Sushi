@@ -13,7 +13,7 @@ public sealed class EcmaScript5Converter : ModelConverter
     private bool _includeUnderscoreExtend;
 
     /// <inheritdoc />
-    public EcmaScript5Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
+    public EcmaScript5Converter(SushiConverter converter, IConverterConfig config) : base(converter, config)
     {
     }
 
@@ -32,17 +32,18 @@ public sealed class EcmaScript5Converter : ModelConverter
     private string Compile(ClassDescriptor model)
     {
         var builder = new StringBuilder();
+        var i = Config.Indent;
 
         builder.AppendJsDoc(XmlDocument, model);
 
         builder.AppendLine($"function {model.Name}(obj) {{");
-        builder.AppendLine(Indent + "let value = obj;");
-        builder.AppendLine(Indent + "if (!(value instanceof Object)) ");
-        builder.AppendLine(Indent + Indent + "value = {};");
+        builder.AppendLine(i + "let value = obj;");
+        builder.AppendLine(i + "if (!(value instanceof Object)) ");
+        builder.AppendLine(i + i + "value = {};");
         builder.AppendLine();
 
         foreach (var prop in model.Properties.Select(x => x.Value))
-            builder.AppendLine($"{Indent}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
+            builder.AppendLine($"{i}this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
         builder.AppendLine("}");
 
         if (!_includeUnderscoreExtend)
@@ -50,7 +51,7 @@ public sealed class EcmaScript5Converter : ModelConverter
 
         builder.AppendLine();
         builder.AppendLine($"{model.Name}.prototype.mapFrom = function(obj) {{");
-        builder.AppendLine($"{Indent}return _.extend(new {model.Name}(), obj); ");
+        builder.AppendLine($"{i}return _.extend(new {model.Name}(), obj); ");
         builder.AppendLine("};");
 
         return builder.ToString();

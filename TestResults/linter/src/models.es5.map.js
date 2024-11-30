@@ -147,8 +147,8 @@ function NullablePropertiesViewModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.guid = value.guid;
     this.value2 = value.value2;
+    this.guid = value.guid;
     this.value = value.value;
 }
 

@@ -11,7 +11,7 @@ namespace Sushi.Converters;
 public sealed class EcmaScript6Converter : ModelConverter
 {
     /// <inheritdoc />
-    public EcmaScript6Converter(SushiConverter converter, IConverterOptions options) : base(converter, options)
+    public EcmaScript6Converter(SushiConverter converter, IConverterConfig config) : base(converter, config)
     {
     }
 
@@ -26,8 +26,8 @@ public sealed class EcmaScript6Converter : ModelConverter
         var builder = new StringBuilder();
         foreach (var prop in properties)
         {
-            builder.AppendJsDoc(XmlDocument, prop, Indent);
-            builder.AppendLine($"{Indent}{prop.Name};");
+            builder.AppendJsDoc(XmlDocument, prop, Config.Indent);
+            builder.AppendLine($"{Config.Indent}{prop.Name};");
         }
 
         return builder.ToString();
@@ -36,22 +36,23 @@ public sealed class EcmaScript6Converter : ModelConverter
     private string CreateConstructorDeclaration(IEnumerable<IPropertyDescriptor> properties, bool hasParent)
     {
         var builder = new StringBuilder();
-        builder.AppendLine(Indent + "constructor(value) {");
+        var i = Config.Indent;
+        builder.AppendLine(i + "constructor(value) {");
         if (hasParent)
         {
-            builder.AppendLine(Indent + Indent + "super(value);");
+            builder.AppendLine(i + i + "super(value);");
             builder.AppendLine("");
         }
 
-        builder.AppendLine(Indent + Indent + "if (!(value instanceof Object))");
-        builder.AppendLine(Indent + Indent + Indent + "return;");
+        builder.AppendLine(i + i + "if (!(value instanceof Object))");
+        builder.AppendLine(i + i + i + "return;");
         builder.AppendLine();
 
         foreach (var prop in properties)
-            builder.AppendLine(Indent + Indent +
+            builder.AppendLine(i + i +
                                $"this.{ApplyCasingStyle(prop.Name)} = value.{ApplyCasingStyle(prop.Name)};");
 
-        builder.Append(Indent + "}");
+        builder.Append(i + "}");
         return builder.ToString();
     }
 
@@ -65,12 +66,13 @@ public sealed class EcmaScript6Converter : ModelConverter
         var propertyDeclaration = CreatePropertyDeclaration(properties);
         var constructorDeclaration = CreateConstructorDeclaration(properties, model.Parent != null);
 
+        var i = Config.Indent;
         builder.AppendLine($"export class {model.Name}{parentClass} {{");
         builder.AppendLine(propertyDeclaration);
         builder.AppendLine(constructorDeclaration);
-        builder.AppendLine(Indent + "static mapFrom(obj) {");
-        builder.AppendLine(Indent + Indent + "return Object.assign(new {model.Name}(), obj);");
-        builder.AppendLine(Indent + "}");
+        builder.AppendLine(i + "static mapFrom(obj) {");
+        builder.AppendLine(i + i + "return Object.assign(new {model.Name}(), obj);");
+        builder.AppendLine(i + "}");
         builder.AppendLine("}");
 
         return builder.ToString();

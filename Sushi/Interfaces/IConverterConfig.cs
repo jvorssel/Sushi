@@ -2,7 +2,7 @@
 
 namespace Sushi.Interfaces;
 
-public interface IConverterOptions
+public interface IConverterConfig
 {
     /// <summary>
     ///		Indentation style, default is 4 spaces.
@@ -19,4 +19,9 @@ public interface IConverterOptions
     ///		Can be used to suppress es-lint warnings or add licence(s).
     /// </summary>
     List<string> Headers { get; }
+    
+    /// <summary>
+    ///     Provides custom script type mapping.
+    /// </summary>
+    Dictionary<Type, ITypeConverter> TypeConverters { get; set; }
 }

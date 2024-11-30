@@ -1,4 +1,3 @@
-// noinspection JSUnusedGlobalSymbols
 
 export enum Gender {
     Undefined = 0,
@@ -159,16 +158,16 @@ export class InheritedViewModel extends BaseViewModel {
 export class NullablePropertiesViewModel extends ViewModel {
 
     /**
-     * An overridden, nullable Guid identifier.
-     * @type (string)
-     */
-    override guid: string = "00000000-0000-0000-0000-000000000000";
-
-    /**
      * Nullable string w get/set.
      * @type (string | null)
      */
     value2: string | null = null;
+
+    /**
+     * An overridden, nullable Guid identifier.
+     * @type (string)
+     */
+    override guid: string = "00000000-0000-0000-0000-000000000000";
 
     /**
      * Nullable string.
@@ -179,8 +178,8 @@ export class NullablePropertiesViewModel extends ViewModel {
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.guid !== undefined) this.guid = value.guid;
         if (value.value2 !== undefined) this.value2 = value.value2;
+        if (value.guid !== undefined) this.guid = value.guid;
     }
 }
 
@@ -195,7 +194,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "19ef8ec1-6dc6-41c2-99a5-d4ee83e96224";
+    identifier: string = "afe7da1e-7d88-45c6-a2dd-035fbe95a7e0";
 
     /**
      * The Name of the person.
@@ -353,7 +352,7 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "6d796d3a-cea2-4c6a-9d31-0380bc76b4ae";
+    override guid: string = "965370d3-6af5-4aad-984f-bb2537413426";
 
     /**
      * A DateTime instance.

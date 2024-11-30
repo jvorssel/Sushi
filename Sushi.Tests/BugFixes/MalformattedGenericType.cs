@@ -30,7 +30,7 @@ public sealed class MalformattedGenericType : TestBase
         Assert.NotNull(genericProperty);
         Assert.True(genericProperty.Type.IsGenericParameter);
 
-        var typescript = converter.TypeScript(new ConverterOptions { Indent = string.Empty });
+        var typescript = converter.TypeScript(new ConverterConfig { Indent = string.Empty });
         var builder = new StringBuilder();
         typescript.ConvertProperty(builder, descriptor, genericProperty);
         var expectedScript = "data!: T;";

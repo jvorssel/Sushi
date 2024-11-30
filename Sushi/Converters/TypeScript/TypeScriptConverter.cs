@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
@@ -7,7 +8,7 @@ using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
-namespace Sushi.Converters;
+namespace Sushi.Converters.TypeScript;
 
 /// <summary>
 ///     Add the TypeScript class declaration to the <see cref="SushiConverter.Models" />.
@@ -15,14 +16,14 @@ namespace Sushi.Converters;
 public sealed class TypeScriptConverter : ModelConverter
 {
     /// <inheritdoc />
-    public TypeScriptConverter(SushiConverter converter, IConverterOptions options) : base(converter, options)
+    public TypeScriptConverter(SushiConverter converter, IConverterConfig config) : base(converter, config)
     {
     }
 
     /// <inheritdoc />
     protected override IEnumerable<string> ConvertToScript(IEnumerable<ClassDescriptor> descriptors)
     {
-        foreach (var line in HeaderLines)
+        foreach (var line in Config.Headers)
             yield return line;
 
         yield return string.Empty;
@@ -40,7 +41,6 @@ public sealed class TypeScriptConverter : ModelConverter
         if (property.Type.IsGenericParameter && !classDescriptor.GenericParameterNames.Contains(scriptType))
             throw new InvalidOperationException($"Generic parameter {scriptType} not resolved.");
 
-
         var name = ApplyCasingStyle(property.Name);
         var defaultValue = ResolveDefaultValue(property);
         if (defaultValue.IsEmpty())
@@ -51,8 +51,8 @@ public sealed class TypeScriptConverter : ModelConverter
         var overridePrefix = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
         var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
 
-        builder.AppendJsDoc(XmlDocument, property, Indent, scriptType);
-        builder.Append($"{Indent}{staticPrefix}{overridePrefix}{readonlyPrefix}{name}: {scriptType}{valueSuffix};");
+        builder.AppendJsDoc(XmlDocument, property, Config.Indent, scriptType);
+        builder.Append($"{Config.Indent}{staticPrefix}{overridePrefix}{readonlyPrefix}{name}: {scriptType}{valueSuffix};");
     }
 
     public string ResolveScriptType(Type type, string prefix = "", bool isNullable = false)
@@ -195,10 +195,11 @@ public sealed class TypeScriptConverter : ModelConverter
     private string CreateConstructorDeclaration(string className, ClassDescriptor model)
     {
         var builder = new StringBuilder();
-        builder.AppendLine($"{Indent}constructor(value: Partial<{className}> = {{}}) {{");
+        var i = Config.Indent;
+        builder.AppendLine($"{i}constructor(value: Partial<{className}> = {{}}) {{");
         if (model.Parent != null)
         {
-            builder.AppendLine(Indent + Indent +
+            builder.AppendLine(i + i +
                                (model.HasParameterizedSuperConstructor() ? "super(value);" : "super();"));
             builder.AppendLine();
         }
@@ -210,9 +211,9 @@ public sealed class TypeScriptConverter : ModelConverter
             .ToList();
 
         foreach (var name in properties.Select(prop => ApplyCasingStyle(prop.Name)))
-            builder.AppendLine($"{Indent + Indent}if (value.{name} !== undefined) this.{name} = value.{name};");
+            builder.AppendLine($"{i + i}if (value.{name} !== undefined) this.{name} = value.{name};");
 
-        builder.Append(Indent + "}");
+        builder.Append(i + "}");
         return builder.ToString();
     }
 
@@ -232,7 +233,7 @@ public sealed class TypeScriptConverter : ModelConverter
         var lastKey = descriptor.Values.Last().Key;
         foreach (var kvp in descriptor.Values)
         {
-            var value = $"{Indent}{kvp.Key} = {kvp.Value}";
+            var value = $"{Config.Indent}{kvp.Key} = {kvp.Value}";
             if (lastKey != kvp.Key)
                 value += ",";
 

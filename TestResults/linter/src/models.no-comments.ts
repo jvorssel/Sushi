@@ -1,4 +1,3 @@
-// noinspection JSUnusedGlobalSymbols
 
 export enum Gender {
     Undefined = 0,
@@ -88,20 +87,20 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class NullablePropertiesViewModel extends ViewModel {
-    override guid: string = "00000000-0000-0000-0000-000000000000";
     value2: string | null = null;
+    override guid: string = "00000000-0000-0000-0000-000000000000";
     static value: string | null = null;
 
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.guid !== undefined) this.guid = value.guid;
         if (value.value2 !== undefined) this.value2 = value.value2;
+        if (value.guid !== undefined) this.guid = value.guid;
     }
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "aa713484-153e-47e1-903d-27ad08978fca";
+    identifier: string = "02880617-230f-4527-b68c-a2911fd3e1f0";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -159,7 +158,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "f21ad8df-18b2-449f-aa01-1d401c1fedc2";
+    override guid: string = "56756c09-8e3f-456c-92e7-a701dadc467c";
     date!: string;
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];

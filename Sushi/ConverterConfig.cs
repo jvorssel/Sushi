@@ -3,7 +3,7 @@ using Sushi.Interfaces;
 
 namespace Sushi;
 
-public class ConverterOptions : IConverterOptions
+public class ConverterConfig : IConverterConfig
 {
     /// <inheritdoc />
     public string Indent { get; set; }
@@ -14,7 +14,9 @@ public class ConverterOptions : IConverterOptions
     /// <inheritdoc />
     public List<string> Headers { get; } = new();
 
-    public ConverterOptions(string indent = "    ",
+    public Dictionary<Type, ITypeConverter> TypeConverters { get; set; } = new();
+
+    public ConverterConfig(string indent = "    ",
         PropertyNameCasing casing = PropertyNameCasing.CamelCase)
     {
         Indent = indent;
