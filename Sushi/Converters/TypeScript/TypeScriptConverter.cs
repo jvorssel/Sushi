@@ -1,9 +1,6 @@
-﻿using System.Globalization;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
+﻿using System.Text;
 using Sushi.Descriptors;
 using Sushi.Documentation;
-using Sushi.Enum;
 using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
@@ -45,14 +42,15 @@ public sealed class TypeScriptConverter : ModelConverter
         var defaultValue = ResolveDefaultValue(property);
         if (defaultValue.IsEmpty())
             name += "!";
-        
+
         var readonlyPrefix = property is { Readonly: true, DefaultValue: not null } ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
         var overridePrefix = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
         var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
 
         builder.AppendJsDoc(XmlDocument, property, Config.Indent, scriptType);
-        builder.Append($"{Config.Indent}{staticPrefix}{overridePrefix}{readonlyPrefix}{name}: {scriptType}{valueSuffix};");
+        builder.Append(
+            $"{Config.Indent}{staticPrefix}{overridePrefix}{readonlyPrefix}{name}: {scriptType}{valueSuffix};");
     }
 
     public string ResolveScriptType(Type type, string prefix = "", bool isNullable = false)
@@ -92,21 +90,23 @@ public sealed class TypeScriptConverter : ModelConverter
             var valueType = genericTypeArgs[1];
 
             // Only allow string/numeric key types
-            return keyType == NativeType.String.ToScriptType() || keyType == NativeType.Int.ToScriptType()
+            return keyType is DefaultConverterConfig.String or DefaultConverterConfig.Number
                 ? $"{{ [key: string]: {valueType} }}"
                 : "any";
         }
 
         var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
+        var enumType = Config.TypeConverters[typeof(System.Enum)]?.Value
+                       ?? throw new Exception($"{nameof(System.Enum)} is not available.");
+
         if (type.IsEnum && enumModel != null)
-            return $"{prefix}{enumModel.Name} | number";
+            return $"{prefix}{enumModel.Name} | {enumType}";
 
-        // Date
-        if (actualType == typeof(DateTime))
-            return isNullable ? "string | null" : "string";
+        var typeConverter = Config.Strict
+            ? Config.TypeConverters.ThrowIfNull(actualType)
+            : Config.TypeConverters.AnyIfNull(actualType);
 
-        var scriptType = actualType.ToNativeScriptType().ToScriptType();
-        return isNullable ? $"{scriptType} | null" : scriptType;
+        return typeConverter.Value + (isNullable ? " | null" : string.Empty);
     }
 
     public string ResolveDefaultValue(IPropertyDescriptor prop)
@@ -132,41 +132,11 @@ public sealed class TypeScriptConverter : ModelConverter
                 return defaultValueType.IsDictionary() ? "{}" : string.Empty;
         }
 
-        return GetNativeTypeValue(prop);
-    }
-
-    private string GetNativeTypeValue(IPropertyDescriptor prop)
-    {
-        var nativeType = prop.Type.ToNativeScriptType();
-        switch (nativeType)
-        {
-            case NativeType.Bool:
-                return prop.DefaultValue as bool? ?? false ? "true" : "false";
-            case NativeType.Enum:
-            case NativeType.Byte:
-            case NativeType.Short:
-            case NativeType.Long:
-            case NativeType.Int:
-            case NativeType.Double:
-            case NativeType.Float:
-            case NativeType.Decimal:
-            {
-                if (prop.DefaultValue == null)
-                    return string.Empty;
-
-                var asDecimal = Convert.ToDecimal(prop.DefaultValue).ToString(CultureInfo.InvariantCulture);
-                return asDecimal.Length > 15 ? asDecimal.Substring(0, 15) : asDecimal;
-            }
-            case NativeType.Char:
-            case NativeType.String:
-                return $"\"{prop.DefaultValue}\"";
-            case NativeType.Null:
-                return "null";
-            case NativeType.Object:
-            case NativeType.Undefined:
-            default:
-                return string.Empty;
-        }
+        var converter = Config.Strict
+            ? Config.TypeConverters.ThrowIfNull(prop.Type)
+            : Config.TypeConverters.AnyIfNull(prop.Type);
+        
+        return converter.GetDefaultValue(prop);
     }
 
     internal IEnumerable<string> GetGenericTypeArguments(Type type, string prefix, bool isNullable)

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Sushi.Converters.TypeScript;
 using Sushi.Descriptors;
-using Sushi.Enum;
 using Sushi.Extensions;
-using Sushi.Helpers;
 using Sushi.TestModels;
 using Xunit;
 
@@ -40,13 +39,15 @@ public abstract class TypeScriptConverterTests
         }
 
         [Fact]
-        public void ResolveScriptType_ClassPropertyMissing_ShouldUseAny()
+        public void ResolveScriptType_ClassPropertyMissing_NotStrict_ShouldUseAny()
         {
             // Arrange
             var descriptor = new ClassDescriptor(typeof(TypeModel));
             var propertyDescriptor = descriptor.Properties[nameof(TypeModel.Student)];
+            
+            var config = new DefaultConverterConfig { Strict = false };
             var converter = new SushiConverter(typeof(TypeModel), typeof(ViewModel), typeof(ScriptModel))
-                .TypeScript();
+                .TypeScript(config);
 
             // Act
             var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
@@ -225,8 +226,8 @@ public abstract class TypeScriptConverterTests
             var nullableResult = converter.ResolveDefaultValue(nullableClassType);
 
             // Assert
-            Assert.Equal(NativeType.Null.ToScriptType(), boolResult);
-            Assert.Equal(NativeType.Null.ToScriptType(), nullableResult);
+            Assert.Equal("null", boolResult);
+            Assert.Equal("null", nullableResult);
         }
 
         [Fact]
@@ -289,7 +290,7 @@ public abstract class TypeScriptConverterTests
         public void ResolveDefaultValue_EnumValue_ReturnsCorrectValueTest()
         {
             // Arrange
-            var converter = new SushiConverter().TypeScript();
+            var converter = new SushiConverter(typeof(Gender)).TypeScript();
             var prop = new PropertyDescriptor(typeof(Gender), Gender.Male);
 
             // Act
@@ -386,7 +387,6 @@ public abstract class TypeScriptConverterTests
         }
     }
 
-    
     public sealed class GenericClassSupport : TypeScriptConverterTests
     {
         [Fact]

@@ -101,7 +101,7 @@ export class ViewModel extends ScriptModel {
      * When this view model was created.
      * @type (string)
      */
-    createdOn!: string;
+    createdOn: string = "";
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -194,7 +194,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "afe7da1e-7d88-45c6-a2dd-035fbe95a7e0";
+    identifier: string = "1457e4c7-17d5-48e6-a552-95e862bfef79";
 
     /**
      * The Name of the person.
@@ -352,13 +352,13 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "965370d3-6af5-4aad-984f-bb2537413426";
+    override guid: string = "1f5b509f-9fbb-42a0-82d4-b8fb116c23c6";
 
     /**
      * A DateTime instance.
      * @type (string)
      */
-    date!: string;
+    date: string = "30/11/2024 13:01:24";
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};

@@ -5,6 +5,7 @@ _ReSharper/*
 _ReSharper.Caches/*
 */bin/*
 */obj/*
+*.DotSettings.user
 
 
 ModelConverter.Tests/bin/*

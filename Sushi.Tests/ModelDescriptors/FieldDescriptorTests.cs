@@ -1,6 +1,5 @@
 ﻿using System;
 using Sushi.Descriptors;
-using Sushi.Enum;
 using Sushi.TestModels;
 using Xunit;
 
@@ -27,7 +26,6 @@ public abstract class FieldDescriptorTests
             Assert.True(descriptor.Readonly);
             Assert.Equal(typeof(string), descriptor.Type);
             Assert.False(descriptor.IsNullable);
-            Assert.Equal(NativeType.String, descriptor.NativeType);
         }
 
 

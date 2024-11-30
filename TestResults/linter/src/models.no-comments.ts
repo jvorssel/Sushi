@@ -50,7 +50,7 @@ export class ScriptModel {
 
 export class ViewModel extends ScriptModel {
     guid: string = "";
-    createdOn!: string;
+    createdOn: string = "";
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -100,7 +100,7 @@ export class NullablePropertiesViewModel extends ViewModel {
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "02880617-230f-4527-b68c-a2911fd3e1f0";
+    identifier: string = "612d7a80-9422-47f4-a033-d61d768dbbb9";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -158,8 +158,8 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "56756c09-8e3f-456c-92e7-a701dadc467c";
-    date!: string;
+    override guid: string = "662b0ff7-d1d2-428d-bd4a-054f129a1b90";
+    date: string = "30/11/2024 13:01:24";
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};

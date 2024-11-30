@@ -2,6 +2,7 @@ namespace Sushi.Interfaces;
 
 public interface ITypeConverter
 {
-    Type Type { get; set; }
-    string ToScriptType();
+    public Type Type { get; }
+    public string Value { get; }
+    public string ToScriptType();
 }
