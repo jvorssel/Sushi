@@ -21,7 +21,7 @@ internal static class JsDocFormatter
         builder.AppendLine();
         builder.AppendLine(prefix + "/**");
         builder.AppendLine(prefix + $" * {summary.Summary}");
-        if (!scriptType.IsEmpty())
+        if (!string.IsNullOrWhiteSpace(scriptType))
             builder.AppendLine(prefix + $" * @type ({scriptType})");
         builder.AppendLine(prefix + " */");
     }

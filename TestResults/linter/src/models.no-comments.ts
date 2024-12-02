@@ -50,7 +50,7 @@ export class ScriptModel {
 
 export class ViewModel extends ScriptModel {
     guid: string = "";
-    createdOn: string = "";
+    createdOn: string = (new Date()).toISOString();
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -87,20 +87,20 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class NullablePropertiesViewModel extends ViewModel {
-    value2: string | null = null;
     override guid: string = "00000000-0000-0000-0000-000000000000";
+    value2: string | null = null;
     static value: string | null = null;
 
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.value2 !== undefined) this.value2 = value.value2;
         if (value.guid !== undefined) this.guid = value.guid;
+        if (value.value2 !== undefined) this.value2 = value.value2;
     }
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "612d7a80-9422-47f4-a033-d61d768dbbb9";
+    identifier: string = "ee10d511-2f21-491a-8fa2-850724561a1e";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -158,8 +158,8 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "662b0ff7-d1d2-428d-bd4a-054f129a1b90";
-    date: string = "30/11/2024 13:01:24";
+    override guid: string = "4a893c35-8601-4787-a6c1-9bbedfd530ae";
+    date: string = (new Date()).toISOString();
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};

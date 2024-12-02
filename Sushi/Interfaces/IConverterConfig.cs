@@ -1,4 +1,5 @@
-﻿using Sushi.Enum;
+﻿using Sushi.DefaultTypeResolver;
+using Sushi.Enum;
 
 namespace Sushi.Interfaces;
 
@@ -12,21 +13,26 @@ public interface IConverterConfig
     /// <summary>
     ///		Casing style for properties, default is camel case.
     /// </summary>
-    PropertyNameCasing CasingStyle{ get; set; }
+    PropertyNameCasing CasingStyle { get; set; }
 
     /// <summary>
     ///		A list of headers written at the start of the file.
     ///		Can be used to suppress es-lint warnings or add licence(s).
     /// </summary>
-    List<string> Headers{ get; set; }
-    
-    /// <summary>
-    ///     Provides custom script type mapping.
-    /// </summary>
-    Dictionary<Type, ITypeConverter> TypeConverters { get; set; }
+    List<string> Headers { get; set; }
 
     /// <summary>
     ///     If type mapping should throw an error when a type is unavailable or return "any".
     /// </summary>
     bool Strict { get; }
+
+    /// <summary>
+    ///     Resolve the default script value for any given <see cref="IPropertyDescriptor"/>.
+    /// </summary>
+    IDefaultValueResolver DefaultValueResolver { get; set; }
+    
+    /// <summary>
+    ///     Resolve the type name.
+    /// </summary>
+    TypeMap ValueResolver { get; set; }
 }

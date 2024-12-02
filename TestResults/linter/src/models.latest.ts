@@ -101,7 +101,7 @@ export class ViewModel extends ScriptModel {
      * When this view model was created.
      * @type (string)
      */
-    createdOn: string = "";
+    createdOn: string = (new Date()).toISOString();
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -158,16 +158,16 @@ export class InheritedViewModel extends BaseViewModel {
 export class NullablePropertiesViewModel extends ViewModel {
 
     /**
-     * Nullable string w get/set.
-     * @type (string | null)
-     */
-    value2: string | null = null;
-
-    /**
      * An overridden, nullable Guid identifier.
      * @type (string)
      */
     override guid: string = "00000000-0000-0000-0000-000000000000";
+
+    /**
+     * Nullable string w get/set.
+     * @type (string | null)
+     */
+    value2: string | null = null;
 
     /**
      * Nullable string.
@@ -178,8 +178,8 @@ export class NullablePropertiesViewModel extends ViewModel {
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.value2 !== undefined) this.value2 = value.value2;
         if (value.guid !== undefined) this.guid = value.guid;
+        if (value.value2 !== undefined) this.value2 = value.value2;
     }
 }
 
@@ -194,7 +194,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "1457e4c7-17d5-48e6-a552-95e862bfef79";
+    identifier: string = "904b01f9-b86c-48f4-956e-8d64768d27a6";
 
     /**
      * The Name of the person.
@@ -352,13 +352,13 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "1f5b509f-9fbb-42a0-82d4-b8fb116c23c6";
+    override guid: string = "55d7eb76-ea7e-4700-b938-c42a5475188c";
 
     /**
      * A DateTime instance.
      * @type (string)
      */
-    date: string = "30/11/2024 13:01:24";
+    date: string = (new Date()).toISOString();
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};

@@ -40,13 +40,13 @@ public sealed class TypeScriptConverter : ModelConverter
 
         var name = ApplyCasingStyle(property.Name);
         var defaultValue = ResolveDefaultValue(property);
-        if (defaultValue.IsEmpty())
+        if (string.IsNullOrWhiteSpace(defaultValue))
             name += "!";
 
         var readonlyPrefix = property is { Readonly: true, DefaultValue: not null } ? "readonly " : string.Empty;
         var staticPrefix = property.IsStatic ? "static " : string.Empty;
         var overridePrefix = classDescriptor.IsPropertyInherited(property.Name) ? "override " : string.Empty;
-        var valueSuffix = defaultValue.IsEmpty() ? string.Empty : $" = {defaultValue}";
+        var valueSuffix = string.IsNullOrWhiteSpace(defaultValue) ? string.Empty : $" = {defaultValue}";
 
         builder.AppendJsDoc(XmlDocument, property, Config.Indent, scriptType);
         builder.Append(
@@ -60,53 +60,41 @@ public sealed class TypeScriptConverter : ModelConverter
         var genericTypeArgs = type.IsGenericType
             ? GetGenericTypeArguments(type, prefix, isNullable).ToList()
             : new List<string>();
-
-        var classModel = Models.SingleOrDefault(x => x.Type == baseType);
-        if (classModel != null)
-        {
-            var className = type.IsGenericType
-                ? $"{prefix}{classModel.Name}<{string.Join(", ", genericTypeArgs)}>"
-                : $"{prefix}{classModel.Name}";
-            return isNullable ? $"{className} | null" : className;
-        }
-
+        
+        var genericArguments = string.Join(", ", genericTypeArgs);
         if (type.IsGenericParameter)
             return type.Name;
-
-        // Array
+        
+        string typeName;
+        var inheritsNullable = false;
         var actualType = type.GetBaseType(deep: false)!;
         var isDictionaryType = type.IsDictionary();
-        if (type.IsArrayType() && !isDictionaryType)
-        {
-            var typeName = type.IsGenericType
-                ? string.Join(", ", genericTypeArgs)
-                : ResolveScriptType(actualType, prefix, isNullable);
-            return $"Array<{typeName}>";
-        }
-
-        if (isDictionaryType && genericTypeArgs.Count == 2)
-        {
-            var keyType = genericTypeArgs[0];
-            var valueType = genericTypeArgs[1];
-
-            // Only allow string/numeric key types
-            return keyType is DefaultConverterConfig.String or DefaultConverterConfig.Number
-                ? $"{{ [key: string]: {valueType} }}"
-                : "any";
-        }
-
         var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
-        var enumType = Config.TypeConverters[typeof(System.Enum)]?.Value
-                       ?? throw new Exception($"{nameof(System.Enum)} is not available.");
+        var classModel = Models.SingleOrDefault(x => x.Type == baseType);
+        
+        if (classModel != null)
+        {
+            typeName = prefix + Config.ValueResolver.GetClassType(classModel, genericArguments);
+            inheritsNullable = true;
+        }
+        else if (type.IsArrayType() && !isDictionaryType)
+        {
+            var arrayTypeArguments = type.IsGenericType
+                ? genericArguments
+                : ResolveScriptType(actualType, prefix, isNullable);
+            typeName  = Config.ValueResolver.GetArrayType(arrayTypeArguments);
+            inheritsNullable = true;
+        }
+        else if (isDictionaryType && genericTypeArgs.Count == 2)
+            typeName = Config.ValueResolver.GetDictionaryType(genericTypeArgs);
+        else if (type.IsEnum && enumModel != null)
+            typeName = Config.ValueResolver.GetEnumType(enumModel);
+        else if (type.IsDateType())
+            typeName = Config.ValueResolver.GetDateType();
+        else
+            typeName = Config.ValueResolver.GetSimpleType(actualType); 
 
-        if (type.IsEnum && enumModel != null)
-            return $"{prefix}{enumModel.Name} | {enumType}";
-
-        var typeConverter = Config.Strict
-            ? Config.TypeConverters.ThrowIfNull(actualType)
-            : Config.TypeConverters.AnyIfNull(actualType);
-
-        return typeConverter.Value + (isNullable ? " | null" : string.Empty);
+        return typeName + (isNullable && !inheritsNullable ? " | null" : string.Empty);
     }
 
     public string ResolveDefaultValue(IPropertyDescriptor prop)
@@ -115,28 +103,34 @@ public sealed class TypeScriptConverter : ModelConverter
             return string.Empty;
 
         if (prop.Type.IsArrayType())
-            return "[]";
+            return Config.DefaultValueResolver.GetArrayValue(prop);
 
         var isNullableString = prop.Type == typeof(string) && prop.DefaultValue == null;
         if (prop.IsNullable || isNullableString)
-            return "null";
+            return Config.DefaultValueResolver.GetNull();
 
         if (prop.DefaultValue != null)
         {
             var defaultValueType = prop.DefaultValue.GetType();
             var descriptor = Models.SingleOrDefault(x => x.Type == defaultValueType && x.HasParameterlessCtor);
-            if (descriptor != null)
-                return $"new {descriptor.Name}()";
-
-            if (defaultValueType.IsClass && defaultValueType != typeof(string))
-                return defaultValueType.IsDictionary() ? "{}" : string.Empty;
+            var defaultValue = Config.DefaultValueResolver.GetClassValue(prop, descriptor);
+            if (!string.IsNullOrWhiteSpace(defaultValue))
+                return defaultValue;
         }
 
-        var converter = Config.Strict
-            ? Config.TypeConverters.ThrowIfNull(prop.Type)
-            : Config.TypeConverters.AnyIfNull(prop.Type);
+        if (prop.Type.IsBooleanType())
+            return Config.DefaultValueResolver.GetBooleanValue(prop);
+
+        if (prop.Type.IsNumericType())
+            return Config.DefaultValueResolver.GetNumericValue(prop);
+
+        if (prop.Type.IsStringType())
+            return Config.DefaultValueResolver.GetStringValue(prop);
         
-        return converter.GetDefaultValue(prop);
+        if (prop.Type.IsDateType())
+            return Config.DefaultValueResolver.GetDateValue(prop);
+
+        return Config.DefaultValueResolver.GetNullOrEmptyValue(prop);
     }
 
     internal IEnumerable<string> GetGenericTypeArguments(Type type, string prefix, bool isNullable)
