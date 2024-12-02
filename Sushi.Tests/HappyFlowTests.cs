@@ -10,7 +10,7 @@ namespace Sushi.Tests;
 
 public sealed class HappyFlowTests : TestBase
 {
-    private const string SourcePath = @"TestResults\linter\src\";
+    private const string SourcePath = @"TestResults\";
 
     private static string GetFilePath(string fileName)
     {

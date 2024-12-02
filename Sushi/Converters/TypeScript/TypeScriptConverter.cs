@@ -60,18 +60,18 @@ public sealed class TypeScriptConverter : ModelConverter
         var genericTypeArgs = type.IsGenericType
             ? GetGenericTypeArguments(type, prefix, isNullable).ToList()
             : new List<string>();
-        
+
         var genericArguments = string.Join(", ", genericTypeArgs);
         if (type.IsGenericParameter)
             return type.Name;
-        
+
         string typeName;
         var inheritsNullable = false;
         var actualType = type.GetBaseType(deep: false)!;
         var isDictionaryType = type.IsDictionary();
         var enumModel = EnumModels.SingleOrDefault(x => x.Name == actualType.Name);
         var classModel = Models.SingleOrDefault(x => x.Type == baseType);
-        
+
         if (classModel != null)
         {
             typeName = prefix + Config.ValueResolver.GetClassType(classModel, genericArguments);
@@ -82,17 +82,25 @@ public sealed class TypeScriptConverter : ModelConverter
             var arrayTypeArguments = type.IsGenericType
                 ? genericArguments
                 : ResolveScriptType(actualType, prefix, isNullable);
-            typeName  = Config.ValueResolver.GetArrayType(arrayTypeArguments);
+            typeName = Config.ValueResolver.GetArrayType(arrayTypeArguments);
             inheritsNullable = true;
         }
         else if (isDictionaryType && genericTypeArgs.Count == 2)
+        {
             typeName = Config.ValueResolver.GetDictionaryType(genericTypeArgs);
+        }
         else if (type.IsEnum && enumModel != null)
+        {
             typeName = Config.ValueResolver.GetEnumType(enumModel);
+        }
         else if (type.IsDateType())
+        {
             typeName = Config.ValueResolver.GetDateType();
+        }
         else
-            typeName = Config.ValueResolver.GetSimpleType(actualType); 
+        {
+            typeName = Config.ValueResolver.GetSimpleType(actualType);
+        }
 
         return typeName + (isNullable && !inheritsNullable ? " | null" : string.Empty);
     }
@@ -105,8 +113,8 @@ public sealed class TypeScriptConverter : ModelConverter
         if (prop.Type.IsArrayType())
             return Config.DefaultValueResolver.GetArrayValue(prop);
 
-        var isNullableString = prop.Type == typeof(string) && prop.DefaultValue == null;
-        if (prop.IsNullable || isNullableString)
+        var isNullableString = prop.Type == typeof(string);
+        if ((prop.IsNullable || isNullableString) && prop.DefaultValue == null)
             return Config.DefaultValueResolver.GetNull();
 
         if (prop.DefaultValue != null)
@@ -126,7 +134,7 @@ public sealed class TypeScriptConverter : ModelConverter
 
         if (prop.Type.IsStringType())
             return Config.DefaultValueResolver.GetStringValue(prop);
-        
+
         if (prop.Type.IsDateType())
             return Config.DefaultValueResolver.GetDateValue(prop);
 

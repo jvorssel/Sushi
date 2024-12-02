@@ -158,16 +158,16 @@ export class InheritedViewModel extends BaseViewModel {
 export class NullablePropertiesViewModel extends ViewModel {
 
     /**
-     * An overridden, nullable Guid identifier.
-     * @type (string)
-     */
-    override guid: string = "00000000-0000-0000-0000-000000000000";
-
-    /**
      * Nullable string w get/set.
      * @type (string | null)
      */
     value2: string | null = null;
+
+    /**
+     * An overridden, nullable Guid identifier.
+     * @type (string)
+     */
+    override guid: string = "00000000-0000-0000-0000-000000000000";
 
     /**
      * Nullable string.
@@ -178,8 +178,8 @@ export class NullablePropertiesViewModel extends ViewModel {
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.guid !== undefined) this.guid = value.guid;
         if (value.value2 !== undefined) this.value2 = value.value2;
+        if (value.guid !== undefined) this.guid = value.guid;
     }
 }
 
@@ -194,7 +194,7 @@ export class PersonViewModel extends ViewModel {
      * The Identifier that this Model refers to.
      * @type (string)
      */
-    identifier: string = "904b01f9-b86c-48f4-956e-8d64768d27a6";
+    identifier: string = "b479e1fa-9b5e-424b-a8b4-87500ae5e0e5";
 
     /**
      * The Name of the person.
@@ -352,7 +352,7 @@ export class TypeModel extends ViewModel {
      * .
      * @type (string)
      */
-    override guid: string = "55d7eb76-ea7e-4700-b938-c42a5475188c";
+    override guid: string = "810395a1-4b8d-41ae-8ade-9c69f070aa02";
 
     /**
      * A DateTime instance.

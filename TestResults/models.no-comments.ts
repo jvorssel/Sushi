@@ -87,20 +87,20 @@ export class InheritedViewModel extends BaseViewModel {
 }
 
 export class NullablePropertiesViewModel extends ViewModel {
-    override guid: string = "00000000-0000-0000-0000-000000000000";
     value2: string | null = null;
+    override guid: string = "00000000-0000-0000-0000-000000000000";
     static value: string | null = null;
 
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
         super(value);
 
-        if (value.guid !== undefined) this.guid = value.guid;
         if (value.value2 !== undefined) this.value2 = value.value2;
+        if (value.guid !== undefined) this.guid = value.guid;
     }
 }
 
 export class PersonViewModel extends ViewModel {
-    identifier: string = "ee10d511-2f21-491a-8fa2-850724561a1e";
+    identifier: string = "8617f3b2-622b-4189-bef4-2112c0ed94c0";
     name: string | null = null;
     surname: string | null = null;
     gender: Gender | number = 1;
@@ -158,7 +158,7 @@ export class SchoolViewModel extends ViewModel {
 export class TypeModel extends ViewModel {
     nullableBool: boolean | null = null;
     nullableString: string | null = null;
-    override guid: string = "4a893c35-8601-4787-a6c1-9bbedfd530ae";
+    override guid: string = "e3155538-0a4b-4e39-be5e-9cbee6e3a03c";
     date: string = (new Date()).toISOString();
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];

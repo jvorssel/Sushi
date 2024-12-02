@@ -11,10 +11,6 @@ function ConstrainedGeneric(obj) {
     this.name = value.name;
 }
 
-ConstrainedGeneric.prototype.mapFrom = function(obj) {
-    return _.extend(new ConstrainedGeneric(), obj); 
-};
-
 /**
  * A class with const values.
  * Sushi.TestModels.ConstValues
@@ -28,10 +24,6 @@ function ConstValues(obj) {
     this.first = value.first;
     this.last = value.last;
 }
-
-ConstValues.prototype.mapFrom = function(obj) {
-    return _.extend(new ConstValues(), obj); 
-};
 
 /**
  * Sushi.TestModels.GenericComplexStandalone`2
@@ -48,10 +40,6 @@ function GenericComplexStandalone(obj) {
     this.totalAmount = value.totalAmount;
 }
 
-GenericComplexStandalone.prototype.mapFrom = function(obj) {
-    return _.extend(new GenericComplexStandalone(), obj); 
-};
-
 /**
  * Sushi.TestModels.GenericStandalone`1
  * @template {any} TEntry
@@ -65,10 +53,6 @@ function GenericStandalone(obj) {
     this.totalAmount = value.totalAmount;
 }
 
-GenericStandalone.prototype.mapFrom = function(obj) {
-    return _.extend(new GenericStandalone(), obj); 
-};
-
 /**
  * .
  * Sushi.TestModels.ScriptModel
@@ -79,10 +63,6 @@ function ScriptModel(obj) {
         value = {};
 
 }
-
-ScriptModel.prototype.mapFrom = function(obj) {
-    return _.extend(new ScriptModel(), obj); 
-};
 
 /**
  * The view model base class.
@@ -98,10 +78,6 @@ function ViewModel(obj) {
     this.createdOn = value.createdOn;
 }
 
-ViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new ViewModel(), obj); 
-};
-
 /**
  * Sushi.TestModels.BaseViewModel
  * @extends ViewModel
@@ -116,10 +92,6 @@ function BaseViewModel(obj) {
     this.base = value.base;
 }
 
-BaseViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new BaseViewModel(), obj); 
-};
-
 /**
  * Sushi.TestModels.InheritedViewModel
  * @extends BaseViewModel
@@ -133,10 +105,6 @@ function InheritedViewModel(obj) {
     this.addition = value.addition;
 }
 
-InheritedViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new InheritedViewModel(), obj); 
-};
-
 /**
  * For testing nullable properties.
  * Sushi.TestModels.NullablePropertiesViewModel
@@ -147,14 +115,10 @@ function NullablePropertiesViewModel(obj) {
     if (!(value instanceof Object)) 
         value = {};
 
-    this.guid = value.guid;
     this.value2 = value.value2;
+    this.guid = value.guid;
     this.value = value.value;
 }
-
-NullablePropertiesViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new NullablePropertiesViewModel(), obj); 
-};
 
 /**
  * The PersonViewModel that represents a Person.
@@ -172,10 +136,6 @@ function PersonViewModel(obj) {
     this.gender = value.gender;
 }
 
-PersonViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new PersonViewModel(), obj); 
-};
-
 /**
  * Represents a Student in a school.
  * Sushi.TestModels.StudentViewModel
@@ -189,10 +149,6 @@ function StudentViewModel(obj) {
     this.grade = value.grade;
     this.school = value.school;
 }
-
-StudentViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new StudentViewModel(), obj); 
-};
 
 /**
  * Basic information about a School.
@@ -216,10 +172,6 @@ function SchoolViewModel(obj) {
     this.timmy = value.timmy;
 }
 
-SchoolViewModel.prototype.mapFrom = function(obj) {
-    return _.extend(new SchoolViewModel(), obj); 
-};
-
 /**
  * Simple model to verify complex types.
  * Sushi.TestModels.TypeModel
@@ -239,8 +191,4 @@ function TypeModel(obj) {
     this.studentPerClass = value.studentPerClass;
     this.readonlyString = value.readonlyString;
 }
-
-TypeModel.prototype.mapFrom = function(obj) {
-    return _.extend(new TypeModel(), obj); 
-};
 

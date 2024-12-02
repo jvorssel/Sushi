@@ -39,9 +39,6 @@ public class DefaultValueResolver : IDefaultValueResolver
 
     public virtual string GetBooleanValue(IPropertyDescriptor descriptor)
     {
-        if (descriptor.IsNullable)
-            return GetNull();
-
         return descriptor.DefaultValue as bool? == true ? "true" : "false";
     }
 
