@@ -1,4 +1,3 @@
-
 export enum Gender {
     Undefined = 0,
     Male = 1,

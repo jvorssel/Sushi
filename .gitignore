@@ -1,10 +1,10 @@
-.vs/*
-packages/*
-.idea/*
-_ReSharper/*
-_ReSharper.Caches/*
-*/bin/*
-*/obj/*
+.vs/**
+packages/**
+.idea/**
+_ReSharper/**
+_ReSharper.Caches/**
+*/bin/**
+*/obj/**
 *.DotSettings.user
 
 
