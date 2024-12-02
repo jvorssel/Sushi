@@ -5,7 +5,7 @@ using Sushi.Interfaces;
 
 namespace Sushi.DefaultTypeResolver;
 
-public class DefaultValueResolver : IDefaultValueResolver
+public class DefaultValueMap : IDefaultValueMap
 {
     public virtual string GetArrayValue(IPropertyDescriptor descriptor)
     {

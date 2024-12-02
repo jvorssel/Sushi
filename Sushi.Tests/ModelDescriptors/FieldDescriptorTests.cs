@@ -8,7 +8,7 @@ namespace Sushi.Tests.ModelDescriptors;
 public abstract class FieldDescriptorTests
 {
     
-    public sealed class TypeMapTests : FieldDescriptorTests
+    public sealed class DefaultTypeMapTests : FieldDescriptorTests
     {
         [Fact]
         public void ReadonlyString_ShouldMapCorrectly()

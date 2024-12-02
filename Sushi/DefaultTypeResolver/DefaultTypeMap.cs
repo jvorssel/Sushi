@@ -1,9 +1,10 @@
 ﻿using Sushi.Descriptors;
 using Sushi.Extensions;
+using Sushi.Interfaces;
 
 namespace Sushi.DefaultTypeResolver;
 
-public class TypeMap
+public class DefaultTypeMap : ITypeMap
 {
     public virtual string GetClassType(ClassDescriptor classDescriptor, string genericArguments)
     {
@@ -40,7 +41,7 @@ public class TypeMap
             type.IsBooleanType() ? "boolean" : "any";
     }
 
-    public string GetDateType()
+    public virtual string GetDateType()
     {
         return "string";
     }

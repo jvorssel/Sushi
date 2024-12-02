@@ -10,8 +10,7 @@ namespace Sushi.Converters;
 
 public abstract class ModelConverter : IConvertModels
 {
-    public IConverterConfig Config { get; }
-
+    protected IConverterConfig Config { get; }
     protected readonly XmlDocumentationReader? XmlDocument;
     public IReadOnlyCollection<ClassDescriptor> Models { get; }
     public IReadOnlyCollection<EnumDescriptor> EnumModels { get; }

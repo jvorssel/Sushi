@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Sushi.Configurations;
 using Sushi.TestModels;
 using Xunit;

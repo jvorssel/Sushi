@@ -10,7 +10,7 @@ public class DefaultConverterConfig : IConverterConfig
     public PropertyNameCasing CasingStyle { get; set; } = PropertyNameCasing.CamelCase;
     public List<string> Headers { get; set; } = new();
 
-    public IDefaultValueResolver DefaultValueResolver { get; set; } = new DefaultValueResolver();
-    public TypeMap ValueResolver { get; set; } = new();
+    public IDefaultValueMap DefaultValueMap { get; set; } = new DefaultValueMap();
+    public ITypeMap TypeMap { get; set; } = new DefaultTypeMap();
     public bool Strict { get; set; } = true;
 }

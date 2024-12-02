@@ -29,10 +29,10 @@ public interface IConverterConfig
     /// <summary>
     ///     Resolve the default script value for any given <see cref="IPropertyDescriptor"/>.
     /// </summary>
-    IDefaultValueResolver DefaultValueResolver { get; set; }
-    
+    IDefaultValueMap DefaultValueMap { get; }
+
     /// <summary>
     ///     Resolve the type name.
     /// </summary>
-    TypeMap ValueResolver { get; set; }
+    ITypeMap TypeMap { get; }
 }
