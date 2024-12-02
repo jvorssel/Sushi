@@ -1,5 +1,5 @@
-﻿using Sushi.Converters;
-using Sushi.Converters.TypeScript;
+﻿using Sushi.Configurations;
+using Sushi.Converters;
 using Sushi.Interfaces;
 
 // ReSharper disable InconsistentNaming

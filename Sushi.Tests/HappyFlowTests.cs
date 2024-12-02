@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Sushi.Converters.TypeScript;
+using Sushi.Configurations;
 using Sushi.TestModels;
 using Xunit;
 

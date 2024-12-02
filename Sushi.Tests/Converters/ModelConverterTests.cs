@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sushi.Converters.TypeScript;
+using Sushi.Configurations;
+using Sushi.Converters;
 using Sushi.Enum;
 using Sushi.Helpers;
 using Sushi.TestModels;

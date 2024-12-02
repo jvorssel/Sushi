@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Text;
-using Sushi.Converters.TypeScript;
+using Sushi.Configurations;
 using Sushi.Descriptors;
 using Sushi.TestModels;
 using Xunit;

@@ -5,7 +5,7 @@ using Sushi.Extensions;
 using Sushi.Helpers;
 using Sushi.Interfaces;
 
-namespace Sushi.Converters.TypeScript;
+namespace Sushi.Converters;
 
 /// <summary>
 ///     Add the TypeScript class declaration to the <see cref="SushiConverter.Models" />.

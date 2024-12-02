@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Sushi.Converters.TypeScript;
+using Sushi.Configurations;
 using Sushi.Descriptors;
 using Sushi.Extensions;
 using Sushi.TestModels;

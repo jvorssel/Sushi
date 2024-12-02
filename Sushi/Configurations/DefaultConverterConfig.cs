@@ -2,7 +2,7 @@
 using Sushi.Enum;
 using Sushi.Interfaces;
 
-namespace Sushi.Converters.TypeScript;
+namespace Sushi.Configurations;
 
 public class DefaultConverterConfig : IConverterConfig
 {
