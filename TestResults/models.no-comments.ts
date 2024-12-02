@@ -5,10 +5,6 @@ export enum Gender {
     Female = 2
 }
 
-/**
- * Sushi.TestModels.ConstrainedGeneric`1
- * @template {any} T
- */
 export class ConstrainedGeneric<T> {
     data!: T;
     name: string | null = null;
@@ -19,37 +15,13 @@ export class ConstrainedGeneric<T> {
     }
 }
 
-/**
- * A class with const values.
- * Sushi.TestModels.ConstValues
- */
 export class ConstValues {
-
-    /**
-     * A Static value.
-     * @type (string)
-     */
     static readonly static: string = "Static";
-
-    /**
-     * The First value.
-     * @type (string)
-     */
     static readonly first: string = "First";
-
-    /**
-     * The Last value.
-     * @type (string)
-     */
     static readonly last: string = "Last";
 
 }
 
-/**
- * Sushi.TestModels.GenericComplexStandalone`2
- * @template {any} TFirst
- * @template {any} TSecond
- */
 export class GenericComplexStandalone<TFirst, TSecond> {
     first: Array<TFirst> = [];
     second: Array<TSecond> = [];
@@ -62,10 +34,6 @@ export class GenericComplexStandalone<TFirst, TSecond> {
     }
 }
 
-/**
- * Sushi.TestModels.GenericStandalone`1
- * @template {any} TEntry
- */
 export class GenericStandalone<TEntry> {
     values: Array<TEntry> = [];
     totalAmount!: number;
@@ -76,32 +44,13 @@ export class GenericStandalone<TEntry> {
     }
 }
 
-/**
- * .
- * Sushi.TestModels.ScriptModel
- */
 export class ScriptModel {
 
 }
 
-/**
- * The view model base class.
- * Sushi.TestModels.ViewModel
- * @extends ScriptModel
- */
 export class ViewModel extends ScriptModel {
-
-    /**
-     * The view model identifier.
-     * @type (string)
-     */
     guid: string = "";
-
-    /**
-     * When this view model was created.
-     * @type (string)
-     */
-    createdOn!: string;
+    createdOn: string = (new Date()).toISOString();
 
     constructor(value: Partial<ViewModel> = {}) {
         super();
@@ -111,10 +60,6 @@ export class ViewModel extends ScriptModel {
     }
 }
 
-/**
- * Sushi.TestModels.BaseViewModel
- * @extends ViewModel
- */
 export class BaseViewModel extends ViewModel {
     value: string = "base";
     override guid: string = "00000000-0000-0000-0000-000000000000";
@@ -129,16 +74,7 @@ export class BaseViewModel extends ViewModel {
     }
 }
 
-/**
- * Sushi.TestModels.InheritedViewModel
- * @extends BaseViewModel
- */
 export class InheritedViewModel extends BaseViewModel {
-
-    /**
-     * .
-     * @type (string)
-     */
     override value: string = "override";
     addition: string = "added";
 
@@ -150,29 +86,9 @@ export class InheritedViewModel extends BaseViewModel {
     }
 }
 
-/**
- * For testing nullable properties.
- * Sushi.TestModels.NullablePropertiesViewModel
- * @extends ViewModel
- */
 export class NullablePropertiesViewModel extends ViewModel {
-
-    /**
-     * Nullable string w get/set.
-     * @type (string | null)
-     */
     value2: string | null = null;
-
-    /**
-     * An overridden, nullable Guid identifier.
-     * @type (string)
-     */
     override guid: string = "00000000-0000-0000-0000-000000000000";
-
-    /**
-     * Nullable string.
-     * @type (string | null)
-     */
     static value: string | null = null;
 
     constructor(value: Partial<NullablePropertiesViewModel> = {}) {
@@ -183,35 +99,10 @@ export class NullablePropertiesViewModel extends ViewModel {
     }
 }
 
-/**
- * The PersonViewModel that represents a Person.
- * Sushi.TestModels.PersonViewModel
- * @extends ViewModel
- */
 export class PersonViewModel extends ViewModel {
-
-    /**
-     * The Identifier that this Model refers to.
-     * @type (string)
-     */
-    identifier: string = "afe7da1e-7d88-45c6-a2dd-035fbe95a7e0";
-
-    /**
-     * The Name of the person.
-     * @type (string | null)
-     */
+    identifier: string = "334d1004-0dfb-4470-90e4-e531462a86cd";
     name: string | null = null;
-
-    /**
-     * The Surname of the person.
-     * @type (string | null)
-     */
     surname: string | null = null;
-
-    /**
-     * The Gender of the person.
-     * @type (Gender | number)
-     */
     gender: Gender | number = 1;
 
     constructor(value: Partial<PersonViewModel> = {}) {
@@ -224,23 +115,8 @@ export class PersonViewModel extends ViewModel {
     }
 }
 
-/**
- * Represents a Student in a school.
- * Sushi.TestModels.StudentViewModel
- * @extends PersonViewModel
- */
 export class StudentViewModel extends PersonViewModel {
-
-    /**
-     * What Grade the Student is in.
-     * @type (number)
-     */
     grade: number = 9;
-
-    /**
-     * The name of the School.
-     * @type (SchoolViewModel)
-     */
     school!: SchoolViewModel;
 
     constructor(value: Partial<StudentViewModel> = {}) {
@@ -251,65 +127,15 @@ export class StudentViewModel extends PersonViewModel {
     }
 }
 
-/**
- * Basic information about a School.
- * Sushi.TestModels.SchoolViewModel
- * @extends ViewModel
- */
 export class SchoolViewModel extends ViewModel {
-
-    /**
-     * The Name of this SchoolViewModel.
-     * @type (string | null)
-     */
     name: string | null = null;
-
-    /**
-     * The AmountOfStudents of this SchoolViewModel.
-     * @type (number)
-     */
     amountOfStudents: number = 0;
-
-    /**
-     * The Owner of this SchoolViewModel.
-     * @type (PersonViewModel)
-     */
     owner!: PersonViewModel;
-
-    /**
-     * The Address of this SchoolViewModel.
-     * @type (string)
-     */
     address: string = "";
-
-    /**
-     * The ZipCode of this SchoolViewModel.
-     * @type (string | null)
-     */
     zipCode: string | null = null;
-
-    /**
-     * The HouseNumber of this SchoolViewModel.
-     * @type (number)
-     */
     houseNumber: number = 0;
-
-    /**
-     * The HouseNumberAddition of this SchoolViewModel.
-     * @type (string | null)
-     */
     houseNumberAddition: string | null = null;
-
-    /**
-     * The school student aren't doing too great ...
-     * @type (number)
-     */
     averageGrade: number = 2.6666666666666;
-
-    /**
-     * The Students of this SchoolViewModel.
-     * @type (Array<StudentViewModel>)
-     */
     students: Array<StudentViewModel> = [];
     timmy: StudentViewModel = new StudentViewModel();
 
@@ -329,44 +155,14 @@ export class SchoolViewModel extends ViewModel {
     }
 }
 
-/**
- * Simple model to verify complex types.
- * Sushi.TestModels.TypeModel
- * @extends ViewModel
- */
 export class TypeModel extends ViewModel {
-
-    /**
-     * A nullable boolean.
-     * @type (boolean | null)
-     */
     nullableBool: boolean | null = null;
-
-    /**
-     * A nullable string, defaults to null.
-     * @type (string | null)
-     */
     nullableString: string | null = null;
-
-    /**
-     * .
-     * @type (string)
-     */
-    override guid: string = "965370d3-6af5-4aad-984f-bb2537413426";
-
-    /**
-     * A DateTime instance.
-     * @type (string)
-     */
-    date!: string;
+    override guid: string = "a8f3534a-53a1-4857-9fef-fef5c0c73465";
+    date: string = (new Date()).toISOString();
     student: StudentViewModel = new StudentViewModel();
     students: Array<StudentViewModel> = [];
     studentPerClass: { [key: string]: Array<StudentViewModel> } = {};
-
-    /**
-     * A readonly string.
-     * @type (string)
-     */
     static readonly readonlyString: string = "readonly";
 
     constructor(value: Partial<TypeModel> = {}) {

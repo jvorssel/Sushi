@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text;
+using Sushi.Configurations;
 using Sushi.Descriptors;
 using Sushi.TestModels;
 using Xunit;
@@ -30,7 +31,7 @@ public sealed class MalformattedGenericType : TestBase
         Assert.NotNull(genericProperty);
         Assert.True(genericProperty.Type.IsGenericParameter);
 
-        var typescript = converter.TypeScript(new ConverterConfig { Indent = string.Empty });
+        var typescript = converter.TypeScript(new DefaultConverterConfig() { Indent = string.Empty });
         var builder = new StringBuilder();
         typescript.ConvertProperty(builder, descriptor, genericProperty);
         var expectedScript = "data!: T;";

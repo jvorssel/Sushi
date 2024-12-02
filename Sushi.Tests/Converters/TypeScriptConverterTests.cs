@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Sushi.Configurations;
 using Sushi.Descriptors;
-using Sushi.Enum;
 using Sushi.Extensions;
-using Sushi.Helpers;
 using Sushi.TestModels;
 using Xunit;
 
@@ -40,13 +39,15 @@ public abstract class TypeScriptConverterTests
         }
 
         [Fact]
-        public void ResolveScriptType_ClassPropertyMissing_ShouldUseAny()
+        public void ResolveScriptType_ClassPropertyMissing_NotStrict_ShouldUseAny()
         {
             // Arrange
             var descriptor = new ClassDescriptor(typeof(TypeModel));
             var propertyDescriptor = descriptor.Properties[nameof(TypeModel.Student)];
+            
+            var config = new DefaultConverterConfig { Strict = false };
             var converter = new SushiConverter(typeof(TypeModel), typeof(ViewModel), typeof(ScriptModel))
-                .TypeScript();
+                .TypeScript(config);
 
             // Act
             var scriptType = converter.ResolveScriptType(propertyDescriptor.Type);
@@ -212,91 +213,29 @@ public abstract class TypeScriptConverterTests
     
     public sealed class ResolveDefaultValueTests : TypeScriptConverterTests
     {
-        [Fact]
-        public void ResolveDefaultValue_NullableProperty_ReturnsCorrectValueTest()
+        [Theory]
+        [InlineData(typeof(bool?), "null")]
+        [InlineData(typeof(List<int>), "[]")]
+        [InlineData(typeof(int[]), "[]")]
+        [InlineData(typeof(IEnumerable<int>), "[]")]
+        [InlineData(typeof(bool), "true", true)]
+        [InlineData(typeof(bool?), "false", false)]
+        [InlineData(typeof(Gender), "1", Gender.Male)]
+        [InlineData(typeof(string), "\"Hi!\"", "Hi!")]
+        [InlineData(typeof(string), "null")]
+        [InlineData(typeof(DateTime), "(new Date()).toISOString()")]
+        [InlineData(typeof(DateTime?), "null")]
+        public void ResolveDefaultValue_DefaultTypeMap_ShouldReturnScriptTypeTest(Type type, string expectedValue, object? defaultValue = null)
         {
             // Arrange
             var converter = new SushiConverter().TypeScript();
-            var nullableBoolType = new PropertyDescriptor(typeof(bool?));
-            var nullableClassType = new PropertyDescriptor(typeof(Nullable<bool>));
+            var descriptor = new PropertyDescriptor(type, defaultValue);
 
             // Act
-            var boolResult = converter.ResolveDefaultValue(nullableBoolType);
-            var nullableResult = converter.ResolveDefaultValue(nullableClassType);
+            var result = converter.ResolveDefaultValue(descriptor);
 
             // Assert
-            Assert.Equal(NativeType.Null.ToScriptType(), boolResult);
-            Assert.Equal(NativeType.Null.ToScriptType(), nullableResult);
-        }
-
-        [Fact]
-        public void ResolveDefaultValue_ArrayProperty_ReturnsCorrectValueTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(List<int>));
-
-            // Act
-            var value = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("[]", value);
-        }
-
-        [Fact]
-        public void ResolveDefaultValue_NullValue_ReturnsCorrectValueTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(int?));
-
-            // Act
-            var value = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("null", value);
-        }
-
-        [Fact]
-        public void ResolveDefaultValue_BooleanValue_ReturnsCorrectValueTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(bool), true);
-
-            // Act
-            var value = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("true", value);
-        }
-
-        [Fact]
-        public void ResolveDefaultValue_BooleanValueFalse_ReturnsCorrectValueTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(bool), false);
-
-            // Act
-            var value = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("false", value);
-        }
-
-        [Fact]
-        public void ResolveDefaultValue_EnumValue_ReturnsCorrectValueTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(Gender), Gender.Male);
-
-            // Act
-            var value = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("1", value);
+            Assert.Equal(expectedValue, result);
         }
 
         [Fact]
@@ -311,20 +250,6 @@ public abstract class TypeScriptConverterTests
 
             // Assert
             Assert.Equal("2.6666666666666666666666666667".Substring(0, 15), value);
-        }
-
-        [Fact]
-        public void ResolveDefaultValue_StringValue_ReturnsCorrectValueTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(string), "Hi!");
-
-            // Act
-            var value = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("\"Hi!\"", value);
         }
 
         [Fact]
@@ -357,20 +282,6 @@ public abstract class TypeScriptConverterTests
         }
 
         [Fact]
-        public void ResolveDefaultValue_NullValue_ExpectNullTest()
-        {
-            // Arrange
-            var converter = new SushiConverter().TypeScript();
-            var prop = new PropertyDescriptor(typeof(string));
-
-            // Act
-            var result = converter.ResolveDefaultValue(prop);
-
-            // Assert
-            Assert.Equal("null", result);
-        }
-
-        [Fact]
         public void ResolveDefaultValue_Dictionary_ExpectObjectTest()
         {
             // Arrange
@@ -386,7 +297,6 @@ public abstract class TypeScriptConverterTests
         }
     }
 
-    
     public sealed class GenericClassSupport : TypeScriptConverterTests
     {
         [Fact]

@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using Sushi.Configurations;
 using Sushi.TestModels;
 using Xunit;
 
@@ -9,7 +11,7 @@ namespace Sushi.Tests;
 
 public sealed class HappyFlowTests : TestBase
 {
-    private const string SourcePath = @"TestResults\linter\src\";
+    private const string SourcePath = @"TestResults\";
 
     private static string GetFilePath(string fileName)
     {
@@ -84,10 +86,14 @@ public sealed class HappyFlowTests : TestBase
     {
         // Arrange
         var assembly = typeof(PersonViewModel).Assembly;
+        var config = new DefaultConverterConfig
+        {
+            Strict = false
+        };
         var converter = new SushiConverter(assembly).UseDocumentation(XmlDocPath);
 
         // Act
-        var script = converter.TypeScript().ToString();
+        var script = converter.TypeScript(config).ToString();
 
         WriteToFile(script, GetFilePath("models.latest.ts"));
     }
@@ -99,10 +105,14 @@ public sealed class HappyFlowTests : TestBase
         // 1) Get the assembly with the exported types.
         var assembly = typeof(PersonViewModel).Assembly;
         var converter = new SushiConverter(assembly);
+        var config = new DefaultConverterConfig
+        {
+            Strict = false
+        };
 
         // Act
         // 2) Specify the target language and invoke ToString().
-        var script = converter.TypeScript().ToString();
+        var script = converter.TypeScript(config).ToString();
 
         // 3) The resulting script can be written to a file(stream).
         WriteToFile(script, GetFilePath("models.no-comments.ts"));

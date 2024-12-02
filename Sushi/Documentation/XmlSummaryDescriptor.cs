@@ -44,7 +44,7 @@ public sealed class XmlSummaryDescriptor
 
     public XmlSummaryDescriptor(string name, ReferenceType field, Dictionary<string, string> values)
     {
-        if (name.IsEmpty())
+        if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentNullException(nameof(name));
 
         RawName = XmlDocumentationReader.RemoveMethodArgs.Match(name).Value;

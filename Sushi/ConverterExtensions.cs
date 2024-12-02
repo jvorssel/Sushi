@@ -1,5 +1,5 @@
-﻿using Sushi.Converters;
-using Sushi.Converters.TypeScript;
+﻿using Sushi.Configurations;
+using Sushi.Converters;
 using Sushi.Interfaces;
 
 // ReSharper disable InconsistentNaming
@@ -13,7 +13,7 @@ public static class ConverterExtensions
     /// </summary>
     public static EcmaScript5Converter ECMAScript5(this SushiConverter converter, IConverterConfig? options = null)
     {
-        return new EcmaScript5Converter(converter, options ?? new ConverterConfig());
+        return new EcmaScript5Converter(converter, options ?? new DefaultConverterConfig());
     }
 
     /// <summary>
@@ -21,7 +21,7 @@ public static class ConverterExtensions
     /// </summary>
     public static EcmaScript6Converter ECMAScript6(this SushiConverter converter, IConverterConfig? options = null)
     {
-        return new EcmaScript6Converter(converter, options ?? new ConverterConfig());
+        return new EcmaScript6Converter(converter, options ?? new DefaultConverterConfig());
     }
 
     /// <summary>
@@ -29,6 +29,6 @@ public static class ConverterExtensions
     /// </summary>
     public static TypeScriptConverter TypeScript(this SushiConverter converter, IConverterConfig? options = null)
     {
-        return new TypeScriptConverter(converter, options ?? new DefaultTypeScriptConverterConfig());
+        return new TypeScriptConverter(converter, options ?? new DefaultConverterConfig());
     }
 }

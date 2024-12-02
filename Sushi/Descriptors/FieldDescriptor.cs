@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection;
-using Sushi.Enum;
 using Sushi.Extensions;
-using Sushi.Helpers;
 using Sushi.Interfaces;
 
 namespace Sushi.Descriptors;
@@ -34,11 +32,6 @@ public sealed class FieldDescriptor : IPropertyDescriptor
 
     /// <inheritdoc />
     public bool IsOverridden => _field.DeclaringType.IsPropertyHidingBaseClassProperty(Name);
-
-    /// <summary>
-    ///     The <see cref="NativeType"/> that matches this field.
-    /// </summary>
-    public NativeType NativeType => Type.ToNativeScriptType();
 
     public FieldDescriptor(FieldInfo fieldInfo)
     {

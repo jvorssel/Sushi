@@ -58,7 +58,7 @@ public sealed class SushiConverter : IConvertModels
     /// </summary>
     public SushiConverter UseDocumentation(string msBuildXmlFilePath)
     {
-        if (msBuildXmlFilePath.IsEmpty())
+        if (string.IsNullOrWhiteSpace(msBuildXmlFilePath))
             throw new ArgumentNullException(nameof(msBuildXmlFilePath));
 
         var extension = Path.GetExtension(msBuildXmlFilePath);

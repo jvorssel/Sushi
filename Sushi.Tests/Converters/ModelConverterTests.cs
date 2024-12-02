@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sushi.Configurations;
 using Sushi.Converters;
-using Sushi.Converters.TypeScript;
 using Sushi.Enum;
 using Sushi.Helpers;
 using Sushi.TestModels;
@@ -18,7 +18,10 @@ public abstract class ModelConverterTests : TestBase
         public void ApplyCasingStyle_Default_KeepValueTests()
         {
             // Arrange
-            var options = new ConverterConfig(casing: PropertyNameCasing.Default);
+            var options = new DefaultConverterConfig
+            {
+                CasingStyle = PropertyNameCasing.Default
+            };
             var converter = new SushiConverter().TypeScript(options);
             var value = "CasingTest";
 
@@ -33,7 +36,10 @@ public abstract class ModelConverterTests : TestBase
         public void ApplyCasingStyle_CamelCasing_ShouldTransformValueTests()
         {
             // Arrange
-            var options = new ConverterConfig(casing: PropertyNameCasing.CamelCase);
+            var options = new DefaultConverterConfig
+            {
+                CasingStyle = PropertyNameCasing.CamelCase
+            };
             var converter = new SushiConverter().TypeScript(options);
             var value = "CasingTest";
 
@@ -48,7 +54,10 @@ public abstract class ModelConverterTests : TestBase
         public void ApplyCasingStyle_UnsupportedValue_ShouldThrow()
         {
             // Arrange
-            var options = new ConverterConfig(casing: (PropertyNameCasing)500);
+            var options = new DefaultConverterConfig
+            {
+                CasingStyle = (PropertyNameCasing)500
+            };
             var converter = new SushiConverter().TypeScript(options);
 
             // Act & Assert

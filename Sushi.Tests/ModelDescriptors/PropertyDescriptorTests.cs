@@ -8,7 +8,7 @@ namespace Sushi.Tests.ModelDescriptors;
 public abstract class PropertyDescriptorTests
 {
     
-    public sealed class TypeMapTests : PropertyDescriptorTests
+    public sealed class DefaultTypeMapTests : PropertyDescriptorTests
     {
         [Fact]
         public void GuidProperty_ShouldMapCorrectly()
